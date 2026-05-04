@@ -168,7 +168,10 @@ If yes and `.forge/config.yml` doesn't already exist, copy `templates/config-tem
 ### Step 8: Scaffold Local Secrets
 Check if `.forge/.env.local` exists. If not, copy `templates/env-local-template.env` to `.forge/.env.local`. Advise the user to open this file and configure their `GITLAB_TOKEN` and IDs if they plan to use `#issue_epic_creation`.
 
-### Step 9: Summary
+### Step 9: Scaffold User Documentation
+Check if `copilot_forge_flow_demo.md` exists in the project root. If not, copy `templates/flow-demo-template.md` to `copilot_forge_flow_demo.md` in the project root to help onboard developers to the spec-driven pipeline.
+
+### Step 10: Summary
 1. Display the created directory structure
 2. Explain the Copilot Forge workflow: `#spec` → `#validate` → `#architect` → `#validate` → `#issue_epic_creation` → implement...
 3. Suggest next step: "Run `#spec` to write your first requirement spec."
