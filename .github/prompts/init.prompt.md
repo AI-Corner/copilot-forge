@@ -8,7 +8,7 @@ description: Bootstrap .forge/ structure in a new project repo
 
 You are setting up the `.forge/` directory structure for spec-driven development in this project.
 
-> **Ethos**: Read `.forge/ETHOS.md` if it exists, or `.github/copilot-instructions.md`, and follow its principles throughout this session.
+> **Ethos**: Follow the principles in `.github/copilot-instructions.md` throughout this session.
 
 ## Input
 
