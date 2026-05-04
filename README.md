@@ -19,6 +19,7 @@ Invoke any prompt from Copilot Chat by typing `#<prompt-name>`:
 | `#spec` | Write requirement specs from feature requests |
 | `#architect` | Design architecture and break requirements into tasks |
 | `#validate` | Validate any Copilot Forge phase output before advancing |
+| `#issue_epic_creation` | Sync local REQs and Tasks to GitLab as Epics and Issues |
 | `#tdd` | Generate failing test suites before implementation (Red-Green-Refactor) |
 | `#proceed` | End-to-end pipeline: validate → architect → tdd → implement → reflect → review → PR → wrapup |
 | `#sprint` | Sequential pipeline orchestrator — run multiple `#proceed` sessions across REQs |

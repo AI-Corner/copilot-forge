@@ -60,6 +60,7 @@ Use the terminal to create:
     support-template.md
     task-template.md
     variables-template.md
+    env-local-template.env
 ```
 
 Copy templates from `templates/` at the toolkit repo root (the canonical location). If a local copy already exists in the consumer project's `.forge/templates/`, preserve it — do not overwrite customizations.
@@ -145,6 +146,10 @@ Add to `.gitignore` (create if it doesn't exist):
 .forge/.next-bug
 .forge/.next-lesson
 .forge/.next-req
+.forge/.next-sup
+
+# Local Secrets & Tokens
+.forge/.env.local
 
 # VS Code local settings
 .vscode/settings.local.json
@@ -160,8 +165,11 @@ Ask the user: "Will this repo ever share features with other repos (e.g., an API
 
 If yes and `.forge/config.yml` doesn't already exist, copy `templates/config-template.yml` to `.forge/config.yml` and advise the user to fill in all `<placeholder>` values.
 
-### Step 8: Summary
+### Step 8: Scaffold Local Secrets
+Check if `.forge/.env.local` exists. If not, copy `templates/env-local-template.env` to `.forge/.env.local`. Advise the user to open this file and configure their `GITLAB_TOKEN` and IDs if they plan to use `#issue_epic_creation`.
+
+### Step 9: Summary
 1. Display the created directory structure
-2. Explain the Copilot Forge workflow: `#spec` → `#validate` → `#architect` → `#validate` → implement → `#reflect` → `#review` → `#wrapup` (or use `#proceed` to run the full pipeline automatically)
+2. Explain the Copilot Forge workflow: `#spec` → `#validate` → `#architect` → `#validate` → `#issue_epic_creation` → implement...
 3. Suggest next step: "Run `#spec` to write your first requirement spec."
 
