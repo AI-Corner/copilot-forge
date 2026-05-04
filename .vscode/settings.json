@@ -1,0 +1,13 @@
+﻿{
+  "_comment": "Copilot Forge pipeline VS Code settings — Copilot configuration for spec-driven development workflow.",
+  "github.copilot.chat.codeGeneration.useInstructionFiles": true,
+  "github.copilot.chat.reviewSelection.enabled": true,
+  "github.copilot.chat.experimental.prompt-files.enabled": true,
+  "editor.formatOnSave": true,
+  "files.exclude": {
+    "**/.worktrees": true,
+    "**/.forge/.next-bug": false,
+    "**/.forge/.next-lesson": false,
+    "**/.forge/.next-req": false
+  }
+}

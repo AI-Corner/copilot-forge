@@ -1,0 +1,118 @@
+# Preset: Java Spring Boot + PostgreSQL + AKS (Backend / API Repo)
+# ---------------------------------------------------------------------------
+# Stack shape:
+#   - Java Spring Boot REST API (Maven or Gradle build)
+#   - PostgreSQL database (managed Azure Database for PostgreSQL or in-cluster)
+#   - Deployed to a shared AKS cluster via Helm
+#   - Azure Container Registry (ACR) for container images
+#   - GitHub Actions CI/CD — build → push image → helm upgrade on PR merge
+#   - Designed for the backend/API repo in a multi-repo setup
+#     (pair with react-aks.yml for the frontend repo)
+#
+# Copy this file to .forge/config.yml in your backend repo, then replace
+# every <placeholder> with a real value.
+#
+#   # PowerShell
+#   Copy-Item \path\to\copilot-forge\presets\springboot-postgres-aks.yml .forge\config.yml
+#
+#   # bash / zsh
+#   cp /path/to/copilot-forge/presets/springboot-postgres-aks.yml .forge/config.yml
+#
+# Prompts (#bugfix, #wrapup, #canary) read this file at runtime to resolve
+# cluster names, namespaces, image paths, and service names. Nothing is
+# hardcoded in the prompts themselves — this file is the single source of truth.
+
+project:
+  name: "<Project Display Name> API"
+  preset: springboot-postgres-aks
+
+stack:
+  languages: [java]
+  frontends: []
+  backends: [k8s]
+  databases: [postgres]
+  ci: github-actions
+
+# ---------------------------------------------------------------------------
+# repos: This repo plus every sibling it might coordinate with.
+# ---------------------------------------------------------------------------
+# In a multi-repo setup, the repo where #proceed is invoked becomes the
+# primary for that REQ. Mark this repo primary: true and list sibling repos
+# with their local relative paths.
+repos:
+  api:
+    primary: true
+  web:
+    path: ../web           # path to the React frontend repo (relative to this repo root)
+
+# Order PRs are merged in — backend first so the frontend never deploys
+# before the API contract it depends on is live.
+merge_order:
+  - api
+  - web
+
+# ---------------------------------------------------------------------------
+# aks: Azure Kubernetes Service deploy config.
+# ---------------------------------------------------------------------------
+# Consumed by #canary, #wrapup, and #bugfix for deploy verification.
+# `default_namespace` is used when a service entry doesn't specify its own.
+# All AKS commands use `az aks get-credentials` to authenticate — ensure
+# the GitHub Actions service principal has the AKS Cluster User role.
+
+aks:
+  cluster_name: <aks-cluster-name>              # e.g., my-company-aks
+  resource_group: <aks-resource-group>          # e.g., my-company-rg
+  subscription_id: <azure-subscription-id>      # Azure subscription GUID
+  default_namespace: <default-k8s-namespace>    # e.g., my-app-api
+
+# ---------------------------------------------------------------------------
+# acr: Azure Container Registry config.
+# ---------------------------------------------------------------------------
+# The registry where GitHub Actions pushes built images. Image tags are
+# typically the short Git SHA (e.g., ghcr.io/org/api:abc1234).
+
+acr:
+  login_server: <acr-login-server>              # e.g., mycompanyacr.azurecr.io
+  repository: <acr-repository-name>            # e.g., my-app/api
+
+# ---------------------------------------------------------------------------
+# postgres: PostgreSQL connection config (for prompt-generated docs/checks).
+# ---------------------------------------------------------------------------
+# Do NOT put real passwords here. Use Azure Key Vault or GitHub Secrets.
+# This block is documentation-only — prompts read it for migration guidance.
+
+postgres:
+  staging_server: <staging-postgres-server>    # e.g., my-app-staging.postgres.database.azure.com
+  production_server: <prod-postgres-server>    # e.g., my-app-prod.postgres.database.azure.com
+  database_name: <database-name>
+  migration_tool: flyway                       # flyway | liquibase | none
+
+# ---------------------------------------------------------------------------
+# services: Per-repo deploy config consumed by #canary and #wrapup.
+# ---------------------------------------------------------------------------
+# Each entry maps a repo id to its Kubernetes deployment details.
+# `helm_chart` is the path to the Helm chart directory (relative to repo root)
+# or a chart name if using a chart repository.
+# `image_tag_env` is the Helm values key that sets the container image tag.
+
+services:
+  api:
+    namespace: <k8s-namespace>                 # e.g., my-app-api
+    deployment_name: <k8s-deployment-name>     # e.g., api-deployment
+    helm_chart: ./helm/api                     # path to Helm chart in this repo
+    image_repository: <acr-login-server>/<acr-repository-name>
+    image_tag_env: image.tag                   # Helm values key for the image tag
+    health_check_path: /actuator/health        # Spring Boot Actuator health endpoint
+    staging_namespace: <staging-k8s-namespace> # e.g., my-app-api-staging
+    production_namespace: <k8s-namespace>      # e.g., my-app-api-prod
+
+# ---------------------------------------------------------------------------
+# build: Java-specific build config consumed by CI guidance prompts.
+# ---------------------------------------------------------------------------
+
+build:
+  tool: maven                                  # maven | gradle
+  java_version: 21                             # 17 | 21
+  test_command: mvn test                       # or: ./gradlew test
+  build_command: mvn package -DskipTests       # or: ./gradlew build -x test
+  dockerfile: Dockerfile                       # path relative to repo root

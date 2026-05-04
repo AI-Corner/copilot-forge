@@ -1,0 +1,114 @@
+# Preset: React + AKS (Frontend / Web Repo)
+# ---------------------------------------------------------------------------
+# Stack shape:
+#   - React frontend (TypeScript, Vite or Create React App)
+#   - Containerized and deployed to a shared AKS cluster via Helm
+#   - Azure Container Registry (ACR) for container images
+#   - Served via Kubernetes Ingress (nginx ingress controller or Azure AGIC)
+#   - GitHub Actions CI/CD — build → push image → helm upgrade on PR merge
+#   - Designed for the frontend/web repo in a multi-repo setup
+#     (pair with springboot-postgres-aks.yml for the backend API repo)
+#
+# Copy this file to .forge/config.yml in your frontend repo, then replace
+# every <placeholder> with a real value.
+#
+#   # PowerShell
+#   Copy-Item \path\to\copilot-forge\presets\react-aks.yml .forge\config.yml
+#
+#   # bash / zsh
+#   cp /path/to/copilot-forge/presets/react-aks.yml .forge/config.yml
+#
+# Prompts (#bugfix, #wrapup, #canary) read this file at runtime to resolve
+# cluster names, namespaces, image paths, and ingress hostnames.
+
+project:
+  name: "<Project Display Name> Web"
+  preset: react-aks
+
+stack:
+  languages: [typescript]
+  frontends: [web]
+  backends: []
+  databases: []
+  ci: github-actions
+
+# ---------------------------------------------------------------------------
+# repos: This repo plus every sibling it might coordinate with.
+# ---------------------------------------------------------------------------
+# In a multi-repo setup, this frontend repo marks itself primary: true.
+# The API repo is a sibling. When the frontend originates a REQ that also
+# touches the API, the API repo becomes a touched sibling for that REQ.
+repos:
+  web:
+    primary: true
+  api:
+    path: ../api            # path to the Spring Boot backend repo (relative to this repo root)
+
+# Frontends merge after their backend dependencies.
+merge_order:
+  - api
+  - web
+
+# ---------------------------------------------------------------------------
+# aks: Azure Kubernetes Service deploy config.
+# ---------------------------------------------------------------------------
+# Same shared AKS cluster as the backend. Each repo uses its own namespace
+# within the shared cluster for isolation.
+
+aks:
+  cluster_name: <aks-cluster-name>              # e.g., my-company-aks (same cluster as API)
+  resource_group: <aks-resource-group>          # e.g., my-company-rg
+  subscription_id: <azure-subscription-id>      # Azure subscription GUID
+  default_namespace: <default-k8s-namespace>    # e.g., my-app-web
+
+# ---------------------------------------------------------------------------
+# acr: Azure Container Registry config.
+# ---------------------------------------------------------------------------
+
+acr:
+  login_server: <acr-login-server>              # e.g., mycompanyacr.azurecr.io
+  repository: <acr-repository-name>            # e.g., my-app/web
+
+# ---------------------------------------------------------------------------
+# services: Per-repo deploy config consumed by #canary and #wrapup.
+# ---------------------------------------------------------------------------
+# The React app runs as an nginx container serving the built static assets.
+# `health_check_path` hits the nginx root — adjust if you have a custom
+# health endpoint (e.g., /health.json as a static file).
+
+services:
+  web:
+    namespace: <k8s-namespace>                  # e.g., my-app-web
+    deployment_name: <k8s-deployment-name>      # e.g., web-deployment
+    helm_chart: ./helm/web                      # path to Helm chart in this repo
+    image_repository: <acr-login-server>/<acr-repository-name>
+    image_tag_env: image.tag                    # Helm values key for the image tag
+    health_check_path: /                        # nginx root or custom health path
+    ingress_host: <ingress-hostname>            # e.g., app.mycompany.com
+    staging_namespace: <staging-k8s-namespace>  # e.g., my-app-web-staging
+    production_namespace: <k8s-namespace>       # e.g., my-app-web-prod
+
+# ---------------------------------------------------------------------------
+# build: React-specific build config consumed by CI guidance prompts.
+# ---------------------------------------------------------------------------
+
+build:
+  package_manager: npm                          # npm | yarn | pnpm
+  node_version: 20                              # LTS version
+  build_command: npm run build                  # output goes to dist/ or build/
+  test_command: npm test -- --watchAll=false    # CI-safe (non-interactive) test run
+  dockerfile: Dockerfile                        # path relative to repo root
+  build_output_dir: dist                        # dist (Vite) | build (CRA)
+
+# ---------------------------------------------------------------------------
+# api_base_url: Runtime API endpoint injected at build time.
+# ---------------------------------------------------------------------------
+# React reads VITE_API_BASE_URL (or REACT_APP_API_BASE_URL for CRA) at
+# build time. GitHub Actions sets these from repo secrets / vars.
+# Document the env var names here for prompt reference.
+
+env_vars:
+  staging:
+    VITE_API_BASE_URL: <staging-api-base-url>   # e.g., https://api-staging.mycompany.com
+  production:
+    VITE_API_BASE_URL: <prod-api-base-url>      # e.g., https://api.mycompany.com

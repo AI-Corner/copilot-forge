@@ -1,0 +1,15 @@
+# Copilot Forge worktrees (created by #proceed for branch isolation)
+.worktrees/
+
+# Copilot Forge per-project counters and state (auto-managed — do not commit)
+.forge/.next-bug
+.forge/.next-lesson
+.forge/.next-req
+.forge/.next-assume
+.forge/.last-analyzed-commit
+
+# VS Code local settings (team settings live in .vscode/settings.json)
+.vscode/settings.local.json
+
+# OS noise
+.DS_Store
