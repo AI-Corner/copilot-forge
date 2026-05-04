@@ -5,6 +5,7 @@ Prompts, checklists, and templates for spec-driven development with **GitHub Cop
 ## What's Included
 
 ## Changelog & Recent Updates
+- **v1.3.0**: Integrated a **Pre-Commit Security Scan** into `#wrapup` to detect and block hardcoded credentials/secrets before they reach version control.
 - **v1.2.0**: Added automated **Support Documentation** generation (via `#wrapup`) and explicitly segregated Application vs. Infrastructure variables in `variables-template.md`.
 - **v1.1.0**: Introduced `#tdd` prompt for Test-Driven Development enforcing the Red-Green-Refactor cycle.
 - **v1.0.0**: Initial Copilot Forge release (formerly ADLC).
