@@ -67,3 +67,11 @@ For complex multi-modal applications spanning multiple repositories (e.g., front
 *   **Complexity**: **Medium**
 *   **Benefit**: **High**
 *   **Impact**: Empowers the AI to confidently navigate, validate, and architect security and authorization logic across multiple repositories. It ensures that token passing, role verifications, and cross-application permissions remain secure and strictly documented.
+
+## 9. Application Monitoring & Observability Knowledge
+
+Once an application is deployed, understanding its health, logs, and performance metrics is crucial. This enhancement introduces a standardized knowledge base artifact (e.g., `.forge/context/observability.md`) to document how the application is monitored. This includes tracking structured logging formats, key performance metrics (APM), health check endpoints, alert thresholds, and dashboard configurations (e.g., Datadog, Prometheus/Grafana, or ELK stack integration).
+
+*   **Complexity**: **Low**
+*   **Benefit**: **Medium**
+*   **Impact**: Provides AI agents with the necessary context to intelligently suggest observability improvements, generate appropriate logging statements during implementation, and help debug production issues by knowing exactly where and how to look at the telemetry data.
