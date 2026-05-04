@@ -5,7 +5,8 @@ Prompts, checklists, and templates for spec-driven development with **GitHub Cop
 ## What's Included
 
 ## Changelog & Recent Updates
-- **v1.3.0**: Integrated a **Pre-Commit Security Scan** into `#wrapup` to detect and block hardcoded credentials/secrets before they reach version control.
+- **v1.3.1**: Refined the security gate to be **Interactive**, allowing users to flag false positives before committing. Added a standalone `#security_scan` prompt.
+- **v1.3.0**: Integrated a **Pre-Commit Security Scan** into `#wrapup` to detect and block hardcoded credentials/secrets.
 - **v1.2.0**: Added automated **Support Documentation** generation (via `#wrapup`) and explicitly segregated Application vs. Infrastructure variables in `variables-template.md`.
 - **v1.1.0**: Introduced `#tdd` prompt for Test-Driven Development enforcing the Red-Green-Refactor cycle.
 - **v1.0.0**: Initial Copilot Forge release (formerly ADLC).
@@ -31,6 +32,7 @@ Invoke any prompt from Copilot Chat by typing `#<prompt-name>`:
 | `#bugfix` | Streamlined bug fix workflow |
 | `#status` | Show current state of all Copilot Forge work |
 | `#analyze` | Codebase health audit |
+| `#security_scan` | Interactive pre-commit secret and credential audit |
 | `#optimize` | API cost & performance scanner |
 | `#template-drift` | Detect drift between a project's local `.forge/templates/` and the canonical toolkit templates |
 

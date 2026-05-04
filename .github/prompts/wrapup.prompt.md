@@ -28,8 +28,11 @@ Target: [REQ-xxx ID — provided by the user]
 
 For each touched repo, run this sequence inside that repo's worktree:
 1. Check `git status` and `git diff` for uncommitted changes.
-2. **Pre-Commit Security Scan**: Read the uncommitted diff. Scan explicitly for hardcoded secrets, passwords, API keys, tokens, or other sensitive credentials. If any potential secrets are found, **STOP immediately**, highlight the file and line to the user, and ask them to remove it. Do NOT proceed to the commit step until the issue is resolved.
-3. If there are no uncommitted changes, or after the security scan passes, stage and commit:
+2. **Pre-Commit Security Scan**: Execute the logic from `#security_scan`. Read the uncommitted diff and scan for hardcoded secrets, passwords, or tokens.
+   - If potential secrets are found, **STOP** and present them to the user.
+   - For each finding, let the user decide if it must be **fixed** or if it is a **false positive**.
+   - Do NOT proceed to the commit step until all "fixed" items are resolved.
+3. If there are no uncommitted changes, or after the security scan is cleared, stage and commit:
    ```bash
    git add <relevant files>
    git commit -m "feat(REQ-xxx): <summary>"
