@@ -4,6 +4,11 @@ Prompts, checklists, and templates for spec-driven development with **GitHub Cop
 
 ## What's Included
 
+## Changelog & Recent Updates
+- **v1.2.0**: Added automated **Support Documentation** generation (via `#wrapup`) and explicitly segregated Application vs. Infrastructure variables in `variables-template.md`.
+- **v1.1.0**: Introduced `#tdd` prompt for Test-Driven Development enforcing the Red-Green-Refactor cycle.
+- **v1.0.0**: Initial Copilot Forge release (formerly ADLC).
+
 ### Prompts
 
 Invoke any prompt from Copilot Chat by typing `#<prompt-name>`:
@@ -56,6 +61,8 @@ These live in `.github/prompts/agents/` and are referenced inline by `#review`, 
 - `bug-template.md` — Bug report template
 - `assumption-template.md` — Validated-assumption knowledge entry
 - `lesson-template.md` — Lesson-learned knowledge entry
+- `support-template.md` — Automated Support Documentation / FAQ knowledge entry
+- `variables-template.md` — Environment & Config variables tracking
 
 ### Presets
 

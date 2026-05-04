@@ -2,6 +2,21 @@
 
 This document outlines strategic improvements to the Copilot Forge toolkit to further optimize Spec-Driven Development (SDD) for enterprise use, particularly for robust multi-service architectures (like Java Spring Boot + React + PostgreSQL + AKS).
 
+## Feature Tracking Overview
+
+| Feature | Status | Complexity | Impact |
+|---------|--------|------------|--------|
+| Test-Driven Development (TDD) First Prompts | ✅ Implemented | Low | High |
+| Automated Support Documentation Generation | ✅ Implemented | Low | Medium |
+| Interactive Architecture Diagrams (Mermaid.js) | 🚧 Future | Low | Medium |
+| AI-Managed Tech Debt Queue | 🚧 Future | Medium | High |
+| MCP (Model Context Protocol) Knowledge Retrieval | 🚧 Future | High | Very High |
+| Automated CI/CD SDD Verification | 🚧 Future | High | High |
+| Automated Rollback in `#canary` | 🚧 Future | High | Medium |
+| Environment & Configuration Variable Mapping | ✅ Implemented | Medium | High |
+| Cross-Application Access Flow Tracking | 🚧 Future | Medium | High |
+| Application Monitoring & Observability Knowledge | 🚧 Future | Low | Medium |
+
 ---
 
 ## 1. Test-Driven Development (TDD) First Prompts
