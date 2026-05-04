@@ -33,3 +33,8 @@ If your enterprise system spans multiple repositories (e.g., frontend, backend, 
 - The `.forge/specs/`, `bugs/`, and `knowledge/` folders act as your historical decision log. 
 
 *Note: The Copilot Forge `.gitignore` template is specifically designed to ignore local state files (like `.forge/.last-analyzed-commit` and `.forge/.next-req`) so that developers don't encounter merge conflicts on their local counters.*
+
+### 7. What is the difference between `#security_scan` and the `security-auditor` checklist?
+They serve different roles in the security lifecycle:
+- **`security-auditor` (Broad Audit)**: A comprehensive checklist used during `#review` or `#analyze` to find architectural and logical vulnerabilities (e.g., input validation flaws, authentication bypasses, insecure dependencies).
+- **`#security_scan` (Focused Safety Gate)**: A dedicated, interactive pre-commit tool used during `#wrapup` specifically to detect and prevent hardcoded credentials (API keys, tokens, passwords) from being committed to version control. It allows users to confirm findings and flag false positives before the `git commit` is executed.
