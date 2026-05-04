@@ -5,30 +5,38 @@
 
 This document serves as the central registry for all configuration properties, environment variables, and secrets used across the project. It provides AI agents and developers with explicit knowledge of the application's configuration surface to prevent missing secrets and deployment crashes.
 
+# Part 1: Application Variables
+
 ## Frontend Variables
 
 Environment variables consumed by the frontend application (e.g., React `REACT_APP_*`, Vite `VITE_*`, Next.js `NEXT_PUBLIC_*`).
 
-| Variable Key | Type/Format | Default Value | Purpose | Consumers (Files/Components) |
-|--------------|-------------|---------------|---------|------------------------------|
-| `VITE_API_BASE_URL` | URL string | `http://localhost:8080/api` | Base URL for backend API requests | `src/api/client.ts` |
-| `VITE_ENABLE_MOCK_DATA` | boolean | `false` | Toggles mock data for local development | `src/main.tsx` |
+| Environment | Variable Key | Default/Example Value | Purpose | Consumers |
+|-------------|--------------|-----------------------|---------|-----------|
+| Local/Dev   | `VITE_API_BASE_URL` | `http://localhost:8080/api` | Base URL for API | `src/api/client.ts` |
+| Staging     | `VITE_API_BASE_URL` | `https://stg-api.demo.com` | Base URL for API | `src/api/client.ts` |
+| Prod        | `VITE_API_BASE_URL` | `https://api.demo.com` | Base URL for API | `src/api/client.ts` |
+| All         | `VITE_ENABLE_MOCK` | `false` | Toggles mock data | `src/main.tsx` |
 
 ## Backend Properties
 
 Configuration properties and environment variables consumed by the backend services (e.g., Spring Boot `application.yml`, Node `process.env`).
 
-| Variable Key | Type/Format | Default Value | Purpose | Consumers (Files/Components) |
-|--------------|-------------|---------------|---------|------------------------------|
-| `DB_HOST` | string | `localhost` | Database hostname | `config/database.js`, `application.yml` |
-| `JWT_SECRET` | string | `dummy-secret-key` | Secret key for signing JWT tokens. DO NOT USE REAL SECRET HERE. | `src/auth/jwt.service.ts` |
-| `PORT` | number | `3000` | HTTP port the server listens on | `src/index.ts` |
+| Environment | Variable Key | Default/Example Value | Purpose | Consumers |
+|-------------|--------------|-----------------------|---------|-----------|
+| Local/Dev   | `DB_HOST` | `localhost` | Database hostname | `application.yml` |
+| Prod        | `DB_HOST` | `db.production.internal` | Database hostname | `application.yml` |
+| All         | `JWT_SECRET` | `dummy-secret-key` | Token signing secret. | `jwt.service.ts` |
+| All         | `PORT` | `3000` | HTTP port | `src/index.ts` |
 
-## Infrastructure & Secrets
+# Part 2: Infrastructure Creation Variables
+
+## Infrastructure & Deploy Secrets
 
 Variables and secrets used in CI/CD pipelines, container orchestration, or cloud environments (e.g., GitHub Secrets, Kubernetes Secrets, Helm Values).
 
-| Variable Key | Type/Format | Default Value | Purpose | Consumers (Files/Components) |
-|--------------|-------------|---------------|---------|------------------------------|
-| `DOCKER_REGISTRY_TOKEN` | string | `dummy-token` | Used by GitHub Actions to push images to registry | `.github/workflows/build.yml` |
-| `AKS_CLUSTER_NAME` | string | `my-cluster` | Name of the target Kubernetes cluster for deployment | `helm/values.yaml` |
+| Environment | Variable Key | Default/Example Value | Purpose | Consumers |
+|-------------|--------------|-----------------------|---------|-----------|
+| All         | `DOCKER_REGISTRY_TOKEN` | `dummy-token` | Image push token | `.github/workflows/build.yml` |
+| Staging     | `AKS_CLUSTER_NAME` | `stg-cluster` | Target Kubernetes cluster | `helm/values-stg.yaml` |
+| Prod        | `AKS_CLUSTER_NAME` | `prod-cluster` | Target Kubernetes cluster | `helm/values-prod.yaml` |
