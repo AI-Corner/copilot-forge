@@ -50,11 +50,14 @@ Use the terminal to create:
       .gitkeep
     lessons/
       .gitkeep
+    support/
+      .gitkeep
   templates/
     assumption-template.md
     bug-template.md
     lesson-template.md
     requirement-template.md
+    support-template.md
     task-template.md
     variables-template.md
 ```
@@ -125,6 +128,12 @@ Copy templates from `templates/` at the toolkit repo root (the canonical locatio
 2. Scan the repository for configuration files (e.g., `.env.example`, `application.yml`, `config.js`, `helm/values.yaml`).
 3. Extract existing variables and populate the tables in `.forge/context/variables.md`. 
 4. **CRITICAL**: Do NOT extract or write actual production secrets. Use dummy values or the safe default values found in `.example` files.
+
+**Support Documentation** — capturing miscellaneous context:
+If the user provides external documentation (e.g., a `/docs` folder) during initialization and you extract valuable context that does not neatly fit into `architecture.md`, `conventions.md`, or `project-overview.md`, generate a support document for it.
+1. Use `templates/support-template.md`.
+2. Save it to `.forge/knowledge/support/SUP-xxx-slug.md` (e.g., `SUP-001-legacy-api-quirks.md`).
+3. Update or create `.forge/knowledge/support/_index.md` to hyperlink to the new document.
 
 ### Step 5: Update .gitignore
 Add to `.gitignore` (create if it doesn't exist):
