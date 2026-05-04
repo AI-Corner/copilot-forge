@@ -59,3 +59,11 @@ Currently, Copilot Forge establishes knowledge baselines for architecture, flows
 *   **Complexity**: **Medium**
 *   **Benefit**: **High**
 *   **Impact**: Prevents "missing secret" deployment crashes, aids in rapid debugging, and provides AI agents with explicit awareness of configuration toggles across both frontend and backend domains.
+
+## 8. Cross-Application Access Flow Tracking
+
+For complex multi-modal applications spanning multiple repositories (e.g., frontend clients, API gateways, backend microservices), tracing authentication and authorization logic can become extremely difficult. This enhancement introduces a standardized knowledge base artifact (e.g., `.forge/context/access-flow.md`) designed to track how access controls, identities, JWTs, and session tokens are provisioned, passed, and validated both *within* a single application boundary and *across* applications in a shared workspace.
+
+*   **Complexity**: **Medium**
+*   **Benefit**: **High**
+*   **Impact**: Empowers the AI to confidently navigate, validate, and architect security and authorization logic across multiple repositories. It ensures that token passing, role verifications, and cross-application permissions remain secure and strictly documented.
