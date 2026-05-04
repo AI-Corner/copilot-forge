@@ -28,23 +28,24 @@ Target: [REQ-xxx ID — provided by the user]
 
 For each touched repo, run this sequence inside that repo's worktree:
 1. Check `git status` and `git diff` for uncommitted changes.
-2. If there are uncommitted changes, stage and commit:
+2. **Pre-Commit Security Scan**: Read the uncommitted diff. Scan explicitly for hardcoded secrets, passwords, API keys, tokens, or other sensitive credentials. If any potential secrets are found, **STOP immediately**, highlight the file and line to the user, and ask them to remove it. Do NOT proceed to the commit step until the issue is resolved.
+3. If there are no uncommitted changes, or after the security scan passes, stage and commit:
    ```bash
    git add <relevant files>
    git commit -m "feat(REQ-xxx): <summary>"
    ```
-3. Push: `git push -u origin <branch>`
-4. If no PR exists, create one: `gh pr create` with a summary of what shipped.
-5. If CI checks exist, monitor: `gh run watch`.
-6. **Rebase check**: run `git merge-base --is-ancestor origin/main HEAD`. If the branch is behind main, rebase:
+4. Push: `git push -u origin <branch>`
+5. If no PR exists, create one: `gh pr create` with a summary of what shipped.
+6. If CI checks exist, monitor: `gh run watch`.
+7. **Rebase check**: run `git merge-base --is-ancestor origin/main HEAD`. If the branch is behind main, rebase:
    ```bash
    git rebase origin/main
    git push --force-with-lease
    ```
    If conflicts, STOP and surface to the user.
-7. Verify PR is mergeable: `gh pr view <prUrl> --json mergeable,mergeStateStatus`
-8. Merge: `gh pr merge <prUrl> --squash --delete-branch` (run from parent repo path, not worktree).
-9. Pull main and clean up worktree:
+8. Verify PR is mergeable: `gh pr view <prUrl> --json mergeable,mergeStateStatus`
+9. Merge: `gh pr merge <prUrl> --squash --delete-branch` (run from parent repo path, not worktree).
+10. Pull main and clean up worktree:
    ```bash
    git checkout main && git pull
    git worktree remove <worktree-path>
