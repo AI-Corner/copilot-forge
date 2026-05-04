@@ -1,4 +1,4 @@
-﻿---
+---
 agent: agent
 tools: [codebase, runCommand, changes, terminalLastCommand]
 description: Close out a completed feature — commit, merge, deploy, capture knowledge, emit ship summary
@@ -89,6 +89,17 @@ For each touched repo, run this sequence inside that repo's worktree:
 
 #### Convention Updates
 - New conventions established? Propose updates to `.forge/context/conventions.md`.
+
+#### Support Documentation
+- Automatically generate user-facing support knowledge based on the completed requirement.
+- Think about what functional queries, common user errors, or troubleshooting steps a support agent or end user might face regarding this feature.
+- Use the support template from `.forge/templates/support-template.md`.
+- Save it to `.forge/knowledge/support/SUP-xxx-slug.md`.
+- Determine the next SUP ID using the atomic counter at `.forge/.next-sup`:
+  ```bash
+  SUP_NUM=$(cat .forge/.next-sup 2>/dev/null || echo "1")
+  echo $((SUP_NUM + 1)) > .forge/.next-sup
+  ```
 
 ### Step 5: Generate Ship Summary
 
