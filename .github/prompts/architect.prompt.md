@@ -45,6 +45,7 @@ Read the key files identified during exploration.
 1. If the requirement involves new architectural decisions, create `.forge/specs/REQ-xxx-*/architecture.md`.
 2. Document:
    - **Approach**: High-level design and rationale
+   - **System Diagram**: A Mermaid sequence diagram or flowchart to visualize the execution flow, especially critical for complex business logic or cross-repo interactions
    - **Data model changes**: New collections/fields, schema changes
    - **API changes**: New or modified endpoints
    - **Service layer**: New or modified services

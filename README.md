@@ -5,6 +5,7 @@ Prompts, checklists, and templates for spec-driven development with **GitHub Cop
 ## What's Included
 
 ## Changelog & Recent Updates
+- **v1.4.0**: Introduced **Visual Architecture** generation. Both `#init` and `#architect` now mandate native Mermaid sequence diagrams and flowcharts for project and feature-level architecture documentation.
 - **v1.3.1**: Refined the security gate to be **Interactive**, allowing users to flag false positives before committing. Added a standalone `#security_scan` prompt.
 - **v1.3.0**: Integrated a **Pre-Commit Security Scan** into `#wrapup` to detect and block hardcoded credentials/secrets.
 - **v1.2.0**: Added automated **Support Documentation** generation (via `#wrapup`) and explicitly segregated Application vs. Infrastructure variables in `variables-template.md`.

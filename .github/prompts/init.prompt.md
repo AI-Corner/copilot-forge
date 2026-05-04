@@ -90,7 +90,7 @@ Copy templates from `templates/` at the toolkit repo root (the canonical locatio
 *Navigation: [Project Overview](project-overview.md) | [Conventions](conventions.md) | [Taxonomy](taxonomy.md)*
 
 ## System Diagram
-{ASCII diagram of major components}
+{Mermaid flowchart or diagram mapping the core system architecture}
 
 ## Layers
 {description of architectural layers}
