@@ -1,4 +1,4 @@
-﻿---
+---
 agent: agent
 tools: [codebase, runCommand, changes, terminalLastCommand]
 description: Multi-dimension code review covering correctness, quality, architecture, test coverage, and security
@@ -60,13 +60,14 @@ Focus: naming, convention compliance, code duplication, complexity.
 - Import/export style per conventions
 
 #### Dimension 3 — Architecture (reference: `#agents/architecture-reviewer`)
-Focus: layering, separation of concerns, API contracts, backward compatibility.
+Focus: layering, separation of concerns, API contracts, backward compatibility, configuration drift.
 - Routes contain only request parsing and response formatting
 - Business logic lives in services, not route handlers
 - Data access encapsulated in repositories only
 - Each layer only calls the layer directly below it
 - Breaking changes to existing endpoints are flagged
 - Database schema changes are additive
+- **Documentation Drift**: If the PR introduces new environment variables, configuration properties, or secrets (e.g., in `.env`, `application.yml`, `process.env`), cross-reference them with `.forge/context/variables.md`. If a variable is used but not documented there, flag it as a Critical failure.
 
 #### Dimension 4 — Test Coverage (reference: `#agents/test-auditor`)
 Focus: test coverage gaps, mock completeness, test quality, determinism.

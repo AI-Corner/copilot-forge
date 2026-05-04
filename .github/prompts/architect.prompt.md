@@ -1,4 +1,4 @@
-﻿---
+---
 agent: agent
 tools: [codebase, runCommand, changes]
 description: Design architecture and break a requirement into implementable tasks
@@ -48,6 +48,7 @@ Read the key files identified during exploration.
    - **Data model changes**: New collections/fields, schema changes
    - **API changes**: New or modified endpoints
    - **Service layer**: New or modified services
+   - **Environment / Configuration**: New `.env` vars, secrets, or configuration properties (e.g., `application.yml`)
    - **Key decisions**: ADRs with rationale (follow the style in `.forge/context/architecture.md`)
 3. Propose any additions to `.forge/context/architecture.md` with rationale.
 
@@ -65,8 +66,9 @@ Read the key files identified during exploration.
    - **Acceptance Criteria**: Concrete, testable criteria
    - **Technical Notes**: Implementation details, patterns to follow, edge cases
    - **Dependencies**: Other tasks that must complete first
-6. Tasks must form a valid dependency graph (no cycles).
-7. Order tasks so foundational work comes first (data layer → service → routes → UI).
+6. **Configuration Updates**: If the feature introduces new environment variables, secrets, or configuration properties, you MUST create a specific task (or append to an existing one) to document them in `.forge/context/variables.md`.
+7. Tasks must form a valid dependency graph (no cycles).
+8. Order tasks so foundational work comes first (data layer → service → routes → UI).
 
 ### Step 5: Update Requirement Status
 1. Update the requirement's frontmatter `status` from `draft` to `approved`.
@@ -84,5 +86,6 @@ Read the key files identified during exploration.
 - [ ] Task dependencies form a valid DAG (no cycles), including cross-repo edges
 - [ ] Every file to be modified is listed in at least one task
 - [ ] Tests are included in task acceptance criteria
+- [ ] If new environment variables/secrets are needed, a task exists to document them in `.forge/context/variables.md`
 - [ ] No task has more than 3 dependencies
 - [ ] In cross-repo mode: every task has a `repo:` field naming a valid repo id from `.forge/config.yml`

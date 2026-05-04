@@ -40,6 +40,7 @@ Use the terminal to create:
     architecture.md
     conventions.md
     taxonomy.md
+    variables.md
   specs/
     .gitkeep
   bugs/
@@ -55,6 +56,7 @@ Use the terminal to create:
     lesson-template.md
     requirement-template.md
     task-template.md
+    variables-template.md
 ```
 
 Copy templates from `templates/` at the toolkit repo root (the canonical location). If a local copy already exists in the consumer project's `.forge/templates/`, preserve it — do not overwrite customizations.
@@ -117,6 +119,12 @@ Copy templates from `templates/` at the toolkit repo root (the canonical locatio
 ## Git Conventions
 {branch naming, commit messages, PR process}
 ```
+
+**variables.md** — environment and configuration tracking:
+1. Copy `templates/variables-template.md` to `.forge/context/variables.md`.
+2. Scan the repository for configuration files (e.g., `.env.example`, `application.yml`, `config.js`, `helm/values.yaml`).
+3. Extract existing variables and populate the tables in `.forge/context/variables.md`. 
+4. **CRITICAL**: Do NOT extract or write actual production secrets. Use dummy values or the safe default values found in `.example` files.
 
 ### Step 5: Update .gitignore
 Add to `.gitignore` (create if it doesn't exist):

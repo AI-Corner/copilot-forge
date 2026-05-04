@@ -51,3 +51,11 @@ The `#canary` prompt currently manages smoke tests and promotes successful deplo
 *   **Complexity**: **High**
 *   **Benefit**: **Medium**
 *   **Impact**: Dramatically increases deployment safety by ensuring that broken, AI-generated code that slips past local reviews is instantly reverted in the integration/staging environments without human panic.
+
+## 7. Environment & Configuration Variable Mapping
+
+Currently, Copilot Forge establishes knowledge baselines for architecture, flows, domain, and functional logic. This upgrade introduces an automated mechanism to extract, document, and track all configuration variables (e.g., frontend `.env` vars, backend `application.yml` properties, CI/CD secrets). It will act as a centralized dictionary to map where variables are defined, where they are consumed, and their intended purpose.
+
+*   **Complexity**: **Medium**
+*   **Benefit**: **High**
+*   **Impact**: Prevents "missing secret" deployment crashes, aids in rapid debugging, and provides AI agents with explicit awareness of configuration toggles across both frontend and backend domains.
