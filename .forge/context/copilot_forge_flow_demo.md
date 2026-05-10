@@ -166,20 +166,27 @@ For bulk work, the `#sprint` command orchestrates multiple `#proceed` pipelines.
 
 ---
 
-## 🛠️ The Moving Parts
+## 🛠️ The Moving Parts: Skills vs Agents vs Templates
 
-To make this flow work, Copilot Forge relies on three main components: **Skills (Prompts)**, **Agents**, and **Templates**.
+To make this flow work, Copilot Forge relies on three main components. Think of it like a real-world software company:
 
-### 1. Skills (Copilot Prompts)
-Skills are the commands you type in Copilot Chat (`#<skill>`). They tell Copilot exactly what phase of the pipeline we are in.
+### 1. Skills (The Workflows / Commands)
+Skills are the main entry points you type in Copilot Chat (`#<skill>`). They are located in the root of `.github/prompts/`. They dictate the *process* and tell Copilot what phase of the pipeline we are in.
 
 * **Core Pipeline**: `#spec`, `#architect`, `#tdd`, `#reflect`, `#review`, `#wrapup`
 * **Orchestrators**: `#proceed` (runs a single feature end-to-end), `#sprint` (runs multiple features).
-* **Maintenance & Audit**: `#analyze` (health audit), `#optimize` (cost/perf scanner), `#security_scan` (credential audit).
-* **Other Utilities**: `#init` (bootstrap project), `#bugfix` (streamlined flow for bugs).
+* **Maintenance & Audit**: `#analyze`, `#optimize`, `#security_scan`.
+* **Other Utilities**: `#init`, `#bugfix`.
 
-### 2. Agents (Reference Checklists)
-Agents are specialized personas that Copilot adopts during specific steps. They live behind the scenes in `.github/prompts/agents/`. When a skill like `#review` runs, it calls upon these agents to look at your code from different perspectives.
+### 2. Agents (The Specialized Personas)
+Agents are specialized reference checklists located inside `.github/prompts/agents/`. 
+They **do not run on their own**. Instead, they get "hired" by the Skills. For example, when the `#review` Skill runs, it dynamically instructs Copilot to adopt the `security-auditor.md` persona. Breaking them out into a subfolder keeps the master prompts clean and prevents context pollution.
+
+### 3. Templates (The Blank Forms)
+Templates are located in the `templates/` directory (and copied to `.forge/templates/`). 
+They contain **zero logic**. They are simply Markdown structures with placeholders (e.g., `task-template.md`). The Skills use these templates to "stamp out" consistent artifacts, ensuring every requirement and task looks identical across the entire project.
+
+**The Relationship:** When you run a **Skill** (`#review`), it adopts an **Agent** persona (`security-auditor`), and if it needs to write a report, it uses a **Template** to format it!
 
 **The Agent Roster & Groupings:**
 ```mermaid
