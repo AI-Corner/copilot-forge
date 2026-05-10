@@ -23,7 +23,15 @@ _Describe how artifacts (Docker images, binaries, zip files) are built and packa
 - **Build Tool**: (e.g., Docker, Maven, Webpack, Vite)
 - **Artifact Registry**: (e.g., ECR, ACR, Docker Hub)
 
-## Deployment Steps
+## Local Deployment / Run Steps
+
+_Step-by-step sequence of how to run this project locally for testing or development._
+
+1. [e.g., `npm install`]
+2. [e.g., `npm run build`]
+3. [e.g., `npm run start` or `docker-compose up`]
+
+## Remote Deployment Steps
 
 _Step-by-step sequence of what happens during a deployment._
 

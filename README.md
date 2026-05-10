@@ -31,6 +31,7 @@ Invoke any prompt from Copilot Chat by typing `#<prompt-name>`:
 | `#reflect` | Post-implementation self-review before formal review |
 | `#review` | Multi-dimension code review (correctness, quality, architecture, tests, security) |
 | `#canary` | Canary deployment with smoke tests — deploy zero-traffic revision and promote on success |
+| `#deploy` | Execute local or remote deployment steps based on `.forge/context/deployment.md` |
 | `#wrapup` | Close out a feature — commit, merge, deploy, update artifacts |
 | `#bugfix` | Streamlined bug fix workflow |
 | `#status` | Show current state of all Copilot Forge work |
