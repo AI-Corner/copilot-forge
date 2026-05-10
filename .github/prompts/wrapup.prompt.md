@@ -109,6 +109,17 @@ For each touched repo, run this sequence inside that repo's worktree:
   echo $((SUP_NUM + 1)) > .forge/.next-sup
   ```
 
+#### Manual QA Documentation
+- Finalize the manual test guide based on the implementation. 
+- Ensure it includes clear **Action -> Expected Result** steps and any necessary **CLI/Curl commands**.
+- Use the template from `.forge/templates/manual-qa-template.md`.
+- Save it to `.forge/knowledge/qa/QA-xxx-slug.md`.
+- Determine the next QA ID using the atomic counter at `.forge/.next-qa`:
+  ```bash
+  QA_NUM=$(cat .forge/.next-qa 2>/dev/null || echo "1")
+  echo $((QA_NUM + 1)) > .forge/.next-qa
+  ```
+
 ### Step 5: Generate Ship Summary
 
 **Single-repo template**:

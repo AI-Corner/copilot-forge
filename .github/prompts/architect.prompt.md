@@ -59,7 +59,9 @@ Read the key files identified during exploration.
 2. Determine the next TASK ID by scanning existing tasks across ALL specs.
 3. **Detect user-facing impact**: Does this requirement change how an end-user interacts with the system? (UI changes, new API endpoints, behavior changes).
    - If YES: You MUST create a dedicated task (e.g., `TASK-xxx-update-user-documentation.md`) to create or update the user-facing guide in `.forge/knowledge/support/`.
-4. **Detect repository mode**: check whether `.forge/config.yml` exists and declares a `repos:` block with more than one entry.
+4. **Manual Verification**: Every feature or bugfix needs a manual verification plan.
+   - You MUST create a task (e.g., `TASK-xxx-draft-manual-qa-guide.md`) to draft the manual test steps using `templates/manual-qa-template.md`.
+5. **Detect repository mode**: check whether `.forge/config.yml` exists and declares a `repos:` block with more than one entry.
    - **Single-repo mode**: set `repo:` on each task to the primary repo id (or omit).
    - **Cross-repo mode**: every task MUST declare a `repo:` field. A single task should not modify files in multiple repos — split cross-repo work into separate tasks with explicit dependencies.
 4. Create `TASK-xxx-description.md` for each task using `.forge/templates/task-template.md`.

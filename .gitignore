@@ -6,6 +6,7 @@
 .forge/.next-lesson
 .forge/.next-req
 .forge/.next-assume
+.forge/.next-qa
 .forge/.last-analyzed-commit
 
 # VS Code local settings (team settings live in .vscode/settings.json)

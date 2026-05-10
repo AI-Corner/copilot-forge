@@ -60,6 +60,7 @@ Use the terminal to create:
     support-template.md
     task-template.md
     variables-template.md
+    manual-qa-template.md
     env-local-template.env
 ```
 
@@ -147,6 +148,7 @@ Add to `.gitignore` (create if it doesn't exist):
 .forge/.next-lesson
 .forge/.next-req
 .forge/.next-sup
+.forge/.next-qa
 
 # Local Secrets & Tokens
 .forge/.env.local
