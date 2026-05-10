@@ -13,3 +13,6 @@
 
 # OS noise
 .DS_Store
+
+#ignore demo contents
+.demo
