@@ -66,7 +66,16 @@ To truly demonstrate the power of Copilot Forge, highlight these advanced archit
 ### 1. The Autonomy Contract & Halt Points
 By default, AI tries to ask for permission at every step, turning automation into a chore. Copilot Forge operates on an **Autonomy Contract**. It runs end-to-end (`#proceed`) and only pauses at specific, declared halt points (Validation Failure, Escalations, Canary Failures, or Merge Conflicts). *Everything else is a log, not a gate.*
 
-### 2. Context Retrieval (Organizational Memory)
+### 2. The Triple Context Strategy & Technical Wiring
+What makes Forge accurate is how it "wires" the AI. When a command like `#proceed` is run, the AI merges three distinct data streams to form its prompt:
+1. **Global Rules**: The project's culture, tech stack, and standards (from `copilot-instructions.md`).
+2. **Specialized Agents**: The specific job description and constraints for the current phase (e.g., `security-auditor.md` from `.github/prompts/agents/`).
+3. **Local State**: The live, durable memory of the current feature (`pipeline-state.json`).
+
+**The Wiring (Read-Observe-Act):**
+Every prompt is hard-coded to begin with an `Observe` step using the `codebase` tool to read `pipeline-state.json`. The AI reads the `currentPhase` value, which acts as its **Instruction Pointer**. It then strictly executes the logic mapped to that phase. It is forbidden from transitioning to the next phase until it performs an atomic write back to the JSON file, ensuring state is never lost.
+
+### 3. Context Retrieval (Organizational Memory)
 When `#spec` is invoked, it doesn't just write a requirement from scratch. It acts as a **Retriever**, pulling prior context from the `.forge/knowledge/` corpus. This ensures that mistakes aren't repeated and cross-cutting concerns are baked into the new spec automatically.
 
 ```mermaid
@@ -87,7 +96,7 @@ flowchart LR
     style B fill:#e1bee7,stroke:#333,stroke-width:1px
 ```
 
-### 3. Agent Constraints & The Phase 5 Deep Dive
+### 4. Agent Constraints & The Phase 5 Deep Dive
 During the `#review` phase (Phase 5 of `#proceed`), Copilot dispatches specialized "Auditor" and "Reviewer" agents. Crucially, **reviewers act under constraints.** They audit the code against conventions and security rules but do not implement the features. Only the "Implementer" agent is responsible for writing the production code. 
 
 **Deep Dive: The Phase 5 Consolidation Flow**
@@ -114,7 +123,7 @@ flowchart TD
     style PR fill:#e1bee7,stroke:#333,stroke-width:1px
 ```
 
-### 4. Cross-Repo Coordination
+### 5. Cross-Repo Coordination
 Copilot Forge can coordinate a single requirement that touches multiple repositories (e.g., frontend, backend API, infrastructure). 
 * **Primary per-REQ:** Whichever repo originates the REQ becomes the "primary" and holds the spec.
 * **Worktree Fan-out:** The pipeline creates parallel Git worktrees in all sibling repositories.
@@ -142,7 +151,7 @@ flowchart TD
     style Wrap fill:#c8e6c9,stroke:#333,stroke-width:1px
 ```
 
-### 5. Multi-REQ Orchestration (`#sprint`)
+### 6. Multi-REQ Orchestration (`#sprint`)
 For bulk work, the `#sprint` command orchestrates multiple `#proceed` pipelines. Copilot Forge manages atomic REQ counters and isolated worktrees for each feature, ensuring that multiple features can be developed concurrently without Git state collisions.
 
 ---
