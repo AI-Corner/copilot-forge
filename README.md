@@ -5,6 +5,7 @@ Prompts, checklists, and templates for spec-driven development with **GitHub Cop
 ## What's Included
 
 ## Changelog & Recent Updates
+- **v1.6.0**: Added **Deployment Flow Context Tracking**. `#init` now scans for CI/CD configurations and scaffolds a `deployment.md` document to ensure agents understand existing deployment workflows.
 - **v1.5.0**: Adopted **System-First Specifications (Zachman 5W1H Framework)**. Upgraded `requirement-template.md` and `#spec` prompt to enforce rigid boundaries (What, Who, When, Where, Why, How) to eliminate ambiguity from user stories.
 - **v1.4.0**: Introduced **Visual Architecture** generation. Both `#init` and `#architect` now mandate native Mermaid sequence diagrams and flowcharts for project and feature-level architecture documentation.
 - **v1.3.1**: Refined the security gate to be **Interactive**, allowing users to flag false positives before committing. Added a standalone `#security_scan` prompt.
@@ -69,6 +70,7 @@ These live in `.github/prompts/agents/` and are referenced inline by `#review`, 
 - `lesson-template.md` — Lesson-learned knowledge entry
 - `support-template.md` — Automated Support Documentation / FAQ knowledge entry
 - `variables-template.md` — Environment & Config variables tracking
+- `deployment-template.md` — CI/CD and deployment flow tracking
 
 ### Presets
 

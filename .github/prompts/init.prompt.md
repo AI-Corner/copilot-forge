@@ -41,6 +41,7 @@ Use the terminal to create:
     conventions.md
     taxonomy.md
     variables.md
+    deployment.md
   specs/
     .gitkeep
   bugs/
@@ -61,6 +62,7 @@ Use the terminal to create:
     task-template.md
     variables-template.md
     manual-qa-template.md
+    deployment-template.md
     env-local-template.env
 ```
 
@@ -130,6 +132,11 @@ Copy templates from `templates/` at the toolkit repo root (the canonical locatio
 2. Scan the repository for configuration files (e.g., `.env.example`, `application.yml`, `config.js`, `helm/values.yaml`).
 3. Extract existing variables and populate the tables in `.forge/context/variables.md`. 
 4. **CRITICAL**: Do NOT extract or write actual production secrets. Use dummy values or the safe default values found in `.example` files.
+
+**deployment.md** — deployment flow tracking:
+1. Copy `templates/deployment-template.md` to `.forge/context/deployment.md`.
+2. Scan the repository for deployment configurations (e.g., `.github/workflows/`, `.gitlab-ci.yml`, `Jenkinsfile`, `Dockerfile`, `helm/`, `terraform/`, `package.json` scripts).
+3. Extract the existing deployment workflow and populate `.forge/context/deployment.md`. If no deployment mechanism is found, note it as "Not configured".
 
 **Support Documentation** — capturing miscellaneous context:
 If the user provides external documentation (e.g., a `/docs` folder) during initialization and you extract valuable context that does not neatly fit into `architecture.md`, `conventions.md`, or `project-overview.md`, generate a support document for it.
