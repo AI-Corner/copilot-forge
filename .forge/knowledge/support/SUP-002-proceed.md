@@ -15,6 +15,8 @@ The `#proceed` prompt runs the entire Spec-Driven Development pipeline sequentia
 ## 2. Common User Queries & FAQ
 - **Q: Can I resume `#proceed` if it fails halfway?**
   **A:** Yes. The pipeline state is saved in `pipeline-state.json`. Simply run `#proceed REQ-xxx` again, and it will resume from the last uncompleted phase.
+- **Q: What personas are called when I type `#proceed` and where is this defined?**
+  **A:** `#proceed` is a master orchestrator that triggers a phased pipeline. It doesn't call personas immediately. Instead, during Phase 5 (Review), the `proceed.prompt.md` file explicitly instructs Copilot to run through a gauntlet of review checklists sequentially. It reads the files in `.github/prompts/agents/` (such as `security-auditor.md` and `architecture-reviewer.md`), applies each checklist to the code, and consolidates the findings.
 
 ## 3. Troubleshooting & Expected Behavior
 | Scenario / Symptom | Expected Behavior | Workaround / Fix |
