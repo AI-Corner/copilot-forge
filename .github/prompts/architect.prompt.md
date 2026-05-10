@@ -46,6 +46,7 @@ Read the key files identified during exploration.
 2. Document:
    - **Approach**: High-level design and rationale
    - **System Diagram**: A Mermaid sequence diagram or flowchart to visualize the execution flow, especially critical for complex business logic or cross-repo interactions
+   - **Execution Flow Breakdown**: Provide a detailed, step-by-step text explanation of the logic shown in the diagram, specifically highlighting how data flows between layers and any critical decision points
    - **Data model changes**: New collections/fields, schema changes
    - **API changes**: New or modified endpoints
    - **Service layer**: New or modified services
