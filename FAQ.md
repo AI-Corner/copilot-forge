@@ -21,10 +21,11 @@ Copilot Forge separates the **Toolkit Engine** from the **Project Context**.
 - The Project Context (`.forge/`) is what `#init` generates—the unique architectural artifacts and requirements for your specific project.
 
 ### 5. Can I generate a single "Global Brain" documentation set for a multi-repo workspace?
-**Yes, you have two options depending on your preference.**
-If your enterprise system spans multiple repositories (e.g., frontend, backend, infra), Copilot Forge supports two architectural patterns natively:
+**Yes, you have three options depending on your preference.**
+If your enterprise system spans multiple repositories (e.g., frontend, backend, infra), Copilot Forge supports these architectural patterns natively:
 - **Approach 1: The "Global Brain" (Centralized):** Open all your repositories in a single VS Code Multi-Root Workspace. Create a central folder (e.g., `system-docs`) and run `#init Please read the /frontend, /backend, and /infra directories and generate a unified architecture.md`. Because the Copilot `codebase` tool sees the entire workspace, it will generate one massive, inter-connected documentation set in that single `.forge/` folder.
 - **Approach 2: Native Cross-Repo (Decentralized):** Run `#init` in each individual repository. Then, inside each repo's `.forge/config.yml`, use the `repos:` block to link them together as siblings. The architecture docs stay perfectly separated by repo, but when you run `#spec` or `#proceed`, Copilot automatically reads the configs and orchestrates code changes across all linked repos simultaneously!
+- **Approach 3: The Hybrid (Micro & Macro Brains):** Run `#init` in each individual repository to generate localized `.forge/` documentation for individual teams. Then, open a single VS Code Multi-Root Workspace, create a central folder, and run `#init Please read the .forge/architecture.md files inside the /frontend, /backend, and /infra directories to generate a high-level global architecture.md`. Copilot will read the highly structured localized docs and effortlessly synthesize a perfect, high-level macro architecture that understands exactly how all the repositories connect!
 
 ### 6. Should I commit the `.github` and `.forge` folders to Git, or keep them local?
 **Absolutely commit them!** They are the single source of truth for your team.
