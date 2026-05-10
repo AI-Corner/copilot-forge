@@ -17,3 +17,7 @@
 
 #ignore demo contents
 .demo
+
+# Node
+node_modules/
+package-lock.json

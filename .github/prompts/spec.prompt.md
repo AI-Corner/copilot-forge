@@ -1,4 +1,4 @@
-﻿---
+---
 agent: agent
 tools: [codebase, runCommand, changes]
 description: Write a requirement spec from a feature request
@@ -26,7 +26,14 @@ Before proceeding:
 ### Step 1: Understand the Request
 1. Read `.forge/context/project-overview.md` and `.forge/context/architecture.md` for grounding context.
 2. Read `.forge/context/taxonomy.md` for tag vocabulary.
-3. If the feature request is vague or ambiguous, ask clarifying questions before proceeding. Wait for answers.
+3. If the feature request is vague or missing key dimensions, act as an "Architectural Interviewer". Ask clarifying questions specifically mapping to the Zachman 5W1H Framework:
+   - **WHAT**: Are the data structures and API boundaries clear?
+   - **WHO**: Who are the actors? What are the RBAC/security perimeters?
+   - **WHEN**: What triggers the action?
+   - **WHERE**: Are there specific infrastructure or network constraints?
+   - **WHY**: What are the unbreakable business rules or compliance invariants?
+   - **HOW**: Does this deviate from the standard stack?
+   Wait for answers before proceeding.
 
 ### Step 1.5: Derive Query Tags for Retrieval
 Before searching for prior context, derive a structured query from the feature request:
@@ -63,11 +70,13 @@ Take the top 15 by score and read their full content. Surface a retrieval summar
 2. Create `requirement.md` using `.forge/templates/requirement-template.md`.
 3. Fill in all sections:
    - **Frontmatter**: `id`, `title`, `status` (`draft`), `deployable`, `created`, `updated`, plus the five query tags from Step 1.5: `component`, `domain`, `stack`, `concerns`, `tags`
-   - **Description**: What the feature does and why — specific and grounded in project context
-   - **System Model**: Entities, Events, Permissions
-   - **Business Rules**: Testable constraints numbered BR-1, BR-2, etc.
+   - **1. WHAT (System Capabilities & Data)**: Exact data structures and API boundaries
+   - **2. WHO (Identity & Access)**: Actors, roles, and security perimeters
+   - **3. WHEN (Event Flows & Triggers)**: Triggers and event flows
+   - **4. WHERE (Infrastructure & Environment)**: Deployment boundaries and networks
+   - **5. WHY (Business Rules & Invariants)**: Testable constraints numbered BR-1, BR-2, etc.
+   - **6. HOW (Implementation & Tech Stack)**: Tech stack and architectural patterns
    - **Acceptance Criteria**: Concrete, testable criteria as checkboxes
-   - **External Dependencies**: New APIs, services, or libraries needed
    - **Assumptions**: Things assumed to be true that could affect design
    - **Open Questions**: Questions that need answers before implementation
    - **Out of Scope**: Items explicitly excluded to prevent scope creep

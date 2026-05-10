@@ -39,3 +39,8 @@ If your enterprise system spans multiple repositories (e.g., frontend, backend, 
 They serve different roles in the security lifecycle:
 - **`security-auditor` (Broad Audit)**: A comprehensive checklist used during `#review` or `#analyze` to find architectural and logical vulnerabilities (e.g., input validation flaws, authentication bypasses, insecure dependencies).
 - **`#security_scan` (Focused Safety Gate)**: A dedicated, interactive pre-commit tool used during `#wrapup` specifically to detect and prevent hardcoded credentials (API keys, tokens, passwords) from being committed to version control. It allows users to confirm findings and flag false positives before the `git commit` is executed.
+
+### 8. Why doesn't Copilot Forge use standard Agile "User Stories"?
+Traditional Agile User Stories (e.g., "As a user, I want X so that Y") are designed for human-to-human communication. They rely heavily on shared intuition and "common sense" to fill in the gaps. 
+When an AI reads a User Story, it fills those gaps with statistical probability—which often results in hallucinated logic, broken security boundaries, or incorrect infrastructure choices.
+Instead, Copilot Forge relies on **System-First Specifications** based on the modernized **Zachman Framework (5W1H)**. We force the AI (and the user) to deterministically define the WHAT (Data), WHO (Actors), WHEN (Triggers), WHERE (Infrastructure), WHY (Invariants), and HOW (Stack). By providing these exact system boundaries, we eliminate ambiguity and prevent the AI from making dangerous assumptions during the `#architect` and implementation phases.

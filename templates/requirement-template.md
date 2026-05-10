@@ -1,4 +1,4 @@
-﻿---
+---
 id: REQ-xxx
 title: "Feature Title"
 status: draft
@@ -12,13 +12,9 @@ concerns: []        # cross-cutting dimensions, e.g., ["security", "performance"
 tags: []            # free-form keywords, e.g., ["password-reset", "tokens"]
 ---
 
-## Description
+## 1. WHAT (System Capabilities & Data)
 
-What the feature does and why.
-
-## System Model
-
-_Define the structured data model for this feature. Remove sections that don't apply._
+_Define the exact data structures, schemas, and API boundaries. What is the system managing?_
 
 ### Entities
 
@@ -26,33 +22,48 @@ _Define the structured data model for this feature. Remove sections that don't a
 |--------|-------|------|-------------|
 | [EntityName] | [field] | [string/number/boolean/timestamp] | [required, unique, max length, etc.] |
 
-### Events
+## 2. WHO (Identity & Access)
 
-| Event | Trigger | Payload |
-|-------|---------|---------|
-| [event_name] | [What causes it] | [Key data included] |
+_Define the actors, roles, and security perimeters. Who is allowed to do what?_
 
-### Permissions
+| Actor / Role | Permission | Condition |
+|--------------|------------|-----------|
+| [RoleName] | [action] | [e.g., "Must own the resource"] |
 
-| Action | Roles Allowed |
-|--------|---------------|
-| [action_name] | [authenticated, owner, admin, etc.] |
+## 3. WHEN (Event Flows & Triggers)
 
-## Business Rules
+_Define the pulse of the feature. What triggers this functionality?_
 
-_Explicit, testable constraints governing this feature's behavior._
+| Event | Trigger | Payload / State Change |
+|-------|---------|------------------------|
+| [event_name] | [What causes it, e.g., Cron, API call] | [Data included or changed] |
+
+## 4. WHERE (Infrastructure & Environment)
+
+_Define the deployment boundaries and network constraints._
+
+- [ ] Environment: [e.g., AKS, Cloud Run, AWS Lambda]
+- [ ] Network: [e.g., Public API, Internal VPN, VPC only]
+- [ ] Dependencies: [e.g., Requires external Payment API]
+
+## 5. WHY (Business Rules & Invariants)
+
+_Explicit, testable constraints that must never be broken (the logical North Star)._
 
 - [ ] BR-1: [Rule statement — e.g., "Only item owner can delete wardrobe items"]
 - [ ] BR-2: [Rule statement]
+
+## 6. HOW (Implementation & Tech Stack)
+
+_Define the foundational architecture/stack this feature binds to (prevents AI guessing)._
+
+- [ ] Stack: [e.g., React frontend + Spring Boot backend]
+- [ ] Architecture Pattern: [e.g., REST API, GraphQL, Event-Driven]
 
 ## Acceptance Criteria
 
 - [ ] Criterion 1
 - [ ] Criterion 2
-
-## External Dependencies
-
-- None
 
 ## Assumptions
 
