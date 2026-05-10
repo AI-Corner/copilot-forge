@@ -95,8 +95,12 @@ For each touched repo, run this sequence inside that repo's worktree:
 - New conventions established? Propose updates to `.forge/context/conventions.md`.
 
 #### Support Documentation
-- Automatically generate user-facing support knowledge based on the completed requirement.
-- Think about what functional queries, common user errors, or troubleshooting steps a support agent or end user might face regarding this feature.
+- **User-Centric Documentation**: Update or create user-facing support knowledge based on the completed requirement.
+- **Filter Technical Noise**: This document is for end-users and support agents. Focus on:
+  - **Features & Usage**: How does the user use the new functionality?
+  - **User Value**: What problem does this solve for the user?
+  - **Troubleshooting**: Common user errors or FAQs.
+  - **STRICTLY OMIT**: Internal technical details, database schema changes, backend refactors, or infrastructure updates that do not change the user experience.
 - Use the support template from `.forge/templates/support-template.md`.
 - Save it to `.forge/knowledge/support/SUP-xxx-slug.md`.
 - Determine the next SUP ID using the atomic counter at `.forge/.next-sup`:
