@@ -63,8 +63,18 @@ graph TD
 
 To truly demonstrate the power of Copilot Forge, highlight these advanced architectural decisions that elevate it from a basic demo to a production-ready framework.
 
-### 1. The Autonomy Contract & Halt Points
-By default, AI tries to ask for permission at every step, turning automation into a chore. Copilot Forge operates on an **Autonomy Contract**. It runs end-to-end (`#proceed`) and only pauses at specific, declared halt points (Validation Failure, Escalations, Canary Failures, or Merge Conflicts). *Everything else is a log, not a gate.*
+### 1. The Autonomy Contract & Technical Backend
+By default, AI tries to ask for permission at every step, turning automation into a chore. Copilot Forge operates on an **Autonomy Contract**. It is a shift from **Event-Driven AI** (wait for user input) to **State-Machine AI** (run until the goal is achieved).
+
+**How it works under the hood:**
+*   **The State Machine (`pipeline-state.json`)**: This file lives inside each requirement's folder and tracks the `currentPhase` and `completedPhases`. It acts as the durable memory of the feature.
+*   **The Orchestrator (`#proceed`)**: The agent reads the state file, identifies the "Incomplete" tasks, and enters a recursive execution loop. It automatically triggers `#spec`, `#architect`, `#tdd`, etc., without pausing to ask for permission for each transition.
+*   **Logging vs. Interrupting**: The AI treats success as a **background log event** (e.g., appending "Tests passed" to the log) and only treats failure as a **foreground interrupt event**.
+*   **Halt Conditions**: The contract only pauses at specific, declared "Hard Halts":
+    1. **Validation Failure**: The `#validate` agent returns a `FAIL`.
+    2. **Escalations**: The AI encounters an ambiguity it cannot resolve.
+    3. **Canary Failure**: Automated tests fail after three attempts.
+    4. **Merge Conflicts**: In cross-repo mode, a worktree cannot be rebased automatically.
 
 ### 2. The Triple Context Strategy & Technical Wiring
 What makes Forge accurate is how it "wires" the AI. When a command like `#proceed` is run, the AI merges three distinct data streams to form its prompt:
