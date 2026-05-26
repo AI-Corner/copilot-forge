@@ -4,18 +4,21 @@ This document outlines strategic improvements to the Copilot Forge toolkit to fu
 
 ## Feature Tracking Overview
 
-| Feature | Status | Complexity | Impact |
-|---------|--------|------------|--------|
-| Test-Driven Development (TDD) First Prompts | ✅ Implemented | Low | High |
-| Automated Support Documentation Generation | ✅ Implemented | Low | Medium |
-| Interactive Architecture Diagrams (Mermaid.js) | 🚧 Future | Low | Medium |
-| AI-Managed Tech Debt Queue | 🚧 Future | Medium | High |
-| MCP (Model Context Protocol) Knowledge Retrieval | 🚧 Future | High | Very High |
-| Automated CI/CD SDD Verification | 🚧 Future | High | High |
-| Automated Rollback in `#canary` | 🚧 Future | High | Medium |
-| Environment & Configuration Variable Mapping | ✅ Implemented | Medium | High |
-| Cross-Application Access Flow Tracking | 🚧 Future | Medium | High |
-| Application Monitoring & Observability Knowledge | 🚧 Future | Low | Medium |
+| # | Feature | Status | Complexity | Impact |
+|---|---------|--------|------------|--------|
+| 1 | Test-Driven Development (TDD) First Prompts | ✅ Implemented | Low | High |
+| 2 | Interactive Architecture Diagrams (Mermaid.js) | 🚧 Future | Low | Medium |
+| 3 | AI-Managed Tech Debt Queue | ⚠️ Partial | Medium | High |
+| 4 | MCP (Model Context Protocol) Knowledge Retrieval | 🚧 Future | High | Very High |
+| 5 | Automated CI/CD SDD Verification | 🚧 Future | High | High |
+| 6 | Automated Rollback in `#canary` | ✅ Implemented | High | Medium |
+| 7 | Environment & Configuration Variable Mapping | ✅ Implemented | Medium | High |
+| 8 | Cross-Application Access Flow Tracking | 🚧 Future | Medium | High |
+| 9 | Application Monitoring & Observability Knowledge | 🚧 Future | Low | Medium |
+| 10 | Architectural Evolution: Subagent-Driven via CLI | 🚧 Future | High | High |
+| — | Automated Support Documentation Generation | ✅ Implemented | Low | Medium |
+
+> **Status legend**: ✅ Implemented · ⚠️ Partial · 🚧 Future
 
 ---
 
