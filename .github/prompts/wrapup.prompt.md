@@ -141,6 +141,7 @@ For each touched repo, run this sequence inside that repo's worktree:
 - Files changed: N
 - Lines added/removed: +N / -N
 - Tests added: N
+- Est. input tokens: ~N,NNN  |  Est. output tokens: ~N,NNN  |  Est. total: ~N,NNN
 
 ### Deferred items
 - [work explicitly postponed for future]
@@ -151,6 +152,25 @@ For each touched repo, run this sequence inside that repo's worktree:
 
 **Cross-repo template** (replace single PR/Branch lines with a Repos table):
 Add a `### Repos` table showing `| Repo | Branch | PR | Files | +/- |` for each touched repo.
+
+### Step 5b: Capture Token Estimate
+
+Run the token estimator to record the session's approximate token consumption:
+
+```powershell
+# From the repo root
+.\token-estimate.ps1 -ReqId REQ-xxx -UpdatePipelineState
+```
+
+This will:
+1. Scan all files loaded across each pipeline phase.
+2. Compute input + output token estimates using the ~4 chars/token formula.
+3. Write the breakdown to `pipeline-state.json` under `tokenEstimate`.
+4. Print a phase-by-phase table to the terminal.
+
+Copy the **Est. GRAND TOTAL** value into the `### Metrics` block of the ship summary above.
+
+> **Note**: If `token-estimate.ps1` is not present in the repo root, run `#token-estimate REQ-xxx` in Copilot Chat instead for an inline estimate.
 
 ### Step 6: Deploy
 Walk touched repos and deploy each deployable component. Read `.forge/config.yml` for stack and deploy config:
