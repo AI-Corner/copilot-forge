@@ -51,3 +51,60 @@ Instead, Copilot Forge relies on **System-First Specifications** based on the mo
 - **The "Context Tax" (Why it uses more input tokens):** In a single long thread, the AI already knows the spec because you talked about it 20 minutes ago. If you use subagents, every time you spin up a new subagent for a new task, you have to re-feed it the Zachman spec, the architecture rules, and the codebase state. You are paying for that baseline context over and over again.
 - **The "Hallucination Tax" (Why it saves tokens in the long run):** In a long continuous pipeline (like running a massive feature through `#proceed` in one thread), the context window grows linearly. By the time it reaches Task 5, the prompt is massive, which makes every single LLM call wildly expensive. Worse, the AI starts hallucinating, mixing up code from Task 1 with Task 5. You end up spending thousands of output tokens arguing with the AI to fix bugs it created due to context confusion.
 - **The Verdict:** Subagents trade slightly higher input token usage for a massive reduction in output tokens, rework, and bugs. Also, with modern features like Prompt Caching (which Anthropic and Google now use), feeding the same Zachman spec to 10 subagents is heavily discounted, making subagents much cheaper than they were a year ago.
+
+### 10. Can I see how many tokens a Copilot Forge session uses?
+**Yes, via the built-in Token Usage Estimator.**
+GitHub Copilot does not expose live token counts from the VS Code extension. However, since every file that Copilot Forge loads is a known, version-controlled Markdown file, Copilot Forge can accurately *estimate* token consumption by scanning those files directly.
+
+**Two ways to use it:**
+
+- **In Copilot Chat** — type `#token-estimate REQ-023` to get an inline phase-by-phase breakdown without leaving the IDE.
+- **From the terminal** — run the standalone PowerShell script for a faster result:
+
+```powershell
+# Baseline only (useful before starting a REQ)
+.\token-estimate.ps1
+
+# Estimate for a specific REQ
+.\token-estimate.ps1 -ReqId REQ-023
+
+# Estimate + write results into pipeline-state.json
+.\token-estimate.ps1 -ReqId REQ-023 -UpdatePipelineState
+
+# JSON output for scripting or dashboards
+.\token-estimate.ps1 -ReqId REQ-023 -OutputJson
+```
+
+**What the output looks like:**
+
+```
+  [TOKEN ESTIMATE] Copilot Forge
+  REQ-023 - My Feature Title
+  --------------------------------------------------------------
+  Phase                           Est. Tokens  % Total
+  --------------------------------------------------------------
+  Step 0: Preflight                     5,326   11.7%
+  Phase 1: Validate Spec                1,119    2.4%
+  Phase 2: Architect                   11,154   24.4%
+  Phase 3: Validate Arch                1,119    2.4%
+  Phase 3.5: TDD                          507    1.1%
+  Phase 4: Implement                    5,866   12.8%
+  Phase 5: Verify                      12,357     27% << largest
+  Phase 6-7: PR + CI                      801    1.8%
+  Phase 7.5: Canary                     1,085    2.4%
+  Phase 8: Wrapup                       6,358   13.9%
+  --------------------------------------------------------------
+  TOTAL Input Tokens                   45,692    100%
+  Est. Output Tokens (~27%)            12,337
+  Est. GRAND TOTAL                     58,029
+  --------------------------------------------------------------
+```
+
+**How it works:**
+- It scans every file that would be loaded across each pipeline phase (context files, prompt files, spec artifacts, tasks, RAG lessons).
+- It applies the standard approximation: **~4 characters = 1 token** for English/Markdown text.
+- Output tokens are estimated at **~27% of input** — a conservative average for agentic implementation tasks.
+- Results are written to `pipeline-state.json` (via `-UpdatePipelineState`) and automatically surfaced in the `#wrapup` ship summary under **Metrics**.
+
+**Accuracy:** ±15–20%. Useful for comparing token costs across REQs and identifying the heaviest phases (typically Phase 5: Verify, which loads all 6 agent checklists simultaneously). Not a substitute for official GitHub Copilot billing data.
+
