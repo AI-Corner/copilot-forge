@@ -10,6 +10,8 @@ You are estimating the token footprint of a Copilot Forge pipeline run for a giv
 
 > **Ethos**: Follow the principles in `.github/copilot-instructions.md` throughout this session.
 
+> **Cost note**: Running this prompt inside Copilot Chat is itself a token-consuming operation (~1,000–2,000 tokens). For routine use, prefer the zero-cost alternative: run `token-estimate.ps1` directly from the terminal. Use this prompt only when the terminal script is unavailable.
+
 ## Input
 
 Target: [REQ-xxx ID — provided by the user. If omitted, estimate baseline context only.]

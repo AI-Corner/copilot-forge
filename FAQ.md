@@ -58,8 +58,10 @@ GitHub Copilot does not expose live token counts from the VS Code extension. How
 
 **Two ways to use it:**
 
-- **In Copilot Chat** — type `#token-estimate REQ-023` to get an inline phase-by-phase breakdown without leaving the IDE.
-- **From the terminal** — run the standalone PowerShell script for a faster result:
+> **Recommended: use the PowerShell script.** Running `#token-estimate` inside Copilot Chat is itself a token-consuming operation — Copilot has to load the prompt, read all the files via the `codebase` tool, and generate the report as output. For routine use, the `.ps1` script runs entirely locally with **zero token cost** and produces identical output.
+
+- **From the terminal** *(zero token cost — recommended)*:
+- **In Copilot Chat** *(convenient, but costs ~1,000–2,000 tokens to run)* — type `#token-estimate REQ-023`:
 
 ```powershell
 # Baseline only (useful before starting a REQ)
