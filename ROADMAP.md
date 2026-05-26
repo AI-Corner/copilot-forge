@@ -90,3 +90,26 @@ Once an application is deployed, understanding its health, logs, and performance
 *   **Complexity**: **Low**
 *   **Benefit**: **Medium**
 *   **Impact**: Provides AI agents with the necessary context to intelligently suggest observability improvements, generate appropriate logging statements during implementation, and help debug production issues by knowing exactly where and how to look at the telemetry data.
+
+## 10. Architectural Evolution: Subagent-Driven Development via CLI
+
+Currently, Copilot Forge relies heavily on the VS Code Copilot Chat GUI for its execution pipeline (`#proceed`). While effective for maintaining context through the ideation and architecture phases, running a continuous pipeline in a single chat window leads to context bloat and increased hallucinations on large features. 
+
+The planned evolution is to transition the execution phase (Task Implementation & Review) to a **Subagent-Driven** model orchestrated by terminal scripts leveraging the **Copilot CLI** (`gh copilot`).
+
+### Pros & Cons of Subagents vs. Single Context Window
+*   **Pro - The "Hallucination Tax" is Eliminated:** In a long continuous thread, context grows linearly, causing the AI to mix up code from Task 1 with Task 5. Subagents operate in pristine, isolated environments, drastically reducing rework and debugging loops.
+*   **Pro - Perfect Isolation:** Task 1's bugs or conversational missteps cannot pollute Task 3's brain.
+*   **Con - The "Context Tax":** You must re-feed baseline context (the Zachman spec, architecture rules, codebase state) to every new subagent. This increases *input* token usage, though modern Prompt Caching significantly offsets this cost.
+
+### Why the Copilot CLI Solves This
+The VS Code Chat GUI naturally retains conversational memory, making it difficult to "wipe" the agent's brain between tasks. A CLI tool is inherently stateless. 
+By moving the execution pipeline to an automated script (e.g., `proceed.ps1`), the orchestrator can:
+1. Parse the task list generated in the Architecture phase.
+2. Spin up a completely fresh `gh copilot` execution for Task 1, passing it only the required artifacts.
+3. Spin up a fresh execution for the `#reflect` checklist.
+4. Move to Task 2 with zero conversational bleed-over.
+
+*   **Complexity**: **High**
+*   **Benefit**: **High**
+*   **Impact**: Allows Copilot Forge to scale autonomously to handle massive, multi-task features without suffering from the context degradation and hallucinations typical of continuous LLM chat sessions.
