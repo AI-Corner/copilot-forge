@@ -59,6 +59,9 @@ GitHub Copilot does not expose live token counts from the VS Code extension. How
 **Two ways to use it:**
 
 > **Recommended: use the PowerShell script.** Running `#token-estimate` inside Copilot Chat is itself a token-consuming operation — Copilot has to load the prompt, read all the files via the `codebase` tool, and generate the report as output. For routine use, the `.ps1` script runs entirely locally with **zero token cost** and produces identical output.
+>
+> **Why is the PowerShell script free (zero tokens)?**
+> Think of tokens like "stamps" you pay when sending data to the AI over the internet. When you use Copilot Chat, it gathers your files and mails them to the AI to read, which costs stamps. The PowerShell script doesn't use the internet or talk to the AI at all. It simply looks at the file sizes on your own hard drive and does basic math (`file size ÷ 4`) to guess what the AI *would* charge you. Since nothing leaves your computer, it costs absolutely nothing.
 
 - **From the terminal** *(zero token cost — recommended)*:
 - **In Copilot Chat** *(convenient, but costs ~1,000–2,000 tokens to run)* — type `#token-estimate REQ-023`:
