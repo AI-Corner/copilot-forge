@@ -107,7 +107,7 @@ GitHub Copilot does not expose live token counts from the VS Code extension. How
 
 **How it works:**
 - It scans every file that would be loaded across each pipeline phase (context files, prompt files, spec artifacts, tasks, RAG lessons).
-- **Variable Source Payload:** It parses your task files (`TASK-*.md`) to find the actual source code files you plan to modify, measures their size, and includes them in the Phase 4 Implementation estimate.
+- **Variable Source Payload:** How does the script know which source files you're changing? It simply reads your `TASK-*.md` text files. Since you list the files to modify under the `## Files to Create/Modify` heading during the architecture phase, the script just extracts those paths, finds the files on your hard drive, and measures their size.
 - It applies the standard approximation: **~4 characters = 1 token** for English/Markdown text.
 - Output tokens are estimated at **~27% of input** — a conservative average for agentic implementation tasks.
 - Results are written to `pipeline-state.json` (via `-UpdatePipelineState`) and automatically surfaced in the `#wrapup` ship summary under **Metrics**.
