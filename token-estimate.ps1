@@ -159,10 +159,12 @@ $tRagLessons = (Get-DirDetails $lessonsDir "*.md" -topN 5 | Measure-Object -Prop
 $tRagSupport = (Get-DirDetails $supportDir "*.md" -topN 3 | Measure-Object -Property Tokens -Sum).Sum
 $tRag = $tRagLessons + $tRagSupport
 
-# --- REQ-specific artifacts ---
+# --- REQ-specific artifacts & Variable source code payload ---
 $tReqArtifacts = 0
 $tTasks        = 0
 $taskCount     = 0
+$tSourcePayload = 0
+$sourceFilesCount = 0
 
 if ($reqSpecDir -ne "") {
     $reqFile  = Join-Path $reqSpecDir "requirement.md"
@@ -172,6 +174,31 @@ if ($reqSpecDir -ne "") {
         $taskFiles = Get-ChildItem $tasksDir -File -Filter "*.md"
         $taskCount = $taskFiles.Count
         $tTasks = ($taskFiles | ForEach-Object { [math]::Ceiling($_.Length / 4) } | Measure-Object -Sum).Sum
+
+        # Estimate variable source code payload based on files listed in tasks
+        $sourcePaths = @()
+        foreach ($taskFile in $taskFiles) {
+            $content = Get-Content $taskFile.FullName -Raw
+            # Extract content between ## Files to Create/Modify and the next ##
+            if ($content -match "(?s)## Files to Create/Modify\s*(.*?)(?:##|\Z)") {
+                $filesSection = $Matches[1]
+                # Match lines like `- `path/to/file` — description`
+                $pathMatches = [regex]::Matches($filesSection, '(?m)^[-\*]\s+[`"]?([^`" \-]+)[`"]?')
+                foreach ($m in $pathMatches) {
+                    $sourcePaths += $m.Groups[1].Value
+                }
+            }
+        }
+        
+        $uniqueSourcePaths = $sourcePaths | Select-Object -Unique
+        foreach ($path in $uniqueSourcePaths) {
+            # Try to resolve path relative to RepoRoot
+            $fullPath = Join-Path $RepoRoot $path
+            if (Test-Path $fullPath -PathType Leaf) {
+                $tSourcePayload += Get-Tokens $fullPath
+                $sourceFilesCount++
+            }
+        }
     }
 }
 
@@ -188,7 +215,7 @@ $phases = [ordered]@{
     "Phase 2: Architect"      = $tArchitect + $tBaseline + $tRag
     "Phase 3: Validate Arch"  = $tValidate + $tReqArtifacts + $tTasks
     "Phase 3.5: TDD"          = $tTdd + $tReqArtifacts + $tTasks
-    "Phase 4: Implement"      = $tProceed + $tTasks + ($tBaseline * 0.5)  # conventions re-read per task
+    "Phase 4: Implement"      = $tProceed + $tTasks + ($tBaseline * 0.5) + $tSourcePayload # conventions re-read + source code
     "Phase 5: Verify"         = $tReflect + $tReview + $tAgents + $tTasks
     "Phase 6-7: PR + CI"      = [math]::Ceiling($tProceed * 0.25)          # only PR section of proceed
     "Phase 7.5: Canary"       = $tCanary
@@ -262,6 +289,9 @@ Write-Host "  $divider"
 if ($taskCount -gt 0) {
     Write-Host "  Tasks in REQ: $taskCount" -ForegroundColor DarkGray
 }
+if ($sourceFilesCount -gt 0) {
+    Write-Host "  Source files identified: $sourceFilesCount (~$(FmtN $tSourcePayload) tokens)" -ForegroundColor DarkGray
+}
 Write-Host "  Accuracy: +/-15-20%  |  Formula: ceil(bytes / 4)" -ForegroundColor DarkGray
 Write-Host ""
 
@@ -277,6 +307,10 @@ if ($phasesInt["Phase 5: Verify"] -gt 0) {
 
 if ($tRag -gt 0) {
     Write-Host ("     RAG knowledge retrieval contributes ~{0} tokens (top lessons + support docs)." -f (FmtN $tRag))
+}
+
+if ($tSourcePayload -gt 0) {
+    Write-Host ("     Variable payload: ~{0} tokens from {1} source files." -f (FmtN $tSourcePayload), $sourceFilesCount)
 }
 
 Write-Host ""
