@@ -212,3 +212,50 @@ The goal here is to ensure the proposed technical solution perfectly matches you
 * **Conflict Resolution:** It checks for architectural conflicts with any other *in-progress* requirements being built by you or your team.
 
 If any of these checks fail, `#validate` categorizes them as **Blockers**, **Warnings**, or **Info**, and explicitly halts the pipeline until the blockers are fixed!
+
+### 17. What problem is Copilot Forge really solving?
+Standard AI tools like Copilot are incredible at "local code generation" (writing snippets, generating tests for a single file, or explaining a block of code). 
+
+However, there is a massive gap between **local code generation** and **production‑ready engineering**. Standard AI does not understand your enterprise architecture, strict security controls, or cross‑system dependencies. This often leads to a cycle where AI generates code quickly, but senior engineers have to spend hours supervising, debugging, and cleaning up architectural violations before it can be merged.
+
+**Copilot Forge solves this gap.**
+It forces the AI to work through a strict, governed delivery process. Instead of just generating code from a prompt, Forge requires the AI to pass through formal requirements gathering (`#spec`), architecture design, test-driven development (`#tdd`), and multiple peer-review quality gates. 
+
+By enforcing this governed execution, Forge's goal is to deliver:
+- Less rework from AI‑generated code.
+- Fewer architecture and standards violations.
+- Drastically lower review times per change, especially on repetitive enterprise tasks.
+
+### 18. Where does the organizational context actually come from?
+To prevent the AI from generating generic ideas that violate your organization's specific standards, Copilot Forge merges three sources of context during every single run:
+
+1. **Global Rules:** Your established architecture standards, coding conventions, guardrails, and "never do this" patterns.
+2. **Specialized Agents:** Targeted persona checklists (e.g., Security Auditor, Architecture Reviewer) that strictly check output against those global rules.
+3. **Local State:** The `.forge/` directory inside each repository. This stores your current specs, architecture records (`architecture.md`), and the living state of your pipelines. 
+
+When you run `#spec`, it pulls in past incidents and architecture rules relevant to *your* codebase. When you run `#proceed`, every validation gate and code review is grounded in those exact same artifacts.
+
+In Copilot Forge, context is not abstract or hallucinated—it is version‑controlled directly in your repository and evolves alongside your project.
+
+### 19. How does Copilot Forge interact with our existing SDLC and CI/CD toolchain?
+Copilot Forge **does not replace** your existing SDLC or CI/CD pipelines; it augments them at the developer level.
+
+Everything Forge does ultimately results in standard Git commits, branches, and Pull Requests/Merge Requests. 
+- For issue tracking, commands like `#issue_epic_creation` push work directly into your existing Jira/GitLab epics.
+- For delivery, the `#wrapup` command integrates perfectly with your existing PR/MR documentation practices.
+
+Think of Copilot Forge as an **intelligent front‑end** to your pipeline. By the time code is pushed and hits your CI/CD server, Forge has already enforced spec quality, architectural compliance, TDD, and peer review locally. It drastically reduces noise and failures downstream instead of attempting to bypass your established enterprise processes.
+
+### 20. How do you handle monitoring and observability?
+We approach monitoring on two distinct levels: **Tool Telemetry** (monitoring the AI itself) and **Application Observability** (teaching the AI how to monitor your code).
+
+**1. Tool Telemetry (Monitoring the AI Pipeline)**
+Copilot Forge tracks its own execution metrics locally to give you visibility and auditability into what the AI is doing:
+* **Pipeline State:** The `#token-estimate` phase tracks token consumption, phase durations, and validation results, saving them to `.forge/pipeline-state.json`.
+* **Ship Summary:** At the end of every pipeline, `#wrapup` generates a final Metrics report summarizing the run, which is appended directly to your Pull Requests.
+* **Agent Telemetry:** Advanced hooks (like `emit-telemetry.sh`) can log granular agent decisions, detect "ghost-skips" (when the AI tries to bypass a review), and track API errors into local TSV files for strict enterprise auditability.
+
+**2. Application Observability (Monitoring Your Code)**
+To ensure the applications you build are observable by default, Forge uses **Contextual Observability Knowledge**:
+* By creating a `.forge/context/observability.md` artifact, you document your organization's specific APM tools (e.g., Datadog, Prometheus), structured logging formats, and alert thresholds.
+* The AI reads this context during the implementation phase and automatically generates the correct logging statements and telemetry hooks for every new feature, eliminating the need for senior engineers to retroactively add monitoring.
