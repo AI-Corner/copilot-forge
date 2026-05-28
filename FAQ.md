@@ -150,6 +150,14 @@ Superpowers outlines four explicit philosophical pillars. Interestingly, Copilot
 - **3. Complexity reduction:** Slight difference—Superpowers focuses on task simplicity/YAGNI, while Forge focuses on large-scale architectural management and drift reduction.
 - **4. Evidence over claims:** Both completely agree on strict self-review and quality gates.
 
+**Intervention vs. Orchestration**
+- **Superpowers:** Relies on *implicit intervention*. It automatically detects when you try to write code and stops you, stepping back to tease out a specification through conversation before allowing you to proceed. It acts as a seamless, automatic guardrail.
+- **Copilot Forge:** Relies on *explicit orchestration*. It provides a defined, manual pipeline (`#spec → #validate → #architect → #proceed`). The developer remains the conductor, explicitly telling the AI which phase of the Software Development Life Cycle (SDLC) to execute.
+
+**Execution Model**
+- **Superpowers:** Heavily champions **subagent-driven-development**. Once the plan is approved, it dispatches multiple autonomous subagents to handle individual engineering tasks, self-review their work, and run for hours at a time.
+- **Copilot Forge:** Champions **contextual, checklist-driven pipelines**. Its core power lies in passing an evolving, living architectural state (`.forge/context/`) sequentially through specialized, interactive reviewer personas (e.g., `security-auditor`, `architecture-reviewer`) within orchestrated cycles.
+
 **Summary**
 Both tools fight the same enemy: undisciplined AI code generation. **Superpowers** solves it by acting as an automatic behavioral interceptor that orchestrates subagents based on its four pillars. **Copilot Forge** solves it by providing the developer with an explicit, enterprise-grade SDLC control panel that bakes those exact same pillars into strict architectural checklists and pipelines.
 
