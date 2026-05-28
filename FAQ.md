@@ -191,3 +191,24 @@ Look at the required sequence for a single feature in Forge:
 - You cannot merge until the code passes the `#review` checklists.
 
 It acts exactly like the strict, phase-gated Waterfall model where every step requires sign-off before the next begins. It's a **"micro" waterfall** because instead of this process taking 6 months for an entire software release, the AI executes this rigid, phase-gated sequence for a single feature in a matter of minutes or hours.
+
+### 16. What exactly is validated during the `#validate` phase?
+When you run `#validate` on a Requirement (REQ) or Architecture phase, Copilot Forge acts as a strict technical reviewer and runs through a rigorous checklist to mathematically eliminate ambiguity and prevent "vibe coding" errors.
+
+**In the REQ Phase (`requirement.md`)**
+The goal here is to ensure the "What" and "Why" are rock-solid before *any* technical decisions are made:
+* **No Implementation Details:** It strictly rejects the spec if you tried to include technical implementation details (those belong in architecture!).
+* **Scope Creep Prevention:** It checks that "Out of Scope" items are explicitly defined so the AI doesn't hallucinate extra features.
+* **Testability:** It verifies that Acceptance Criteria are specific, highly testable, and formatted as checkboxes.
+* **Metadata & Clarity:** Checks that the frontmatter (ID, status, dates) is valid, explicit assumptions are stated, and external dependencies are identified.
+* **Conflicts:** Checks to ensure this requirement doesn't duplicate or overlap with existing specs in your project.
+
+**In the Architecture Phase (`architecture.md`)**
+The goal here is to ensure the proposed technical solution perfectly matches your existing codebase rules:
+* **Pattern Enforcement:** It cross-references your `.forge/context/architecture.md` and `.forge/context/conventions.md` to ensure the new design perfectly matches your existing architectural patterns and REST conventions.
+* **ADR Rationale:** If Architectural Decision Records (ADRs) are made, it forces them to include the *rationale*, not just the final decision.
+* **Data Model Safety:** It checks that proposed data model changes are actually compatible with your existing database schema.
+* **Layered Architecture:** It ensures the service layer adheres to your established layered pattern (e.g., routes → services → repositories).
+* **Conflict Resolution:** It checks for architectural conflicts with any other *in-progress* requirements being built by you or your team.
+
+If any of these checks fail, `#validate` categorizes them as **Blockers**, **Warnings**, or **Info**, and explicitly halts the pipeline until the blockers are fixed!
