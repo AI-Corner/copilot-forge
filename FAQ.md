@@ -290,3 +290,10 @@ When searching, Forge evaluates the available knowledge files using a strict mat
 * **+1×** for overlapping tags
 
 Once scored, only the **Top 15** files by score are read in full and injected into the AI's context. This guarantees that the AI has a hyper-relevant "memory" of your project's history without wasting tokens or suffering from context-bloat.
+
+### 23. How do you explain the architecture of Copilot Forge in simple terms?
+Copilot Forge's architecture is a simple split between the **Engine** and the **Memory**:
+1. **The Toolkit Engine (`.github/`)**: The strict conductor. It contains the prompt templates and pipelines that tell the AI *how* to execute standard enterprise workflows (like `#spec` or `#review`).
+2. **The Project Memory (`.forge/`)**: The stateful brain. It stores your project's specific architecture rules, past bugs, and current specs.
+
+When you run a command, Forge merges the Engine with the Memory—forcing the AI to follow rigorous SDLC processes using your exact project context!
