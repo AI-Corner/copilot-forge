@@ -1,0 +1,167 @@
+1. “What problem are you really solving?”
+Likely question (explicit or implicit)
+
+“We already have Copilot and other tools; what specific problem does Forge solve for us?”
+
+“Is this about productivity, quality, or risk?”
+
+Suggested answer (short):
+
+“We’re solving the gap between local code generation and production‑ready engineering. Today AI is good at snippets, but it doesn’t understand our architecture, controls, or cross‑system dependencies. That means senior engineers end up supervising and cleaning up AI output. Forge forces AI to work through our delivery process — with requirements, architecture, tests, review and deployment gates — so we get governed execution, not just more code.”
+
+If he wants more depth, add:
+
+“From a metrics perspective, the goals are:
+– less rework from AI‑generated code,
+– fewer architecture and standards violations, and
+– lower review time per change, especially on repetitive tasks.”
+
+2. “How is this different from standard Copilot / other vendors?”
+Likely question
+
+“How is this different from just using Copilot or another LLM plugin?”
+
+“Couldn’t we ask any baseline model to follow this process?”
+
+Answer:
+
+“Standard copilots are session‑oriented and code‑centric: you prompt, they generate. Forge is pipeline‑oriented and system‑centric. The core difference is that Forge enforces a sequence: #spec → #validate → #architect → #validate → #tdd → implementation → #reflect + #review → #canary + #wrapup, all under #proceed orchestration. The model doesn’t get to skip requirements, architecture, tests, or review.”
+
+“You could try to prompt a generic model to do this, but it will forget steps and context. Forge bakes the steps, the prompts, the validations, and the project memory into a repeatable toolchain inside the repo and IDE, so behavior is consistent across engineers and projects, not just per‑session.”
+
+3. “Where does the organizational context actually come from?”
+Likely question
+
+“You keep saying ‘context’ and ‘memory’ — concretely, what does the system read and how is it wired?”
+
+“How do you ensure it really reflects UBS standards, not just generic ideas?”
+
+Answer:
+
+“We merge three sources of context for every run:
+
+Global rules – our architecture standards, coding conventions, guardrails and ‘never do this’ patterns.
+
+Specialized agents – e.g., Security, Architecture, Conventions, that check output against those rules.
+
+Local state – the .forge directory and pipeline-state.json in each repo, which stores specs, diagrams, and lessons learned from prior runs.”
+
+“When you call #spec, it pulls in past incidents and architecture rules relevant to that codebase; when you call #proceed, every gate and review is grounded on those same artifacts. So the ‘context’ is not abstract; it’s version‑controlled in the repo and evolves with the project.”
+
+4. “How do you keep this safe in a bank environment?”
+Likely question
+
+“What about model risk, security, leakage of sensitive code, auditability?”
+
+“How do we know what the AI did?”
+
+Answer:
+
+“Forge is designed to run inside our environment — inside the IDE and repository — so it uses the same access controls and data boundaries as our engineers. We don’t send arbitrary code or client data to public endpoints. All artifacts — specs, architecture diagrams, test plans, review findings — are stored under .forge in the repo, which gives us a full audit trail of what the AI proposed and what was accepted.”
+
+“On top of that, the model is never the final authority. We have validation gates, read‑only review agents, and manual QA instructions before changes are merged. That’s how we keep the AI powerful but contained.”
+
+If he presses on model governance, you can add that this fits naturally into UBS’s existing model‑risk and SDLC controls because outputs are versioned, testable, and reviewable.
+
+5. “What’s the ROI / where would you deploy first?”
+Likely question
+
+“Where does this move the needle the most?”
+
+“If we piloted this, what use cases would you start with?”
+
+Answer:
+
+“The highest‑value initial areas are:
+– repetitive feature work in well‑understood services,
+– remediation tasks (logging, resilience patterns, observability),
+– and integration/adapter work where the architecture and contracts are clear but the coding is tedious.”
+
+“In those spaces we can measure impact directly: cycle time from spec to merge, rework after review, architecture/standards violations, and how many defects are caught at the gates vs in later testing. That’s where I’d propose we pilot first before moving to more business‑critical flows.”
+
+You can also connect this to your DevSecOps background:
+
+“Given my work across pipelines and observability, I’m particularly interested in using Forge to standardize cross‑cutting changes — for example, enforcing consistent security headers, telemetry, or rollout patterns across many services with less manual toil.”
+
+6. “How does this interact with our existing SDLC / DevSecOps toolchain?”
+Likely question
+
+“Does this sit inside VS Code only, or how does it connect to Git, CI/CD, change management?”
+
+“Are we reinventing the pipeline, or just augmenting it?”
+
+Answer:
+
+“Forge doesn’t replace our SDLC; it augments it at the developer and repo level. Everything still ends up as normal Git commits, branches, worktrees and MR/PRs. #issue_epic_creation pushes work into GitLab epics and issues, and #wrapup integrates with our existing merge and documentation practices.”
+
+“Think of it as an intelligent front‑end to the pipeline: it makes sure that by the time code hits CI/CD, we’ve enforced spec quality, architecture, tests, and review. It reduces noise downstream instead of bypassing our processes.”
+
+7. “How opinionated is this? Can teams adapt it?”
+Likely question
+
+“Our desks and teams can be quite different. How rigid is this pipeline?”
+
+“Can teams customize the spec format, gates, or agents?”
+
+Answer:
+
+“The backbone is opinionated — we always want spec → architecture → tests → implementation → review → deployment — but the details are configurable per domain. Teams can adjust the spec templates, add or remove review agents, and refine the rulesets that feed into context retrieval. The idea is to standardize the shape of the process while letting each area encode its own patterns and controls.”
+
+“That way we get global consistency on flow, but local flexibility on what ‘good’ looks like for each platform or region.”
+
+8. “What can go wrong with this approach?”
+He may test you by asking about risks or weaknesses.
+
+Answer:
+
+“There are three main risks I’m conscious of:
+
+Over‑trusting the AI and relaxing human review — which is why we enforce read‑only review agents and manual QA.
+
+Stale rules and lessons — if teams don’t keep .forge artifacts and rules updated, context retrieval becomes less valuable.
+
+Adoption fatigue — if the pipeline feels heavy, people may try to bypass it.”
+
+“We mitigate that by: keeping the pipeline as light as possible for small changes, integrating tightly with the IDE and GitLab so it feels natural, and starting with a few teams to prove value before pushing it wider.”
+
+If you tell me which area you’re most worried about (ROI, risk, architecture, or org change), I can draft 2–3 line answers you can memorize for that dimension.
+
+ROI and risk
+
+For ROI and risk, you’ll want very crisp answers that sound like you’ve thought about this as a delivery leader, not just as a tool builder. Based on your deck and profile, here are short, memorizable responses.
+
+ROI: 3 quick answers
+1) “Where’s the ROI?”
+
+“We get ROI from quality of change, not just speed of typing. Forge reduces rework, architecture violations, and review effort per change. In early use, the biggest wins are on repetitive feature work and cross‑cutting changes where the pattern is known but the manual work is heavy.”
+
+2) “How would you measure success?”
+
+“I’d track four things:
+– cycle time from #spec to merged PR,
+– rework after review,
+– number of standards / architecture violations, and
+– how many issues are caught at the validation gates versus later testing.
+If those trend the right way, the business case is clear.”
+
+3) “Where would you pilot first?”
+
+“I’d start in domains with stable patterns: API integration work, observability/security rollouts, and well‑understood services. That lets us prove the model on low‑drama changes, get hard numbers, and then decide where it makes sense to move closer to revenue‑critical flows.”
+
+Risk: 3 quick answers
+1) “What’s the main risk of this approach?”
+
+“The main risk is over‑trusting the AI and letting architectural or control issues slip through. That’s exactly why we force it through #validate on spec and architecture, tests first with #tdd, and read‑only review agents, plus manual QA before merge. The AI never has the last word.”
+
+2) “How do you avoid data leakage and model‑risk issues?”
+
+“Forge runs inside our environment — inside the IDE and repo — so it uses the same access controls and boundaries as our engineers. All specs, diagrams, and review artifacts sit in .forge under version control, which gives us a full audit trail of what the AI proposed and what we accepted. That makes it easier to plug into model‑risk and SDLC governance.”
+
+3) “What could still go wrong?”
+
+“Three things:
+– rules and lessons get stale if teams don’t maintain them,
+– people try to bypass the pipeline if it feels too heavy, and
+– we underestimate change‑management.
+My plan is to start small, keep the pipeline as light as possible for simple changes, integrate with our existing GitLab/CI flows, and make the feedback loop on rules and lessons part of normal retrospective hygiene.”
+
