@@ -272,3 +272,21 @@ Copilot Forge tracks its own execution metrics locally to give you visibility an
 To ensure the applications you build are observable by default, Forge uses **Contextual Observability Knowledge**:
 * By creating a `.forge/context/observability.md` artifact, you document your organization's specific APM tools (e.g., Datadog, Prometheus), structured logging formats, and alert thresholds.
 * The AI reads this context during the implementation phase and automatically generates the correct logging statements and telemetry hooks for every new feature, eliminating the need for senior engineers to retroactively add monitoring.
+
+### 22. How does Knowledge Retrieval work in Copilot Forge?
+To ensure the AI has the exact right context without exceeding token limits, Copilot Forge utilizes a **weighted-score retriever** at context-loading time over the `.forge/knowledge/` directory.
+
+Rather than blindly loading all past documentation, prompts dynamically retrieve relevant prior knowledge based on what is being executed:
+
+* **Lessons (`.forge/knowledge/lessons/*.md`)** — Surfaced during `#spec`, `#architect`, `#reflect`, and `#review` phases to prevent the AI from repeating past mistakes.
+* **Specs (`.forge/specs/*/requirement.md`)** — Surfaced during the `#spec` phase to find related prior requirements and prevent overlapping work.
+* **Bugs (`.forge/bugs/*.md`)** — Surfaced during the `#spec` phase to load context about related resolved bugs.
+
+**The Scoring System:**
+When searching, Forge evaluates the available knowledge files using a strict mathematical weighting:
+* **+3** for a Component match
+* **+2** for a Domain match
+* **+2×** for overlapping concerns
+* **+1×** for overlapping tags
+
+Once scored, only the **Top 15** files by score are read in full and injected into the AI's context. This guarantees that the AI has a hyper-relevant "memory" of your project's history without wasting tokens or suffering from context-bloat.
