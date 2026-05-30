@@ -5,6 +5,7 @@ Prompts, checklists, and templates for spec-driven development with **GitHub Cop
 ## What's Included
 
 ## Changelog & Recent Updates
+- **v1.8.0**: Introduced **Vibe Coding Workflow**. Added `#vibe` prompt for lightweight, low-overhead changes and an intelligent workflow router in `#spec` to automatically suggest `#vibe` for tasks without cross-boundary impact or unit test requirements.
 - **v1.7.0**: Added **Token Usage Estimator**. New `#token-estimate` prompt and `token-estimate.ps1` script estimate session token consumption by phase using a `ceil(bytes/4)` approximation. Results are written to `pipeline-state.json` and surfaced in the `#wrapup` ship summary under Metrics.
 - **v1.6.0**: Added **Deployment Flow Context Tracking**. `#init` now scans for CI/CD configurations and scaffolds a `deployment.md` document to ensure agents understand existing deployment workflows.
 - **v1.5.0**: Adopted **System-First Specifications (Zachman 5W1H Framework)**. Upgraded `requirement-template.md` and `#spec` prompt to enforce rigid boundaries (What, Who, When, Where, Why, How) to eliminate ambiguity from user stories.
@@ -35,6 +36,7 @@ Invoke any prompt from Copilot Chat by typing `#<prompt-name>`:
 | `#deploy` | Execute local or remote deployment steps based on `.forge/context/deployment.md` |
 | `#wrapup` | Close out a feature — commit, merge, deploy, update artifacts |
 | `#bugfix` | Streamlined bug fix workflow |
+| `#vibe` | Fast, lightweight Vibe Coding workflow for trivial changes without heavy specs |
 | `#status` | Show current state of all Copilot Forge work |
 | `#analyze` | Codebase health audit |
 | `#security_scan` | Interactive pre-commit secret and credential audit |

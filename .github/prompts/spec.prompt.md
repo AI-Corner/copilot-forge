@@ -23,7 +23,24 @@ Before proceeding:
 
 ## Instructions
 
-### Step 1: Understand the Request
+### Step 1: Workflow Routing (VIBE vs SDD)
+
+Evaluate the feature request to decide whether it should be processed as "VIBE" (fast, vibe coding, no heavy documentation) or "SDD" (full Software Design & Development workflow).
+
+1. Answer "YES" to any of the following if true:
+   a) Cross-boundary impact: touches multiple architecture layers or multiple repos.
+   b) State/DB change: modifies schema, writes migrations, or alters persistent state.
+   c) Security/Auth impact: modifies auth flows, RBAC, or exposes new public APIs.
+   d) Infrastructure/Dependencies: provisions new cloud resources or adds major external libraries.
+   e) Hard to test/rollback: correctness is hard to validate locally or rollback is difficult.
+   f) Ambiguity: requirement is unclear, vague, or likely to evolve significantly.
+   g) Unit Tests Required: The logic is complex enough that new unit or integration tests must be written to prove it works.
+
+2. Decision:
+   - If ANY of the above is YES → Proceed with SDD (go to Step 1.1).
+   - If ALL are NO → The requirement is suitable for VIBE. Stop immediately and ask the user: *"This looks like a small, isolated change suitable for Vibe Coding. Would you like to use the lightweight `#vibe` workflow instead? If yes, please run `#vibe [your requirement]`."* Do not proceed further until the user decides.
+
+### Step 1.1: Understand the Request
 1. Read `.forge/context/project-overview.md` and `.forge/context/architecture.md` for grounding context.
 2. Read `.forge/context/taxonomy.md` for tag vocabulary.
 3. If the feature request is vague or missing key dimensions, act as an "Architectural Interviewer". Ask clarifying questions specifically mapping to the Zachman 5W1H Framework:

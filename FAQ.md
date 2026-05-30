@@ -297,3 +297,14 @@ Copilot Forge's architecture is a simple split between the **Engine** and the **
 2. **The Project Memory (`.forge/`)**: The stateful brain. It stores your project's specific architecture rules, past bugs, and current specs.
 
 When you run a command, Forge merges the Engine with the Memory—forcing the AI to follow rigorous SDLC processes using your exact project context!
+
+### 24. What is `#vibe` and when should I use it vs `#spec`?
+The `#vibe` prompt is a lightweight "Vibe Coding" workflow designed for trivial changes that don't require heavy documentation. It bypasses the strict Zachman Framework specs and Test-Driven Development phases in favor of speed, differential edits, and an "as-built" traceability document.
+
+You should use `#vibe` when:
+- The change is confined to a single layer or component.
+- It does not require any database or state modifications.
+- It does not introduce new unit tests.
+- It has no cross-boundary or security impact.
+
+For everything else, the intelligent router built into `#spec` will require you to use the full Spec-Driven Development (SDD) workflow to ensure architectural safety.
