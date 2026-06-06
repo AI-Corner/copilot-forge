@@ -18,56 +18,11 @@ Prompts, checklists, and templates for spec-driven development with **GitHub Cop
 - **v1.1.0**: Introduced `#tdd` prompt for Test-Driven Development enforcing the Red-Green-Refactor cycle.
 - **v1.0.0**: Initial Copilot Forge release (formerly ADLC).
 
-### Prompts
+### Prompts & Usage Guide
 
-Invoke any prompt from Copilot Chat by typing `#<prompt-name>`:
+For a complete reference of every Copilot Forge prompt, including what they do, when to call them, and where they fit in the workflow, see the **[Prompt Usage Guide](PROMPT_USAGE.md)**.
 
-| Prompt | Description |
-|--------|-------------|
-| `#init` | Bootstrap `.forge/` structure in a new repo |
-| `#spec` | Write requirement specs from feature requests |
-| `#architect` | Design architecture and break requirements into tasks |
-| `#validate` | Validate any Copilot Forge phase output before advancing |
-| `#issue_epic_creation` | Sync local REQs and Tasks to GitLab as Epics and Issues |
-| `#tdd` | Generate failing test suites before implementation (Red-Green-Refactor) |
-| `#proceed` | End-to-end pipeline: validate → architect → tdd → implement → reflect → review → PR → wrapup |
-| `#sprint` | Sequential pipeline orchestrator — run multiple `#proceed` sessions across REQs |
-| `#reflect` | Post-implementation self-review before formal review |
-| `#review` | Multi-dimension code review (correctness, quality, architecture, tests, security) |
-| `#canary` | Canary deployment with smoke tests — deploy zero-traffic revision and promote on success |
-| `#deploy` | Execute local or remote deployment steps based on `.forge/context/deployment.md` |
-| `#wrapup` | Close out a feature — commit, merge, deploy, update artifacts |
-| `#bugfix` | Streamlined bug fix workflow |
-| `#vibe` | Fast, lightweight Vibe Coding workflow for trivial changes without heavy specs |
-| `#learn` | Capture knowledge (lesson, assumption, ADR, support doc, QA guide) at any time — no active pipeline required |
-| `#status` | Show current state of all Copilot Forge work |
-| `#analyze` | Codebase health audit |
-| `#security_scan` | Interactive pre-commit secret and credential audit |
-| `#optimize` | API cost & performance scanner |
-| `#template-drift` | Detect drift between a project's local `.forge/templates/` and the canonical toolkit templates |
-| `#token-estimate` | Estimate token consumption per pipeline phase for a REQ session (also available as `token-estimate.ps1`) |
-
-### Agent Reference Checklists
-
-These live in `.github/prompts/agents/` and are referenced inline by `#review`, `#reflect`, `#analyze`, `#optimize`, and `#architect`. They are not invoked directly.
-
-| Checklist | Used by |
-|-----------|---------|
-| `reflector` | `#reflect`, `#proceed` Phase 5 |
-| `correctness-reviewer` | `#review`, `#proceed` Phase 5 |
-| `quality-reviewer` | `#review`, `#proceed` Phase 5 |
-| `architecture-reviewer` | `#review`, `#proceed` Phase 5 |
-| `test-auditor` | `#review`, `#analyze`, `#proceed` Phase 5 |
-| `security-auditor` | `#review`, `#analyze`, `#proceed` Phase 5 |
-| `feature-tracer` | `#architect` |
-| `architecture-mapper` | `#architect` |
-| `integration-explorer` | `#architect` |
-| `convention-auditor` | `#analyze` |
-| `code-quality-auditor` | `#analyze` |
-| `api-cost-scanner` | `#optimize` |
-| `db-perf-scanner` | `#optimize` |
-| `latency-scanner` | `#optimize` |
-| `task-implementer` | `#proceed` Phase 4 |
+Invoke any prompt from Copilot Chat by typing `#<prompt-name>` (e.g., `#init`, `#spec`, `#proceed`).
 
 ### Templates
 
