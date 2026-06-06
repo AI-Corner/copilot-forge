@@ -65,8 +65,16 @@ For each touched repo, run this sequence inside that repo's worktree:
 ### Step 4: Capture Knowledge
 
 #### Architectural Decisions
-- Were new patterns introduced? Propose an update to `.forge/context/architecture.md`.
-- Were existing patterns modified or deprecated?
+- Review the implementation for any emergent architectural or technical decisions that were made *after* the initial design.
+- For local or feature-specific tradeoffs, log them in the feature's `.forge/specs/REQ-xxx-*/architecture.md` under `## Decisions & Tradeoffs`.
+- For global shifts (decisions that affect multiple repos or set a new reusable standard):
+  - Draft a formal ADR in `.forge/knowledge/decisions/ADR-xxx-slug.md` using the template at `.forge/templates/adr-template.md`.
+  - Determine the next ADR ID using the atomic counter at `.forge/.next-adr`:
+    ```bash
+    ADR_NUM=$(cat .forge/.next-adr 2>/dev/null || echo "1")
+    echo $((ADR_NUM + 1)) > .forge/.next-adr
+    ```
+- Propose updates to `.forge/context/architecture.md` if existing patterns were modified or deprecated.
 
 #### Assumptions Validated or Invalidated
 - Review assumptions from the requirement spec.

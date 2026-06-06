@@ -308,3 +308,11 @@ You should use `#vibe` when:
 - It has no cross-boundary or security impact.
 
 For everything else, the intelligent router built into `#spec` will require you to use the full Spec-Driven Development (SDD) workflow to ensure architectural safety.
+
+### 25. How are Architecture Decision Records (ADRs) tracked in Copilot Forge?
+Copilot Forge uses a **Hybrid Approach** for tracking decisions to balance keeping the workflow lean while maintaining a queryable history for major architectural shifts.
+
+1. **Local Decisions (The Default):** For the vast majority of work (90%), you do not create an extra file. The `#architect` agent simply logs the decisions and tradeoffs in a dedicated `## Decisions & Tradeoffs` section inside the specific feature's local `architecture.md` file. This avoids file bloat and keeps everything perfectly consolidated.
+2. **Global Decisions (The Exception):** If a decision affects multiple repositories or sets a new, reusable standard (e.g., "All new APIs must use GraphQL instead of REST"), the agent will promote it to a standalone ADR file in `.forge/knowledge/decisions/ADR-xxx-slug.md`. 
+
+This guarantees that you have a searchable, durable history for project-altering choices, without drowning your repository in minor paperwork for everyday features.
