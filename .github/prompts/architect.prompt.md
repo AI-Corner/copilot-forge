@@ -29,7 +29,7 @@ Read `.forge/templates/task-template.md` (or `templates/task-template.md` at the
 2. If given a description, search `.forge/specs/` for the matching requirement.
 3. Verify the requirement status is `draft` or `approved` (not already `complete`).
 4. Read `.forge/context/architecture.md` and `.forge/context/conventions.md` (skip if already in conversation).
-5. Check `.forge/knowledge/assumptions/` for prior decisions that may affect design.
+5. Check `.forge/knowledge/decisions/` (for global ADRs) and `.forge/knowledge/assumptions/` for prior choices that may affect design.
 6. **Lessons — search first**: use the codebase tool to search `.forge/knowledge/lessons/` with patterns matching the affected area (e.g., `component:.*API/auth`). Read only matched files. Note applicable lessons in your architecture rationale.
 
 ### Step 2: Explore the Codebase
@@ -51,8 +51,9 @@ Read the key files identified during exploration.
    - **API changes**: New or modified endpoints
    - **Service layer**: New or modified services
    - **Environment / Configuration**: New `.env` vars, secrets, or configuration properties (e.g., `application.yml`)
-   - **Key decisions**: ADRs with rationale (follow the style in `.forge/context/architecture.md`)
+   - **Decisions & Tradeoffs**: List the key decisions and tradeoffs made specifically for this feature.
 3. Propose any additions to `.forge/context/architecture.md` with rationale.
+4. **Global Decisions**: If any decision clearly affects multiple features/repos or defines a reusable standard, suggest creating a separate ADR. If so, draft it in `.forge/knowledge/decisions/ADR-xxx-slug.md` using `.forge/templates/adr-template.md` (check `templates/adr-template.md` if absent). Determine the next ID using `.forge/.next-adr` (fallback to counting existing files).
 
 ### Step 4: Break Into Tasks
 1. Create `.forge/specs/REQ-xxx-*/tasks/` directory.

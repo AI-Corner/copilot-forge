@@ -5,6 +5,8 @@ Prompts, checklists, and templates for spec-driven development with **GitHub Cop
 ## What's Included
 
 ## Changelog & Recent Updates
+- **v2.0.0**: Added **Standalone Knowledge Capture (`#learn`)**. New prompt for capturing lessons, assumptions, ADRs, support docs, and QA guides at any time — no active REQ or pipeline required. Automatically classifies knowledge type, mints IDs, populates taxonomy tags, and manages index files.
+- **v1.9.0**: Added **Hybrid ADR Support (Architecture Decision Records)**. Introduced a new `adr-template.md` and updated `#architect` and `#wrapup` prompts to support logging minor feature-level decisions directly in the local architecture doc, while automatically promoting global/reusable standards to standalone ADR files in `.forge/knowledge/decisions/`.
 - **v1.8.0**: Introduced **Vibe Coding Workflow**. Added `#vibe` prompt for lightweight, low-overhead changes and an intelligent workflow router in `#spec` to automatically suggest `#vibe` for tasks without cross-boundary impact or unit test requirements.
 - **v1.7.0**: Added **Token Usage Estimator**. New `#token-estimate` prompt and `token-estimate.ps1` script estimate session token consumption by phase using a `ceil(bytes/4)` approximation. Results are written to `pipeline-state.json` and surfaced in the `#wrapup` ship summary under Metrics.
 - **v1.6.0**: Added **Deployment Flow Context Tracking**. `#init` now scans for CI/CD configurations and scaffolds a `deployment.md` document to ensure agents understand existing deployment workflows.
@@ -37,6 +39,7 @@ Invoke any prompt from Copilot Chat by typing `#<prompt-name>`:
 | `#wrapup` | Close out a feature — commit, merge, deploy, update artifacts |
 | `#bugfix` | Streamlined bug fix workflow |
 | `#vibe` | Fast, lightweight Vibe Coding workflow for trivial changes without heavy specs |
+| `#learn` | Capture knowledge (lesson, assumption, ADR, support doc, QA guide) at any time — no active pipeline required |
 | `#status` | Show current state of all Copilot Forge work |
 | `#analyze` | Codebase health audit |
 | `#security_scan` | Interactive pre-commit secret and credential audit |
@@ -71,6 +74,7 @@ These live in `.github/prompts/agents/` and are referenced inline by `#review`, 
 - `requirement-template.md` — Requirement spec template
 - `task-template.md` — Technical task template
 - `bug-template.md` — Bug report template
+- `adr-template.md` — Architecture Decision Record (ADR) global standard entry
 - `assumption-template.md` — Validated-assumption knowledge entry
 - `lesson-template.md` — Lesson-learned knowledge entry
 - `support-template.md` — Automated Support Documentation / FAQ knowledge entry
