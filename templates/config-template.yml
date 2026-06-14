@@ -1,0 +1,156 @@
+# .forge/config.yml — Copilot Forge project configuration
+#
+# This file lives in every repo that originates REQs. "Primary" is per-REQ,
+# not a fixed designation: whichever repo you invoke #proceed from becomes
+# the primary for that REQ, so every repo that can host REQs needs its own
+# `.forge/` (from #init) and its own config.yml.
+#
+# The config in THIS repo describes the world from this repo's perspective:
+# this repo is primary, the others are siblings. The sibling repos that also
+# originate REQs will have their own config.yml files that mirror this —
+# they'll mark themselves primary and list this one as a sibling. That's
+# expected; the configs are symmetric by design.
+#
+# A repo that only ever participates as a sibling (never originates REQs)
+# doesn't strictly need a config, but it's cheap insurance to set one up
+# anyway so it can host a REQ later.
+#
+# Single-repo projects can leave this file absent OR include only a single
+# entry under `repos:`. All Copilot Forge prompts fall back to legacy single-repo
+# behavior in that case.
+#
+# ---------------------------------------------------------------------------
+# QUICKSTART: copy a preset
+# ---------------------------------------------------------------------------
+# The fastest way to fill this in is to start from a preset that matches your
+# stack, then replace the placeholder values.
+#
+#   # Backend / API repo (Java Spring Boot + PostgreSQL + AKS):
+#   cp /path/to/copilot-forge/presets/springboot-postgres-aks.yml .forge/config.yml
+#
+#   # Frontend / web repo (React + AKS):
+#   cp /path/to/copilot-forge/presets/react-aks.yml .forge/config.yml
+#
+# Available presets (see presets/ in the copilot-forge toolkit repo):
+#   - springboot-postgres-aks.yml — Java Spring Boot + PostgreSQL + AKS backend
+#   - react-aks.yml              — React (TypeScript) + AKS frontend
+#
+# If no preset matches, fill out the sections below from scratch.
+
+# ---------------------------------------------------------------------------
+# project: Display name and (optional) preset reference.
+# ---------------------------------------------------------------------------
+# `name` is shown in prompt output and PR/commit metadata. It's the only place
+# the project's human name appears — every prompt reads it from here.
+# `preset` is informational only: it records which preset (if any) this config
+# was seeded from. Prompts don't read it; it's a hint for `#template-drift`.
+
+project:
+  name: "My Project"
+  # preset: springboot-postgres-aks
+
+# ---------------------------------------------------------------------------
+# stack: Tech stack declaration. Drives conditional prompt behavior.
+# ---------------------------------------------------------------------------
+# Prompts consult these lists before running stack-specific steps. For example,
+# `#bugfix` and `#wrapup` only emit iOS deploy instructions when `frontends`
+# includes `ios`. `#canary` only runs when `backends` includes `cloud-run`.
+#
+# Keep these lists honest — listing a platform you don't actually use will
+# produce noisy output; omitting one will skip steps you actually need.
+#
+# Recognized values (extend by editing the relevant prompt):
+#   languages:  swift | typescript | javascript | python | go | rust | kotlin | java
+#   frontends:  ios | android | web | mobile-rn | mobile-flutter
+#   backends:   cloud-run | aws-lambda | k8s | nodejs-server | django | rails | none
+#   databases:  postgres | mysql | dynamodb | mongodb | sqlite | none
+#   ci:         github-actions | gitlab-ci | circleci | none
+
+stack:
+  languages: []
+  frontends: []
+  backends: []
+  databases: []
+  ci: github-actions
+
+# ---------------------------------------------------------------------------
+# repos: This repo plus every sibling it might coordinate with.
+# ---------------------------------------------------------------------------
+# The key is a short stable id (used in task frontmatter as `repo: <id>`).
+# The entry for THIS repo has `primary: true` and no `path` (path is implicit).
+# Sibling entries declare a `path:` relative to this repo's root (or absolute).
+# Every sibling must be cloned locally at that path.
+
+repos:
+  # Example: primary is the web frontend
+  web:
+    primary: true
+  # Example: siblings
+  api:
+    path: ../api
+  mobile:
+    path: ../mobile
+
+# ---------------------------------------------------------------------------
+# merge_order: Order Phase 8 merges PRs.
+# ---------------------------------------------------------------------------
+# List touched repo ids in the order they should merge. Typical pattern:
+# data/backend first, then the services that consume them.
+# If omitted, #proceed uses the order repos appear under `repos:` above.
+
+merge_order:
+  - api
+  - web
+  - mobile
+
+# ---------------------------------------------------------------------------
+# gcp: GCP-specific deploy config. Only relevant if `stack.backends` includes
+# `cloud-run` or your CI/CD targets GCP.
+# ---------------------------------------------------------------------------
+# `staging_project` and `production_project` are the GCP project IDs that
+# `/bugfix` and `/wrapup` query to confirm a deploy succeeded.
+# `default_region` is used by `/canary` and the deploy-confirmation gcloud
+# commands when a service entry doesn't specify its own region.
+#
+# If you don't deploy to GCP, omit this whole section.
+
+gcp:
+  staging_project: <staging-gcp-project-id>
+  production_project: <production-gcp-project-id>
+  default_region: us-central1
+
+# ---------------------------------------------------------------------------
+# ios: iOS-specific deploy config. Only relevant if `stack.frontends`
+# includes `ios`.
+# ---------------------------------------------------------------------------
+# `deploy_targets` is the list of WiFi-paired devices (or simulators) that
+# `/bugfix` and `/wrapup` deploy to after merge. Listing more than one means
+# every device gets the build — drop devices you don't need to keep current.
+# `derived_data_clean: true` runs `rm -rf ~/Library/Developer/Xcode/DerivedData/*`
+# before each deploy (recommended — avoids stale-build issues).
+# `deploy_command` is the script the prompt invokes from the iOS repo root.
+#
+# If you don't ship iOS, omit this whole section.
+
+ios:
+  deploy_targets: []
+  derived_data_clean: true
+  deploy_command: "./deploy.sh"
+
+# ---------------------------------------------------------------------------
+# services: Cloud Run / deploy config keyed by repo id.
+# ---------------------------------------------------------------------------
+# Consumed by /canary. Repos without a `services:` entry are treated as
+# non-deployable (e.g., docs-only, iOS, infrastructure-only repos).
+# Repos that deploy via a different mechanism (TestFlight, custom script)
+# can be omitted here and handled in /wrapup Step 6.
+
+services:
+  api:
+    cloud_run_service: api
+    region: us-central1
+    image_path: us-central1-docker.pkg.dev/<gcp-project>/api/api
+  web:
+    cloud_run_service: web
+    region: us-central1
+    image_path: us-central1-docker.pkg.dev/<gcp-project>/web/web
