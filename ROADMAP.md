@@ -16,6 +16,7 @@ This document outlines strategic improvements to the Copilot Forge toolkit to fu
 | 8 | Cross-Application Access Flow Tracking | 🚧 Future | Medium | High |
 | 9 | Application Monitoring & Observability Knowledge | 🚧 Future | Low | Medium |
 | 10 | Architectural Evolution: Subagent-Driven via CLI | 🚧 Future | High | High |
+| 11 | **Harness Engineering: Deterministic Pipeline** | ✅ Implemented | High | Very High |
 | — | Automated Support Documentation Generation | ✅ Implemented | Low | Medium |
 
 > **Status legend**: ✅ Implemented · ⚠️ Partial · 🚧 Future
@@ -116,3 +117,49 @@ By moving the execution pipeline to an automated script (e.g., `proceed.ps1`), t
 *   **Complexity**: **High**
 *   **Benefit**: **High**
 *   **Impact**: Allows Copilot Forge to scale autonomously to handle massive, multi-task features without suffering from the context degradation and hallucinations typical of continuous LLM chat sessions.
+
+---
+
+## 11. Harness Engineering: Deterministic Pipeline
+
+Copilot Forge is already a conceptual harness — it uses structured Markdown state, phase-separated prompts, and a retrieval-based memory system. This item **hardens the harness** from a guided, honor-based process into a deterministic, production-grade pipeline where phase gates, feedback loops, and observability are enforced by code, not just by convention.
+
+Full analysis: `.demo/harness_engineering_analysis.md`
+
+### The 5 Sub-Deliverables (Combined as a Single REQ)
+
+#### 11.1 — Deterministic Guardrails (Phase 1 · Priority: Critical)
+Add hard pre-flight checks to every phase prompt so the harness **refuses to proceed** when the required upstream artifact or status is missing.
+- `#architect` gate: requires `requirement.md` with `status: draft|approved`
+- `#tdd` gate: requires `status: approved` AND at least one task file
+- `#wrapup` gate: requires all tasks to have `status: complete`
+- `#reflect` lint-first rule: always runs linter + type-checker + build **before** any LLM self-review
+
+#### 11.2 — Autonomous Test Execution Loop (Phase 2 · Priority: High)
+Build a `forge-test` wrapper script (PowerShell + bash) that:
+- Detects the project's test runner from `.forge/config.yml`
+- Runs the test suite and produces a **token-efficient structured failure summary**
+- Writes results to `.forge/.last-test-run.md`
+- Allows `#tdd` to operate as a true red-green-refactor loop without user intervention
+
+#### 11.3 — State Machine Gate Enforcement (Phase 3 · Priority: High)
+Build a `forge-gate` script that enforces pipeline phase transitions programmatically:
+- Called at the start of each phase prompt's prerequisite step
+- Exits with a clear, human-readable error if pre-conditions are not met
+- Supports a `--force` override flag that logs to `pipeline-state.json` under `forcedTransitions`
+
+#### 11.4 — Context Freshness Mechanism (Phase 4 · Priority: Medium)
+Build a `forge-context` snapshot generator:
+- Compiles current task, relevant acceptance criteria, and `git diff --stat` into `.forge/.active-context.md`
+- Invalidated automatically on new commits, task switches, or 30-min idle sessions
+- Eliminates context drift during long implementation sessions
+
+#### 11.5 — Execution Observability & Failure Taxonomy (Phase 5 · Priority: Medium)
+- Add execution quality metrics to `pipeline-state.json`: `phaseDurationMs`, `retryCount`, `gateFailures`, `driftEvents`, `forcedTransitions`
+- Define a 4-action failure taxonomy for all agent failures: **retry** / **ask user** / **regenerate artifact** / **abort**
+- Introduce BDD (Given/When/Then) acceptance criteria format in `requirement-template.md` to enable future spec-to-test automation
+
+### Complexity / Benefit
+*   **Complexity**: **High** (5 sub-deliverables, requires scripting + prompt changes)
+*   **Benefit**: **Very High**
+*   **Impact**: Transforms Copilot Forge from a convention-driven workflow into a production-grade harness where failures are legible, phase transitions are enforced, and feedback loops are closed without human intervention.

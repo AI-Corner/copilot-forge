@@ -9,6 +9,7 @@ description: Design architecture and break a requirement into implementable task
 You are designing architecture and breaking a requirement into implementable tasks.
 
 > **Ethos**: Follow the principles in `.github/copilot-instructions.md` throughout this session.
+> **Focus**: Act as the architect for the requirement. Only use `.forge/context/*.md`, the REQ’s `requirement.md`, and matching lessons; ignore any earlier chat history or brainstorming.
 
 ## Input
 
@@ -24,13 +25,22 @@ Read `.forge/templates/task-template.md` (or `templates/task-template.md` at the
 
 ## Instructions
 
+### ⛔ Pre-flight Gate (Run This First — Do Not Skip)
+
+Run this command via terminal **before doing anything else**:
+
+```powershell
+.\forge-gate.ps1 -Phase architect
+```
+
+> **If the gate fails**: stop immediately. Surface the exact error to the user. Do not attempt to work around the gate or proceed.
+
 ### Step 1: Locate and Read the Requirement
 1. If given a REQ ID, read `.forge/specs/REQ-xxx-*/requirement.md` via the codebase tool.
 2. If given a description, search `.forge/specs/` for the matching requirement.
-3. Verify the requirement status is `draft` or `approved` (not already `complete`).
-4. Read `.forge/context/architecture.md` and `.forge/context/conventions.md` (skip if already in conversation).
-5. Check `.forge/knowledge/decisions/` (for global ADRs) and `.forge/knowledge/assumptions/` for prior choices that may affect design.
-6. **Lessons — search first**: use the codebase tool to search `.forge/knowledge/lessons/` with patterns matching the affected area (e.g., `component:.*API/auth`). Read only matched files. Note applicable lessons in your architecture rationale.
+3. Read `.forge/context/architecture.md` and `.forge/context/conventions.md` (skip if already in conversation).
+4. Check `.forge/knowledge/decisions/` (for global ADRs) and `.forge/knowledge/assumptions/` for prior choices that may affect design.
+5. **Lessons — search first**: use the codebase tool to search `.forge/knowledge/lessons/` with patterns matching the affected area (e.g., `component:.*API/auth`). Read only matched files. Note applicable lessons in your architecture rationale.
 
 ### Step 2: Explore the Codebase
 Use the codebase tool to explore systematically — run these explorations in sequence:
@@ -58,11 +68,7 @@ Read the key files identified during exploration.
 ### Step 4: Break Into Tasks
 1. Create `.forge/specs/REQ-xxx-*/tasks/` directory.
 2. Determine the next TASK ID by scanning existing tasks across ALL specs.
-3. **Detect user-facing impact**: Does this requirement change how an end-user interacts with the system? (UI changes, new API endpoints, behavior changes).
-   - If YES: You MUST create a dedicated task (e.g., `TASK-xxx-update-user-documentation.md`) to create or update the user-facing guide in `.forge/knowledge/support/`.
-4. **Manual Verification**: Every feature or bugfix needs a manual verification plan.
-   - You MUST create a task (e.g., `TASK-xxx-draft-manual-qa-guide.md`) to draft the manual test steps using `templates/manual-qa-template.md`.
-5. **Detect repository mode**: check whether `.forge/config.yml` exists and declares a `repos:` block with more than one entry.
+3. **Detect repository mode**: check whether `.forge/config.yml` exists and declares a `repos:` block with more than one entry.
    - **Single-repo mode**: set `repo:` on each task to the primary repo id (or omit).
    - **Cross-repo mode**: every task MUST declare a `repo:` field. A single task should not modify files in multiple repos — split cross-repo work into separate tasks with explicit dependencies.
 4. Create `TASK-xxx-description.md` for each task using `.forge/templates/task-template.md`.

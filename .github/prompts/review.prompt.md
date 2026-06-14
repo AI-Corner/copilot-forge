@@ -9,6 +9,7 @@ description: Multi-dimension code review covering correctness, quality, architec
 You are performing a thorough code review of recent changes covering 5 dimensions: correctness, quality, architecture, test coverage, and security.
 
 > **Ethos**: Follow the principles in `.github/copilot-instructions.md` throughout this session.
+> **Focus**: Act as the formal code reviewer. Only use `.forge/context/*.md`, the REQ’s `requirement.md`, its tasks, and the current code diff; ignore any earlier chat history or brainstorming.
 >
 
 ## Input
@@ -20,6 +21,14 @@ Scope: [file paths, branch name, REQ/TASK ID, or nothing for current branch — 
 Use the codebase tool to verify `.forge/context/conventions.md` exists. If it doesn't, stop and tell the user: "The `.forge/` structure hasn't been initialized. Run `#init` first."
 
 ## Instructions
+
+### ⛔ Pre-flight Gate (Run This First — Do Not Skip)
+
+```powershell
+.\forge-gate.ps1 -Phase review
+```
+
+> **If the gate fails**: stop immediately. There are no changes to review.
 
 ### Step 1: Determine Review Scope and Load Context
 1. If given specific file paths, review those files.

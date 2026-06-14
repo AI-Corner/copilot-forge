@@ -4,7 +4,7 @@
 *Status: Draft / Final*
 
 ## 🎯 Objective
-Briefly describe what this manual test is intended to verify.
+Briefly describe what this manual test is intended to verify. (Keep to 1-2 short sentences max)
 
 ## 🛠️ Prerequisites
 - Environment (Local / Dev / Staging)
@@ -24,7 +24,7 @@ Briefly describe what this manual test is intended to verify.
 {command}
 ```
 
-## ⚠️ Edge Cases to Verify
+## ⚠️ Edge Cases to Verify (List a maximum of 3 core edge cases)
 - [ ] {Edge case 1}
 - [ ] {Edge case 2}
 

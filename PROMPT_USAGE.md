@@ -21,7 +21,7 @@ Complete reference for every Copilot Forge prompt. Each section covers **what th
 | [`#review`](#review) | Review | Multi-dimension code review |
 | [`#bugfix`](#bugfix) | Bug Fixing | End-to-end bug fix workflow |
 | [`#vibe`](#vibe) | Lightweight | Fast, low-overhead workflow for trivial changes |
-| [`#learn`](#learn) | Knowledge | Capture knowledge at any time — no active pipeline needed |
+| [`#query`](#query) | Knowledge | Query project knowledge and optionally capture new insights |
 | [`#wrapup`](#wrapup) | Completion | Close out a feature — merge, deploy, capture knowledge |
 | [`#canary`](#canary) | Deployment | Canary deploy with smoke tests |
 | [`#deploy`](#deploy) | Deployment | Execute deployment steps from deployment config |
@@ -53,7 +53,7 @@ Or automated via `#proceed` (single REQ) or `#sprint` (batch):
 Standalone utilities can be invoked at any time:
 
 ```
-#learn       — capture knowledge anytime
+#query       — query project knowledge and optionally capture new insights
 #bugfix      — fix a bug end-to-end
 #vibe        — quick change without heavy specs
 #analyze     — codebase health audit
@@ -96,7 +96,7 @@ Standalone utilities can be invoked at any time:
 | **When to call** | When you have a new feature request, user story, or enhancement idea that needs to be formally specified before implementation. |
 | **Input** | Feature request description in natural language. |
 | **Prerequisites** | `.forge/` must be initialized (`#init`). |
-| **What it does** | 1. **Workflow routing** — evaluates the request against 7 criteria (cross-boundary impact, DB changes, security, infrastructure, testability, ambiguity, unit tests). If ALL are NO, suggests `#vibe` instead.<br>2. **Architectural interview** — asks clarifying questions mapped to the Zachman 5W1H framework (What, Who, When, Where, Why, How) if the request is vague.<br>3. **Retrieval** — searches `.forge/knowledge/lessons/`, existing specs, and resolved bugs for relevant prior context. Scores candidates by component/domain/tags match and surfaces the top 15.<br>4. **Spec authoring** — creates `REQ-xxx-slug/requirement.md` with frontmatter, all 6 Zachman sections, acceptance criteria, assumptions, open questions, out-of-scope items, and retrieved context citations.<br>5. **ID management** — reads/increments `.forge/.next-req` counter. |
+| **What it does** | 1. **Workflow routing** — evaluates the request against 7 criteria (cross-boundary impact, DB changes, security, infrastructure, testability, ambiguity, unit tests). If ALL are NO, suggests `#vibe` instead.<br>2. **Architectural interview** — asks clarifying questions mapped to the Zachman 5W1H framework (What, Who, When, Where, Why, How) if the request is vague.<br>3. **Retrieval** — searches `.forge/knowledge/lessons/`, existing specs, and resolved bugs for relevant prior context. Scores candidates by component/domain/tags match and surfaces the top 5.<br>4. **Spec authoring** — creates `REQ-xxx-slug/requirement.md` with frontmatter, all 6 Zachman sections, acceptance criteria, assumptions, open questions, out-of-scope items, and retrieved context citations.<br>5. **ID management** — reads/increments `.forge/.next-req` counter. |
 | **Outputs** | `.forge/specs/REQ-xxx-slug/requirement.md` — the formal spec document. |
 | **Next step** | `#validate` to verify the spec, then `#architect` to design and break into tasks. |
 
@@ -251,17 +251,17 @@ Standalone utilities can be invoked at any time:
 
 ## Knowledge Capture
 
-### `#learn`
+### `#query`
 
-> Capture knowledge (lesson, assumption, ADR, support doc, QA guide) at any time — no active REQ or pipeline required.
+> Query project knowledge, answer using `.forge` context, and optionally capture or enhance knowledge in `.forge/knowledge/`.
 
 | | |
 |---|---|
-| **When to call** | Anytime you want to record knowledge that isn't tied to an active pipeline. Examples: insights from a Slack thread, prod incident learnings, vendor documentation, team wiki pages, ad-hoc architectural decisions, onboarding notes. |
-| **Input** | Knowledge to capture — free text, attached files, URLs, or references to codebase files. |
+| **When to call** | Anytime you want to ask a question, discuss a design, or capture new knowledge that isn't tied to an active pipeline. |
+| **Input** | A question, design discussion, historical context request, or free text that may represent knowledge worth saving. |
 | **Prerequisites** | `.forge/knowledge/` must exist (run `#init` if not). |
-| **What it does** | 1. **Classify** — determines the knowledge type (lesson, assumption, ADR, support, QA) from user input using classification heuristics, or asks if ambiguous.<br>2. **Mint ID** — reads the atomic counter (`.forge/.next-lesson`, `.forge/.next-assume`, etc.), generates `PREFIX-xxx-slug.md` filename.<br>3. **Template selection** — auto-selects the right template from `.forge/templates/`.<br>4. **Content structuring** — transforms free-text input into the template's structure (frontmatter + body sections).<br>5. **Taxonomy tagging** — reads `.forge/context/taxonomy.md` and populates `component`, `domain`, `stack`, `concerns`, `tags` fields for future retrieval by `#spec`, `#architect`, `#reflect`, and `#review`.<br>6. **Write** — saves to `.forge/knowledge/<type>/`. Updates or creates `_index.md` if applicable.<br>7. **Follow-up suggestions** — recommends `#analyze` if lesson affects architecture, updating `architecture.md` for ADRs, revisiting assumptions after implementation. |
-| **Outputs** | Knowledge document in `.forge/knowledge/` with full frontmatter and taxonomy tags. |
+| **What it does** | 1. **Intent Detection** — determines if you are querying, capturing, or doing a hybrid of both.<br>2. **Context Retrieval** — searches `.forge/context/` and `.forge/knowledge/` to ground its answers.<br>3. **Discussion** — answers questions and acts as a senior engineer grounded in project history.<br>4. **Action Proposal** — if durable knowledge is created, proposes creating, enhancing, or merging knowledge docs.<br>5. **Structure & Tag** — if approved, formats knowledge into templates and tags with taxonomy.<br>6. **Write** — saves to `.forge/knowledge/<type>/` and updates `_index.md`. |
+| **Outputs** | Conversational answers, and optionally updated knowledge documents in `.forge/knowledge/`. |
 
 #### Knowledge Types at a Glance
 

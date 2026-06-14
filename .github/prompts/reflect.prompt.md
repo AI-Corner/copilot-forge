@@ -1,4 +1,4 @@
-﻿---
+---
 agent: agent
 tools: [codebase, runCommand, changes, terminalLastCommand]
 description: Post-implementation self-review — catch issues before #review
@@ -9,6 +9,7 @@ description: Post-implementation self-review — catch issues before #review
 You are performing a self-review of recently implemented code to catch issues before the formal `#review` step. This is a fast, honest assessment of your own work.
 
 > **Ethos**: Follow the principles in `.github/copilot-instructions.md` throughout this session.
+> **Focus**: Act as the self-reviewer. Only use `.forge/context/*.md`, the REQ’s `requirement.md`, its tasks, and the current code diff; ignore any earlier chat history or brainstorming.
 
 ## Input
 
@@ -20,20 +21,48 @@ Use the codebase tool to verify `.forge/context/conventions.md` exists. If it do
 
 ## Instructions
 
-### Step 1: Determine Scope
+### ⛔ Pre-flight Gate (Run This First — Do Not Skip)
+
+```powershell
+.\forge-gate.ps1 -Phase reflect
+```
+
+> **If the gate fails**: stop immediately. There are no changes to review.
+
+### Step 1: Deterministic Build Check (Run Second — Always)
+
+Run the project's linter, type-checker, and build command via terminal **before any LLM-based review**. The first signal must always be deterministic, not a "vibe check".
+
+```powershell
+if (Test-Path "package.json") {
+  Write-Host "--- lint ---"; npm run lint 2>&1
+  Write-Host "--- type-check ---"; npm run type-check 2>&1
+  Write-Host "--- build ---"; npm run build 2>&1
+} elseif (Test-Path "pom.xml") {
+  Write-Host "--- mvn compile ---"; mvn compile -q 2>&1
+} elseif (Test-Path "build.gradle") {
+  Write-Host "--- gradle build ---"; ./gradlew build -x test -q 2>&1
+} else {
+  Write-Warning "No known build file detected. Skipping deterministic check."
+}
+```
+
+> **If build or lint fails: STOP.** Do not proceed to any LLM-based checklist steps. Present the raw error output to the user and help fix it first. Only after a clean deterministic pass should you continue.
+
+### Step 2: Determine Scope
 1. If given a REQ ID, find the associated branch and review its changes.
 2. If given a branch name, review all changes on that branch vs `main`.
 3. If no argument, review all changes on the current branch vs `main`.
 4. Get the full diff by running in terminal: `git diff main...HEAD`
 5. Read `.forge/context/conventions.md` and `.forge/context/architecture.md` via the codebase tool (skip if already in conversation).
 
-### Step 2: Read All Changed Files
+### Step 3: Read All Changed Files
 Use the codebase tool to read the complete current version of every changed file (not just the diff) to understand full context.
 
-### Step 3: Check Lessons Learned
+### Step 4: Check Lessons Learned
 Use the codebase tool to search `.forge/knowledge/lessons/` with patterns matching the affected areas (e.g., `component:.*API/auth`). Read matched lesson files and flag any applicable lessons as findings.
 
-### Step 4: Run Self-Review Checklist
+### Step 5: Run Self-Review Checklist
 
 #### Correctness
 - Does the code do what the requirement/task specifies?

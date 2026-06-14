@@ -60,6 +60,13 @@ Maintain a state file at `.forge/specs/REQ-xxx-*/pipeline-state.json` to track p
     "currentTask": null,
     "completedTasks": [],
     "failedTasks": []
+  },
+  "metrics": {
+    "phaseTimings": {},
+    "retryCount": 0,
+    "gateFailures": 0,
+    "driftEvents": 0,
+    "forcedTransitions": []
   }
 }
 ```
@@ -161,11 +168,12 @@ Run the `#tdd` prompt inline:
 2. On resume: read `pipeline-state.json` — skip tasks in `phase4.completedTasks`; resume `phase4.currentTask` if non-null.
 3. For each task (in dependency order):
    - Write `phase4.currentTask` to the TASK-xxx ID before starting.
+   - **Refresh context**: run `.\forge-context.ps1 -ReqId REQ-xxx -TaskId TASK-xxx` to regenerate `.forge/.active-context.md`. Read this file before touching any code.
    - Read the task file for requirements, files to modify, ACs, and `repo:` field.
    - All file reads/writes, tests, and git operations happen inside the worktree (use `git -C <worktree>` form).
    - Implement the changes following project conventions from `.forge/context/conventions.md`.
    - Write any additional tests as specified in the task (if not covered by Phase 3.5 TDD).
-   - Run the test suite: `npm test` or equivalent. Ensure the previously failing TDD tests now pass (the "Green" phase).
+   - Run the test suite: `.\forge-test.ps1 -ReqId REQ-xxx`. Read `.forge/.last-test-run.md` to verify previously failing TDD tests now pass (the "Green" phase).
    - Mark the task status as `complete` in its frontmatter.
    - Commit inside the worktree: `feat(scope): description [TASK-xxx]`
    - Append the TASK-xxx ID to `phase4.completedTasks` and clear `phase4.currentTask`.
@@ -279,9 +287,27 @@ Run the `#canary` prompt for each affected deployable service. If any canary fai
 
 ---
 
-## Error Handling
+## Error Handling — Failure Taxonomy
 
-- **Test failures during implementation**: stop, diagnose, fix in the worktree, re-run tests before continuing. If unfixable after 2 attempts, pause and ask the user.
-- **Validation stuck after 3 loops**: present remaining FAIL items and ask the user.
-- **Missing context files**: tell the user to run `#init` first.
-- **Merge conflicts**: stop and ask the user how to resolve.
+Every failure the agent encounters must map to exactly one of these four actions. No ambiguous failures.
+
+| Failure Type | Action | Max Retries | Example |
+|---|---|---|---|
+| **Transient** | Auto-retry | 3 | Build flake, network timeout, test flake |
+| **Spec Ambiguity** | Pause and ask user | 0 | Missing acceptance criteria, contradictory requirements |
+| **Artifact Corruption** | Regenerate artifact, log to `metrics.gateFailures` | 1 | Bad frontmatter, missing task file, invalid status |
+| **Unrecoverable** | Abort phase, surface error with remediation | 0 | Gate failure, security scan failure, merge conflict |
+
+### Specific rules
+- **Test failures during implementation**: classify as **Transient**. Auto-retry up to 2 fix attempts. If still failing, reclassify as **Spec Ambiguity** and ask the user.
+- **Validation stuck after 3 loops**: classify as **Spec Ambiguity**. Present remaining FAIL items and halt.
+- **Missing context files**: classify as **Unrecoverable**. Tell the user to run `#init` first.
+- **Merge conflicts**: classify as **Unrecoverable**. Stop and ask the user how to resolve.
+
+### Metric logging
+After every phase completes, update `metrics` in `pipeline-state.json`:
+- `phaseTimings["<phase>"]`: duration in milliseconds
+- `retryCount`: increment for each auto-retry within a phase
+- `gateFailures`: increment for each `forge-gate.ps1` failure
+- `driftEvents`: increment when the agent detects it referenced stale context
+- `forcedTransitions`: append an entry when `--Force` is used

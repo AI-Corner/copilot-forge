@@ -9,6 +9,7 @@ description: Write a requirement spec from a feature request
 You are writing a requirement spec following the spec-driven Copilot Forge process.
 
 > **Ethos**: Follow the principles in `.github/copilot-instructions.md` throughout this session.
+> **Focus**: Act as the product manager. Only use `.forge/context/*.md` and the initial feature request; ignore any earlier chat history or brainstorming.
 
 ## Input
 
@@ -22,6 +23,8 @@ Before proceeding:
 3. Read `.forge/templates/requirement-template.md` (or `templates/requirement-template.md` at the toolkit root).
 
 ## Instructions
+
+> **Strict Rule**: Keep the requirement document strictly concise. Use short bullet points. Do not invent filler, irrelevant edge cases, or hallucinate implementation details. DO NOT generate QA, Support, or Architecture documents — those are handled in later phases.
 
 ### Step 1: Workflow Routing (VIBE vs SDD)
 
@@ -74,7 +77,7 @@ Score each candidate:
 - `+2 × overlapping concerns`
 - `+1 × overlapping stack/tags`
 
-Take the top 15 by score and read their full content. Surface a retrieval summary to the user before authoring.
+Take the top 5 by score and read their full content. Surface a retrieval summary to the user before authoring.
 
 ### Step 2: Determine the Next REQ ID
 1. Run in terminal: `cat .forge/.next-req 2>/dev/null || echo "1"`

@@ -9,6 +9,7 @@ description: Close out a completed feature — commit, merge, deploy, capture kn
 You are closing out a completed feature after it has been merged. This skill ensures Copilot Forge artifacts are finalized, knowledge is captured, and the team has a clear summary of what shipped.
 
 > **Ethos**: Follow the principles in `.github/copilot-instructions.md` throughout this session.
+> **Focus**: Act as the release manager. Only use `.forge/context/*.md`, the REQ’s `requirement.md`, its tasks, and the current code state; ignore any earlier chat history or brainstorming.
 
 ## Input
 
@@ -16,10 +17,20 @@ Target: [REQ-xxx ID — provided by the user]
 
 ## Instructions
 
+### ⛔ Pre-flight Gate (Run This First — Do Not Skip)
+
+Run this command via terminal **before doing anything else**:
+
+```powershell
+.\forge-gate.ps1 -Phase wrapup
+```
+
+> **If the gate fails**: stop immediately. List the incomplete tasks to the user and tell them to complete implementation before running `#wrapup` again. Do not attempt to work around the gate.
+
 ### Step 1: Identify the Feature
 1. If given a REQ ID, locate all artifacts under `.forge/specs/REQ-xxx-*/` via the codebase tool.
 2. If no REQ ID, infer from the current branch name or recent merge commits (run `git log --oneline --merges -10`).
-3. Read the requirement spec, architecture doc (if any), and all task files.
+3. Read the requirement spec, architecture doc (if any), and all task files (confirmed complete by the gate above).
 4. **Detect repository mode** — read `.forge/config.yml`. If it declares more than one `repos:` entry, this is **cross-repo mode** — also read `pipeline-state.json` from the spec directory.
 
 ### Step 2: Commit, Push, and Merge

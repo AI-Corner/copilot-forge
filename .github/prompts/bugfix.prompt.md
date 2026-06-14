@@ -1,4 +1,4 @@
-﻿---
+---
 agent: agent
 tools: [codebase, runCommand, changes, terminalLastCommand]
 description: End-to-end bug fix workflow — report, analyze, fix, verify, ship, knowledge capture
@@ -9,6 +9,7 @@ description: End-to-end bug fix workflow — report, analyze, fix, verify, ship,
 You are fixing a bug using a streamlined workflow. Changes land via PR, ride the project's CI/CD pipeline, and aren't marked resolved until every declared deploy target is confirmed.
 
 > **Ethos**: Follow the principles in `.github/copilot-instructions.md` throughout this session.
+> **Focus**: Act as the bugfix engineer. Only use `.forge/context/*.md`, the bug report, and its tasks; ignore any earlier chat history or brainstorming.
 
 ## Input
 
