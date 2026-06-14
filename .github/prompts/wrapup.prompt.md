@@ -22,20 +22,7 @@ Target: [REQ-xxx ID — provided by the user]
 Run this command via terminal **before doing anything else**:
 
 ```powershell
-$reqFile = Get-ChildItem -Path ".forge/specs" -Recurse -Filter "requirement.md" | Select-Object -First 1
-if (-not $reqFile) { Write-Error "GATE FAILED: No requirement.md found. Nothing to wrap up."; exit 1 }
-$status = ((Get-Content $reqFile.FullName | Select-String '^status:') -replace '^status:\s*','').Trim()
-if ($status -eq 'complete') { Write-Warning "Warning: Requirement is already marked complete. Proceeding anyway (idempotent wrapup)." }
-$taskDir = Join-Path (Split-Path $reqFile.FullName) "tasks"
-$tasks = Get-ChildItem -Path $taskDir -Filter "TASK-*.md" -ErrorAction SilentlyContinue
-if ($tasks.Count -eq 0) { Write-Error "GATE FAILED: No task files found. Run #architect first."; exit 1 }
-$incompleteTasks = $tasks | Where-Object { (Get-Content $_.FullName | Select-String '^status:') -notmatch 'complete' }
-if ($incompleteTasks.Count -gt 0) {
-  Write-Error "GATE FAILED: $($incompleteTasks.Count) task(s) are not yet complete:"
-  $incompleteTasks | ForEach-Object { Write-Error "  - $($_.Name)" }
-  exit 1
-}
-Write-Host "Gate passed: $($tasks.Count) tasks — all complete. Safe to wrap up."
+.\forge-gate.ps1 -Phase wrapup
 ```
 
 > **If the gate fails**: stop immediately. List the incomplete tasks to the user and tell them to complete implementation before running `#wrapup` again. Do not attempt to work around the gate.

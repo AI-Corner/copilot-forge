@@ -21,7 +21,15 @@ Use the codebase tool to verify `.forge/context/conventions.md` exists. If it do
 
 ## Instructions
 
-### Step 1: Deterministic Build Check (Run First — Always)
+### ⛔ Pre-flight Gate (Run This First — Do Not Skip)
+
+```powershell
+.\forge-gate.ps1 -Phase reflect
+```
+
+> **If the gate fails**: stop immediately. There are no changes to review.
+
+### Step 1: Deterministic Build Check (Run Second — Always)
 
 Run the project's linter, type-checker, and build command via terminal **before any LLM-based review**. The first signal must always be deterministic, not a "vibe check".
 

@@ -22,6 +22,14 @@ Use the codebase tool to verify `.forge/context/conventions.md` exists. If it do
 
 ## Instructions
 
+### ⛔ Pre-flight Gate (Run This First — Do Not Skip)
+
+```powershell
+.\forge-gate.ps1 -Phase review
+```
+
+> **If the gate fails**: stop immediately. There are no changes to review.
+
 ### Step 1: Determine Review Scope and Load Context
 1. If given specific file paths, review those files.
 2. If given a branch name, review all changes on that branch vs `main`.

@@ -30,12 +30,7 @@ Read `.forge/templates/task-template.md` (or `templates/task-template.md` at the
 Run this command via terminal **before doing anything else**:
 
 ```powershell
-$reqFile = Get-ChildItem -Path ".forge/specs" -Recurse -Filter "requirement.md" | Select-Object -First 1
-if (-not $reqFile) { Write-Error "GATE FAILED: No requirement.md found. Run #spec first."; exit 1 }
-$status = ((Get-Content $reqFile.FullName | Select-String '^status:') -replace '^status:\s*','').Trim()
-if ($status -eq 'complete') { Write-Error "GATE FAILED: Requirement is already complete."; exit 1 }
-if ($status -notin @('draft','approved')) { Write-Error "GATE FAILED: Unexpected status '$status'. Expected: draft or approved."; exit 1 }
-Write-Host "Gate passed: $($reqFile.Name) | status: $status"
+.\forge-gate.ps1 -Phase architect
 ```
 
 > **If the gate fails**: stop immediately. Surface the exact error to the user. Do not attempt to work around the gate or proceed.

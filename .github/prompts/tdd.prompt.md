@@ -22,14 +22,7 @@ REQ-xxx
 Run this command via terminal **before doing anything else**:
 
 ```powershell
-$reqFile = Get-ChildItem -Path ".forge/specs" -Recurse -Filter "requirement.md" | Select-Object -First 1
-if (-not $reqFile) { Write-Error "GATE FAILED: No requirement.md found. Run #spec and #architect first."; exit 1 }
-$status = ((Get-Content $reqFile.FullName | Select-String '^status:') -replace '^status:\s*','').Trim()
-if ($status -ne 'approved') { Write-Error "GATE FAILED: status is '$status'. Must be 'approved'. Run #architect first."; exit 1 }
-$taskDir = Join-Path (Split-Path $reqFile.FullName) "tasks"
-$taskCount = (Get-ChildItem -Path $taskDir -Filter "TASK-*.md" -ErrorAction SilentlyContinue | Measure-Object).Count
-if ($taskCount -eq 0) { Write-Error "GATE FAILED: No TASK-*.md files found in $taskDir. Run #architect first."; exit 1 }
-Write-Host "Gate passed: $($reqFile.Name) | status: $status | tasks: $taskCount"
+.\forge-gate.ps1 -Phase tdd
 ```
 
 > **If the gate fails**: stop immediately. Surface the exact error to the user. Do not attempt to work around the gate or proceed.
