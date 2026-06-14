@@ -47,9 +47,34 @@ Extract all acceptance criteria (ACs) and edge cases from the requirement spec a
 2. The tests must compile/parse correctly, but they MUST fail because the underlying business logic is not yet implemented (or throws `NotImplementedError` / `UnsupportedOperationException`).
 3. Include unit tests for core logic and integration tests for API endpoints or database interactions.
 
-### Step 4: Verify Failure
-1. Use `runCommand` to execute the test suite (e.g., `mvn test` or `npm test`).
-2. Verify that the tests actually run and fail as expected. This proves that the tests are executing and correctly asserting the absent behavior.
+### Step 4: Verify Failure — Autonomous Test Execution
 
-### Step 5: Output Report
-Summarize the test suite created. List the tests that are currently failing, proving that the spec is covered. Report completion so the implementation phase can begin to make them pass (Green Phase).
+Do NOT ask the user to run tests manually. Run `forge-test.ps1` via terminal instead:
+
+```powershell
+.\forge-test.ps1 -ReqId REQ-xxx
+```
+
+Then read `.forge/.last-test-run.md`. This file contains a token-efficient summary of the run.
+
+**Interpret the result:**
+- If `status: FAIL` — the tests are correctly in the Red Phase. Read the `## Failures` section and confirm each failure maps to an acceptance criterion from the spec. This is the expected and desired outcome.
+- If `status: PASS` — the tests are passing prematurely, which means either the tests are too weak (not asserting absent behavior) or the code already exists. Investigate and strengthen the tests before proceeding.
+- If `status: skipped` — no test runner was detected. Stop and tell the user to configure a test runner.
+
+### Step 5: Red-Green Remediation Loop
+
+If any test passes when it should fail (premature green):
+1. Read the failing test and the corresponding acceptance criterion.
+2. Strengthen the assertion so it correctly fails against missing implementation.
+3. Re-run `forge-test.ps1` and re-read `.forge/.last-test-run.md`.
+4. Repeat until all written tests are red.
+
+> **Autonomy rule**: you may loop on steps 4–5 up to **3 times** without asking the user. After 3 loops, surface the remaining issue and ask for input.
+
+### Step 6: Output Report
+
+Report completion by summarizing `.forge/.last-test-run.md`:
+- Total tests written and currently failing
+- One-line summary per failure, confirming it maps to an AC
+- Status: **Red Phase complete — ready for implementation**
