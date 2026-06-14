@@ -9,6 +9,7 @@ description: Multi-dimension code review covering correctness, quality, architec
 You are performing a thorough code review of recent changes covering 5 dimensions: correctness, quality, architecture, test coverage, and security.
 
 > **Ethos**: Follow the principles in `.github/copilot-instructions.md` throughout this session.
+> **Focus**: Act as the formal code reviewer. Only use `.forge/context/*.md`, the REQ’s `requirement.md`, its tasks, and the current code diff; ignore any earlier chat history or brainstorming.
 >
 
 ## Input

@@ -9,6 +9,7 @@ description: Design architecture and break a requirement into implementable task
 You are designing architecture and breaking a requirement into implementable tasks.
 
 > **Ethos**: Follow the principles in `.github/copilot-instructions.md` throughout this session.
+> **Focus**: Act as the architect for the requirement. Only use `.forge/context/*.md`, the REQ’s `requirement.md`, and matching lessons; ignore any earlier chat history or brainstorming.
 
 ## Input
 

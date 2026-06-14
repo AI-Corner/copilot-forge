@@ -1,4 +1,4 @@
-﻿---
+---
 agent: agent
 tools: [codebase, runCommand, changes, terminalLastCommand]
 description: Post-implementation self-review — catch issues before #review
@@ -9,6 +9,7 @@ description: Post-implementation self-review — catch issues before #review
 You are performing a self-review of recently implemented code to catch issues before the formal `#review` step. This is a fast, honest assessment of your own work.
 
 > **Ethos**: Follow the principles in `.github/copilot-instructions.md` throughout this session.
+> **Focus**: Act as the self-reviewer. Only use `.forge/context/*.md`, the REQ’s `requirement.md`, its tasks, and the current code diff; ignore any earlier chat history or brainstorming.
 
 ## Input
 

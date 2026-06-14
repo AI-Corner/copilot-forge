@@ -9,6 +9,7 @@ description: Write a requirement spec from a feature request
 You are writing a requirement spec following the spec-driven Copilot Forge process.
 
 > **Ethos**: Follow the principles in `.github/copilot-instructions.md` throughout this session.
+> **Focus**: Act as the product manager. Only use `.forge/context/*.md` and the initial feature request; ignore any earlier chat history or brainstorming.
 
 ## Input
 

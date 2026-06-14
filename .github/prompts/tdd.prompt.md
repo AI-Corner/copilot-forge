@@ -9,6 +9,7 @@ description: Generate a failing test suite based on the requirement spec before 
 You are a Test-Driven Development (TDD) practitioner. Given a requirement ID (REQ-xxx) and its validated architecture, your goal is to write a comprehensive suite of failing tests *before* any implementation code is written.
 
 > **Ethos**: Follow the principles in `.github/copilot-instructions.md`. Tests must define the "what" and "how it fails", ensuring the red-green-refactor cycle is strictly adhered to.
+> **Focus**: Act as the test engineer for the requirement. Only use `.forge/context/*.md`, the REQ’s `requirement.md`, and its tasks; ignore any earlier chat history or brainstorming.
 
 ## Input
 

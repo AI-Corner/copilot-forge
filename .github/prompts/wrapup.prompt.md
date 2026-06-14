@@ -9,6 +9,7 @@ description: Close out a completed feature — commit, merge, deploy, capture kn
 You are closing out a completed feature after it has been merged. This skill ensures Copilot Forge artifacts are finalized, knowledge is captured, and the team has a clear summary of what shipped.
 
 > **Ethos**: Follow the principles in `.github/copilot-instructions.md` throughout this session.
+> **Focus**: Act as the release manager. Only use `.forge/context/*.md`, the REQ’s `requirement.md`, its tasks, and the current code state; ignore any earlier chat history or brainstorming.
 
 ## Input
 
