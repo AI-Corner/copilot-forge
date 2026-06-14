@@ -5,7 +5,7 @@ Prompts, checklists, and templates for spec-driven development with **GitHub Cop
 ## What's Included
 
 ## Changelog & Recent Updates
-- **v2.0.0**: Added **Standalone Knowledge Capture (`#learn`)**. New prompt for capturing lessons, assumptions, ADRs, support docs, and QA guides at any time — no active REQ or pipeline required. Automatically classifies knowledge type, mints IDs, populates taxonomy tags, and manages index files.
+- **v2.0.0**: Added **Project Knowledge Query & Capture (`#query`)**. Replaces `#learn` with a hybrid agent that can discuss project history, answer questions using `.forge/context`, and optionally capture new lessons, ADRs, assumptions, and support docs when a new conclusion is reached.
 - **v1.9.0**: Added **Hybrid ADR Support (Architecture Decision Records)**. Introduced a new `adr-template.md` and updated `#architect` and `#wrapup` prompts to support logging minor feature-level decisions directly in the local architecture doc, while automatically promoting global/reusable standards to standalone ADR files in `.forge/knowledge/decisions/`.
 - **v1.8.0**: Introduced **Vibe Coding Workflow**. Added `#vibe` prompt for lightweight, low-overhead changes and an intelligent workflow router in `#spec` to automatically suggest `#vibe` for tasks without cross-boundary impact or unit test requirements.
 - **v1.7.0**: Added **Token Usage Estimator**. New `#token-estimate` prompt and `token-estimate.ps1` script estimate session token consumption by phase using a `ceil(bytes/4)` approximation. Results are written to `pipeline-state.json` and surfaced in the `#wrapup` ship summary under Metrics.
