@@ -17,10 +17,33 @@ Target: [REQ-xxx ID — provided by the user]
 
 ## Instructions
 
+### ⛔ Pre-flight Gate (Run This First — Do Not Skip)
+
+Run this command via terminal **before doing anything else**:
+
+```powershell
+$reqFile = Get-ChildItem -Path ".forge/specs" -Recurse -Filter "requirement.md" | Select-Object -First 1
+if (-not $reqFile) { Write-Error "GATE FAILED: No requirement.md found. Nothing to wrap up."; exit 1 }
+$status = ((Get-Content $reqFile.FullName | Select-String '^status:') -replace '^status:\s*','').Trim()
+if ($status -eq 'complete') { Write-Warning "Warning: Requirement is already marked complete. Proceeding anyway (idempotent wrapup)." }
+$taskDir = Join-Path (Split-Path $reqFile.FullName) "tasks"
+$tasks = Get-ChildItem -Path $taskDir -Filter "TASK-*.md" -ErrorAction SilentlyContinue
+if ($tasks.Count -eq 0) { Write-Error "GATE FAILED: No task files found. Run #architect first."; exit 1 }
+$incompleteTasks = $tasks | Where-Object { (Get-Content $_.FullName | Select-String '^status:') -notmatch 'complete' }
+if ($incompleteTasks.Count -gt 0) {
+  Write-Error "GATE FAILED: $($incompleteTasks.Count) task(s) are not yet complete:"
+  $incompleteTasks | ForEach-Object { Write-Error "  - $($_.Name)" }
+  exit 1
+}
+Write-Host "Gate passed: $($tasks.Count) tasks — all complete. Safe to wrap up."
+```
+
+> **If the gate fails**: stop immediately. List the incomplete tasks to the user and tell them to complete implementation before running `#wrapup` again. Do not attempt to work around the gate.
+
 ### Step 1: Identify the Feature
 1. If given a REQ ID, locate all artifacts under `.forge/specs/REQ-xxx-*/` via the codebase tool.
 2. If no REQ ID, infer from the current branch name or recent merge commits (run `git log --oneline --merges -10`).
-3. Read the requirement spec, architecture doc (if any), and all task files.
+3. Read the requirement spec, architecture doc (if any), and all task files (confirmed complete by the gate above).
 4. **Detect repository mode** — read `.forge/config.yml`. If it declares more than one `repos:` entry, this is **cross-repo mode** — also read `pipeline-state.json` from the spec directory.
 
 ### Step 2: Commit, Push, and Merge

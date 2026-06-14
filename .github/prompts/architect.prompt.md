@@ -25,13 +25,27 @@ Read `.forge/templates/task-template.md` (or `templates/task-template.md` at the
 
 ## Instructions
 
+### ⛔ Pre-flight Gate (Run This First — Do Not Skip)
+
+Run this command via terminal **before doing anything else**:
+
+```powershell
+$reqFile = Get-ChildItem -Path ".forge/specs" -Recurse -Filter "requirement.md" | Select-Object -First 1
+if (-not $reqFile) { Write-Error "GATE FAILED: No requirement.md found. Run #spec first."; exit 1 }
+$status = ((Get-Content $reqFile.FullName | Select-String '^status:') -replace '^status:\s*','').Trim()
+if ($status -eq 'complete') { Write-Error "GATE FAILED: Requirement is already complete."; exit 1 }
+if ($status -notin @('draft','approved')) { Write-Error "GATE FAILED: Unexpected status '$status'. Expected: draft or approved."; exit 1 }
+Write-Host "Gate passed: $($reqFile.Name) | status: $status"
+```
+
+> **If the gate fails**: stop immediately. Surface the exact error to the user. Do not attempt to work around the gate or proceed.
+
 ### Step 1: Locate and Read the Requirement
 1. If given a REQ ID, read `.forge/specs/REQ-xxx-*/requirement.md` via the codebase tool.
 2. If given a description, search `.forge/specs/` for the matching requirement.
-3. Verify the requirement status is `draft` or `approved` (not already `complete`).
-4. Read `.forge/context/architecture.md` and `.forge/context/conventions.md` (skip if already in conversation).
-5. Check `.forge/knowledge/decisions/` (for global ADRs) and `.forge/knowledge/assumptions/` for prior choices that may affect design.
-6. **Lessons — search first**: use the codebase tool to search `.forge/knowledge/lessons/` with patterns matching the affected area (e.g., `component:.*API/auth`). Read only matched files. Note applicable lessons in your architecture rationale.
+3. Read `.forge/context/architecture.md` and `.forge/context/conventions.md` (skip if already in conversation).
+4. Check `.forge/knowledge/decisions/` (for global ADRs) and `.forge/knowledge/assumptions/` for prior choices that may affect design.
+5. **Lessons — search first**: use the codebase tool to search `.forge/knowledge/lessons/` with patterns matching the affected area (e.g., `component:.*API/auth`). Read only matched files. Note applicable lessons in your architecture rationale.
 
 ### Step 2: Explore the Codebase
 Use the codebase tool to explore systematically — run these explorations in sequence:
