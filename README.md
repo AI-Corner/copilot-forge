@@ -5,6 +5,7 @@ Prompts, checklists, and templates for spec-driven development with **GitHub Cop
 ## What's Included
 
 ## Changelog & Recent Updates
+- **v2.1.0**: Added **Harness Engineering: Deterministic Pipeline**. Replaced honor-system LLM guardrails with hard, deterministic phase gates (`forge-gate.ps1`). Introduced an autonomous test runner loop (`forge-test.ps1`), an active context snapshot generator to prevent drift (`forge-context.ps1`), execution metrics tracking in `pipeline-state.json`, and a structured failure taxonomy for orchestrating agents.
 - **v2.0.0**: Added **Project Knowledge Query & Capture (`#query`)**. Replaces `#learn` with a hybrid agent that can discuss project history, answer questions using `.forge/context`, and optionally capture new lessons, ADRs, assumptions, and support docs when a new conclusion is reached.
 - **v1.9.0**: Added **Hybrid ADR Support (Architecture Decision Records)**. Introduced a new `adr-template.md` and updated `#architect` and `#wrapup` prompts to support logging minor feature-level decisions directly in the local architecture doc, while automatically promoting global/reusable standards to standalone ADR files in `.forge/knowledge/decisions/`.
 - **v1.8.0**: Introduced **Vibe Coding Workflow**. Added `#vibe` prompt for lightweight, low-overhead changes and an intelligent workflow router in `#spec` to automatically suggest `#vibe` for tasks without cross-boundary impact or unit test requirements.
