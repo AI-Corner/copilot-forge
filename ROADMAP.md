@@ -17,6 +17,7 @@ This document outlines strategic improvements to the Copilot Forge toolkit to fu
 | 9 | Application Monitoring & Observability Knowledge | 🚧 Future | Low | Medium |
 | 10 | Architectural Evolution: Subagent-Driven via CLI | 🚧 Future | High | High |
 | 11 | **Harness Engineering: Deterministic Pipeline** | ✅ Implemented | High | Very High |
+| 12 | SDD Semantic Testing Framework (Prompt Eval) | 🚧 Future | High | High |
 | — | Automated Support Documentation Generation | ✅ Implemented | Low | Medium |
 
 > **Status legend**: ✅ Implemented · ⚠️ Partial · 🚧 Future
@@ -163,3 +164,20 @@ Build a `forge-context` snapshot generator:
 *   **Complexity**: **High** (5 sub-deliverables, requires scripting + prompt changes)
 *   **Benefit**: **Very High**
 *   **Impact**: Transforms Copilot Forge from a convention-driven workflow into a production-grade harness where failures are legible, phase transitions are enforced, and feedback loops are closed without human intervention.
+
+---
+
+## 12. SDD Semantic Testing Framework (Prompt Eval)
+
+As the harness and prompts become more complex, we need a way to ensure that changes to instructions do not introduce regressions. Traditional string-matching tests are brittle for LLMs. This feature introduces a Model-Graded Evaluation (LLM-as-judge) framework to test prompts and agents semantically.
+
+Full blueprint: `.demo/SDD_TESTING_FRAMEWORK.md`
+
+### Core Components
+- **Scenario Definition Layer**: Markdown-based scenario templates (`scenario_template.md`) to define test inputs and expected constraints (`MUST INCLUDE`, `MUST NOT INCLUDE`).
+- **Semantic Evaluator Engine**: A test runner that passes scenarios through the target prompt, then uses a secondary LLM to grade whether the output satisfies the semantic intent and structural constraints.
+- **Observability Pipeline**: CI/CD integration to track intent drift and prompt regression over time.
+
+*   **Complexity**: **High**
+*   **Benefit**: **High**
+*   **Impact**: Enables confident iteration on prompts and subagents. Prevents prompt regressions from breaking downstream automation by establishing a continuous prompt-testing pipeline.
