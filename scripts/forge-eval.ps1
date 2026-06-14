@@ -13,7 +13,7 @@ Path to a specific .scenario.md file. If omitted, runs all scenarios in tests/pr
 Which layer to run: "structural", "behavioral", "semantic", or "all". Default is "all".
 
 .PARAMETER Provider
-The LLM provider to use: "openai", "anthropic", "ollama". Default is "openai".
+The LLM provider to use: "openai", "anthropic", "ollama", "gemini". Default is "openai".
 #>
 
 [CmdletBinding()]
@@ -21,8 +21,8 @@ param(
     [string]$Scenario = "",
     [ValidateSet("structural", "behavioral", "semantic", "all")]
     [string]$Mode = "all",
-    [ValidateSet("openai", "anthropic", "ollama")]
-    [string]$Provider = "openai"
+    [ValidateSet("openai", "anthropic", "ollama", "gemini")]
+    [string]$Provider = "gemini"
 )
 
 $ErrorActionPreference = "Stop"
@@ -137,6 +137,35 @@ function Invoke-Llm {
         $Body = $BodyObj | ConvertTo-Json -Depth 5 -Compress
         $Response = Invoke-RestMethod -Uri "https://api.openai.com/v1/chat/completions" -Method Post -Headers $Headers -Body $Body
         return $Response.choices[0].message.content
+    } elseif ($Provider -eq "gemini") {
+        $ApiKey = $env:GEMINI_API_KEY
+        if ([string]::IsNullOrEmpty($ApiKey)) { throw "GEMINI_API_KEY is not set." }
+
+        $Headers = @{
+            "Content-Type" = "application/json"
+        }
+
+        $BodyObj = @{
+            system_instruction = @{ parts = @{ text = $SystemPrompt } }
+            contents = @(
+                @{ role = "user"; parts = @( @{ text = $UserPrompt } ) }
+            )
+            generationConfig = @{
+                temperature = 0.0
+            }
+        }
+
+        if ($JsonMode) {
+            $BodyObj.generationConfig["responseMimeType"] = "application/json"
+        }
+
+        $Body = $BodyObj | ConvertTo-Json -Depth 7 -Compress
+        $Endpoint = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro:generateContent?key=$ApiKey"
+        
+        $Response = Invoke-RestMethod -Uri $Endpoint -Method Post -Headers $Headers -Body $Body
+        
+        # Extract text from Gemini response structure
+        return $Response.candidates[0].content.parts[0].text
     } else {
         throw "Provider $Provider is not fully implemented yet."
     }
