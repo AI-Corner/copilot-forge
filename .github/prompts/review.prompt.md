@@ -25,7 +25,7 @@ Use the codebase tool to verify `.forge/context/conventions.md` exists. If it do
 ### ⛔ Pre-flight Gate (Run This First — Do Not Skip)
 
 ```powershell
-.\forge-gate.ps1 -Phase review
+.\scripts\forge-gate.ps1 -Phase review
 ```
 
 > **If the gate fails**: stop immediately. There are no changes to review.

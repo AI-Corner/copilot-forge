@@ -168,12 +168,12 @@ Run the `#tdd` prompt inline:
 2. On resume: read `pipeline-state.json` — skip tasks in `phase4.completedTasks`; resume `phase4.currentTask` if non-null.
 3. For each task (in dependency order):
    - Write `phase4.currentTask` to the TASK-xxx ID before starting.
-   - **Refresh context**: run `.\forge-context.ps1 -ReqId REQ-xxx -TaskId TASK-xxx` to regenerate `.forge/.active-context.md`. Read this file before touching any code.
+   - **Refresh context**: run `.\scripts\forge-context.ps1 -ReqId REQ-xxx -TaskId TASK-xxx` to regenerate `.forge/.active-context.md`. Read this file before touching any code.
    - Read the task file for requirements, files to modify, ACs, and `repo:` field.
    - All file reads/writes, tests, and git operations happen inside the worktree (use `git -C <worktree>` form).
    - Implement the changes following project conventions from `.forge/context/conventions.md`.
    - Write any additional tests as specified in the task (if not covered by Phase 3.5 TDD).
-   - Run the test suite: `.\forge-test.ps1 -ReqId REQ-xxx`. Read `.forge/.last-test-run.md` to verify previously failing TDD tests now pass (the "Green" phase).
+   - Run the test suite: `.\scripts\forge-test.ps1 -ReqId REQ-xxx`. Read `.forge/.last-test-run.md` to verify previously failing TDD tests now pass (the "Green" phase).
    - Mark the task status as `complete` in its frontmatter.
    - Commit inside the worktree: `feat(scope): description [TASK-xxx]`
    - Append the TASK-xxx ID to `phase4.completedTasks` and clear `phase4.currentTask`.
@@ -308,6 +308,6 @@ Every failure the agent encounters must map to exactly one of these four actions
 After every phase completes, update `metrics` in `pipeline-state.json`:
 - `phaseTimings["<phase>"]`: duration in milliseconds
 - `retryCount`: increment for each auto-retry within a phase
-- `gateFailures`: increment for each `forge-gate.ps1` failure
+- `gateFailures`: increment for each `.\scripts\forge-gate.ps1` failure
 - `driftEvents`: increment when the agent detects it referenced stale context
 - `forcedTransitions`: append an entry when `--Force` is used

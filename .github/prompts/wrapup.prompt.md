@@ -22,7 +22,7 @@ Target: [REQ-xxx ID — provided by the user]
 Run this command via terminal **before doing anything else**:
 
 ```powershell
-.\forge-gate.ps1 -Phase wrapup
+.\scripts\forge-gate.ps1 -Phase wrapup
 ```
 
 > **If the gate fails**: stop immediately. List the incomplete tasks to the user and tell them to complete implementation before running `#wrapup` again. Do not attempt to work around the gate.

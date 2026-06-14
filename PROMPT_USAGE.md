@@ -286,7 +286,7 @@ Standalone utilities can be invoked at any time:
 | **When to call** | After a feature has been implemented and reviewed. This is the final step before moving on. Usually invoked automatically at the end of `#proceed`. |
 | **Input** | `REQ-xxx` ID (or inferred from current branch / recent merges). |
 | **Prerequisites** | Feature implementation complete, ideally reviewed via `#review`. |
-| **What it does** | 7 steps:<br><br>**Step 1 — Identify**: Locates all artifacts for the REQ. Detects single vs cross-repo mode.<br>**Step 2 — Commit, Push, Merge**: Branch check (never on `main`), pre-commit security scan, `git add/commit/push`, create PR if none exists, rebase if behind main, merge via `gh pr merge --squash`.<br>**Step 3 — Update statuses**: Sets requirement and all tasks to `status: complete`.<br>**Step 4 — Capture knowledge**: Architectural decisions (local in architecture.md or global ADRs), assumptions (validated/invalidated/unresolved), lessons learned, convention updates, support documentation, manual QA guide.<br>**Step 5 — Ship summary**: Generates formatted summary with status, branch, PR, what shipped, key decisions, metrics (files, lines, tests, tokens), deferred items, follow-ups.<br>**Step 5b — Token estimate**: Runs `token-estimate.ps1` for session cost metrics.<br>**Step 6 — Deploy**: Walks touched repos and deploys (Cloud Run, AKS, iOS, IaC).<br>**Step 7 — Recommend next steps**: Suggests specs for deferred items, monitoring, convention review. |
+| **What it does** | 7 steps:<br><br>**Step 1 — Identify**: Locates all artifacts for the REQ. Detects single vs cross-repo mode.<br>**Step 2 — Commit, Push, Merge**: Branch check (never on `main`), pre-commit security scan, `git add/commit/push`, create PR if none exists, rebase if behind main, merge via `gh pr merge --squash`.<br>**Step 3 — Update statuses**: Sets requirement and all tasks to `status: complete`.<br>**Step 4 — Capture knowledge**: Architectural decisions (local in architecture.md or global ADRs), assumptions (validated/invalidated/unresolved), lessons learned, convention updates, support documentation, manual QA guide.<br>**Step 5 — Ship summary**: Generates formatted summary with status, branch, PR, what shipped, key decisions, metrics (files, lines, tests, tokens), deferred items, follow-ups.<br>**Step 5b — Token estimate**: Runs `.\scripts\token-estimate.ps1` for session cost metrics.<br>**Step 6 — Deploy**: Walks touched repos and deploys (Cloud Run, AKS, iOS, IaC).<br>**Step 7 — Recommend next steps**: Suggests specs for deferred items, monitoring, convention review. |
 | **Outputs** | Merged PR(s), knowledge artifacts, ship summary, deployment confirmation. |
 
 ---
@@ -421,12 +421,12 @@ Standalone utilities can be invoked at any time:
 
 | | |
 |---|---|
-| **When to call** | Before or after a `#proceed` run to understand token costs. For routine use, prefer running `token-estimate.ps1` directly from the terminal (zero Copilot token cost). |
+| **When to call** | Before or after a `#proceed` run to understand token costs. For routine use, prefer running `.\scripts\token-estimate.ps1` directly from the terminal (zero Copilot token cost). |
 | **Input** | `REQ-xxx` ID (optional — estimates baseline context only if omitted). |
 | **Prerequisites** | `.forge/` must be initialized. |
 | **What it does** | 1. **Measures** baseline context files, REQ-specific artifacts, prompt files per phase, agent checklists, and knowledge retrieval files.<br>2. **Formula**: `estimated_tokens = ceil(file_size_in_bytes / 4)` (~4 chars/token for English/Markdown).<br>3. **Phase breakdown** — calculates tokens for each of the 9 pipeline phases based on what files are loaded.<br>4. **Output estimation** — applies ~25% multiplier for estimated output tokens.<br>5. **Writes results** to `pipeline-state.json` under `tokenEstimate`.<br>6. **Reports** — phase-by-phase table with token counts, percentages, and largest-phase callout. |
 | **Outputs** | Token estimate table, `pipeline-state.json` update. Accuracy: ±15–20%. |
-| **Alternative** | Run `token-estimate.ps1` from the terminal for the same estimate without consuming Copilot tokens. |
+| **Alternative** | Run `.\scripts\token-estimate.ps1` from the terminal for the same estimate without consuming Copilot tokens. |
 
 ---
 

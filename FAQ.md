@@ -30,7 +30,7 @@ Copilot Forge features an **Incremental Analysis engine**: it stores the git com
 
 ### 5. Why didn't `#init` create the `copilot-instructions.md` file for me?
 Copilot Forge separates the **Toolkit Engine** from the **Project Context**.
-- The Toolkit Engine (`.github/` and `.vscode/`) contains the instructions and prompts. This must be manually copied into your repository first (or by running `install.ps1`). If it isn't there, VS Code won't even recognize the `#init` command.
+- The Toolkit Engine (`.github/` and `.vscode/`) contains the instructions and prompts. This must be manually copied into your repository first (or by running `.\scripts\install.ps1`). If it isn't there, VS Code won't even recognize the `#init` command.
 - The Project Context (`.forge/`) is what `#init` generates—the unique architectural artifacts and requirements for your specific project.
 
 ### 6. Can I generate a single "Global Brain" documentation set for a multi-repo workspace?
@@ -81,16 +81,16 @@ GitHub Copilot does not expose live token counts from the VS Code extension. How
 
 ```powershell
 # Baseline only (useful before starting a REQ)
-.\token-estimate.ps1
+.\scripts\token-estimate.ps1
 
 # Estimate for a specific REQ
-.\token-estimate.ps1 -ReqId REQ-023
+.\scripts\token-estimate.ps1 -ReqId REQ-023
 
 # Estimate + write results into pipeline-state.json
-.\token-estimate.ps1 -ReqId REQ-023 -UpdatePipelineState
+.\scripts\token-estimate.ps1 -ReqId REQ-023 -UpdatePipelineState
 
 # JSON output for scripting or dashboards
-.\token-estimate.ps1 -ReqId REQ-023 -OutputJson
+.\scripts\token-estimate.ps1 -ReqId REQ-023 -OutputJson
 ```
 
 **What the output looks like:**

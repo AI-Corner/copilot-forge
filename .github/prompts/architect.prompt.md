@@ -30,7 +30,7 @@ Read `.forge/templates/task-template.md` (or `templates/task-template.md` at the
 Run this command via terminal **before doing anything else**:
 
 ```powershell
-.\forge-gate.ps1 -Phase architect
+.\scripts\forge-gate.ps1 -Phase architect
 ```
 
 > **If the gate fails**: stop immediately. Surface the exact error to the user. Do not attempt to work around the gate or proceed.

@@ -22,7 +22,7 @@ REQ-xxx
 Run this command via terminal **before doing anything else**:
 
 ```powershell
-.\forge-gate.ps1 -Phase tdd
+.\scripts\forge-gate.ps1 -Phase tdd
 ```
 
 > **If the gate fails**: stop immediately. Surface the exact error to the user. Do not attempt to work around the gate or proceed.
@@ -42,10 +42,10 @@ Extract all acceptance criteria (ACs) and edge cases from the requirement spec a
 
 ### Step 4: Verify Failure — Autonomous Test Execution
 
-Do NOT ask the user to run tests manually. Run `forge-test.ps1` via terminal instead:
+Do NOT ask the user to run tests manually. Run `.\scripts\forge-test.ps1` via terminal instead:
 
 ```powershell
-.\forge-test.ps1 -ReqId REQ-xxx
+.\scripts\forge-test.ps1 -ReqId REQ-xxx
 ```
 
 Then read `.forge/.last-test-run.md`. This file contains a token-efficient summary of the run.
@@ -60,7 +60,7 @@ Then read `.forge/.last-test-run.md`. This file contains a token-efficient summa
 If any test passes when it should fail (premature green):
 1. Read the failing test and the corresponding acceptance criterion.
 2. Strengthen the assertion so it correctly fails against missing implementation.
-3. Re-run `forge-test.ps1` and re-read `.forge/.last-test-run.md`.
+3. Re-run `.\scripts\forge-test.ps1` and re-read `.forge/.last-test-run.md`.
 4. Repeat until all written tests are red.
 
 > **Autonomy rule**: you may loop on steps 4–5 up to **3 times** without asking the user. After 3 loops, surface the remaining issue and ask for input.

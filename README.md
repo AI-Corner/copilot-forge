@@ -8,7 +8,7 @@ Prompts, checklists, and templates for spec-driven development with **GitHub Cop
 - **v2.0.0**: Added **Project Knowledge Query & Capture (`#query`)**. Replaces `#learn` with a hybrid agent that can discuss project history, answer questions using `.forge/context`, and optionally capture new lessons, ADRs, assumptions, and support docs when a new conclusion is reached.
 - **v1.9.0**: Added **Hybrid ADR Support (Architecture Decision Records)**. Introduced a new `adr-template.md` and updated `#architect` and `#wrapup` prompts to support logging minor feature-level decisions directly in the local architecture doc, while automatically promoting global/reusable standards to standalone ADR files in `.forge/knowledge/decisions/`.
 - **v1.8.0**: Introduced **Vibe Coding Workflow**. Added `#vibe` prompt for lightweight, low-overhead changes and an intelligent workflow router in `#spec` to automatically suggest `#vibe` for tasks without cross-boundary impact or unit test requirements.
-- **v1.7.0**: Added **Token Usage Estimator**. New `#token-estimate` prompt and `token-estimate.ps1` script estimate session token consumption by phase using a `ceil(bytes/4)` approximation. Results are written to `pipeline-state.json` and surfaced in the `#wrapup` ship summary under Metrics.
+- **v1.7.0**: Added **Token Usage Estimator**. New `#token-estimate` prompt and `.\scripts\token-estimate.ps1` script estimate session token consumption by phase using a `ceil(bytes/4)` approximation. Results are written to `pipeline-state.json` and surfaced in the `#wrapup` ship summary under Metrics.
 - **v1.6.0**: Added **Deployment Flow Context Tracking**. `#init` now scans for CI/CD configurations and scaffolds a `deployment.md` document to ensure agents understand existing deployment workflows.
 - **v1.5.0**: Adopted **System-First Specifications (Zachman 5W1H Framework)**. Upgraded `requirement-template.md` and `#spec` prompt to enforce rigid boundaries (What, Who, When, Where, Why, How) to eliminate ambiguity from user stories.
 - **v1.4.0**: Introduced **Visual Architecture** generation. Both `#init` and `#architect` now mandate native Mermaid sequence diagrams and flowcharts for project and feature-level architecture documentation.
@@ -62,7 +62,7 @@ git clone https://github.com/<owner>/copilot-forge.git
 **Option A: Automated Setup (Windows)**
 Run the installer script from the root of this toolkit:
 ```powershell
-.\install.ps1 -TargetDir \path\to\your\project
+.\scripts\install.ps1 -TargetDir \path\to\your\project
 ```
 
 **Option B: Manual Setup**
