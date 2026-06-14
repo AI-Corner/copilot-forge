@@ -1,0 +1,66 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Forge Evaluation Scenario",
+  "type": "object",
+  "required": [
+    "target_prompt",
+    "description",
+    "user_input",
+    "assertions"
+  ],
+  "properties": {
+    "target_prompt": {
+      "type": "string",
+      "description": "Path to the prompt file being tested (e.g., .github/prompts/validate.prompt.md)"
+    },
+    "description": {
+      "type": "string",
+      "description": "Human readable description of the scenario"
+    },
+    "expected_decision": {
+      "type": "string",
+      "enum": ["continue", "block", "ask_user", "recommend_command", "stop"],
+      "description": "The expected high-level behavioral outcome of the prompt"
+    },
+    "severity_if_failed": {
+      "type": "string",
+      "enum": ["BROKEN", "DEGRADED", "MINOR"],
+      "default": "DEGRADED"
+    },
+    "mock_repo_state": {
+      "type": "object",
+      "description": "Key-value map of file paths to their mock text content. These will be created in the fixture directory before execution.",
+      "additionalProperties": {
+        "type": "string"
+      }
+    },
+    "user_input": {
+      "type": "string",
+      "description": "The simulated user chat message"
+    },
+    "assertions": {
+      "type": "object",
+      "properties": {
+        "structural": {
+          "type": "array",
+          "description": "Deterministic regex or string inclusion checks against the output",
+          "items": {
+            "type": "object",
+            "required": ["type", "value"],
+            "properties": {
+              "type": { "type": "string", "enum": ["contains", "not_contains", "regex", "not_regex"] },
+              "value": { "type": "string" }
+            }
+          }
+        },
+        "semantic": {
+          "type": "array",
+          "description": "Natural language statements that the LLM Judge must verify are true about the output",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}
