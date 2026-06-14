@@ -23,6 +23,8 @@ Before proceeding:
 
 ## Instructions
 
+> **Strict Rule**: Keep the requirement document strictly concise. Use short bullet points. Do not invent filler, irrelevant edge cases, or hallucinate implementation details. DO NOT generate QA, Support, or Architecture documents — those are handled in later phases.
+
 ### Step 1: Workflow Routing (VIBE vs SDD)
 
 Evaluate the feature request to decide whether it should be processed as "VIBE" (fast, vibe coding, no heavy documentation) or "SDD" (full Software Design & Development workflow).
@@ -74,7 +76,7 @@ Score each candidate:
 - `+2 × overlapping concerns`
 - `+1 × overlapping stack/tags`
 
-Take the top 15 by score and read their full content. Surface a retrieval summary to the user before authoring.
+Take the top 5 by score and read their full content. Surface a retrieval summary to the user before authoring.
 
 ### Step 2: Determine the Next REQ ID
 1. Run in terminal: `cat .forge/.next-req 2>/dev/null || echo "1"`

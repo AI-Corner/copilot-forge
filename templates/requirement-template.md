@@ -60,7 +60,7 @@ _Define the foundational architecture/stack this feature binds to (prevents AI g
 - [ ] Stack: [e.g., React frontend + Spring Boot backend]
 - [ ] Architecture Pattern: [e.g., REST API, GraphQL, Event-Driven]
 
-## Acceptance Criteria
+## Acceptance Criteria (Strictly concise. Max 5 core criteria)
 
 - [ ] Criterion 1
 - [ ] Criterion 2
@@ -73,6 +73,6 @@ _Define the foundational architecture/stack this feature binds to (prevents AI g
 
 - [ ] Open question 1
 
-## Out of Scope
+## Out of Scope (List at most 3 explicitly excluded items)
 
 - Items explicitly excluded
