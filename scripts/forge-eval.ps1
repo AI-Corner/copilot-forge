@@ -33,6 +33,16 @@ $FixturesDir = Join-Path $RootDir "tests\fixtures"
 $JudgePromptsDir = Join-Path $RootDir "judge-prompts"
 $WorkspaceDir = (Get-Location).Path
 
+# --- Load Environment Variables ---
+$EnvFile = Join-Path $RootDir ".env.local"
+if (Test-Path $EnvFile) {
+    Write-Host "Loading environment variables from .env.local..." -ForegroundColor DarkGray
+    Get-Content $EnvFile | Where-Object { $_ -match '=' -and -not $_.StartsWith('#') } | ForEach-Object {
+        $Name, $Value = $_.Split('=', 2)
+        [System.Environment]::SetEnvironmentVariable($Name.Trim(), $Value.Trim())
+    }
+}
+
 # --- Core Data Structures ---
 $Global:Report = @{
     Timestamp = (Get-Date).ToString("o")
