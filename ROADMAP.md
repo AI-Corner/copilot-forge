@@ -4,21 +4,22 @@ This document outlines strategic improvements to the Copilot Forge toolkit to fu
 
 ## Feature Tracking Overview
 
-| # | Feature | Status | Complexity | Impact |
-|---|---------|--------|------------|--------|
-| 1 | Test-Driven Development (TDD) First Prompts | ✅ Implemented | Low | High |
-| 2 | Interactive Architecture Diagrams (Mermaid.js) | ✅ Implemented | Low | Medium |
-| 3 | AI-Managed Tech Debt Queue | ⚠️ Partial | Medium | High |
-| 4 | MCP (Model Context Protocol) Knowledge Retrieval | 🚧 Future | High | Very High |
-| 5 | Automated CI/CD SDD Verification | 🚧 Future | High | High |
-| 6 | Automated Rollback in `#canary` | ✅ Implemented | High | Medium |
-| 7 | Environment & Configuration Variable Mapping | ✅ Implemented | Medium | High |
-| 8 | Cross-Application Access Flow Tracking | 🚧 Future | Medium | High |
-| 9 | Application Monitoring & Observability Knowledge | 🚧 Future | Low | Medium |
-| 10 | Architectural Evolution: Subagent-Driven via CLI | 🚧 Future | High | High |
-| 11 | **Harness Engineering: Deterministic Pipeline** | ✅ Implemented | High | Very High |
-| 12 | SDD Semantic Testing Framework (Prompt Eval) | 🚧 Future | High | High |
-| — | Automated Support Documentation Generation | ✅ Implemented | Low | Medium |
+| # | Feature | Status | Released | Complexity | Impact |
+|---|---------|--------|----------|------------|--------|
+| 1 | Test-Driven Development (TDD) First Prompts | ✅ Implemented | `v1.1.0` | Low | High |
+| 2 | Interactive Architecture Diagrams (Mermaid.js) | ✅ Implemented | `v1.4.0` | Low | Medium |
+| 3 | AI-Managed Tech Debt Queue | ⚠️ Partial | — | Medium | High |
+| 4 | MCP (Model Context Protocol) Knowledge Retrieval | 🚧 Future | — | High | Very High |
+| 5 | Automated CI/CD SDD Verification | 🚧 Future | — | High | High |
+| 6 | Automated Rollback in `#canary` | ✅ Implemented | `v1.3.0` | High | Medium |
+| 7 | Environment & Configuration Variable Mapping | ✅ Implemented | `v1.2.0` | Medium | High |
+| 8 | Cross-Application Access Flow Tracking | 🚧 Future | — | Medium | High |
+| 9 | Application Monitoring & Observability Knowledge | 🚧 Future | — | Low | Medium |
+| 10 | Architectural Evolution: Subagent-Driven via CLI | 🚧 Future | — | High | High |
+| 11 | **Harness Engineering: Deterministic Pipeline** | ✅ Implemented | `v2.1.0` | High | Very High |
+| 12 | SDD Semantic Testing Framework (Prompt Eval) | 🚧 Future | — | High | High |
+| 13 | Forge Admin Prompt (Self-Modification Harness) | 🚧 Future | — | Medium | High |
+| — | Automated Support Documentation Generation | ✅ Implemented | `v1.2.0` | Low | Medium |
 
 > **Status legend**: ✅ Implemented · ⚠️ Partial · 🚧 Future
 
@@ -181,3 +182,34 @@ Full blueprint: `.demo/SDD_TESTING_FRAMEWORK.md`
 *   **Complexity**: **High**
 *   **Benefit**: **High**
 *   **Impact**: Enables confident iteration on prompts and subagents. Prevents prompt regressions from breaking downstream automation by establishing a continuous prompt-testing pipeline.
+
+---
+
+## 13. Forge Admin Prompt (Self-Modification Harness)
+
+Currently, modifying Forge itself — adding new prompts, editing existing agents, updating templates, or changing pipeline scripts — requires manual knowledge of how all the pieces connect. There is no guided, safety-aware workflow for users who want to evolve the toolkit. A careless edit (e.g., removing a frontmatter field that `#proceed` references, or renaming an agent that `#review` delegates to) can silently break the pipeline.
+
+This feature introduces a dedicated `#forge-admin` prompt that acts as a **self-modification harness** for the Forge toolkit.
+
+### Core Capabilities
+
+1.  **Guided Modification Workflow**: Users describe what they want to change ("add a new agent for accessibility auditing", "rename the #canary prompt", "add a field to the requirement template"). The prompt maps the change to the affected files and walks the user through it step by step.
+2.  **Dependency Graph Awareness**: The prompt understands the relationships between Forge components — which prompts reference which agents, which templates are consumed by which phases, which scripts are invoked by which prompts — and flags any downstream breakage before a change is applied.
+3.  **Breaking Change Detection**: Before applying modifications, the prompt cross-references the change against all existing prompts, agents, templates, and `copilot-instructions.md` to identify references that would become stale or broken.
+4.  **Scaffold Generation**: For common operations (new prompt, new agent, new template), the prompt generates correctly structured files with proper frontmatter, naming conventions, and integration points pre-wired.
+5.  **Post-Modification Validation**: After changes are applied, the prompt runs a consistency sweep — verifying all cross-references resolve, all agent names in prompt frontmatter exist, and all template references in prompts point to real files.
+
+### Example Use Cases
+- "Add a new `#a11y` prompt for accessibility auditing"
+- "Rename the `security-auditor` agent to `appsec-reviewer` across the entire toolkit"
+- "Add a `priority` field to `requirement-template.md` and update all prompts that consume it"
+- "Remove the `#deploy` prompt and clean up all references"
+- "Show me everything that would break if I deleted `reflector.prompt.md`"
+
+### Relationship to Other Roadmap Items
+- **Item 11 (Harness Engineering)**: Forge Admin operates on the harness itself, while Item 11 hardens the harness for end-user projects. Forge Admin is the "maintenance mode" for the pipeline that Item 11 builds.
+- **Item 12 (SDD Semantic Testing)**: Once the testing framework exists, Forge Admin can invoke it post-modification to verify that changed prompts still produce semantically correct outputs.
+
+*   **Complexity**: **Medium** (requires mapping the Forge dependency graph; no new scripting infrastructure)
+*   **Benefit**: **High**
+*   **Impact**: Lowers the barrier for users and contributors to safely evolve the Forge toolkit. Prevents silent pipeline breakage from ad-hoc edits and ensures that the toolkit remains internally consistent as it grows.
