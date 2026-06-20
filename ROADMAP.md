@@ -18,7 +18,7 @@ This document outlines strategic improvements to the Copilot Forge toolkit to fu
 | 10 | Architectural Evolution: Subagent-Driven via CLI | 🚧 Future | — | High | High |
 | 11 | **Harness Engineering: Deterministic Pipeline** | ✅ Implemented | `v2.1.0` | High | Very High |
 | 12 | SDD Semantic Testing Framework (Prompt Eval) | 🚧 Future | — | High | High |
-| 13 | Forge Admin Prompt (Self-Modification Harness) | 🚧 Future | — | Medium | High |
+| 13 | Forge Admin Prompt (Self-Modification Harness) | ✅ Implemented | `v2.2.0` | Medium | High |
 | — | Automated Support Documentation Generation | ✅ Implemented | `v1.2.0` | Low | Medium |
 
 > **Status legend**: ✅ Implemented · ⚠️ Partial · 🚧 Future
