@@ -19,6 +19,13 @@ This document outlines strategic improvements to the Copilot Forge toolkit to fu
 | 11 | **Harness Engineering: Deterministic Pipeline** | ✅ Implemented | `v2.1.0` | High | Very High |
 | 12 | SDD Semantic Testing Framework (Prompt Eval) | 🚧 Future | — | High | High |
 | 13 | Forge Admin Prompt (Self-Modification Harness) | ✅ Implemented | `v2.2.0` | Medium | High |
+| 14 | Corpus/Guide Split (Context Window Optimization) | 🚧 Future | — | Medium | High |
+| 15 | Learning Flywheel (Self-Improving Knowledge) | 🚧 Future | — | Medium | High |
+| 16 | Process Discipline Guides | 🚧 Future | — | Low | High |
+| 17 | Computational vs. Inferential Sensor Split | 🚧 Future | — | Medium | High |
+| 18 | Pacing Modes | 🚧 Future | — | High | High |
+| 19 | Drift Sensor (Continuous Convention Compliance) | 🚧 Future | — | Low | High |
+| 20 | Codebase State Document (Rich Project Understanding) | 🚧 Future | — | Medium | High |
 | — | Automated Support Documentation Generation | ✅ Implemented | `v1.2.0` | Low | Medium |
 
 > **Status legend**: ✅ Implemented · ⚠️ Partial · 🚧 Future
@@ -213,3 +220,89 @@ This feature introduces a dedicated `#forge-admin` prompt that acts as a **self-
 *   **Complexity**: **Medium** (requires mapping the Forge dependency graph; no new scripting infrastructure)
 *   **Benefit**: **High**
 *   **Impact**: Lowers the barrier for users and contributors to safely evolve the Forge toolkit. Prevents silent pipeline breakage from ad-hoc edits and ensures that the toolkit remains internally consistent as it grows.
+
+---
+
+## 14. Corpus/Guide Split (Context Window Optimization)
+
+Forge prompts currently mix rules and reasoning. When checklists load, agents read thousands of lines of explanation unnecessarily. This feature splits `.forge/context/` into two layers:
+- **Rules/Guides**: Short, directive, always loaded.
+- **Corpus**: Long-form reasoning, loaded on-demand via references.
+
+*   **Complexity**: **Medium**
+*   **Benefit**: **High**
+*   **Impact**: Significantly reduces the token usage per session and improves agent focus by emphasizing actionable directives.
+
+---
+
+## 15. Learning Flywheel (Self-Improving Knowledge)
+
+Knowledge capture is currently pull-based and ad-hoc (`#query`). This enhancement creates two active flywheels:
+- **Additive**: Agents auto-capture learning candidates into a `.forge/knowledge/inbox/` when they encounter surprises. A new `#synthesize` prompt processes these into lessons, assumptions, or convention updates.
+- **Subtractive**: A `#prune` prompt checks existing rules against the codebase to archive stale knowledge.
+
+*   **Complexity**: **Medium**
+*   **Benefit**: **High**
+*   **Impact**: Transforms passive knowledge into an active self-improving system.
+
+---
+
+## 16. Process Discipline Guides
+
+Agents currently lack explicit rules about behavioral disciplines, such as escalation, pushback against wrong premises, avoiding hallucinations, and scoping.
+
+This feature introduces explicit process guides (e.g., `grounding.md`, `escalation.md`, `self-validation.md`) with a tiered severity system (**IRON LAW**, **GOLDEN PATH**, **RULES**), similar to Keystone.
+
+*   **Complexity**: **Low**
+*   **Benefit**: **High**
+*   **Impact**: Immediately improves agent behavior and separates reliable automation from hallucination-prone runs without changing existing logic.
+
+---
+
+## 17. Computational vs. Inferential Sensor Split
+
+Agent checklists currently mix deterministic checks with LLM-based reviews. This feature formalizes a separation:
+- **Computational Sensors**: Shell commands yielding deterministic output (lint, test, build, secret-scan). These always run first.
+- **Inferential Sensors**: LLM-based reviews (correctness, architecture, security, spec-adherence) that run only after computational passes succeed.
+
+It also introduces a new `spec-adherence.prompt.md` sensor to strictly compare ACs to the `git diff`.
+
+*   **Complexity**: **Medium**
+*   **Benefit**: **High**
+*   **Impact**: Speeds up the verification loop, prevents the AI from reviewing code that doesn't compile, and explicitly grounds reviews in the original spec.
+
+---
+
+## 18. Pacing Modes
+
+The framework currently offers only binary speeds: `#proceed` (autonomous with specific pause points) or `#vibe` (lightweight, minimal checks). This enhancement introduces three pacing modes:
+- **Paired**: Ask at every phase boundary.
+- **Solo**: Work independently. Stop on hard problems.
+- **Autopilot**: Fully autonomous. Log decisions implicitly to an Assumption Log (`assumption-log.md`) at the end.
+
+*   **Complexity**: **High**
+*   **Benefit**: **High**
+*   **Impact**: Adapts the pipeline's chatty nature to the complexity of the task, enabling true autonomous overnight runs.
+
+---
+
+## 19. Drift Sensor (Continuous Convention Compliance)
+
+Convention compliance is currently only checked during `#reflect` or `#review`. This introduces a new lightweight `#check-drift` prompt to perform fast spot-checks during implementation to flag deviations instantly without auto-fixing them.
+
+*   **Complexity**: **Low**
+*   **Benefit**: **High**
+*   **Impact**: Catches convention deviations early during long implementation sessions, preventing compounding errors.
+
+---
+
+## 20. Codebase State Document (Rich Project Understanding)
+
+Currently, `project-overview.md` and `architecture.md` fail to capture the real empirical state (e.g., tools, framework versions, CI platforms, quality scorecards, debt ledger). This feature adds:
+- `codebase-state.md` (auto-generated by `#init`, updated by `#analyze`)
+- `quality-radar.md`
+- `code-debt.md`
+
+*   **Complexity**: **Medium**
+*   **Benefit**: **High**
+*   **Impact**: Gives the agent explicit, empirical knowledge of the environment to better inform commands and logic without redundant code scans.
