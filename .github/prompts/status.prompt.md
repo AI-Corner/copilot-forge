@@ -4,7 +4,7 @@ tools: [codebase, runCommand, terminalLastCommand]
 description: Show current state of all Copilot Forge work across the project
 ---
 
-# status — Copilot Forge Status Dashboard
+# status â€” Copilot Forge Status Dashboard
 
 You are generating a status report of all Copilot Forge work in the current project.
 
@@ -12,13 +12,13 @@ You are generating a status report of all Copilot Forge work in the current proj
 
 ## Input
 
-Filter: [optional — REQ-xxx ID, "in-progress", "bugs", or nothing for full dashboard]
+Filter: [optional â€” REQ-xxx ID, "in-progress", "bugs", or nothing for full dashboard]
 
 ## Instructions
 
 ### Step 1: Scan All Copilot Forge artifacts
 
-**Detect repository mode** — use the codebase tool to read `.forge/config.yml`. If it declares more than one `repos:` entry, this is **cross-repo mode**; otherwise **single-repo mode**.
+**Detect repository mode** â€” use the codebase tool to read `.forge/config.yml`. If it declares more than one `repos:` entry, this is **cross-repo mode**; otherwise **single-repo mode**.
 
 1. Read all `requirement.md` files under `.forge/specs/REQ-*/` via the codebase tool.
 2. Read all task files under `.forge/specs/REQ-*/tasks/`.
@@ -76,3 +76,10 @@ At the bottom, list recommended next actions:
 - Approved specs that need architecture/tasks
 - Tasks that are ready to implement (dependencies met)
 - Bugs that are `open` and unassigned
+
+## Internal Reference
+- **Incoming Skill Dependencies**: *None*
+- **Incoming Agent Dependencies**: *None*
+- **Outgoing Skill Dependencies**: *None*
+- **Outgoing Agent Dependencies**: *None*
+- **Resource Dependencies**: *None*

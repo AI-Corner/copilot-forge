@@ -1,10 +1,10 @@
----
+﻿---
 agent: agent
 tools: [codebase, runCommand, changes, terminalLastCommand]
 description: Bootstrap .forge/ structure in a new project repo
 ---
 
-# init — Bootstrap Copilot Forge Structure
+# init â€” Bootstrap Copilot Forge Structure
 
 You are setting up the `.forge/` directory structure for spec-driven development in this project.
 
@@ -12,7 +12,7 @@ You are setting up the `.forge/` directory structure for spec-driven development
 
 ## Input
 
-Target directory: [provided by the user — defaults to the current workspace root if omitted]
+Target directory: [provided by the user â€” defaults to the current workspace root if omitted]
 
 ## Instructions
 
@@ -22,13 +22,13 @@ Target directory: [provided by the user — defaults to the current workspace ro
 
 ### Step 2: Gather Project Context
 Ask the user for the following (skip any already known from existing files like `README.md`, `package.json`, or project documentation):
-1. **Project name** — What is this project called?
-2. **What it does** — One paragraph description
-3. **Tech stack** — Languages, frameworks, databases, cloud providers
-4. **Project scope** — What's in scope vs out of scope
-5. **Key architectural patterns** — Layered? Microservices? Monolith?
+1. **Project name** â€” What is this project called?
+2. **What it does** â€” One paragraph description
+3. **Tech stack** â€” Languages, frameworks, databases, cloud providers
+4. **Project scope** â€” What's in scope vs out of scope
+5. **Key architectural patterns** â€” Layered? Microservices? Monolith?
 
-If a `README.md` or `package.json` exists, read it via the codebase tool and extract this info automatically — confirm with the user instead of asking from scratch.
+If a `README.md` or `package.json` exists, read it via the codebase tool and extract this info automatically â€” confirm with the user instead of asking from scratch.
 
 ### Step 3: Create Directory Structure
 
@@ -66,13 +66,13 @@ Use the terminal to create:
     env-local-template.env
 ```
 
-Copy templates from `templates/` at the toolkit repo root (the canonical location). If a local copy already exists in the consumer project's `.forge/templates/`, preserve it — do not overwrite customizations.
+Copy templates from `templates/` at the toolkit repo root (the canonical location). If a local copy already exists in the consumer project's `.forge/templates/`, preserve it â€” do not overwrite customizations.
 
 ### Step 4: Populate Context Files
 
-**project-overview.md** — fill in based on user input:
+**project-overview.md** â€” fill in based on user input:
 ```markdown
-# {Project Name} — Project Overview
+# {Project Name} â€” Project Overview
 
 *Navigation: [Architecture](architecture.md) | [Conventions](conventions.md) | [Taxonomy](taxonomy.md)*
 
@@ -86,9 +86,9 @@ Copy templates from `templates/` at the toolkit repo root (the canonical locatio
 {in scope / out of scope}
 ```
 
-**architecture.md** — initial structure:
+**architecture.md** â€” initial structure:
 ```markdown
-# {Project Name} — Architecture
+# {Project Name} â€” Architecture
 
 *Navigation: [Project Overview](project-overview.md) | [Conventions](conventions.md) | [Taxonomy](taxonomy.md)*
 
@@ -105,9 +105,9 @@ Copy templates from `templates/` at the toolkit repo root (the canonical locatio
 (Add architectural decision records here as decisions are made)
 ```
 
-**conventions.md** — based on project analysis:
+**conventions.md** â€” based on project analysis:
 ```markdown
-# {Project Name} — Conventions
+# {Project Name} â€” Conventions
 
 *Navigation: [Project Overview](project-overview.md) | [Architecture](architecture.md) | [Taxonomy](taxonomy.md)*
 
@@ -127,18 +127,18 @@ Copy templates from `templates/` at the toolkit repo root (the canonical locatio
 {branch naming, commit messages, PR process}
 ```
 
-**variables.md** — environment and configuration tracking:
+**variables.md** â€” environment and configuration tracking:
 1. Copy `templates/variables-template.md` to `.forge/context/variables.md`.
 2. Scan the repository for configuration files (e.g., `.env.example`, `application.yml`, `config.js`, `helm/values.yaml`).
 3. Extract existing variables and populate the tables in `.forge/context/variables.md`. 
 4. **CRITICAL**: Do NOT extract or write actual production secrets. Use dummy values or the safe default values found in `.example` files.
 
-**deployment.md** — deployment flow tracking:
+**deployment.md** â€” deployment flow tracking:
 1. Copy `templates/deployment-template.md` to `.forge/context/deployment.md`.
 2. Scan the repository for deployment configurations (e.g., `.github/workflows/`, `.gitlab-ci.yml`, `Jenkinsfile`, `Dockerfile`, `helm/`, `terraform/`, `package.json` scripts).
 3. Extract the existing deployment workflow and populate `.forge/context/deployment.md`. If no deployment mechanism is found, note it as "Not configured".
 
-**Support Documentation** — capturing miscellaneous context:
+**Support Documentation** â€” capturing miscellaneous context:
 If the user provides external documentation (e.g., a `/docs` folder) during initialization and you extract valuable context that does not neatly fit into `architecture.md`, `conventions.md`, or `project-overview.md`, generate a support document for it.
 1. Use `templates/support-template.md`.
 2. Save it to `.forge/knowledge/support/SUP-xxx-slug.md` (e.g., `SUP-001-legacy-api-quirks.md`).
@@ -165,7 +165,7 @@ Add to `.gitignore` (create if it doesn't exist):
 ```
 
 ### Step 6: Scaffold Retrieval Taxonomy
-Copy `templates/taxonomy-template.md` to `.forge/context/taxonomy.md` (skip if it already exists — preserve customizations).
+Copy `templates/taxonomy-template.md` to `.forge/context/taxonomy.md` (skip if it already exists â€” preserve customizations).
 
 Advise the user: "Open `.forge/context/taxonomy.md` and customize the example values for this codebase."
 
@@ -179,6 +179,12 @@ Check if `.forge/.env.local` exists. If not, copy `templates/env-local-template.
 
 ### Step 9: Summary
 1. Display the created directory structure
-2. Explain the Copilot Forge workflow: `#spec` → `#validate` → `#architect` → `#validate` → `#issue_epic_creation` → implement...
+2. Explain the Copilot Forge workflow: `#spec` â†’ `#validate` â†’ `#architect` â†’ `#validate` â†’ `#issue_epic_creation` â†’ implement...
 3. Suggest next step: "Run `#spec` to write your first requirement spec."
 
+## Internal Reference
+- **Incoming Skill Dependencies**: *None*
+- **Incoming Agent Dependencies**: *None*
+- **Outgoing Skill Dependencies**: *None*
+- **Outgoing Agent Dependencies**: *None*
+- **Resource Dependencies**: `adr-template.md`, `assumption-template.md`, `bug-template.md`, `deployment-template.md`, `env-local-template.env`, `lesson-template.md`, `requirement-template.md`, `support-template.md`, `task-template.md`, `taxonomy-template.md`, `variables-template.md`

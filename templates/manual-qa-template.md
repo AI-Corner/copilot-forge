@@ -30,3 +30,8 @@ Briefly describe what this manual test is intended to verify. (Keep to 1-2 short
 
 ## 📝 Findings / Notes
 (Space for the manual tester to leave comments or attach screenshots)
+
+## Internal Reference
+- **Incoming Dependencies**: `#query`, `#wrapup`
+- **Outgoing Dependencies**: *None*
+- **Resource Dependencies**: *None*

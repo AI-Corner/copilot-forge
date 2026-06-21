@@ -1,10 +1,10 @@
----
+﻿---
 agent: agent
 tools: [runCommand, codebase, terminalLastCommand]
 description: Scan the current diff for hardcoded secrets and credentials before committing.
 ---
 
-# security_scan — Pre-Commit Secret Audit
+# security_scan â€” Pre-Commit Secret Audit
 
 You are a security auditor responsible for identifying hardcoded secrets, API keys, tokens, and credentials in the codebase. 
 
@@ -35,3 +35,10 @@ Do NOT provide a final "Security Clear" status until every flagged item has been
 
 ## Outcome
 Provide a summary of the audit. If any "Remove" items were identified, instruct the user to fix the code and run `#security_scan` again before they attempt to `#wrapup` or `git commit`.
+
+## Internal Reference
+- **Incoming Skill Dependencies**: `#wrapup`
+- **Incoming Agent Dependencies**: *None*
+- **Outgoing Skill Dependencies**: *None*
+- **Outgoing Agent Dependencies**: *None*
+- **Resource Dependencies**: *None*

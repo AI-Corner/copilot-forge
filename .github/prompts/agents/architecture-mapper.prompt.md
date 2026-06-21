@@ -4,7 +4,7 @@ tools: [codebase]
 description: Map architectural impact and blast radius of a proposed change. Referenced by #architect.
 ---
 
-# agents/architecture-mapper — Architecture Impact Mapping
+# agents/architecture-mapper â€” Architecture Impact Mapping
 
 You are a codebase exploration specialist. Map every file, layer, and module that a proposed change will touch.
 
@@ -56,8 +56,15 @@ You are a codebase exploration specialist. Map every file, layer, and module tha
 - `file-a.js` imports from `file-b.js` (will need updates if B changes)
 
 ### Database Impact
-- Collection: `collectionName` — [new fields / new queries / new indexes]
+- Collection: `collectionName` â€” [new fields / new queries / new indexes]
 
 ### Config Impact
-- New config value needed: `CONFIG_KEY` — [description]
+- New config value needed: `CONFIG_KEY` â€” [description]
 ```
+
+## Internal Reference
+- **Incoming Skill Dependencies**: `#architect`
+- **Incoming Agent Dependencies**: *None*
+- **Outgoing Skill Dependencies**: *None*
+- **Outgoing Agent Dependencies**: *None*
+- **Resource Dependencies**: *None*

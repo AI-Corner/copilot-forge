@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Copilot Forge - Dependency Graph</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="header">
+        <h1>Copilot Forge Dependency Graph</h1>
+        <p>Interactive map of Prompts, Templates, and Scripts. Drag nodes to rearrange. Click a node to view its detailed flow.</p>
+    </div>
+    
+    <div id="toolbar">
+        <div id="filters">
+            <strong>Show:</strong>
+            <label><input type="checkbox" id="filter-prompt" checked> Prompts <span class="color-box" style="background-color: #d4edda; border-color: #28a745;"></span></label>
+            <label><input type="checkbox" id="filter-agent" checked> Agents <span class="color-box" style="background-color: #e2d9f3; border-color: #6f42c1;"></span></label>
+            <label><input type="checkbox" id="filter-script" checked> Scripts <span class="color-box" style="background-color: #cce5ff; border-color: #007bff;"></span></label>
+            <label><input type="checkbox" id="filter-template"> Templates <span class="color-box" style="background-color: #fff3cd; border-color: #ffc107;"></span> (Hidden by default)</label>
+        </div>
+    </div>
+
+    <div id="main-container">
+        <svg id="graph-svg"></svg>
+        
+        <div id="sidebar" class="hidden">
+            <h2 id="node-title">#node-name</h2>
+            <span id="node-badge" class="badge">prompt</span>
+            
+            <div class="list-container">
+                <h3>Dependencies (Calls these)</h3>
+                <ul id="deps-out-list"></ul>
+            </div>
+            
+            <div class="list-container">
+                <h3>Dependents (Called by these)</h3>
+                <ul id="deps-in-list"></ul>
+            </div>
+            
+            <button id="close-sidebar">Close panel</button>
+        </div>
+    </div>
+
+    <script src="https://d3js.org/d3.v6.min.js"></script>
+    <script src="data.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

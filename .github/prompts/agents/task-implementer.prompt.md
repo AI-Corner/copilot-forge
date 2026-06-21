@@ -1,4 +1,4 @@
-﻿---
+---
 agent: agent
 tools: [codebase, runCommand]
 description: Implements a single Copilot Forge task. Referenced by #proceed Phase 4.
@@ -35,7 +35,7 @@ You are a task implementation agent. Implement a single TASK from an Copilot For
 - Use project logger, not `console.log`
 - Config values in config, not hardcoded
 - Proper error handling with appropriate error types
-- Layered architecture: routes → services → repositories
+- Layered architecture: routes ? services ? repositories
 
 ### Tests
 - Test both happy path and error paths
@@ -56,3 +56,10 @@ After implementation:
 - Report test results (pass/fail count)
 - Report the commit hash
 - Flag any concerns or deviations from the task spec
+
+## Internal Reference
+- **Incoming Skill Dependencies**: `#proceed`
+- **Incoming Agent Dependencies**: *None*
+- **Outgoing Skill Dependencies**: *None*
+- **Outgoing Agent Dependencies**: *None*
+- **Resource Dependencies**: *None*

@@ -246,3 +246,8 @@ switch ($Phase) {
         Pass "$($tasks.Count) tasks — all complete. Safe to wrap up."
     }
 }
+
+## Internal Reference
+- **Incoming Dependencies**: `#proceed`, `#forge-admin`, `#architect`
+- **Outgoing Dependencies**: *None*
+- **Resource Dependencies**: *None*

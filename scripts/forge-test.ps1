@@ -311,3 +311,8 @@ Write-Host "  Summary written to: $outputFile" -ForegroundColor DarkGray
 Write-Host ""
 
 exit $exitCode
+
+## Internal Reference
+- **Incoming Dependencies**: *None*
+- **Outgoing Dependencies**: *None*
+- **Resource Dependencies**: *None*

@@ -18,3 +18,8 @@ Why this assumption was made and what depends on it.
 ## Resolution
 
 How it was validated or invalidated (filled after resolution).
+
+## Internal Reference
+- **Incoming Dependencies**: `#query`, `#init`, `#wrapup`
+- **Outgoing Dependencies**: *None*
+- **Resource Dependencies**: *None*

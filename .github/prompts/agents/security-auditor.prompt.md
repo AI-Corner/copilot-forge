@@ -1,4 +1,4 @@
-﻿---
+---
 agent: agent
 tools: [codebase, runCommand]
 description: Security audit checklist. Referenced by #review and #analyze.
@@ -79,3 +79,10 @@ You are a security auditor. Identify security vulnerabilities, data exposure ris
 - Low: N
 - Dependency issues: N
 ```
+
+## Internal Reference
+- **Incoming Skill Dependencies**: `#review`
+- **Incoming Agent Dependencies**: *None*
+- **Outgoing Skill Dependencies**: *None*
+- **Outgoing Agent Dependencies**: *None*
+- **Resource Dependencies**: *None*

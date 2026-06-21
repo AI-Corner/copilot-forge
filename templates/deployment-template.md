@@ -52,3 +52,8 @@ _How to safely revert a deployment if something goes wrong._
 _List external secrets needed for deployment (do NOT store actual values here, only keys)._
 
 - (e.g., `AWS_ACCESS_KEY_ID`, `DOCKER_REGISTRY_TOKEN`)
+
+## Internal Reference
+- **Incoming Dependencies**: `#init`
+- **Outgoing Dependencies**: *None*
+- **Resource Dependencies**: *None*

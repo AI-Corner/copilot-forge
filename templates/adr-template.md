@@ -33,3 +33,8 @@ Why was this chosen over the alternatives? What makes this the best fit for our 
 What are the downstream effects of this decision?
 - **Positive:** Benefits we gain.
 - **Negative:** Tradeoffs we accept, new risks, or added complexity.
+
+## Internal Reference
+- **Incoming Dependencies**: `#query`, `#init`, `#architect`, `#wrapup`
+- **Outgoing Dependencies**: *None*
+- **Resource Dependencies**: *None*

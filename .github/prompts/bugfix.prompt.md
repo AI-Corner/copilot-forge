@@ -1,10 +1,10 @@
----
+﻿---
 agent: agent
 tools: [codebase, runCommand, changes, terminalLastCommand]
-description: End-to-end bug fix workflow — report, analyze, fix, verify, ship, knowledge capture
+description: End-to-end bug fix workflow â€” report, analyze, fix, verify, ship, knowledge capture
 ---
 
-# bugfix — Bug Fix Workflow
+# bugfix â€” Bug Fix Workflow
 
 You are fixing a bug using a streamlined workflow. Changes land via PR, ride the project's CI/CD pipeline, and aren't marked resolved until every declared deploy target is confirmed.
 
@@ -13,7 +13,7 @@ You are fixing a bug using a streamlined workflow. Changes land via PR, ride the
 
 ## Input
 
-Bug report: [bug description or BUG-xxx ID — provided by the user]
+Bug report: [bug description or BUG-xxx ID â€” provided by the user]
 
 ## Prerequisites
 
@@ -38,7 +38,7 @@ Read `.forge/templates/bug-template.md` (or `templates/bug-template.md` at the t
 2. If given a BUG ID, read the existing bug report.
 
 ### Phase 2: Analyze
-1. Use the codebase tool to trace the bug — search for relevant code paths based on the bug description.
+1. Use the codebase tool to trace the bug â€” search for relevant code paths based on the bug description.
 2. Trace the execution flow that triggers the bug.
 3. Identify the root cause (not just symptoms).
 4. Read the identified files to understand the context.
@@ -55,13 +55,13 @@ Read `.forge/templates/bug-template.md` (or `templates/bug-template.md` at the t
 ### Phase 4: Verify
 1. Run the test suite: `npm test` (or equivalent).
 2. If tests fail, fix and re-run.
-3. Update the bug report (leave status as `open` for now — marked resolved only after merge + deploy in Phase 7):
+3. Update the bug report (leave status as `open` for now â€” marked resolved only after merge + deploy in Phase 7):
    - Fill in "Resolution" section with what was changed and why
    - Fill in "Files Changed" section with specific file paths
    - Update the `updated` date
 4. Present interim summary (root cause, fix, files changed, test results). Then continue to Phase 5.
 
-### Phase 5: Ship — Create Pull Request(s)
+### Phase 5: Ship â€” Create Pull Request(s)
 
 For each touched repo:
 1. Push the fix branch: `git push -u origin fix/bug-xxx-slug`
@@ -81,15 +81,15 @@ Run when:
 
 Invoke `#canary` for each affected service. If all canaries pass, continue. If any fails, halt and surface the failure.
 
-### Phase 7: Wrapup — Merge, Deploy, Knowledge Capture
+### Phase 7: Wrapup â€” Merge, Deploy, Knowledge Capture
 
-**Step 1 — Merge each PR**:
+**Step 1 â€” Merge each PR**:
 1. Verify mergeable: `gh pr view <prUrl> --json mergeable,mergeStateStatus`
 2. If main has advanced, rebase: `git rebase origin/main && git push --force-with-lease`. Re-check CI.
 3. Merge: `gh pr merge <prUrl> --squash --delete-branch`
 4. In cross-repo mode, walk `touched_repos:` order (or `merge_order:` from config).
 
-**Step 2 — Confirm deploys** (skip if project doesn't use Cloud Run):
+**Step 2 â€” Confirm deploys** (skip if project doesn't use Cloud Run):
 For each touched service, verify the fix is deployed to both staging and production:
 ```bash
 gcloud run services describe <service> \
@@ -102,12 +102,12 @@ Confirm staging and production both serve the new revision.
 **iOS deploy** (only when `stack.frontends` includes `ios` AND iOS repo was touched):
 Read `ios.deploy_targets` and `ios.deploy_command` from `.forge/config.yml`. Deploy to every device in `deploy_targets`.
 
-**Step 3 — Update the bug report**:
+**Step 3 â€” Update the bug report**:
 - Set status to `resolved`
 - Update the `updated` date
 - Add a Deployment section noting staging + production revisions
 
-**Step 4 — Capture knowledge** (NEVER skip):
+**Step 4 â€” Capture knowledge** (NEVER skip):
 Evaluate: did this bug reveal something a future implementer should know?
 - A surprising failure mode, race condition, schema mismatch?
 - A pattern or anti-pattern worth recording?
@@ -122,7 +122,7 @@ Include `domain`, `component`, `tags`. Filename format: `LESSON-xxx-slug.md` onl
 
 If the bug genuinely produced no useful lesson (one-line typo, etc.), say so explicitly.
 
-**Step 5 — Clean up**:
+**Step 5 â€” Clean up**:
 ```bash
 git checkout main && git pull
 git worktree remove <fix-worktree-path>   # if separate worktree was used
@@ -130,9 +130,9 @@ git branch -D fix/bug-xxx-slug
 git fetch --prune
 ```
 
-**Step 6 — Final ship summary**:
+**Step 6 â€” Final ship summary**:
 ```
-## BUG-xxx: Bug Title — Resolved
+## BUG-xxx: Bug Title â€” Resolved
 
 **Severity**: <severity>
 **PR**: #nn
@@ -149,8 +149,8 @@ git fetch --prune
 - Production: <service> revision <hash> @ 100% traffic
 
 ### Lessons captured
-- LESSON-xxx-slug.md — one-line hook
-  (or "None — fix was straightforward and revealed no new pattern")
+- LESSON-xxx-slug.md â€” one-line hook
+  (or "None â€” fix was straightforward and revealed no new pattern")
 ```
 
 ## Branch Naming
@@ -160,3 +160,10 @@ Use `fix/bug-xxx-slug`. In cross-repo bugs, use the same branch name in every to
 ```
 fix(BUG-xxx): short description of the fix
 ```
+
+## Internal Reference
+- **Incoming Skill Dependencies**: *None*
+- **Incoming Agent Dependencies**: *None*
+- **Outgoing Skill Dependencies**: `#canary`, `#wrapup`
+- **Outgoing Agent Dependencies**: *None*
+- **Resource Dependencies**: `bug-template.md`, `lesson-template.md`

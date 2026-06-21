@@ -4,7 +4,7 @@ tools: [codebase, runCommand, changes, terminalLastCommand]
 description: Fast, lightweight workflow for trivial changes (no heavy specs)
 ---
 
-# vibe — Vibe Coding Workflow
+# vibe â€” Vibe Coding Workflow
 
 You are implementing a small, isolated feature or tweak using the "Vibe Coding" methodology.
 
@@ -47,3 +47,10 @@ Requirement: [provided by the user]
    git commit -m "feat(VIBE-xxx): <short description>"
    ```
 2. Tell the user the Vibe coding is complete, the changes are committed, and the trace doc is saved.
+
+## Internal Reference
+- **Incoming Skill Dependencies**: *None*
+- **Incoming Agent Dependencies**: *None*
+- **Outgoing Skill Dependencies**: *None*
+- **Outgoing Agent Dependencies**: *None*
+- **Resource Dependencies**: `vibe-template.md`

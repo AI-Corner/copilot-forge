@@ -347,3 +347,8 @@ if ($UpdatePipelineState -and $reqSpecDir -ne "") {
         Write-Warning "pipeline-state.json not found at $stateFile - skipping update."
     }
 }
+
+## Internal Reference
+- **Incoming Dependencies**: `#token-estimate`, `#wrapup`
+- **Outgoing Dependencies**: *None*
+- **Resource Dependencies**: *None*

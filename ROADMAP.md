@@ -26,6 +26,7 @@ This document outlines strategic improvements to the Copilot Forge toolkit to fu
 | 18 | Pacing Modes | 🚧 Future | — | High | High |
 | 19 | Drift Sensor (Continuous Convention Compliance) | 🚧 Future | — | Low | High |
 | 20 | Codebase State Document (Rich Project Understanding) | 🚧 Future | — | Medium | High |
+| 21 | Dynamic Dependency Graph Visualization | ✅ Implemented | `v2.3.0` | Medium | High |
 | — | Automated Support Documentation Generation | ✅ Implemented | `v1.2.0` | Low | Medium |
 
 > **Status legend**: ✅ Implemented · ⚠️ Partial · 🚧 Future
@@ -580,3 +581,13 @@ GitHub Actions (.github/workflows/ci.yml)
 ```
 
 `#init` auto-generates this by scanning the repo. `#analyze` keeps it current.
+
+---
+
+## 21. Dynamic Dependency Graph Visualization
+
+Currently, the relationships between the many skills, prompts, and agents in Copilot Forge can be difficult to trace manually. This feature introduces a robust `generate-graph.ps1` script and an interactive D3.js frontend to visualize the exact intent-based architecture of the toolkit.
+
+*   **Complexity**: **Medium**
+*   **Benefit**: **High**
+*   **Impact**: Enables users and maintainers to easily explore how prompts orchestrate agents, greatly improving the discoverability and maintainability of Forge's internal architecture. You can view the graph locally by opening `docs/graph/index.html`.

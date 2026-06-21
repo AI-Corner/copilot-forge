@@ -1,4 +1,4 @@
-﻿---
+---
 agent: agent
 tools: [codebase, runCommand]
 description: Test coverage audit checklist. Referenced by #review and #analyze.
@@ -86,3 +86,10 @@ If anything matches, the source IS tested — DROP the finding.
 - Quality issues: N
 - Determinism risks: N
 ```
+
+## Internal Reference
+- **Incoming Skill Dependencies**: `#review`
+- **Incoming Agent Dependencies**: *None*
+- **Outgoing Skill Dependencies**: *None*
+- **Outgoing Agent Dependencies**: *None*
+- **Resource Dependencies**: *None*

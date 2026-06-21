@@ -1,19 +1,19 @@
----
+﻿---
 agent: agent
 tools: [codebase, runCommand, changes, terminalLastCommand]
-description: Post-implementation self-review — catch issues before #review
+description: Post-implementation self-review â€” catch issues before #review
 ---
 
-# reflect — Post-Implementation Reflection
+# reflect â€” Post-Implementation Reflection
 
 You are performing a self-review of recently implemented code to catch issues before the formal `#review` step. This is a fast, honest assessment of your own work.
 
 > **Ethos**: Follow the principles in `.github/copilot-instructions.md` throughout this session.
-> **Focus**: Act as the self-reviewer. Only use `.forge/context/*.md`, the REQ’s `requirement.md`, its tasks, and the current code diff; ignore any earlier chat history or brainstorming.
+> **Focus**: Act as the self-reviewer. Only use `.forge/context/*.md`, the REQâ€™s `requirement.md`, its tasks, and the current code diff; ignore any earlier chat history or brainstorming.
 
 ## Input
 
-Scope: [REQ-xxx ID, branch name, or "current changes" — provided by the user]
+Scope: [REQ-xxx ID, branch name, or "current changes" â€” provided by the user]
 
 ## Prerequisites
 
@@ -21,7 +21,7 @@ Use the codebase tool to verify `.forge/context/conventions.md` exists. If it do
 
 ## Instructions
 
-### ⛔ Pre-flight Gate (Run This First — Do Not Skip)
+### â›” Pre-flight Gate (Run This First â€” Do Not Skip)
 
 ```powershell
 .\scripts\forge-gate.ps1 -Phase reflect
@@ -29,7 +29,7 @@ Use the codebase tool to verify `.forge/context/conventions.md` exists. If it do
 
 > **If the gate fails**: stop immediately. There are no changes to review.
 
-### Step 1: Deterministic Build Check (Run Second — Always)
+### Step 1: Deterministic Build Check (Run Second â€” Always)
 
 Run the project's linter, type-checker, and build command via terminal **before any LLM-based review**. The first signal must always be deterministic, not a "vibe check".
 
@@ -72,17 +72,17 @@ Use the codebase tool to search `.forge/knowledge/lessons/` with patterns matchi
 - Any race conditions or async issues?
 
 #### Convention Compliance
-Read `.forge/context/conventions.md` first — it is the source of truth. Check the changed code against every rule it declares:
+Read `.forge/context/conventions.md` first â€” it is the source of truth. Check the changed code against every rule it declares:
 - Naming (files, types, variables, functions, constants, route paths) per the project's declared scheme
-- Logging — uses the project's logger abstraction, not raw `console.log`
-- Configuration — environment-specific values come from config, not hardcoded literals
-- API response format — error and success shapes match the project's declared format
+- Logging â€” uses the project's logger abstraction, not raw `console.log`
+- Configuration â€” environment-specific values come from config, not hardcoded literals
+- API response format â€” error and success shapes match the project's declared format
 
 #### Architecture
 Read `.forge/context/architecture.md` first. Check:
-- Layering — routes/handlers don't bypass services; services don't bypass data-access layers
-- Business logic location — sits in the correct layer per the architecture
-- Dependency injection — components receive collaborators per the declared DI pattern
+- Layering â€” routes/handlers don't bypass services; services don't bypass data-access layers
+- Business logic location â€” sits in the correct layer per the architecture
+- Dependency injection â€” components receive collaborators per the declared DI pattern
 
 #### Testing
 - New code has corresponding tests
@@ -104,9 +104,9 @@ Report a "Questions for the User" section covering:
 - Assumptions made during implementation
 - Deferred edge cases
 
-If there are no questions, state: "No questions — implementation is unambiguous."
+If there are no questions, state: "No questions â€” implementation is unambiguous."
 
-Do not proceed past this step until the user has answered any questions — their responses may change what needs to be fixed.
+Do not proceed past this step until the user has answered any questions â€” their responses may change what needs to be fixed.
 
 ### Step 6: Fix or Defer
 1. If Critical issues are found, fix them immediately.
@@ -118,3 +118,10 @@ Do not proceed past this step until the user has answered any questions — thei
 - If no issues or only minor ones: "Ready for `#review`"
 - If fixes were applied: "Fixes applied. Re-run `#reflect` to verify, or proceed to `#review`"
 - If blockers remain: "Address these issues before `#review`"
+
+## Internal Reference
+- **Incoming Skill Dependencies**: `#proceed`
+- **Incoming Agent Dependencies**: *None*
+- **Outgoing Skill Dependencies**: `#review`
+- **Outgoing Agent Dependencies**: `#agents/reflector`
+- **Resource Dependencies**: *None*

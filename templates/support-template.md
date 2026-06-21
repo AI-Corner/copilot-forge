@@ -27,3 +27,8 @@ tags: []
 
 ## 4. Known Limitations
 - [Any edge cases, system constraints, or out-of-scope items from the spec]
+
+## Internal Reference
+- **Incoming Dependencies**: `#query`, `#init`, `#wrapup`
+- **Outgoing Dependencies**: *None*
+- **Resource Dependencies**: *None*

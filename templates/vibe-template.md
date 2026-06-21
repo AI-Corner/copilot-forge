@@ -13,4 +13,9 @@
 
 ## 3. Verification
 *How was this verified before commit? (e.g., existing test suite passed, manual UI check)*
-- 
+-
+
+## Internal Reference
+- **Incoming Dependencies**: `#vibe`
+- **Outgoing Dependencies**: *None*
+- **Resource Dependencies**: *None*

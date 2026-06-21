@@ -76,3 +76,8 @@ _Define the foundational architecture/stack this feature binds to (prevents AI g
 ## Out of Scope (List at most 3 explicitly excluded items)
 
 - Items explicitly excluded
+
+## Internal Reference
+- **Incoming Dependencies**: `#spec`, `#init`
+- **Outgoing Dependencies**: *None*
+- **Resource Dependencies**: *None*

@@ -5,6 +5,7 @@ Prompts, checklists, and templates for spec-driven development with **GitHub Cop
 ## What's Included
 
 ## Changelog & Recent Updates
+- **v2.3.0**: Added **Dynamic Dependency Graph Visualization**. Refactored all internal prompt dependencies to an intent-based 5-category system (Skills vs. Agents). Automatically generates an interactive D3.js graph to explore the toolkit's architecture. View the graph locally by opening [docs/graph/index.html](docs/graph/index.html).
 - **v2.2.0**: Added **Forge Admin Prompt (`#forge-admin`)**. A maintenance control plane for governing Forge's own prompts, agents, templates, and scripts. Supports five actions (`audit`, `patch`, `standardize`, `deprecate`, `index`) with mandatory dependency graph scanning before any write operation to prevent silent pipeline breakage. All modifications are tracked via lightweight REQ specs for audit traceability.
 - **v2.1.0**: Added **Harness Engineering: Deterministic Pipeline**. Replaced honor-system LLM guardrails with hard, deterministic phase gates (`forge-gate.ps1`). Introduced an autonomous test runner loop (`forge-test.ps1`), an active context snapshot generator to prevent drift (`forge-context.ps1`), execution metrics tracking in `pipeline-state.json`, and a structured failure taxonomy for orchestrating agents.
 - **v2.0.0**: Added **Project Knowledge Query & Capture (`#query`)**. Replaces `#learn` with a hybrid agent that can discuss project history, answer questions using `.forge/context`, and optionally capture new lessons, ADRs, assumptions, and support docs when a new conclusion is reached.
@@ -23,6 +24,8 @@ Prompts, checklists, and templates for spec-driven development with **GitHub Cop
 ### Prompts & Usage Guide
 
 For a complete reference of every Copilot Forge prompt, including what they do, when to call them, and where they fit in the workflow, see the **[Prompt Usage Guide](PROMPT_USAGE.md)**.
+
+You can also explore the **[Interactive Dependency Graph](docs/graph/index.html)** to visually trace how the various skills and agents orchestrate each other under the hood.
 
 Invoke any prompt from Copilot Chat by typing `#<prompt-name>` (e.g., `#init`, `#spec`, `#proceed`).
 

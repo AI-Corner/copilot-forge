@@ -1,4 +1,4 @@
-﻿---
+---
 agent: agent
 tools: [codebase]
 description: Request latency and performance bottleneck scanner. Referenced by #optimize.
@@ -16,7 +16,7 @@ You are a request latency analyst. Identify performance bottlenecks that increas
 Use the codebase tool to trace request paths from route handler through services:
 - `await` chains where independent calls could use `Promise.all()`
 - Sequential service calls that don't depend on each other
-- Waterfall patterns (A → B → C when B and C could run in parallel)
+- Waterfall patterns (A ? B ? C when B and C could run in parallel)
 - Loop with `await` inside that could be parallelized
 
 ### Response Payload Sizes
@@ -81,3 +81,10 @@ Use the codebase tool to trace request paths from route handler through services
 Estimated total latency reduction: ~Xs across N endpoints
 Top 3 quick wins: ...
 ```
+
+## Internal Reference
+- **Incoming Skill Dependencies**: `#optimize`
+- **Incoming Agent Dependencies**: *None*
+- **Outgoing Skill Dependencies**: *None*
+- **Outgoing Agent Dependencies**: *None*
+- **Resource Dependencies**: *None*

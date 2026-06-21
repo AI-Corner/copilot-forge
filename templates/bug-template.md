@@ -1,4 +1,4 @@
-﻿---
+---
 id: BUG-xxx
 title: "Bug Title"
 status: open
@@ -44,4 +44,9 @@ What happens instead.
 
 ## Files Changed
 
-- `path/to/file.js` — description
+- `path/to/file.js` � description
+
+## Internal Reference
+- **Incoming Dependencies**: `#bugfix`, `#init`
+- **Outgoing Dependencies**: *None*
+- **Resource Dependencies**: *None*

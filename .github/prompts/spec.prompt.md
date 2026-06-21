@@ -4,7 +4,7 @@ tools: [codebase, runCommand, changes]
 description: Write a requirement spec from a feature request
 ---
 
-# spec — Requirement Specification
+# spec â€” Requirement Specification
 
 You are writing a requirement spec following the spec-driven Copilot Forge process.
 
@@ -24,7 +24,7 @@ Before proceeding:
 
 ## Instructions
 
-> **Strict Rule**: Keep the requirement document strictly concise. Use short bullet points. Do not invent filler, irrelevant edge cases, or hallucinate implementation details. DO NOT generate QA, Support, or Architecture documents — those are handled in later phases.
+> **Strict Rule**: Keep the requirement document strictly concise. Use short bullet points. Do not invent filler, irrelevant edge cases, or hallucinate implementation details. DO NOT generate QA, Support, or Architecture documents â€” those are handled in later phases.
 
 ### Step 1: Workflow Routing (VIBE vs SDD)
 
@@ -40,8 +40,8 @@ Evaluate the feature request to decide whether it should be processed as "VIBE" 
    g) Unit Tests Required: The logic is complex enough that new unit or integration tests must be written to prove it works.
 
 2. Decision:
-   - If ANY of the above is YES → Proceed with SDD (go to Step 1.1).
-   - If ALL are NO → The requirement is suitable for VIBE. Stop immediately and ask the user: *"This looks like a small, isolated change suitable for Vibe Coding. Would you like to use the lightweight `#vibe` workflow instead? If yes, please run `#vibe [your requirement]`."* Do not proceed further until the user decides.
+   - If ANY of the above is YES â†’ Proceed with SDD (go to Step 1.1).
+   - If ALL are NO â†’ The requirement is suitable for VIBE. Stop immediately and ask the user: *"This looks like a small, isolated change suitable for Vibe Coding. Would you like to use the lightweight `#vibe` workflow instead? If yes, please run `#vibe [your requirement]`."* Do not proceed further until the user decides.
 
 ### Step 1.1: Understand the Request
 1. Read `.forge/context/project-overview.md` and `.forge/context/architecture.md` for grounding context.
@@ -57,25 +57,25 @@ Evaluate the feature request to decide whether it should be processed as "VIBE" 
 
 ### Step 1.5: Derive Query Tags for Retrieval
 Before searching for prior context, derive a structured query from the feature request:
-- **component** — narrow area this touches (e.g., `API/auth`, `iOS/SwiftUI`)
-- **domain** — broader problem domain (e.g., `auth`, `payments`, `ui`)
-- **stack** — tech layers implicated (e.g., `express`, `postgres`, `swiftui`)
-- **concerns** — cross-cutting dimensions (e.g., `security`, `perf`, `a11y`)
-- **tags** — free-form keywords from the feature description
+- **component** â€” narrow area this touches (e.g., `API/auth`, `iOS/SwiftUI`)
+- **domain** â€” broader problem domain (e.g., `auth`, `payments`, `ui`)
+- **stack** â€” tech layers implicated (e.g., `express`, `postgres`, `swiftui`)
+- **concerns** â€” cross-cutting dimensions (e.g., `security`, `perf`, `a11y`)
+- **tags** â€” free-form keywords from the feature description
 
 Surface the proposed query to the user and wait for confirmation or edits before proceeding.
 
 ### Step 1.6: Retrieve Prior Context
 Search for relevant prior artifacts using the codebase tool:
-1. Scan `.forge/knowledge/lessons/*.md` — read frontmatter for `component`, `domain`, `tags`. Keep those matching the query.
-2. Scan `.forge/specs/*/requirement.md` — include only where frontmatter `status` is `approved`, `in-progress`, or `deployed`.
-3. Scan `.forge/bugs/*.md` — include only where frontmatter `status` is `resolved`.
+1. Scan `.forge/knowledge/lessons/*.md` â€” read frontmatter for `component`, `domain`, `tags`. Keep those matching the query.
+2. Scan `.forge/specs/*/requirement.md` â€” include only where frontmatter `status` is `approved`, `in-progress`, or `deployed`.
+3. Scan `.forge/bugs/*.md` â€” include only where frontmatter `status` is `resolved`.
 
 Score each candidate:
 - `+3` if `doc.component == query.component`
 - `+2` if `doc.domain == query.domain`
-- `+2 × overlapping concerns`
-- `+1 × overlapping stack/tags`
+- `+2 Ã— overlapping concerns`
+- `+1 Ã— overlapping stack/tags`
 
 Take the top 5 by score and read their full content. Surface a retrieval summary to the user before authoring.
 
@@ -115,3 +115,10 @@ Take the top 5 by score and read their full content. Surface a retrieval summary
 - [ ] Out of scope items prevent scope creep
 - [ ] No implementation details leaked into the requirement (that's for architecture phase)
 - [ ] Retrieved Context section present
+
+## Internal Reference
+- **Incoming Skill Dependencies**: *None*
+- **Incoming Agent Dependencies**: *None*
+- **Outgoing Skill Dependencies**: `#validate`
+- **Outgoing Agent Dependencies**: *None*
+- **Resource Dependencies**: `requirement-template.md`

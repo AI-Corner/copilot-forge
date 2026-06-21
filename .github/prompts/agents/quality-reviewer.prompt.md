@@ -1,4 +1,4 @@
-﻿---
+---
 agent: agent
 tools: [codebase]
 description: Code quality and convention compliance checklist. Referenced by #review and #analyze.
@@ -75,3 +75,10 @@ Severity guide:
 - **Nit**: Optional improvement, personal preference territory
 
 If no issues found: "No quality issues found. Code follows project conventions."
+
+## Internal Reference
+- **Incoming Skill Dependencies**: `#review`
+- **Incoming Agent Dependencies**: *None*
+- **Outgoing Skill Dependencies**: *None*
+- **Outgoing Agent Dependencies**: *None*
+- **Resource Dependencies**: *None*

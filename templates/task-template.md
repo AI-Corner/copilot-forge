@@ -1,11 +1,10 @@
-﻿---
+---
 id: TASK-xxx
 title: "Task Title"
 status: draft
 parent: REQ-xxx
 created: YYYY-MM-DD
 updated: YYYY-MM-DD
-dependencies: []
 # repo: <repo-id>   # REQUIRED in cross-repo projects (see .forge/config.yml).
                     # One of the ids under `repos:` in .forge/config.yml.
                     # In single-repo projects, omit or set to the primary repo id.
@@ -17,7 +16,7 @@ What this task accomplishes.
 
 ## Files to Create/Modify
 
-- `path/to/file.js` — description of changes
+- `path/to/file.js` � description of changes
 
 ## Acceptance Criteria
 
@@ -27,3 +26,8 @@ What this task accomplishes.
 ## Technical Notes
 
 Implementation details, patterns to follow, edge cases.
+
+## Internal Reference
+- **Incoming Dependencies**: `#init`, `#architect`
+- **Outgoing Dependencies**: *None*
+- **Resource Dependencies**: *None*

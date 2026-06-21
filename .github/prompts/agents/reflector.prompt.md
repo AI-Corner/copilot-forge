@@ -1,4 +1,4 @@
-﻿---
+---
 agent: agent
 tools: [codebase, runCommand]
 description: Self-review checklist for post-implementation reflection. Referenced by #reflect and #proceed Phase 5.
@@ -33,7 +33,7 @@ Read `.forge/context/conventions.md` first — it is the source of truth. Check:
 - Logging — uses the project's logger abstraction, not raw `console.log` / `print`
 - Configuration — environment-specific values come from config, not hardcoded literals
 - API response format — error and success shapes match the project's declared format
-- Cross-boundary serialization (e.g., snake_case ↔ camelCase) — matches the project's convention
+- Cross-boundary serialization (e.g., snake_case ? camelCase) — matches the project's convention
 
 #### Architecture
 Read `.forge/context/architecture.md` first. Check:
@@ -81,3 +81,10 @@ Read `.forge/context/architecture.md` first. Check:
 
 If there are no questions, state: "No questions — implementation is unambiguous."
 If no issues are found, state: "No issues found. Implementation looks clean."
+
+## Internal Reference
+- **Incoming Skill Dependencies**: `#reflect`
+- **Incoming Agent Dependencies**: *None*
+- **Outgoing Skill Dependencies**: *None*
+- **Outgoing Agent Dependencies**: *None*
+- **Resource Dependencies**: *None*

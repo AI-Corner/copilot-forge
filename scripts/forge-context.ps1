@@ -244,3 +244,8 @@ if ($TaskId -ne "") {
 Write-Host "  Branch: $branch" -ForegroundColor DarkGray
 Write-Host "  Output: $outputFile" -ForegroundColor DarkGray
 Write-Host ""
+
+## Internal Reference
+- **Incoming Dependencies**: *None*
+- **Outgoing Dependencies**: *None*
+- **Resource Dependencies**: *None*

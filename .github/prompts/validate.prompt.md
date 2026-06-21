@@ -4,7 +4,7 @@ tools: [codebase, runCommand, changes]
 description: Validate any Copilot Forge phase output before advancing to the next phase
 ---
 
-# validate — Copilot Forge phase Validation
+# validate â€” Copilot Forge phase Validation
 
 You are validating Copilot Forge artifacts to ensure quality before advancing to the next phase.
 
@@ -12,7 +12,7 @@ You are validating Copilot Forge artifacts to ensure quality before advancing to
 
 ## Input
 
-Target: [REQ-xxx ID or phase name provided by the user — e.g., `REQ-023` or `spec` or `architecture`]
+Target: [REQ-xxx ID or phase name provided by the user â€” e.g., `REQ-023` or `spec` or `architecture`]
 
 ## Prerequisites
 
@@ -51,12 +51,12 @@ Search .forge/specs/*/requirement.md for frontmatter with status: draft, approve
 - [ ] New ADRs include rationale (not just decisions)
 - [ ] Data model changes are compatible with existing schema
 - [ ] API endpoint design follows REST conventions from `.forge/context/conventions.md`
-- [ ] Service layer follows the layered pattern (routes → services → repositories)
+- [ ] Service layer follows the layered pattern (routes ? services ? repositories)
 - [ ] No architectural conflicts with other in-progress requirements
 
 #### Validating Tasks
 - [ ] Every task has valid frontmatter (`id`, `title`, `status`, `parent`, `created`, `updated`, `dependencies`)
-- [ ] Tasks form a valid DAG — no circular dependencies (including cross-repo dependencies)
+- [ ] Tasks form a valid DAG â€” no circular dependencies (including cross-repo dependencies)
 - [ ] Every acceptance criterion from the requirement is covered by at least one task
 - [ ] Each task lists specific files to create/modify
 - [ ] Tasks are appropriately scoped (not too large, not too granular)
@@ -87,7 +87,14 @@ Search .forge/specs/*/requirement.md for frontmatter with status: draft, approve
 4. If blockers exist, list specific fixes needed.
 
 ### Step 4: Recommend Next Action
-- Spec validated → "Ready for `#architect`"
-- Architecture validated → "Ready for implementation"
-- Tasks validated → "Ready for implementation"
-- Implementation validated → "Ready for `#review`"
+- Spec validated ? "Ready for `#architect`"
+- Architecture validated ? "Ready for implementation"
+- Tasks validated ? "Ready for implementation"
+- Implementation validated ? "Ready for `#review`"
+
+## Internal Reference
+- **Incoming Skill Dependencies**: `#proceed`, `#spec`
+- **Incoming Agent Dependencies**: *None*
+- **Outgoing Skill Dependencies**: *None*
+- **Outgoing Agent Dependencies**: *None*
+- **Resource Dependencies**: *None*

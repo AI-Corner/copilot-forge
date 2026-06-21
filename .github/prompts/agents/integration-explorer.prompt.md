@@ -1,4 +1,4 @@
-﻿---
+---
 agent: agent
 tools: [codebase]
 description: Identify integration surfaces, extension points, and test infrastructure for a new feature. Referenced by #architect.
@@ -72,3 +72,10 @@ You are a codebase exploration specialist. Find the extension points, contracts,
 - `path/to/test-utils.js` — [what helpers are available]
 - `path/to/fixtures/` — [what seed data exists]
 ```
+
+## Internal Reference
+- **Incoming Skill Dependencies**: `#architect`
+- **Incoming Agent Dependencies**: *None*
+- **Outgoing Skill Dependencies**: *None*
+- **Outgoing Agent Dependencies**: *None*
+- **Resource Dependencies**: *None*

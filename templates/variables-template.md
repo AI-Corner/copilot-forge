@@ -40,3 +40,8 @@ Variables and secrets used in CI/CD pipelines, container orchestration, or cloud
 | All         | `DOCKER_REGISTRY_TOKEN` | `dummy-token` | Image push token | `.github/workflows/build.yml` |
 | Staging     | `AKS_CLUSTER_NAME` | `stg-cluster` | Target Kubernetes cluster | `helm/values-stg.yaml` |
 | Prod        | `AKS_CLUSTER_NAME` | `prod-cluster` | Target Kubernetes cluster | `helm/values-prod.yaml` |
+
+## Internal Reference
+- **Incoming Dependencies**: `#init`
+- **Outgoing Dependencies**: *None*
+- **Resource Dependencies**: *None*
