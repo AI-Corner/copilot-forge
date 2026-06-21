@@ -65,6 +65,10 @@ If a `README.md` or `package.json` exists, read it via the codebase tool and ext
       .gitkeep
     support/
       .gitkeep
+    inbox/
+      .gitkeep
+    archive/
+      .gitkeep
   templates/
     assumption-template.md
     bug-template.md
@@ -76,6 +80,7 @@ If a `README.md` or `package.json` exists, read it via the codebase tool and ext
     manual-qa-template.md
     deployment-template.md
     env-local-template.env
+    inbox-template.md
 ```
 
 Copy templates from `templates/` at the toolkit repo root (the canonical location). If a local copy already exists in the consumer project's `.forge/templates/`, preserve it — do not overwrite customizations.

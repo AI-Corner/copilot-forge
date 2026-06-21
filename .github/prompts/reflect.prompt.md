@@ -78,6 +78,8 @@ Read `.forge/context/rules/conventions.rules.md` first — it is the source of t
 - Configuration — environment-specific values come from config, not hardcoded literals
 - API response format — error and success shapes match the project's declared format
 
+**Auto-Capture Learning candidates**: If you find a convention violation or pattern that is *not* covered by the existing `.rules.md` files (a surprise), use the `write_to_file` tool to create a candidate in `.forge/knowledge/inbox/YYYY-MM-DD-HHMM-slug.md` using the `inbox-template.md` format.
+
 #### Architecture
 Read `.forge/context/rules/architecture.rules.md` first. Check:
 - Layering — routes/handlers don't bypass services; services don't bypass data-access layers
@@ -97,7 +99,7 @@ Read `.forge/context/rules/architecture.rules.md` first. Check:
 - No debug logging accidentally left in
 - All import paths resolve correctly
 
-### Step 5: Surface Questions
+### Step 6: Surface Questions
 Report a "Questions for the User" section covering:
 - Ambiguous requirements
 - Design tradeoffs made

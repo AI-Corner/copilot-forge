@@ -29,7 +29,8 @@ graph TD
     init("#init") -.-> support_template_md("support-template.md")
     init("#init") -.-> task_template_md("task-template.md")
     init("#init") -.-> taxonomy_template_md("taxonomy-template.md")
-    init("#init") -.-> variables_template_md("variables-template.md")
+    init("#init") -.- variables_template_md("variables-template.md")
+    init("#init") -.- inbox_template_md("inbox-template.md")
     issue_epic_creation("#issue_epic_creation") -.-> env_local_template_env("env-local-template.env")
     optimize("#optimize") --> agents/api_cost_scanner("#agents/api-cost-scanner")
     optimize("#optimize") --> agents/db_perf_scanner("#agents/db-perf-scanner")
@@ -51,12 +52,14 @@ graph TD
     query("#query") -.-> support_template_md("support-template.md")
     reflect("#reflect") --> agents/reflector("#agents/reflector")
     reflect("#reflect") --> review("#review")
+    reflect("#reflect") -.- inbox_template_md("inbox-template.md")
     review("#review") --> agents/architecture_reviewer("#agents/architecture-reviewer")
     review("#review") --> agents/correctness_reviewer("#agents/correctness-reviewer")
     review("#review") --> agents/quality_reviewer("#agents/quality-reviewer")
     review("#review") --> agents/security_auditor("#agents/security-auditor")
     review("#review") --> agents/test_auditor("#agents/test-auditor")
     review("#review") --> wrapup("#wrapup")
+    review("#review") -.- inbox_template_md("inbox-template.md")
     spec("#spec") --> validate("#validate")
     spec("#spec") --> vibe("#vibe")
     spec("#spec") -.-> requirement_template_md("requirement-template.md")
@@ -69,7 +72,10 @@ graph TD
     wrapup("#wrapup") -.-> lesson_template_md("lesson-template.md")
     wrapup("#wrapup") -.-> manual_qa_template_md("manual-qa-template.md")
     wrapup("#wrapup") -.-> support_template_md("support-template.md")
-    wrapup("#wrapup") -.-> token_estimate_ps1("token-estimate.ps1")
+    wrapup("#wrapup") -.- token_estimate_ps1("token-estimate.ps1")
+    wrapup("#wrapup") -.- inbox_template_md("inbox-template.md")
+    synthesize("#synthesize") -.- lesson_template_md("lesson-template.md")
+    synthesize("#synthesize") -.- adr_template_md("adr-template.md")
     style vibe fill:#d4edda,stroke:#28a745,color:#155724
     style requirement_template_md fill:#fff3cd,stroke:#ffc107,color:#856404
     style agents/db_perf_scanner fill:#e2d9f3,stroke:#6f42c1,color:#381c63
@@ -125,5 +131,8 @@ graph TD
     style token_estimate_ps1 fill:#cce5ff,stroke:#007bff,color:#004085
     style analyze fill:#d4edda,stroke:#28a745,color:#155724
     style agents/reflector fill:#e2d9f3,stroke:#6f42c1,color:#381c63
+    style synthesize fill:#d4edda,stroke:#28a745,color:#155724
+    style prune fill:#d4edda,stroke:#28a745,color:#155724
+    style inbox_template_md fill:#fff3cd,stroke:#ffc107,color:#856404
 
 ```

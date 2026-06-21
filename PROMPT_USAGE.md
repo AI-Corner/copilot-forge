@@ -32,6 +32,8 @@ Complete reference for every Copilot Forge prompt. Each section covers **what th
 | [`#forge-admin`](#forge-admin) | Maintenance | Modify the Forge toolkit safely |
 | [`#template-drift`](#template-drift) | Maintenance | Detect drift between local and canonical templates |
 | [`#token-estimate`](#token-estimate) | Metrics | Estimate token consumption per pipeline phase |
+| [`#synthesize`](#synthesize) | Knowledge | Process learning inbox into permanent rules/lessons/ADRs |
+| [`#prune`](#prune) | Knowledge | Periodic knowledge hygiene — archive stale rules and lessons |
 
 ---
 
@@ -40,7 +42,7 @@ Complete reference for every Copilot Forge prompt. Each section covers **what th
 The standard Copilot Forge workflow is:
 
 ```
-#init → #spec → #validate → #architect → #validate → #tdd → implement → #reflect → #review → merge → #wrapup
+#init → #spec → #validate → #architect → #validate → #tdd → implement → #reflect → #review → merge → #wrapup → #synthesize (periodically)
 ```
 
 Or automated via `#proceed` (single REQ) or `#sprint` (batch):
@@ -64,6 +66,8 @@ Standalone utilities can be invoked at any time:
 #forge-admin — modify the Forge toolkit itself safely
 #template-drift — check template freshness
 #token-estimate — estimate session token cost
+#synthesize  — process learning inbox into permanent knowledge
+#prune       — archive stale rules and lessons
 ```
 
 ---
@@ -79,7 +83,7 @@ Standalone utilities can be invoked at any time:
 | **When to call** | Once per project, at the very beginning. Also useful to fill gaps if `.forge/` was partially initialized. |
 | **Input** | Optional: target directory path. Defaults to workspace root. |
 | **Prerequisites** | None — this is the first prompt you run. |
-| **What it does** | 1. Gathers project context (name, description, tech stack, scope, patterns) — auto-extracts from `README.md` and `package.json` if present.<br>2. Creates the full `.forge/` directory tree: `context/`, `specs/`, `bugs/`, `knowledge/`, `templates/`.<br>3. Populates context files: `project-overview.md`, `architecture.md`, `conventions.md`, `variables.md`, `deployment.md`, `taxonomy.md`.<br>4. Copies templates from the toolkit's canonical `templates/` directory.<br>5. Scans for CI/CD configurations and populates `deployment.md`.<br>6. Scans for environment variables and populates `variables.md`.<br>7. Updates `.gitignore` with Copilot Forge exclusions.<br>8. Optionally scaffolds cross-repo `config.yml` and local secrets. |
+| **What it does** | 1. Gathers project context (name, description, tech stack, scope, patterns) — auto-extracts from `README.md` and `package.json` if present.<br>2. **Migration check** — if a legacy `.forge/context/architecture.md` exists, auto-migrates to the v2 layout (`rules/` + `corpus/`).<br>3. Creates the full `.forge/` directory tree: `context/` (with `rules/` and `corpus/` subdirectories), `specs/`, `bugs/`, `knowledge/` (with `inbox/` and `archive/`), `templates/`.<br>4. Populates context files: `project-overview.md`, `taxonomy.md`, `corpus/architecture.md`, `corpus/conventions.md`, `corpus/variables.md`, `corpus/deployment.md`, and distilled `rules/*.rules.md` files.<br>5. Copies templates from the toolkit's canonical `templates/` directory.<br>6. Scans for CI/CD configurations and populates `corpus/deployment.md`.<br>7. Scans for environment variables and populates `corpus/variables.md`.<br>8. Updates `.gitignore` with Copilot Forge exclusions.<br>9. Optionally scaffolds cross-repo `config.yml` and local secrets. |
 | **Outputs** | Complete `.forge/` directory structure ready for spec-driven development. |
 | **Next step** | `#spec` to write your first requirement. |
 
@@ -272,6 +276,34 @@ Standalone utilities can be invoked at any time:
 | **adr** | `adr-template.md` | `knowledge/decisions/` | An architectural or technical decision with rationale |
 | **support** | `support-template.md` | `knowledge/support/` | User-facing docs, FAQs, troubleshooting guides |
 | **qa** | `manual-qa-template.md` | `knowledge/qa/` | Manual test guides with step-by-step verification |
+
+---
+
+### `#synthesize`
+
+> Process raw learning candidates from `.forge/knowledge/inbox/` into permanent project knowledge.
+
+| | |
+|---|---|
+| **When to call** | Periodically — after a few `#reflect`, `#review`, or `#wrapup` sessions have deposited candidates into the inbox. |
+| **Input** | None — processes all files in `.forge/knowledge/inbox/`. |
+| **Prerequisites** | `.forge/knowledge/inbox/` must exist (scaffolded by `#init`). At least one candidate file must be present. |
+| **What it does** | 1. **Scans inbox** — lists all candidate files in `.forge/knowledge/inbox/`.<br>2. **Classifies each candidate** — lesson, convention update, ADR, or reject.<br>3. **Routes and applies**:<br>   - **Lesson**: Formats using `lesson-template.md`, saves to `.forge/knowledge/lessons/`.<br>   - **Convention update**: Proposes a diff to the relevant `.rules.md` file and waits for user approval before applying.<br>   - **ADR**: Formats using `adr-template.md`, saves to `.forge/knowledge/decisions/`.<br>   - **Reject**: Moves to `.forge/knowledge/archive/` with a reason.<br>4. **Summary report** — counts of lessons created, ADRs created, rules updated, and candidates archived. |
+| **Outputs** | Permanent knowledge artifacts (lessons, ADRs, rule updates). Archived rejects. Summary report. |
+
+---
+
+### `#prune`
+
+> Periodic knowledge hygiene — verify rules and lessons against the codebase and archive stale items.
+
+| | |
+|---|---|
+| **When to call** | Periodically (e.g., monthly or after major refactors) to keep `.forge/` knowledge lean and accurate. |
+| **Input** | None — audits all rules and lessons. |
+| **Prerequisites** | `.forge/context/rules/` and `.forge/knowledge/lessons/` must exist. |
+| **What it does** | 1. **Gathers knowledge** — reads all `.rules.md` files and lesson files.<br>2. **Empirical verification** — searches the codebase to check if each rule/lesson still reflects reality.<br>3. **Classifies** each item as `active`, `stale-factual`, `stale-aspirational`, or `superseded`.<br>4. **Proposes pruning** — presents the archival list to the user for approval before making changes.<br>5. **Archives** approved items to `.forge/knowledge/archive/` with reasoning.<br>6. **Hygiene report** — lists pruned, borderline (widely violated but still important), and healthy items. |
+| **Outputs** | Hygiene report. Archived stale knowledge (with user approval). |
 
 ---
 
@@ -488,7 +520,13 @@ Start
   │    └─ #bugfix
   │
   ├─ Want to capture something you learned?
-  │    └─ #learn
+  │    └─ #query
+  │
+  ├─ Have learning candidates in the inbox?
+  │    └─ #synthesize
+  │
+  ├─ Want to clean up stale knowledge?
+  │    └─ #prune
   │
   ├─ Want to check project health?
   │    ├─ Code quality & tech debt → #analyze

@@ -105,6 +105,7 @@ Focus: input validation, auth/authz, data exposure, rate limiting, dependency is
    - **Minor**: Nice to fix (style, naming)
    - **Nit**: Optional suggestions
 3. Cross-reference findings against the loaded lessons — if a finding matches a known pitfall, escalate its severity by one level and flag it explicitly.
+4. **Auto-Capture Learning candidates**: If you observe a recurring anti-pattern or a missing architectural constraint that should be codified, use the `write_to_file` tool to create a candidate in `.forge/knowledge/inbox/YYYY-MM-DD-HHMM-slug.md` using the `inbox-template.md` format.
 
 ### Step 5: Present Review
 

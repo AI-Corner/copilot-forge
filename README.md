@@ -5,6 +5,7 @@ Prompts, checklists, and templates for spec-driven development with **GitHub Cop
 ## What's Included
 
 ## Changelog & Recent Updates
+- **v2.4.0**: Added **Corpus/Guide Split** (Feature 14) and **Learning Flywheel** (Feature 15). Context files are now split into short, directive `rules/` (always loaded) and long-form `corpus/` (loaded on demand) under `.forge/context/` for optimized token usage. Three pipeline prompts (`#reflect`, `#review`, `#wrapup`) now auto-capture learning candidates to a new `.forge/knowledge/inbox/`. Added `#synthesize` to process inbox candidates into permanent rules/lessons/ADRs, and `#prune` to periodically garbage-collect stale knowledge. `#init` updated with auto-migration for existing projects.
 - **v2.3.0**: Added **Dynamic Dependency Graph Visualization**. Refactored all internal prompt dependencies to an intent-based 5-category system (Skills vs. Agents). Automatically generates an interactive D3.js graph to explore the toolkit's architecture. View the graph locally by opening [docs/graph/index.html](docs/graph/index.html).
 - **v2.2.0**: Added **Forge Admin Prompt (`#forge-admin`)**. A maintenance control plane for governing Forge's own prompts, agents, templates, and scripts. Supports five actions (`audit`, `patch`, `standardize`, `deprecate`, `index`) with mandatory dependency graph scanning before any write operation to prevent silent pipeline breakage. All modifications are tracked via lightweight REQ specs for audit traceability.
 - **v2.1.0**: Added **Harness Engineering: Deterministic Pipeline**. Replaced honor-system LLM guardrails with hard, deterministic phase gates (`forge-gate.ps1`). Introduced an autonomous test runner loop (`forge-test.ps1`), an active context snapshot generator to prevent drift (`forge-context.ps1`), execution metrics tracking in `pipeline-state.json`, and a structured failure taxonomy for orchestrating agents.
@@ -40,6 +41,7 @@ Invoke any prompt from Copilot Chat by typing `#<prompt-name>` (e.g., `#init`, `
 - `support-template.md` — Automated Support Documentation / FAQ knowledge entry
 - `variables-template.md` — Environment & Config variables tracking
 - `deployment-template.md` — CI/CD and deployment flow tracking
+- `inbox-template.md` — Learning candidate for the knowledge flywheel inbox
 
 ### Presets
 
@@ -141,7 +143,7 @@ Single-repo projects without a backend can leave the file absent — every promp
 ## Workflow
 
 ```
-#spec → #validate → #architect → #validate → implement → #reflect → #review → merge → #wrapup
+#spec → #validate → #architect → #validate → implement → #reflect → #review → merge → #wrapup → #synthesize (periodically)
 ```
 
 Or use `#proceed` to run the full pipeline automatically for a single REQ.
@@ -165,8 +167,12 @@ After `#init`, each code repo will have:
 .forge/
   config.yml         # Project's stack, deploy config, and (optional) sibling repo layout
   context/           # Project-specific architecture, conventions, overview
+    rules/           # Short, directive rules (always loaded by agents)
+    corpus/          # Long-form reference docs (loaded on demand)
   specs/             # Requirement docs, architecture docs, tasks
   knowledge/         # Assumptions validated, lessons learned
+    inbox/           # Raw learning candidates from pipeline auto-capture
+    archive/         # Pruned or rejected knowledge
   templates/         # Copies of templates (from this toolkit)
 ```
 
@@ -235,7 +241,7 @@ The toolkit's workflow is stack-agnostic. Prompts that need to do stack-specific
 | Canary deploys (`#canary`) | `services:` block | service name, region, image path per repo (Cloud Run) |
 | AKS canary / rollout verification (`#canary`) | `stack.backends` includes `k8s` | `services.<id>.deployment_name`, `services.<id>.health_check_path` |
 | iOS device deploys (`#bugfix`, `#wrapup`) | `stack.frontends` includes `ios` | `ios.deploy_targets`, `ios.deploy_command` |
-| Convention checking (`#review`, `#reflect`) | `.forge/context/conventions.md` | declare your project's naming, logging, and API conventions |
+| Convention checking (`#review`, `#reflect`) | `.forge/context/rules/conventions.rules.md` | declare your project's naming, logging, and API conventions |
 
 If you want to add support for a new stack (e.g., AWS Lambda backends, Android device deploys), edit the relevant prompt to handle the new `stack.*` value and document it in [`templates/config-template.yml`](templates/config-template.yml). PRs welcome.
 
