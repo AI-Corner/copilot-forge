@@ -129,12 +129,17 @@ Then list findings organized by file, then by severity within each file.
 
 **Gate rule**: if ANY dimension reports a `Critical` finding, the overall gate FAILS. Fix critical findings before pushing.
 
-### Step 6: Summary
+### Step 6: Log Technical Debt
+If there are any `Minor` or `Nit` findings that the user opts not to fix immediately (or that you recommend deferring), you must persist them so they aren't lost:
+1. Append these deferred items to `.forge/context/code-debt.md` in the ledger table format `| Date | Source | Severity | Description |` (Source = `#review`).
+
+### Step 7: Summary
 1. Overall gate: PASS / FAIL / RESHAPE
 2. Count of issues by severity and by dimension
 3. Top 3 most important things to address
 4. Any findings that matched recent lessons (elevated-severity items)
-5. If changes look good, say so clearly — an empty review is a valid result for small, well-scoped changes
+5. Confirmation of any technical debt logged to `code-debt.md`
+6. If changes look good, say so clearly — an empty review is a valid result for small, well-scoped changes
 
 ## Internal Reference
 - **Incoming Skill Dependencies**: `#proceed`, `#reflect`

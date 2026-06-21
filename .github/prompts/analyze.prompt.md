@@ -119,6 +119,12 @@ Nice-to-have improvements — refactoring opportunities, performance optimizatio
 2. For each, estimate effort (small/medium/large) and impact (low/medium/high).
 3. Suggest which items could become Copilot Forge requirements (candidates for `#spec`).
 
+### Step 5: Save State
+You must persist these findings so the agent can reference them later without rescanning.
+1. **Update `quality-radar.md`**: Overwrite `.forge/context/quality-radar.md` with the new Health Scorecard table.
+2. **Update `code-debt.md`**: Append all items from the "Technical Debt" and "Improvement Opportunities" sections to `.forge/context/code-debt.md` in the ledger table format `| Date | Source | Severity | Description |` (Source = `#analyze`).
+3. **Update `codebase-state.md`**: If you noticed any changed framework versions or tool commands during the audit, update them in `.forge/context/codebase-state.md`.
+
 ## Internal Reference
 - **Incoming Skill Dependencies**: *None*
 - **Incoming Agent Dependencies**: *None*
