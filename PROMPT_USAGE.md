@@ -17,6 +17,7 @@ Complete reference for every Copilot Forge prompt. Each section covers **what th
 | [`#tdd`](#tdd) | Testing | Generate failing test suites before implementation |
 | [`#proceed`](#proceed) | Orchestration | Run the full pipeline end-to-end for a single REQ |
 | [`#sprint`](#sprint) | Orchestration | Batch-run multiple `#proceed` pipelines sequentially |
+| [`#check-drift`](#check-drift) | Review | Lightweight read-only convention compliance check |
 | [`#reflect`](#reflect) | Review | Post-implementation self-review before formal review |
 | [`#review`](#review) | Review | Multi-dimension code review |
 | [`#bugfix`](#bugfix) | Bug Fixing | End-to-end bug fix workflow |
@@ -58,6 +59,7 @@ Standalone utilities can be invoked at any time:
 #query       — query project knowledge and optionally capture new insights
 #bugfix      — fix a bug end-to-end
 #vibe        — quick change without heavy specs
+#check-drift — lightweight read-only convention compliance check
 #analyze     — codebase health audit
 #optimize    — performance scanner
 #status      — see what's in progress
@@ -188,6 +190,21 @@ Standalone utilities can be invoked at any time:
 ---
 
 ## Review
+
+### `#check-drift`
+
+> Lightweight read-only convention compliance check — flags drift without auto-fixing.
+
+| | |
+|---|---|
+| **When to call** | Intermittently during active development (or automatically inside `#proceed`) to catch convention violations early. |
+| **Input** | File paths, branch name, or nothing (defaults to current uncommitted + staged changes). |
+| **Prerequisites** | `.forge/context/rules/conventions.rules.md` must exist. |
+| **What it does** | 1. **Rule load** — reads all `.rules.md` files from `.forge/context/rules/`.<br>2. **Diff scan** — identifies changed files.<br>3. **Compare** — reads full file contents and compares them against architecture, convention, security, and deployment rules.<br>4. **Classify** — groups findings into 🔴 IRON LAW, 🟡 GOLDEN PATH, and 🔵 RULE.<br>5. **Read-only** — this prompt *never* modifies code or auto-fixes anything. |
+| **Outputs** | Compact drift report showing files, lines, and specific rules violated. |
+| **Next step** | Fix any 🔴 IRON LAW violations before continuing development. |
+
+---
 
 ### `#reflect`
 
@@ -533,6 +550,9 @@ Start
   │    ├─ Performance & costs → #optimize
   │    ├─ Secrets in code → #security_scan
   │    └─ Template freshness → #template-drift
+  │
+  ├─ Are you mid-implementation and want a quick convention check?
+  │    └─ #check-drift
   │
   ├─ Want to modify the Forge toolkit?
   │    └─ #forge-admin

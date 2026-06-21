@@ -18,6 +18,7 @@ graph TD
     bugfix("#bugfix") --> wrapup("#wrapup")
     bugfix("#bugfix") -.-> bug_template_md("bug-template.md")
     bugfix("#bugfix") -.-> lesson_template_md("lesson-template.md")
+    check_drift("#check-drift")
     forge_admin("#forge-admin") -.-> forge_gate_ps1("forge-gate.ps1")
     init("#init") -.-> adr_template_md("adr-template.md")
     init("#init") -.-> assumption_template_md("assumption-template.md")
@@ -39,6 +40,7 @@ graph TD
     proceed("#proceed") --> agents/task_implementer("#agents/task-implementer")
     proceed("#proceed") --> architect("#architect")
     proceed("#proceed") --> canary("#canary")
+    proceed("#proceed") --> check_drift("#check-drift")
     proceed("#proceed") --> reflect("#reflect")
     proceed("#proceed") --> review("#review")
     proceed("#proceed") --> tdd("#tdd")
@@ -117,6 +119,7 @@ graph TD
     style review fill:#d4edda,stroke:#28a745,color:#155724
     style env_local_template_env fill:#fff3cd,stroke:#ffc107,color:#856404
     style adr_template_md fill:#fff3cd,stroke:#ffc107,color:#856404
+    style check_drift fill:#d4edda,stroke:#28a745,color:#155724
     style architect fill:#d4edda,stroke:#28a745,color:#155724
     style support_template_md fill:#fff3cd,stroke:#ffc107,color:#856404
     style query fill:#d4edda,stroke:#28a745,color:#155724

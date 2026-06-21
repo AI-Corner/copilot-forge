@@ -102,6 +102,7 @@ Run the `#tdd` prompt inline:
    - Mark the task status as `complete` in its frontmatter.
    - Commit inside the worktree: `feat(scope): description [TASK-xxx]`
    - Append the TASK-xxx ID to `phase4.completedTasks` and clear `phase4.currentTask`.
+   - **Drift check**: If `phase4.completedTasks.length % 3 === 0`, run `#check-drift` inline to catch convention drift early. If any 🔴 IRON LAW violations are found, fix them before continuing to the next task. 🟡 GOLDEN PATH and 🔵 RULE findings are logged but do not block progress.
 
 **Log**: After each task completes, emit one line: `TASK-xxx ✓`. Continue immediately to the next task.
 
@@ -297,6 +298,7 @@ Run the `#tdd` prompt inline:
    - Mark the task status as `complete` in its frontmatter.
    - Commit inside the worktree: `feat(scope): description [TASK-xxx]`
    - Append the TASK-xxx ID to `phase4.completedTasks` and clear `phase4.currentTask`.
+   - **Drift check**: If `phase4.completedTasks.length % 3 === 0`, run `#check-drift` inline to catch convention drift early. If any 🔴 IRON LAW violations are found, fix them before continuing to the next task. 🟡 GOLDEN PATH and 🔵 RULE findings are logged but do not block progress.
 
 **Log**: After each task completes, emit one line: `TASK-xxx ✓`. Continue immediately to the next task.
 
@@ -435,6 +437,6 @@ After every phase completes, update `metrics` in `pipeline-state.json`:
 ## Internal Reference
 - **Incoming Skill Dependencies**: `#sprint`
 - **Incoming Agent Dependencies**: *None*
-- **Outgoing Skill Dependencies**: `#architect`, `#canary`, `#reflect`, `#review`, `#tdd`, `#validate`, `#wrapup`
+- **Outgoing Skill Dependencies**: `#architect`, `#canary`, `#check-drift`, `#reflect`, `#review`, `#tdd`, `#validate`, `#wrapup`
 - **Outgoing Agent Dependencies**: `#agents/reflector`, `#agents/task-implementer`
 - **Resource Dependencies**: `forge-gate.ps1`
