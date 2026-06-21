@@ -162,6 +162,17 @@ If you or a teammate make manual code changes outside of the Copilot Forge pipel
 To resolve this automatically, just run `#analyze`.
 Copilot Forge uses a highly efficient **Incremental Analysis** engine. It stores the commit hash from its last run in `.forge/.last-analyzed-commit`. When you run `#analyze`, it uses `git diff` to identify exactly which files were added or modified since the last run. It then audits *only* those new files and automatically updates `architecture.md` and `conventions.md` to perfectly match the new codebase reality without needing to rescan the entire project.
 
+### Process Discipline Guides
+
+While workflows dictate *what* to do, **Process Discipline Guides** dictate *how* the AI behaves. To prevent AI hallucinations, scope creep, and dangerous edits, Copilot Forge natively enforces behavioral boundaries through rule files in `.forge/context/rules/process/`. 
+
+These guides implement a tiered severity system:
+- 🔴 **IRON LAW**: Non-negotiable rules (e.g., "No proceeding without acceptance criteria", "No silent overwrites").
+- 🟡 **GOLDEN PATH**: Strong defaults that require explicit justification to break (e.g., "Verify references exist before using them").
+- 🔵 **RULE**: Standard operating procedures (e.g., "One concern per commit").
+
+`#init` automatically scaffolds these process guides into any new project to ensure the AI behaves responsibly from day one.
+
 ## Project Structure
 
 After `#init`, each code repo will have:
