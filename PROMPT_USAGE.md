@@ -28,8 +28,8 @@ Complete reference for every Copilot Forge prompt. Each section covers **what th
 | [`#issue_epic_creation`](#issue_epic_creation) | Integration | Sync REQs and Tasks to GitLab as Epics and Issues |
 | [`#status`](#status) | Visibility | Show current state of all Copilot Forge work |
 | [`#analyze`](#analyze) | Health | Codebase health audit |
-| [`#optimize`](#optimize) | Performance | API cost & performance scanner |
 | [`#security_scan`](#security_scan) | Security | Pre-commit secret and credential audit |
+| [`#forge-admin`](#forge-admin) | Maintenance | Modify the Forge toolkit safely |
 | [`#template-drift`](#template-drift) | Maintenance | Detect drift between local and canonical templates |
 | [`#token-estimate`](#token-estimate) | Metrics | Estimate token consumption per pipeline phase |
 
@@ -59,9 +59,9 @@ Standalone utilities can be invoked at any time:
 #analyze     — codebase health audit
 #optimize    — performance scanner
 #status      — see what's in progress
-#deploy      — run deployment steps
 #canary      — canary deploy with smoke tests
 #security_scan — scan for secrets before committing
+#forge-admin — modify the Forge toolkit itself safely
 #template-drift — check template freshness
 #token-estimate — estimate session token cost
 ```
@@ -399,6 +399,20 @@ Standalone utilities can be invoked at any time:
 
 ## Maintenance
 
+### `#forge-admin`
+
+> Admin control plane for Copilot Forge maintenance — audit, patch, standardize, and govern prompt/instruction/agent updates.
+
+| | |
+|---|---|
+| **When to call** | When you want to add, rename, modify, or deprecate prompts, agents, templates, or pipeline scripts within the Forge toolkit. |
+| **Input** | Action (`audit`\|`patch`\|`standardize`\|`deprecate`\|`index`), Target, `REQ-xxx` ID, and Change intent. |
+| **Prerequisites** | Must be executed in a repository with the Forge toolkit installed. |
+| **What it does** | 1. **Dependency Graph Scan** — flags downstream breakage before a change is applied.<br>2. **Guided Modification** — maps the change to affected files and executes it via a lightweight REQ spec.<br>3. **Scaffold Generation** — scaffolds correctly structured files with proper frontmatter.<br>4. **Post-Modification Validation** — runs a consistency sweep to verify all cross-references resolve. |
+| **Outputs** | Commits to `.github/prompts`, `templates`, or `scripts`, tracked by a REQ spec. |
+
+---
+
 ### `#template-drift`
 
 > Detect drift between a project's local `.forge/templates/` and the canonical toolkit templates.
@@ -481,6 +495,9 @@ Start
   │    ├─ Performance & costs → #optimize
   │    ├─ Secrets in code → #security_scan
   │    └─ Template freshness → #template-drift
+  │
+  ├─ Want to modify the Forge toolkit?
+  │    └─ #forge-admin
   │
   ├─ Want visibility?
   │    ├─ What's in progress → #status
