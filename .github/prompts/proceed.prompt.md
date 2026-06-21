@@ -162,7 +162,7 @@ Run the `#tdd` prompt inline:
 
 **Gate**: `currentPhase` must be `4`. After completion: append `4`, set `currentPhase=5`.
 
-**Execute tasks one at a time in dependency order** (all work happens inside the feature branch worktree):
+**Execute tasks one at a time in dependency order** (reference: `#agents/task-implementer`). All work happens inside the feature branch worktree:
 
 1. Build the dependency graph from task frontmatter.
 2. On resume: read `pipeline-state.json` — skip tasks in `phase4.completedTasks`; resume `phase4.currentTask` if non-null.

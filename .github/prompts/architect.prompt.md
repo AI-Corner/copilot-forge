@@ -45,9 +45,9 @@ Run this command via terminal **before doing anything else**:
 ### Step 2: Explore the Codebase
 Use the codebase tool to explore systematically — run these explorations in sequence:
 
-1. **Feature tracing** — search for similar existing implementations of this feature type. Look for similar API endpoints, service patterns, data models.
-2. **Architecture mapping** — map all files and layers that will be affected. Use the codebase tool to trace imports and dependencies.
-3. **Integration surfaces** — identify extension points, existing tests that will need updating, and API contracts this feature must respect.
+1. **Feature tracing** (reference: `#agents/feature-tracer`) — search for similar existing implementations of this feature type. Look for similar API endpoints, service patterns, data models.
+2. **Architecture mapping** (reference: `#agents/architecture-mapper`) — map all files and layers that will be affected. Use the codebase tool to trace imports and dependencies.
+3. **Integration surfaces** (reference: `#agents/integration-explorer`) — identify extension points, existing tests that will need updating, and API contracts this feature must respect.
 
 Read the key files identified during exploration.
 

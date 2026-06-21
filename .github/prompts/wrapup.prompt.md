@@ -177,8 +177,7 @@ Add a `### Repos` table showing `| Repo | Branch | PR | Files | +/- |` for each 
 Run the token estimator to record the session's approximate token consumption:
 
 ```powershell
-# From the repo root
-.\token-estimate.ps1 -ReqId REQ-xxx -UpdatePipelineState
+.\scripts\token-estimate.ps1 -ReqId REQ-xxx -UpdatePipelineState
 ```
 
 This will:
