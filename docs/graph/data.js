@@ -1,24 +1,216 @@
 const graphData = {
     "nodes": [
                     {
-                        "id":  "#vibe",
+                        "id":  "#agents/computational\test-gate",
+                        "group":  "agent"
+                    },
+                    {
+                        "id":  "#agents/inferential\architecture-reviewer",
+                        "group":  "agent"
+                    },
+                    {
+                        "id":  "#wrapup",
                         "group":  "prompt"
                     },
                     {
-                        "id":  "requirement-template.md",
-                        "group":  "template"
-                    },
-                    {
-                        "id":  "#agents/db-perf-scanner",
-                        "group":  "agent"
+                        "id":  "#sprint",
+                        "group":  "prompt"
                     },
                     {
                         "id":  "#token-estimate",
                         "group":  "prompt"
                     },
                     {
+                        "id":  "process\subagent-trust.rules.md",
+                        "group":  "template"
+                    },
+                    {
+                        "id":  "#agents/feature-tracer",
+                        "group":  "agent"
+                    },
+                    {
+                        "id":  "support-template.md",
+                        "group":  "template"
+                    },
+                    {
+                        "id":  "#security_scan",
+                        "group":  "prompt"
+                    },
+                    {
+                        "id":  "process\context-budget.rules.md",
+                        "group":  "template"
+                    },
+                    {
+                        "id":  "#issue_epic_creation",
+                        "group":  "prompt"
+                    },
+                    {
+                        "id":  "#analyze",
+                        "group":  "prompt"
+                    },
+                    {
+                        "id":  "#agents/inferential\test-auditor",
+                        "group":  "agent"
+                    },
+                    {
+                        "id":  "#spec",
+                        "group":  "prompt"
+                    },
+                    {
+                        "id":  "process\iron-laws.rules.md",
+                        "group":  "template"
+                    },
+                    {
+                        "id":  "#agents/inferential\quality-reviewer",
+                        "group":  "agent"
+                    },
+                    {
+                        "id":  "assumption-template.md",
+                        "group":  "template"
+                    },
+                    {
+                        "id":  "#canary",
+                        "group":  "prompt"
+                    },
+                    {
+                        "id":  "#agents/computational\build-gate",
+                        "group":  "agent"
+                    },
+                    {
+                        "id":  "deployment-template.md",
+                        "group":  "template"
+                    },
+                    {
+                        "id":  "#agents/inferential\security-auditor",
+                        "group":  "agent"
+                    },
+                    {
+                        "id":  "lesson-template.md",
+                        "group":  "template"
+                    },
+                    {
+                        "id":  "manual-qa-template.md",
+                        "group":  "template"
+                    },
+                    {
+                        "id":  "variables-template.md",
+                        "group":  "template"
+                    },
+                    {
+                        "id":  "#agents/integration-explorer",
+                        "group":  "agent"
+                    },
+                    {
+                        "id":  "#agents/inferential\code-quality-auditor",
+                        "group":  "agent"
+                    },
+                    {
+                        "id":  "process\escalation.rules.md",
+                        "group":  "template"
+                    },
+                    {
+                        "id":  "#architect",
+                        "group":  "prompt"
+                    },
+                    {
+                        "id":  "#agents/convention-auditor",
+                        "group":  "agent"
+                    },
+                    {
+                        "id":  "bug-template.md",
+                        "group":  "template"
+                    },
+                    {
+                        "id":  "#agents/correctness-reviewer",
+                        "group":  "agent"
+                    },
+                    {
+                        "id":  "#agents/db-perf-scanner",
+                        "group":  "agent"
+                    },
+                    {
+                        "id":  "process\scoping.rules.md",
+                        "group":  "template"
+                    },
+                    {
+                        "id":  "task-template.md",
+                        "group":  "template"
+                    },
+                    {
+                        "id":  "#agents/computational\typecheck-gate",
+                        "group":  "agent"
+                    },
+                    {
                         "id":  "#validate",
                         "group":  "prompt"
+                    },
+                    {
+                        "id":  "#agents/computational\secret-scan",
+                        "group":  "agent"
+                    },
+                    {
+                        "id":  "process\self-validation.rules.md",
+                        "group":  "template"
+                    },
+                    {
+                        "id":  "process\pushback.rules.md",
+                        "group":  "template"
+                    },
+                    {
+                        "id":  "#agents/code-quality-auditor",
+                        "group":  "agent"
+                    },
+                    {
+                        "id":  "token-estimate.ps1",
+                        "group":  "script"
+                    },
+                    {
+                        "id":  "#agents/task-implementer",
+                        "group":  "agent"
+                    },
+                    {
+                        "id":  "process\surgical-edits.rules.md",
+                        "group":  "template"
+                    },
+                    {
+                        "id":  "#init",
+                        "group":  "prompt"
+                    },
+                    {
+                        "id":  "#agents/test-auditor",
+                        "group":  "agent"
+                    },
+                    {
+                        "id":  "#agents/architecture-reviewer",
+                        "group":  "agent"
+                    },
+                    {
+                        "id":  "#review",
+                        "group":  "prompt"
+                    },
+                    {
+                        "id":  "forge-test.ps1",
+                        "group":  "script"
+                    },
+                    {
+                        "id":  "#vibe",
+                        "group":  "prompt"
+                    },
+                    {
+                        "id":  "#deploy",
+                        "group":  "prompt"
+                    },
+                    {
+                        "id":  "process\grounding.rules.md",
+                        "group":  "template"
+                    },
+                    {
+                        "id":  "#status",
+                        "group":  "prompt"
+                    },
+                    {
+                        "id":  "requirement-template.md",
+                        "group":  "template"
                     },
                     {
                         "id":  "#template-drift",
@@ -29,179 +221,75 @@ const graphData = {
                         "group":  "agent"
                     },
                     {
-                        "id":  "#agents/task-implementer",
+                        "id":  "#agents/reflector",
                         "group":  "agent"
-                    },
-                    {
-                        "id":  "#forge-admin",
-                        "group":  "prompt"
-                    },
-                    {
-                        "id":  "manual-qa-template.md",
-                        "group":  "template"
-                    },
-                    {
-                        "id":  "#agents/architecture-mapper",
-                        "group":  "agent"
-                    },
-                    {
-                        "id":  "#bugfix",
-                        "group":  "prompt"
-                    },
-                    {
-                        "id":  "#reflect",
-                        "group":  "prompt"
-                    },
-                    {
-                        "id":  "#agents/test-auditor",
-                        "group":  "agent"
-                    },
-                    {
-                        "id":  "#agents/api-cost-scanner",
-                        "group":  "agent"
-                    },
-                    {
-                        "id":  "lesson-template.md",
-                        "group":  "template"
-                    },
-                    {
-                        "id":  "#sprint",
-                        "group":  "prompt"
-                    },
-                    {
-                        "id":  "#agents/quality-reviewer",
-                        "group":  "agent"
-                    },
-                    {
-                        "id":  "taxonomy-template.md",
-                        "group":  "template"
-                    },
-                    {
-                        "id":  "forge-test.ps1",
-                        "group":  "script"
-                    },
-                    {
-                        "id":  "#agents/security-auditor",
-                        "group":  "agent"
-                    },
-                    {
-                        "id":  "#spec",
-                        "group":  "prompt"
-                    },
-                    {
-                        "id":  "assumption-template.md",
-                        "group":  "template"
-                    },
-                    {
-                        "id":  "#issue_epic_creation",
-                        "group":  "prompt"
-                    },
-                    {
-                        "id":  "#security_scan",
-                        "group":  "prompt"
-                    },
-                    {
-                        "id":  "#deploy",
-                        "group":  "prompt"
-                    },
-                    {
-                        "id":  "forge-context.ps1",
-                        "group":  "script"
-                    },
-                    {
-                        "id":  "#proceed",
-                        "group":  "prompt"
-                    },
-                    {
-                        "id":  "deployment-template.md",
-                        "group":  "template"
-                    },
-                    {
-                        "id":  "forge-gate.ps1",
-                        "group":  "script"
-                    },
-                    {
-                        "id":  "variables-template.md",
-                        "group":  "template"
-                    },
-                    {
-                        "id":  "#tdd",
-                        "group":  "prompt"
-                    },
-                    {
-                        "id":  "#agents/code-quality-auditor",
-                        "group":  "agent"
-                    },
-                    {
-                        "id":  "#agents/architecture-reviewer",
-                        "group":  "agent"
-                    },
-                    {
-                        "id":  "#status",
-                        "group":  "prompt"
-                    },
-                    {
-                        "id":  "#agents/integration-explorer",
-                        "group":  "agent"
-                    },
-                    {
-                        "id":  "#wrapup",
-                        "group":  "prompt"
-                    },
-                    {
-                        "id":  "#canary",
-                        "group":  "prompt"
-                    },
-                    {
-                        "id":  "#review",
-                        "group":  "prompt"
-                    },
-                    {
-                        "id":  "env-local-template.env",
-                        "group":  "template"
                     },
                     {
                         "id":  "adr-template.md",
                         "group":  "template"
                     },
                     {
-                        "id":  "#architect",
+                        "id":  "#check-drift",
                         "group":  "prompt"
-                    },
-                    {
-                        "id":  "support-template.md",
-                        "group":  "template"
                     },
                     {
                         "id":  "#query",
                         "group":  "prompt"
                     },
                     {
-                        "id":  "#agents/correctness-reviewer",
-                        "group":  "agent"
+                        "id":  "forge-gate.ps1",
+                        "group":  "script"
                     },
                     {
-                        "id":  "#agents/convention-auditor",
-                        "group":  "agent"
+                        "id":  "forge-context.ps1",
+                        "group":  "script"
                     },
                     {
-                        "id":  "task-template.md",
-                        "group":  "template"
-                    },
-                    {
-                        "id":  "#optimize",
+                        "id":  "#reflect",
                         "group":  "prompt"
                     },
                     {
-                        "id":  "#init",
-                        "group":  "prompt"
+                        "id":  "#agents/security-auditor",
+                        "group":  "agent"
                     },
                     {
-                        "id":  "bug-template.md",
+                        "id":  "#agents/architecture-mapper",
+                        "group":  "agent"
+                    },
+                    {
+                        "id":  "env-local-template.env",
                         "group":  "template"
                     },
                     {
-                        "id":  "#agents/feature-tracer",
+                        "id":  "#proceed",
+                        "group":  "prompt"
+                    },
+                    {
+                        "id":  "#bugfix",
+                        "group":  "prompt"
+                    },
+                    {
+                        "id":  "#agents/inferential\convention-auditor",
+                        "group":  "agent"
+                    },
+                    {
+                        "id":  "#agents/inferential\correctness-reviewer",
+                        "group":  "agent"
+                    },
+                    {
+                        "id":  "#agents/computational\lint-gate",
+                        "group":  "agent"
+                    },
+                    {
+                        "id":  "inbox-template.md",
+                        "group":  "template"
+                    },
+                    {
+                        "id":  "#forge-admin",
+                        "group":  "prompt"
+                    },
+                    {
+                        "id":  "#agents/computational\vuln-scan",
                         "group":  "agent"
                     },
                     {
@@ -209,16 +297,36 @@ const graphData = {
                         "group":  "template"
                     },
                     {
-                        "id":  "token-estimate.ps1",
-                        "group":  "script"
+                        "id":  "#agents/quality-reviewer",
+                        "group":  "agent"
                     },
                     {
-                        "id":  "#analyze",
+                        "id":  "#prune",
                         "group":  "prompt"
                     },
                     {
-                        "id":  "#agents/reflector",
+                        "id":  "taxonomy-template.md",
+                        "group":  "template"
+                    },
+                    {
+                        "id":  "#agents/api-cost-scanner",
                         "group":  "agent"
+                    },
+                    {
+                        "id":  "#agents/inferential\spec-adherence",
+                        "group":  "agent"
+                    },
+                    {
+                        "id":  "#tdd",
+                        "group":  "prompt"
+                    },
+                    {
+                        "id":  "#optimize",
+                        "group":  "prompt"
+                    },
+                    {
+                        "id":  "#synthesize",
+                        "group":  "prompt"
                     }
     ],
     "links": [
@@ -394,6 +502,11 @@ const graphData = {
                     },
                     {
                         "source":  "#proceed",
+                        "target":  "#check-drift",
+                        "type": "behavioral"
+                    },
+                    {
+                        "source":  "#proceed",
                         "target":  "#reflect",
                         "type": "behavioral"
                     },
@@ -494,11 +607,6 @@ const graphData = {
                     },
                     {
                         "source":  "#spec",
-                        "target":  "#vibe",
-                        "type": "behavioral"
-                    },
-                    {
-                        "source":  "#spec",
                         "target":  "requirement-template.md",
                         "type": "resource"
                     },
@@ -506,6 +614,16 @@ const graphData = {
                         "source":  "#sprint",
                         "target":  "#proceed",
                         "type": "behavioral"
+                    },
+                    {
+                        "source":  "#synthesize",
+                        "target":  "adr-template.md",
+                        "type": "resource"
+                    },
+                    {
+                        "source":  "#synthesize",
+                        "target":  "lesson-template.md",
+                        "type": "resource"
                     },
                     {
                         "source":  "#token-estimate",
@@ -530,6 +648,11 @@ const graphData = {
                     {
                         "source":  "#wrapup",
                         "target":  "assumption-template.md",
+                        "type": "resource"
+                    },
+                    {
+                        "source":  "#wrapup",
+                        "target":  "inbox-template.md",
                         "type": "resource"
                     },
                     {

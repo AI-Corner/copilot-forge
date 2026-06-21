@@ -34,7 +34,7 @@ To prevent hallucination and maintain sync after manual edits or `git pull` even
 
 ### Step 2: Run Audit Dimensions Sequentially
 
-#### Dimension 1 — Code Quality (reference: `#agents/code-quality-auditor`)
+#### Dimension 1 — Code Quality (reference: `#agents/inferential/code-quality-auditor`)
 Check for:
 - **Dead code**: unused exports, unreachable branches, commented-out code blocks, deprecated functions
 - **Code duplication**: copy-pasted logic, near-duplicate functions, repeated patterns without abstraction
@@ -42,7 +42,7 @@ Check for:
 - **Inconsistent patterns**: same operation done multiple ways, mixed paradigms
 - **Maintenance markers**: TODOs, FIXMEs, HACKs, workarounds with no ticket
 
-#### Dimension 2 — Convention Compliance (reference: `#agents/convention-auditor`)
+#### Dimension 2 — Convention Compliance (reference: `#agents/inferential/convention-auditor`)
 Read `.forge/context/rules/conventions.rules.md` first — it is the source of truth.
 - Naming violations (files, types, variables, functions, route paths, constants)
 - Logging violations — direct `console.log`/`print` usage instead of project logger
@@ -56,7 +56,7 @@ Use the codebase tool to grep for common patterns:
 - `require(` in ESM projects
 - Hardcoded URLs (search for `http://` or `https://` in source files)
 
-#### Dimension 3 — Security (reference: `#agents/security-auditor`)
+#### Dimension 3 — Security (reference: `#agents/inferential/security-auditor`)
 - User input not validated or sanitized at API boundaries
 - Endpoints missing authentication middleware
 - PII in log messages
@@ -64,7 +64,7 @@ Use the codebase tool to grep for common patterns:
 - Rate limiting missing on expensive or auth endpoints
 - Run in terminal: `npm audit` (if package.json exists)
 
-#### Dimension 4 — Testing (reference: `#agents/test-auditor`)
+#### Dimension 4 — Testing (reference: `#agents/inferential/test-auditor`)
 - Source files with no corresponding test file (check both centralized and colocated layouts before reporting a gap)
 - Functions with no test coverage
 - Error paths not tested

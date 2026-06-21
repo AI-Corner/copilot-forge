@@ -22,7 +22,7 @@ This document outlines strategic improvements to the Copilot Forge toolkit to fu
 | 14 | Corpus/Guide Split (Context Window Optimization) | ✅ Implemented | `v2.4.0` | Medium | High |
 | 15 | Learning Flywheel (Self-Improving Knowledge) | ✅ Implemented | `v2.4.0` | Medium | High |
 | 16 | Process Discipline Guides | ✅ Implemented | `v2.7.0` | Low | High |
-| 17 | Computational vs. Inferential Sensor Split | 🚧 Future | — | Medium | High |
+| 17 | Computational vs. Inferential Sensor Split | ✅ Implemented | `v2.8.0` | Medium | High |
 | 18 | Pacing Modes | 🚧 Future | — | High | High |
 | 19 | Drift Sensor (Continuous Convention Compliance) | ✅ Implemented | `v2.5.0` | Low | High |
 | 20 | Codebase State Document (Rich Project Understanding) | ✅ Implemented | `v2.6.0` | Medium | High |

@@ -18,7 +18,6 @@ graph TD
     bugfix("#bugfix") --> wrapup("#wrapup")
     bugfix("#bugfix") -.-> bug_template_md("bug-template.md")
     bugfix("#bugfix") -.-> lesson_template_md("lesson-template.md")
-    check_drift("#check-drift")
     forge_admin("#forge-admin") -.-> forge_gate_ps1("forge-gate.ps1")
     init("#init") -.-> adr_template_md("adr-template.md")
     init("#init") -.-> assumption_template_md("assumption-template.md")
@@ -30,8 +29,7 @@ graph TD
     init("#init") -.-> support_template_md("support-template.md")
     init("#init") -.-> task_template_md("task-template.md")
     init("#init") -.-> taxonomy_template_md("taxonomy-template.md")
-    init("#init") -.- variables_template_md("variables-template.md")
-    init("#init") -.- inbox_template_md("inbox-template.md")
+    init("#init") -.-> variables_template_md("variables-template.md")
     issue_epic_creation("#issue_epic_creation") -.-> env_local_template_env("env-local-template.env")
     optimize("#optimize") --> agents/api_cost_scanner("#agents/api-cost-scanner")
     optimize("#optimize") --> agents/db_perf_scanner("#agents/db-perf-scanner")
@@ -54,88 +52,108 @@ graph TD
     query("#query") -.-> support_template_md("support-template.md")
     reflect("#reflect") --> agents/reflector("#agents/reflector")
     reflect("#reflect") --> review("#review")
-    reflect("#reflect") -.- inbox_template_md("inbox-template.md")
     review("#review") --> agents/architecture_reviewer("#agents/architecture-reviewer")
     review("#review") --> agents/correctness_reviewer("#agents/correctness-reviewer")
     review("#review") --> agents/quality_reviewer("#agents/quality-reviewer")
     review("#review") --> agents/security_auditor("#agents/security-auditor")
     review("#review") --> agents/test_auditor("#agents/test-auditor")
     review("#review") --> wrapup("#wrapup")
-    review("#review") -.- inbox_template_md("inbox-template.md")
     spec("#spec") --> validate("#validate")
-    spec("#spec") --> vibe("#vibe")
     spec("#spec") -.-> requirement_template_md("requirement-template.md")
     sprint("#sprint") --> proceed("#proceed")
+    synthesize("#synthesize") -.-> adr_template_md("adr-template.md")
+    synthesize("#synthesize") -.-> lesson_template_md("lesson-template.md")
     token_estimate("#token-estimate") -.-> token_estimate_ps1("token-estimate.ps1")
     vibe("#vibe") -.-> vibe_template_md("vibe-template.md")
     wrapup("#wrapup") --> security_scan("#security_scan")
     wrapup("#wrapup") -.-> adr_template_md("adr-template.md")
     wrapup("#wrapup") -.-> assumption_template_md("assumption-template.md")
+    wrapup("#wrapup") -.-> inbox_template_md("inbox-template.md")
     wrapup("#wrapup") -.-> lesson_template_md("lesson-template.md")
     wrapup("#wrapup") -.-> manual_qa_template_md("manual-qa-template.md")
     wrapup("#wrapup") -.-> support_template_md("support-template.md")
-    wrapup("#wrapup") -.- token_estimate_ps1("token-estimate.ps1")
-    wrapup("#wrapup") -.- inbox_template_md("inbox-template.md")
-    synthesize("#synthesize") -.- lesson_template_md("lesson-template.md")
-    synthesize("#synthesize") -.- adr_template_md("adr-template.md")
-    style vibe fill:#d4edda,stroke:#28a745,color:#155724
-    style requirement_template_md fill:#fff3cd,stroke:#ffc107,color:#856404
-    style agents/db_perf_scanner fill:#e2d9f3,stroke:#6f42c1,color:#381c63
+    wrapup("#wrapup") -.-> token_estimate_ps1("token-estimate.ps1")
+    style agents/computational\test_gate fill:#e2d9f3,stroke:#6f42c1,color:#381c63
+    style agents/inferential\architecture_reviewer fill:#e2d9f3,stroke:#6f42c1,color:#381c63
+    style wrapup fill:#d4edda,stroke:#28a745,color:#155724
+    style sprint fill:#d4edda,stroke:#28a745,color:#155724
     style token_estimate fill:#d4edda,stroke:#28a745,color:#155724
+    style process\subagent_trust_rules_md fill:#fff3cd,stroke:#ffc107,color:#856404
+    style agents/feature_tracer fill:#e2d9f3,stroke:#6f42c1,color:#381c63
+    style support_template_md fill:#fff3cd,stroke:#ffc107,color:#856404
+    style security_scan fill:#d4edda,stroke:#28a745,color:#155724
+    style process\context_budget_rules_md fill:#fff3cd,stroke:#ffc107,color:#856404
+    style issue_epic_creation fill:#d4edda,stroke:#28a745,color:#155724
+    style analyze fill:#d4edda,stroke:#28a745,color:#155724
+    style agents/inferential\test_auditor fill:#e2d9f3,stroke:#6f42c1,color:#381c63
+    style spec fill:#d4edda,stroke:#28a745,color:#155724
+    style process\iron_laws_rules_md fill:#fff3cd,stroke:#ffc107,color:#856404
+    style agents/inferential\quality_reviewer fill:#e2d9f3,stroke:#6f42c1,color:#381c63
+    style assumption_template_md fill:#fff3cd,stroke:#ffc107,color:#856404
+    style canary fill:#d4edda,stroke:#28a745,color:#155724
+    style agents/computational\build_gate fill:#e2d9f3,stroke:#6f42c1,color:#381c63
+    style deployment_template_md fill:#fff3cd,stroke:#ffc107,color:#856404
+    style agents/inferential\security_auditor fill:#e2d9f3,stroke:#6f42c1,color:#381c63
+    style lesson_template_md fill:#fff3cd,stroke:#ffc107,color:#856404
+    style manual_qa_template_md fill:#fff3cd,stroke:#ffc107,color:#856404
+    style variables_template_md fill:#fff3cd,stroke:#ffc107,color:#856404
+    style agents/integration_explorer fill:#e2d9f3,stroke:#6f42c1,color:#381c63
+    style agents/inferential\code_quality_auditor fill:#e2d9f3,stroke:#6f42c1,color:#381c63
+    style process\escalation_rules_md fill:#fff3cd,stroke:#ffc107,color:#856404
+    style architect fill:#d4edda,stroke:#28a745,color:#155724
+    style agents/convention_auditor fill:#e2d9f3,stroke:#6f42c1,color:#381c63
+    style bug_template_md fill:#fff3cd,stroke:#ffc107,color:#856404
+    style agents/correctness_reviewer fill:#e2d9f3,stroke:#6f42c1,color:#381c63
+    style agents/db_perf_scanner fill:#e2d9f3,stroke:#6f42c1,color:#381c63
+    style process\scoping_rules_md fill:#fff3cd,stroke:#ffc107,color:#856404
+    style task_template_md fill:#fff3cd,stroke:#ffc107,color:#856404
+    style agents/computational\typecheck_gate fill:#e2d9f3,stroke:#6f42c1,color:#381c63
     style validate fill:#d4edda,stroke:#28a745,color:#155724
+    style agents/computational\secret_scan fill:#e2d9f3,stroke:#6f42c1,color:#381c63
+    style process\self_validation_rules_md fill:#fff3cd,stroke:#ffc107,color:#856404
+    style process\pushback_rules_md fill:#fff3cd,stroke:#ffc107,color:#856404
+    style agents/code_quality_auditor fill:#e2d9f3,stroke:#6f42c1,color:#381c63
+    style token_estimate_ps1 fill:#cce5ff,stroke:#007bff,color:#004085
+    style agents/task_implementer fill:#e2d9f3,stroke:#6f42c1,color:#381c63
+    style process\surgical_edits_rules_md fill:#fff3cd,stroke:#ffc107,color:#856404
+    style init fill:#d4edda,stroke:#28a745,color:#155724
+    style agents/test_auditor fill:#e2d9f3,stroke:#6f42c1,color:#381c63
+    style agents/architecture_reviewer fill:#e2d9f3,stroke:#6f42c1,color:#381c63
+    style review fill:#d4edda,stroke:#28a745,color:#155724
+    style forge_test_ps1 fill:#cce5ff,stroke:#007bff,color:#004085
+    style vibe fill:#d4edda,stroke:#28a745,color:#155724
+    style deploy fill:#d4edda,stroke:#28a745,color:#155724
+    style process\grounding_rules_md fill:#fff3cd,stroke:#ffc107,color:#856404
+    style status fill:#d4edda,stroke:#28a745,color:#155724
+    style requirement_template_md fill:#fff3cd,stroke:#ffc107,color:#856404
     style template_drift fill:#d4edda,stroke:#28a745,color:#155724
     style agents/latency_scanner fill:#e2d9f3,stroke:#6f42c1,color:#381c63
-    style agents/task_implementer fill:#e2d9f3,stroke:#6f42c1,color:#381c63
-    style forge_admin fill:#d4edda,stroke:#28a745,color:#155724
-    style manual_qa_template_md fill:#fff3cd,stroke:#ffc107,color:#856404
-    style agents/architecture_mapper fill:#e2d9f3,stroke:#6f42c1,color:#381c63
-    style bugfix fill:#d4edda,stroke:#28a745,color:#155724
-    style reflect fill:#d4edda,stroke:#28a745,color:#155724
-    style agents/test_auditor fill:#e2d9f3,stroke:#6f42c1,color:#381c63
-    style agents/api_cost_scanner fill:#e2d9f3,stroke:#6f42c1,color:#381c63
-    style lesson_template_md fill:#fff3cd,stroke:#ffc107,color:#856404
-    style sprint fill:#d4edda,stroke:#28a745,color:#155724
-    style agents/quality_reviewer fill:#e2d9f3,stroke:#6f42c1,color:#381c63
-    style taxonomy_template_md fill:#fff3cd,stroke:#ffc107,color:#856404
-    style forge_test_ps1 fill:#cce5ff,stroke:#007bff,color:#004085
-    style agents/security_auditor fill:#e2d9f3,stroke:#6f42c1,color:#381c63
-    style spec fill:#d4edda,stroke:#28a745,color:#155724
-    style assumption_template_md fill:#fff3cd,stroke:#ffc107,color:#856404
-    style issue_epic_creation fill:#d4edda,stroke:#28a745,color:#155724
-    style security_scan fill:#d4edda,stroke:#28a745,color:#155724
-    style deploy fill:#d4edda,stroke:#28a745,color:#155724
-    style forge_context_ps1 fill:#cce5ff,stroke:#007bff,color:#004085
-    style proceed fill:#d4edda,stroke:#28a745,color:#155724
-    style deployment_template_md fill:#fff3cd,stroke:#ffc107,color:#856404
-    style forge_gate_ps1 fill:#cce5ff,stroke:#007bff,color:#004085
-    style variables_template_md fill:#fff3cd,stroke:#ffc107,color:#856404
-    style tdd fill:#d4edda,stroke:#28a745,color:#155724
-    style agents/code_quality_auditor fill:#e2d9f3,stroke:#6f42c1,color:#381c63
-    style agents/architecture_reviewer fill:#e2d9f3,stroke:#6f42c1,color:#381c63
-    style status fill:#d4edda,stroke:#28a745,color:#155724
-    style agents/integration_explorer fill:#e2d9f3,stroke:#6f42c1,color:#381c63
-    style wrapup fill:#d4edda,stroke:#28a745,color:#155724
-    style canary fill:#d4edda,stroke:#28a745,color:#155724
-    style review fill:#d4edda,stroke:#28a745,color:#155724
-    style env_local_template_env fill:#fff3cd,stroke:#ffc107,color:#856404
+    style agents/reflector fill:#e2d9f3,stroke:#6f42c1,color:#381c63
     style adr_template_md fill:#fff3cd,stroke:#ffc107,color:#856404
     style check_drift fill:#d4edda,stroke:#28a745,color:#155724
-    style architect fill:#d4edda,stroke:#28a745,color:#155724
-    style support_template_md fill:#fff3cd,stroke:#ffc107,color:#856404
     style query fill:#d4edda,stroke:#28a745,color:#155724
-    style agents/correctness_reviewer fill:#e2d9f3,stroke:#6f42c1,color:#381c63
-    style agents/convention_auditor fill:#e2d9f3,stroke:#6f42c1,color:#381c63
-    style task_template_md fill:#fff3cd,stroke:#ffc107,color:#856404
-    style optimize fill:#d4edda,stroke:#28a745,color:#155724
-    style init fill:#d4edda,stroke:#28a745,color:#155724
-    style bug_template_md fill:#fff3cd,stroke:#ffc107,color:#856404
-    style agents/feature_tracer fill:#e2d9f3,stroke:#6f42c1,color:#381c63
-    style vibe_template_md fill:#fff3cd,stroke:#ffc107,color:#856404
-    style token_estimate_ps1 fill:#cce5ff,stroke:#007bff,color:#004085
-    style analyze fill:#d4edda,stroke:#28a745,color:#155724
-    style agents/reflector fill:#e2d9f3,stroke:#6f42c1,color:#381c63
-    style synthesize fill:#d4edda,stroke:#28a745,color:#155724
-    style prune fill:#d4edda,stroke:#28a745,color:#155724
+    style forge_gate_ps1 fill:#cce5ff,stroke:#007bff,color:#004085
+    style forge_context_ps1 fill:#cce5ff,stroke:#007bff,color:#004085
+    style reflect fill:#d4edda,stroke:#28a745,color:#155724
+    style agents/security_auditor fill:#e2d9f3,stroke:#6f42c1,color:#381c63
+    style agents/architecture_mapper fill:#e2d9f3,stroke:#6f42c1,color:#381c63
+    style env_local_template_env fill:#fff3cd,stroke:#ffc107,color:#856404
+    style proceed fill:#d4edda,stroke:#28a745,color:#155724
+    style bugfix fill:#d4edda,stroke:#28a745,color:#155724
+    style agents/inferential\convention_auditor fill:#e2d9f3,stroke:#6f42c1,color:#381c63
+    style agents/inferential\correctness_reviewer fill:#e2d9f3,stroke:#6f42c1,color:#381c63
+    style agents/computational\lint_gate fill:#e2d9f3,stroke:#6f42c1,color:#381c63
     style inbox_template_md fill:#fff3cd,stroke:#ffc107,color:#856404
+    style forge_admin fill:#d4edda,stroke:#28a745,color:#155724
+    style agents/computational\vuln_scan fill:#e2d9f3,stroke:#6f42c1,color:#381c63
+    style vibe_template_md fill:#fff3cd,stroke:#ffc107,color:#856404
+    style agents/quality_reviewer fill:#e2d9f3,stroke:#6f42c1,color:#381c63
+    style prune fill:#d4edda,stroke:#28a745,color:#155724
+    style taxonomy_template_md fill:#fff3cd,stroke:#ffc107,color:#856404
+    style agents/api_cost_scanner fill:#e2d9f3,stroke:#6f42c1,color:#381c63
+    style agents/inferential\spec_adherence fill:#e2d9f3,stroke:#6f42c1,color:#381c63
+    style tdd fill:#d4edda,stroke:#28a745,color:#155724
+    style optimize fill:#d4edda,stroke:#28a745,color:#155724
+    style synthesize fill:#d4edda,stroke:#28a745,color:#155724
 
 ```

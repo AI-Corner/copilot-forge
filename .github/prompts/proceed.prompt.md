@@ -108,31 +108,34 @@ Run the `#tdd` prompt inline:
 
 ---
 
-## Phase 5: Verify (Reflect + Review)
+## Phase 5: Verify (Computational & Inferential)
 
 **Gate**: `currentPhase` must be `5`. After completion: append `5`, set `currentPhase=6`.
 
+**Part 1: Computational Verification**
+Run all deterministic computational sensors sequentially:
+1. **Lint Gate** (`#agents/computational/lint-gate`): Run configured linter.
+2. **Typecheck Gate** (`#agents/computational/typecheck-gate`): Run type checker.
+3. **Build Gate** (`#agents/computational/build-gate`): Ensure the project builds.
+4. **Test Gate** (`#agents/computational/test-gate`): Run the full test suite.
+5. **Secret Scan Gate** (`#agents/computational/secret-scan`): Scan diff for hardcoded credentials.
+6. **Vuln Scan Gate** (`#agents/computational/vuln-scan`): Scan for dependency vulnerabilities.
+
+**Computational Gate Rule**: If *any* computational sensor fails, you must STOP, fix the underlying code issue, and re-run the failed computational sensors until they pass. **Do not proceed to Part 2 until Part 1 is 100% clean.**
+
+**Part 2: Inferential Verification**
+Only after a clean computational pass, use the LLM-driven reviewers to verify heuristics.
 **Get diffs**: run `git -C <worktree> diff main...HEAD` plus the list of changed files.
 
-**Run review checklists sequentially** (reference the full checklists in `.github/prompts/agents/`):
-
-**Step A — Self-Review** (reference: `#agents/reflector`):
-Run the reflector checklist:
-- Does the code do what the requirement specifies? Are all ACs met?
-- Edge cases handled? Follows naming conventions? Proper layering?
-- New code has tests? Tests cover error paths?
-- No TODOs, commented-out code, or debug logging?
-- Check `.forge/knowledge/lessons/` for applicable pitfalls.
-
-**Step B — Correctness** (reference: `#agents/correctness-reviewer`): logic errors, null handling, race conditions, error handling, security.
-
-**Step C — Quality** (reference: `#agents/quality-reviewer`): convention compliance, naming, duplication, input validation.
-
-**Step D — Architecture** (reference: `#agents/architecture-reviewer`): layering, test coverage, mock completeness, API contract compliance.
-
-**Step E — Test Coverage** (reference: `#agents/test-auditor`): coverage gaps, mock completeness, test quality.
-
-**Step F — Security** (reference: `#agents/security-auditor`): injection, auth bypass, data exposure, rate limiting.
+**Run review checklists sequentially**:
+**Step A — Spec Adherence** (reference: `#agents/inferential/spec-adherence`): strictly compare diff against ACs.
+**Step B — Self-Review** (reference: `#agents/reflector`):
+Run the reflector checklist: edge cases handled, naming conventions, proper layering, lessons from `.forge/knowledge/lessons/`.
+**Step C — Correctness** (reference: `#agents/inferential/correctness-reviewer`): logic errors, null handling, race conditions.
+**Step D — Quality** (reference: `#agents/inferential/quality-reviewer`): convention compliance, duplication.
+**Step E — Architecture** (reference: `#agents/inferential/architecture-reviewer`): API contract compliance, layer bounds.
+**Step F — Test Quality** (reference: `#agents/inferential/test-auditor`): coverage gaps, mock completeness.
+**Step G — Security** (reference: `#agents/inferential/security-auditor`): injection risks, auth bypass.
 
 **Consolidate**: deduplicate overlapping findings. Produce a single ranked list by severity.
 

@@ -47,7 +47,7 @@ Read the complete current version of every changed file (not just the diff) to u
 
 Run each review dimension in order. For each, produce structured findings with severity (Critical/Major/Minor/Nit), file path, line number, and suggested fix.
 
-#### Dimension 1 — Correctness (reference: `#agents/correctness-reviewer`)
+#### Dimension 1 — Correctness (reference: `#agents/inferential/correctness-reviewer`)
 Focus: logic errors, null risks, race conditions, edge cases, concurrency bugs.
 - Off-by-one errors in loops and array indexing
 - Incorrect boolean logic (inverted conditions, missing negations)
@@ -59,7 +59,7 @@ Focus: logic errors, null risks, race conditions, edge cases, concurrency bugs.
 - Data exposure (PII in logs, sensitive fields in API responses)
 - Empty inputs, boundary values, concurrent modification scenarios
 
-#### Dimension 2 — Quality (reference: `#agents/quality-reviewer`)
+#### Dimension 2 — Quality (reference: `#agents/inferential/quality-reviewer`)
 Focus: naming, convention compliance, code duplication, complexity.
 - Naming conventions per `.forge/context/rules/conventions.rules.md`
 - Logging — uses project logger, not `console.log`
@@ -68,7 +68,7 @@ Focus: naming, convention compliance, code duplication, complexity.
 - User input validated at API boundaries
 - Import/export style per conventions
 
-#### Dimension 3 — Architecture (reference: `#agents/architecture-reviewer`)
+#### Dimension 3 — Architecture (reference: `#agents/inferential/architecture-reviewer`)
 Focus: layering, separation of concerns, API contracts, backward compatibility, configuration drift.
 - Routes contain only request parsing and response formatting
 - Business logic lives in services, not route handlers
@@ -78,7 +78,7 @@ Focus: layering, separation of concerns, API contracts, backward compatibility, 
 - Database schema changes are additive
 - **Documentation Drift**: If the PR introduces new environment variables, configuration properties, or secrets (e.g., in `.env`, `application.yml`, `process.env`), cross-reference them with `.forge/context/corpus/variables.md`. If a variable is used but not documented there, flag it as a Critical failure.
 
-#### Dimension 4 — Test Coverage (reference: `#agents/test-auditor`)
+#### Dimension 4 — Test Coverage (reference: `#agents/inferential/test-auditor`)
 Focus: test coverage gaps, mock completeness, test quality, determinism.
 - New code has corresponding test files (scan both centralized and colocated test layouts before reporting a gap)
 - Tests cover error/failure paths, not just happy path
@@ -87,7 +87,7 @@ Focus: test coverage gaps, mock completeness, test quality, determinism.
 - No tests that make real network calls
 - For any "no test file" finding, run in terminal: `find . -name '<filename>.test.*' -o -name '<filename>.spec.*' | grep -v node_modules` to verify before reporting
 
-#### Dimension 5 — Security (reference: `#agents/security-auditor`)
+#### Dimension 5 — Security (reference: `#agents/inferential/security-auditor`)
 Focus: input validation, auth/authz, data exposure, rate limiting, dependency issues.
 - User input validated and sanitized at API boundaries
 - Authentication middleware present on protected endpoints
