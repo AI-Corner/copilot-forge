@@ -1,10 +1,10 @@
-﻿---
+---
 agent: agent
 tools: [codebase, runCommand, terminalLastCommand]
 description: Detect drift between this project's .forge/templates/ copies and the canonical templates in the toolkit
 ---
 
-# template-drift â€” Template Drift Detector
+# template-drift — Template Drift Detector
 
 You are checking whether the project's local `.forge/templates/` copies still match the canonical templates in the copilot-forge. Templates are copied per-repo (not symlinked), so they drift over time. Some drift is **intentional** (project-specific customization); some is **accidental** (toolkit updated and the project never pulled the change).
 
@@ -13,7 +13,7 @@ You are checking whether the project's local `.forge/templates/` copies still ma
 
 ## Input
 
-Scope: [optional â€” single template name to check (e.g., `requirement-template`), otherwise check all templates]
+Scope: [optional — single template name to check (e.g., `requirement-template`), otherwise check all templates]
 
 ## Prerequisites
 
@@ -24,14 +24,14 @@ Scope: [optional â€” single template name to check (e.g., `requirement-temp
 
 ### Step 1: Enumerate Templates to Compare
 1. If the user passed a scope argument, only check `.forge/templates/<scope>.md` vs the canonical `<scope>.md`.
-2. Otherwise, list every `*.md` file in `.forge/templates/` AND every `*.md` in the canonical `templates/`. Compare the union â€” this catches templates added upstream but not yet in the project, and templates in the project not in the toolkit.
+2. Otherwise, list every `*.md` file in `.forge/templates/` AND every `*.md` in the canonical `templates/`. Compare the union — this catches templates added upstream but not yet in the project, and templates in the project not in the toolkit.
 
 ### Step 2: Diff Each Template
 For each template, use the codebase tool to read both versions and compare them. Capture:
 - **Missing upstream**: template exists locally but not in toolkit (legacy or custom)
 - **Missing locally**: template exists in toolkit but not in project (upstream added, not yet copied)
 - **Identical**: no differences
-- **Drifted**: differences â€” count added/removed lines
+- **Drifted**: differences — count added/removed lines
 
 Also compute a rough drift size: total lines added + total lines removed.
 
@@ -60,7 +60,7 @@ When in doubt, classify as "needs human review."
 ### Step 4: Produce the Drift Report
 
 ```
-## Template Drift Report â€” [date]
+## Template Drift Report — [date]
 
 Project: <repo name>
 Canonical templates: <path to toolkit templates/>
@@ -69,8 +69,8 @@ Canonical templates: <path to toolkit templates/>
 |---|---|---|---|
 | requirement-template.md | Drifted | +42 / -8 | Intentional (System Model, Entities) |
 | task-template.md | Drifted | +3 / -1 | Accidental (cosmetic) |
-| bug-template.md | Identical | â€” | â€” |
-| assumption-template.md | Missing locally | â€” | Upstream added â€” needs copy |
+| bug-template.md | Identical | — | — |
+| assumption-template.md | Missing locally | — | Upstream added — needs copy |
 
 Overall: 3 drifted, 1 missing locally, 1 identical.
 Intentional: 1. Accidental: 2. Missing: 1.
@@ -99,7 +99,7 @@ Reply with action numbers to apply (e.g. "1 2" or "all"), or "skip" to take no a
 
 **Do not apply any changes without explicit user approval.** Writing to `.forge/templates/` affects how future `#spec`, `#architect`, and `#bugfix` runs behave.
 
-For **intentional** drift, do not propose reconciliation â€” just note it in the report.
+For **intentional** drift, do not propose reconciliation — just note it in the report.
 
 If the user approves, apply only the numbered actions they listed and re-diff those files to confirm drift is now zero.
 
@@ -109,9 +109,9 @@ If the user approves, apply only the numbered actions they listed and re-diff th
 - If intentional customizations were found: remind the user to document them in a project NOTES file so future toolkit updates don't accidentally overwrite them.
 
 ## What This Skill Does NOT Do
-- Does not modify toolkit templates â€” changes to the canonical version go through the copilot-forge repo.
-- Does not rename or delete project template files â€” only copies or reports.
-- Does not check drift of prompts or agents â€” those would need to be re-copied manually from the toolkit's `.github/prompts/` directory.
+- Does not modify toolkit templates — changes to the canonical version go through the copilot-forge repo.
+- Does not rename or delete project template files — only copies or reports.
+- Does not check drift of prompts or agents — those would need to be re-copied manually from the toolkit's `.github/prompts/` directory.
 
 ## Internal Reference
 - **Incoming Skill Dependencies**: *None*

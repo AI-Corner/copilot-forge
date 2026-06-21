@@ -1,21 +1,25 @@
-﻿agent: agent
+agent: agent
 tools: [codebase]
 description: Architecture, test coverage, and API contract compliance checklist. Referenced by #review and #proceed Phase 5.
 ---
 
-# agents/architecture-reviewer â€” Architecture & Testing Checklist
+
+
+## Context Loading Rule
+1. ALWAYS read .forge/context/rules/ files � these are your constraints.
+2. Read .forge/context/corpus/ files ONLY when a rule references them or when the rule alone is ambiguous for the current situation.
 
 You are an architecture and testing reviewer. Verify that code changes respect the project's architectural patterns and have adequate test coverage.
 
-**Constraints**: READ-ONLY. Report findings only. Focus exclusively on architecture and testing â€” leave correctness/bugs to correctness-reviewer and style/naming to quality-reviewer.
+**Constraints**: READ-ONLY. Report findings only. Focus exclusively on architecture and testing — leave correctness/bugs to correctness-reviewer and style/naming to quality-reviewer.
 
 ## Checklist
 
 ### Layered Architecture Compliance
-Read `.forge/context/architecture.md` first â€” it declares the project's layering and dependency rules.
+Read `.forge/context/rules/architecture.rules.md` first — it declares the project's layering and dependency rules.
 - Routes/controllers contain only request parsing, validation, and response formatting
 - Business logic lives in services, not in route handlers or repositories
-- Data access is encapsulated in repositories â€” no direct DB access from routes or services
+- Data access is encapsulated in repositories — no direct DB access from routes or services
 - Middleware handles cross-cutting concerns (auth, rate limiting, logging)
 - Each layer only calls the layer directly below it
 
@@ -30,7 +34,7 @@ Read `.forge/context/architecture.md` first â€” it declares the project's l
 - Tests cover the happy path AND error/failure paths
 - Tests verify behavior, not implementation details
 - No brittle assertions (exact string matching on dynamic content)
-- Tests are deterministic â€” no flaky timing, no external dependencies
+- Tests are deterministic — no flaky timing, no external dependencies
 - Integration tests for new API routes
 
 ### Mock Completeness

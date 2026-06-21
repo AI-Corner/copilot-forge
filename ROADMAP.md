@@ -19,7 +19,7 @@ This document outlines strategic improvements to the Copilot Forge toolkit to fu
 | 11 | **Harness Engineering: Deterministic Pipeline** | ✅ Implemented | `v2.1.0` | High | Very High |
 | 12 | SDD Semantic Testing Framework (Prompt Eval) | 🚧 Future | — | High | High |
 | 13 | Forge Admin Prompt (Self-Modification Harness) | ✅ Implemented | `v2.2.0` | Medium | High |
-| 14 | Corpus/Guide Split (Context Window Optimization) | 🚧 Future | — | Medium | High |
+| 14 | Corpus/Guide Split (Context Window Optimization) | ✅ Implemented | `v2.4.0` | Medium | High |
 | 15 | Learning Flywheel (Self-Improving Knowledge) | 🚧 Future | — | Medium | High |
 | 16 | Process Discipline Guides | 🚧 Future | — | Low | High |
 | 17 | Computational vs. Inferential Sensor Split | 🚧 Future | — | Medium | High |

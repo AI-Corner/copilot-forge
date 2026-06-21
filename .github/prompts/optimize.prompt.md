@@ -1,10 +1,10 @@
-﻿---
+---
 agent: agent
 tools: [codebase, runCommand, terminalLastCommand]
-description: API cost & performance scanner â€” identify expensive operations and optimization opportunities
+description: API cost & performance scanner — identify expensive operations and optimization opportunities
 ---
 
-# optimize â€” API Cost & Performance Scanner
+# optimize — API Cost & Performance Scanner
 
 You are scanning this project's API and infrastructure for cost and performance optimization opportunities.
 
@@ -13,18 +13,18 @@ You are scanning this project's API and infrastructure for cost and performance 
 
 ## Input
 
-Focus: [specific focus area â€” "ai", "caching", "queries", "latency" â€” or nothing for all dimensions]
+Focus: [specific focus area — "ai", "caching", "queries", "latency" — or nothing for all dimensions]
 
 ## Instructions
 
 ### Step 1: Determine Focus
 1. If given a focus area, prioritize that dimension.
 2. If no argument, scan all dimensions.
-3. Read `.forge/context/architecture.md` and `.forge/context/project-overview.md` via the codebase tool for current caching and optimization patterns.
+3. Read `.forge/context/rules/architecture.rules.md` and `.forge/context/project-overview.md` via the codebase tool for current caching and optimization patterns.
 
 ### Step 2: Run Scanner Dimensions Sequentially
 
-#### Dimension 1 â€” API Cost Analysis (reference: `#agents/api-cost-scanner`)
+#### Dimension 1 — API Cost Analysis (reference: `#agents/api-cost-scanner`)
 Use the codebase tool to find all AI API call sites:
 - **AI API Call Inventory**: find all AI API calls (grep for OpenAI SDK imports and `.create(`, `chat.completions`, etc.). For each call: which model, estimated token usage per request, frequency.
 - **Model Selection**: calls using expensive frontier models that could use cheaper/faster alternatives. Tasks where model capability exceeds what's actually needed.
@@ -32,7 +32,7 @@ Use the codebase tool to find all AI API call sites:
 - **Redundant Calls**: duplicate AI calls for the same input, calls that could be replaced with deterministic logic, speculative calls often discarded.
 - **Cost Estimates**: estimate per-call cost and monthly volume.
 
-#### Dimension 2 â€” Database Performance (reference: `#agents/db-perf-scanner`)
+#### Dimension 2 — Database Performance (reference: `#agents/db-perf-scanner`)
 Use the codebase tool to grep for JDBC, JPA, and Spring Data call patterns:
 - **Query Issues**: missing indexes on frequently filtered columns, unbounded queries (no `Pageable`/`LIMIT`), N+1 patterns, read-after-write that could reuse the write result, `SELECT *` where projections suffice.
 - **Connection Pool**: missing HikariCP config, pool exhaustion, connections not released.
@@ -41,9 +41,9 @@ Use the codebase tool to grep for JDBC, JPA, and Spring Data call patterns:
 - **Batch Operations**: sequential `save()` calls that could use `saveAll()`, N selects that could be one IN-clause query.
 - **Cache Effectiveness**: frequently read data not cached with `@Cacheable`, missing `@CacheEvict` on writes.
 
-#### Dimension 3 â€” Latency Analysis (reference: `#agents/latency-scanner`)
+#### Dimension 3 — Latency Analysis (reference: `#agents/latency-scanner`)
 Use the codebase tool to trace request paths from controller through service to repository:
-- **Sequential Blocking Calls**: service methods making multiple independent DB or HTTP calls in series â€” prefer `CompletableFuture.allOf()` or parallel streams.
+- **Sequential Blocking Calls**: service methods making multiple independent DB or HTTP calls in series — prefer `CompletableFuture.allOf()` or parallel streams.
 - **Response Payload Sizes**: over-fetching (returning full entity when only a few fields are needed), missing DTO projections, large nested objects that could be lazy-loaded.
 - **Controller / Filter Overhead**: auth token verification not cached, expensive filters running before cheap ones, unnecessary filter chain entries.
 - **Thread Pool Sizing**: `@Async` thread pool defaults too small for I/O-heavy workloads, unbounded thread pools.

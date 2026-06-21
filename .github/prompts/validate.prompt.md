@@ -1,10 +1,10 @@
-﻿---
+---
 agent: agent
 tools: [codebase, runCommand, changes]
 description: Validate any Copilot Forge phase output before advancing to the next phase
 ---
 
-# validate â€” Copilot Forge phase Validation
+# validate — Copilot Forge phase Validation
 
 You are validating Copilot Forge artifacts to ensure quality before advancing to the next phase.
 
@@ -12,7 +12,7 @@ You are validating Copilot Forge artifacts to ensure quality before advancing to
 
 ## Input
 
-Target: [REQ-xxx ID or phase name provided by the user â€” e.g., `REQ-023` or `spec` or `architecture`]
+Target: [REQ-xxx ID or phase name provided by the user — e.g., `REQ-023` or `spec` or `architecture`]
 
 ## Prerequisites
 
@@ -47,16 +47,16 @@ Search .forge/specs/*/requirement.md for frontmatter with status: draft, approve
 - [ ] No duplicate or overlapping requirements with existing specs
 
 #### Validating Architecture
-- [ ] Architecture follows existing patterns from `.forge/context/architecture.md`
+- [ ] Architecture follows existing patterns from `.forge/context/rules/architecture.rules.md`
 - [ ] New ADRs include rationale (not just decisions)
 - [ ] Data model changes are compatible with existing schema
-- [ ] API endpoint design follows REST conventions from `.forge/context/conventions.md`
+- [ ] API endpoint design follows REST conventions from `.forge/context/rules/conventions.rules.md`
 - [ ] Service layer follows the layered pattern (routes ? services ? repositories)
 - [ ] No architectural conflicts with other in-progress requirements
 
 #### Validating Tasks
 - [ ] Every task has valid frontmatter (`id`, `title`, `status`, `parent`, `created`, `updated`, `dependencies`)
-- [ ] Tasks form a valid DAG â€” no circular dependencies (including cross-repo dependencies)
+- [ ] Tasks form a valid DAG — no circular dependencies (including cross-repo dependencies)
 - [ ] Every acceptance criterion from the requirement is covered by at least one task
 - [ ] Each task lists specific files to create/modify
 - [ ] Tasks are appropriately scoped (not too large, not too granular)
@@ -72,7 +72,7 @@ Search .forge/specs/*/requirement.md for frontmatter with status: draft, approve
 #### Validating Implementation
 - [ ] All task acceptance criteria are met
 - [ ] Tests pass (run `npm test` or equivalent via terminal)
-- [ ] Code follows conventions from `.forge/context/conventions.md`
+- [ ] Code follows conventions from `.forge/context/rules/conventions.rules.md`
 - [ ] No new lint warnings or errors
 - [ ] All requirement acceptance criteria are satisfied
 - [ ] Copilot Forge artifacts are updated (task statuses set to `complete`)

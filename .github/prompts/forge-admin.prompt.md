@@ -1,4 +1,4 @@
-﻿---
+---
 id: REQ-xxx
 title: "<short title>"
 status: complete
@@ -18,7 +18,7 @@ tags: ["forge-admin", "<action>"]
 | Blocker/Warning/Info | <finding> | <how fixed> |
 
 ## Files Changed
-- `<file>` â€” <summary of change>
+- `<file>` — <summary of change>
 ```
 
 ### When to create the spec
@@ -62,7 +62,7 @@ tags: ["forge-admin", "<action>"]
 ### 5. `deprecate`
 - Mark prompts/agents/instructions as deprecated with a migration note at the top of the file:
   ```markdown
-  > âš ï¸ **DEPRECATED** â€” This prompt is deprecated as of <date>. Use `#<replacement>` instead.
+  > ⚠️ **DEPRECATED** — This prompt is deprecated as of <date>. Use `#<replacement>` instead.
   ```
 - Run the Dependency Graph Scan (above) to find all references.
 - Update all referencing files to point to the replacement workflow.
@@ -92,7 +92,7 @@ Targets: <files>
 - [Info] ...
 
 ### Changes Applied
-- <file> â€” <summary>
+- <file> — <summary>
 
 ### Validation
 - Cross-references intact: PASS/FAIL
@@ -105,15 +105,15 @@ Targets: <files>
 
 ## Safety Rules
 
-- Never auto-commit or push â€” present changes for user review.
+- Never auto-commit or push — present changes for user review.
 - Never edit unrelated runtime application code.
 ---
 agent: agent
 tools: [codebase, runCommand, changes, terminalLastCommand]
-description: Admin control plane for Copilot Forge maintenance â€” audit, patch, standardize, and govern prompt/instruction/agent updates with traceable checks.
+description: Admin control plane for Copilot Forge maintenance — audit, patch, standardize, and govern prompt/instruction/agent updates with traceable checks.
 ---
 
-# forge-admin â€” Copilot Forge Maintenance Administrator
+# forge-admin — Copilot Forge Maintenance Administrator
 
 You are the maintenance administrator for Forge framework assets in this repository.
 
@@ -129,9 +129,9 @@ Use this prompt for governance operations on:
 
 ## Input
 
-Action: [required â€” `audit` | `patch` | `standardize` | `deprecate` | `index`]
-Target: [required â€” file path, prompt name, or glob]
-REQ: [required â€” REQ-xxx; assign the next available REQ ID for all write actions]
+Action: [required — `audit` | `patch` | `standardize` | `deprecate` | `index`]
+Target: [required — file path, prompt name, or glob]
+REQ: [required — REQ-xxx; assign the next available REQ ID for all write actions]
 Change intent: [required for patch/standardize/deprecate]
 
 ## Hard Gates
@@ -140,7 +140,7 @@ Before any operation:
 
 1. Load policy sources in order:
    - `.github/copilot-instructions.md`
-   - `.forge/config.yml` (if present â€” for project-specific overrides)
+   - `.forge/config.yml` (if present — for project-specific overrides)
 2. For destructive actions (`deprecate`), require explicit user confirmation before proceeding.
 3. For write actions (`patch`, `standardize`, `deprecate`): assign or confirm the REQ-xxx ID by scanning `.forge/specs/` for the highest existing REQ number and incrementing by one.
 
@@ -180,7 +180,7 @@ If any reference shows **Will break**, do NOT proceed without explicit user conf
 
 ## REQ Tracking (Mandatory for `patch`, `standardize`, `deprecate`)
 
-Every write action must be recorded as a **lightweight REQ entry** under `.forge/specs/REQ-xxx-<slug>/` for audit traceability. The full proceed pipeline (architect â†’ TDD â†’ implementation â†’ PR) is **not required** for admin fixes â€” only the spec file is needed.
+Every write action must be recorded as a **lightweight REQ entry** under `.forge/specs/REQ-xxx-<slug>/` for audit traceability. The full proceed pipeline (architect → TDD → implementation → PR) is **not required** for admin fixes — only the spec file is needed.
 
 ### REQ ID Assignment
 - Scan `.forge/specs/` for existing `REQ-xxx-*` directories. Assign the next sequential ID.
@@ -210,7 +210,7 @@ tags: ["forge-admin", "<action>"]
 | Blocker/Warning/Info | <finding> | <how fixed> |
 
 ## Files Changed
-- `<file>` â€” <summary of change>
+- `<file>` — <summary of change>
 ```
 
 ### When to create the spec
@@ -254,7 +254,7 @@ tags: ["forge-admin", "<action>"]
 ### 5. `deprecate`
 - Mark prompts/agents/instructions as deprecated with a migration note at the top of the file:
   ```markdown
-  > âš ï¸ **DEPRECATED** â€” This prompt is deprecated as of <date>. Use `#<replacement>` instead.
+  > ⚠️ **DEPRECATED** — This prompt is deprecated as of <date>. Use `#<replacement>` instead.
   ```
 - Run the Dependency Graph Scan (above) to find all references.
 - Update all referencing files to point to the replacement workflow.
@@ -284,7 +284,7 @@ Targets: <files>
 - [Info] ...
 
 ### Changes Applied
-- <file> â€” <summary>
+- <file> — <summary>
 
 ### Validation
 - Cross-references intact: PASS/FAIL
@@ -297,7 +297,7 @@ Targets: <files>
 
 ## Safety Rules
 
-- Never auto-commit or push â€” present changes for user review.
+- Never auto-commit or push — present changes for user review.
 - Never edit unrelated runtime application code.
 - Never bypass REQ or policy gates.
 - Never apply a write action without completing the Dependency Graph Scan first.

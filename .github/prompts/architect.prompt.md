@@ -1,15 +1,15 @@
-﻿---
+---
 agent: agent
 tools: [codebase, runCommand, changes]
 description: Design architecture and break a requirement into implementable tasks
 ---
 
-# architect â€” Architecture & Task Breakdown
+# architect — Architecture & Task Breakdown
 
 You are designing architecture and breaking a requirement into implementable tasks.
 
 > **Ethos**: Follow the principles in `.github/copilot-instructions.md` throughout this session.
-> **Focus**: Act as the architect for the requirement. Only use `.forge/context/*.md`, the REQâ€™s `requirement.md`, and matching lessons; ignore any earlier chat history or brainstorming.
+> **Focus**: Act as the architect for the requirement. Only use `.forge/context/*.md`, the REQ’s `requirement.md`, and matching lessons; ignore any earlier chat history or brainstorming.
 
 ## Input
 
@@ -18,14 +18,14 @@ Requirement: [REQ-xxx ID or requirement description provided by the user]
 ## Prerequisites
 
 Before proceeding, use the codebase tool to verify:
-- `.forge/context/architecture.md` exists â€” stop and run `#init` if missing
-- `.forge/context/conventions.md` exists â€” stop and run `#init` if missing
+- `.forge/context/rules/architecture.rules.md` exists — stop and run `#init` if missing
+- `.forge/context/rules/conventions.rules.md` exists — stop and run `#init` if missing
 
 Read `.forge/templates/task-template.md` (or `templates/task-template.md` at the toolkit root).
 
 ## Instructions
 
-### â›” Pre-flight Gate (Run This First â€” Do Not Skip)
+### ⛔ Pre-flight Gate (Run This First — Do Not Skip)
 
 Run this command via terminal **before doing anything else**:
 
@@ -38,16 +38,16 @@ Run this command via terminal **before doing anything else**:
 ### Step 1: Locate and Read the Requirement
 1. If given a REQ ID, read `.forge/specs/REQ-xxx-*/requirement.md` via the codebase tool.
 2. If given a description, search `.forge/specs/` for the matching requirement.
-3. Read `.forge/context/architecture.md` and `.forge/context/conventions.md` (skip if already in conversation).
+3. Read `.forge/context/rules/architecture.rules.md` and `.forge/context/rules/conventions.rules.md` (skip if already in conversation).
 4. Check `.forge/knowledge/decisions/` (for global ADRs) and `.forge/knowledge/assumptions/` for prior choices that may affect design.
-5. **Lessons â€” search first**: use the codebase tool to search `.forge/knowledge/lessons/` with patterns matching the affected area (e.g., `component:.*API/auth`). Read only matched files. Note applicable lessons in your architecture rationale.
+5. **Lessons — search first**: use the codebase tool to search `.forge/knowledge/lessons/` with patterns matching the affected area (e.g., `component:.*API/auth`). Read only matched files. Note applicable lessons in your architecture rationale.
 
 ### Step 2: Explore the Codebase
-Use the codebase tool to explore systematically â€” run these explorations in sequence:
+Use the codebase tool to explore systematically — run these explorations in sequence:
 
-1. **Feature tracing** (reference: `#agents/feature-tracer`) â€” search for similar existing implementations of this feature type. Look for similar API endpoints, service patterns, data models.
-2. **Architecture mapping** (reference: `#agents/architecture-mapper`) â€” map all files and layers that will be affected. Use the codebase tool to trace imports and dependencies.
-3. **Integration surfaces** (reference: `#agents/integration-explorer`) â€” identify extension points, existing tests that will need updating, and API contracts this feature must respect.
+1. **Feature tracing** (reference: `#agents/feature-tracer`) — search for similar existing implementations of this feature type. Look for similar API endpoints, service patterns, data models.
+2. **Architecture mapping** (reference: `#agents/architecture-mapper`) — map all files and layers that will be affected. Use the codebase tool to trace imports and dependencies.
+3. **Integration surfaces** (reference: `#agents/integration-explorer`) — identify extension points, existing tests that will need updating, and API contracts this feature must respect.
 
 Read the key files identified during exploration.
 
@@ -62,7 +62,7 @@ Read the key files identified during exploration.
    - **Service layer**: New or modified services
    - **Environment / Configuration**: New `.env` vars, secrets, or configuration properties (e.g., `application.yml`)
    - **Decisions & Tradeoffs**: List the key decisions and tradeoffs made specifically for this feature.
-3. Propose any additions to `.forge/context/architecture.md` with rationale.
+3. Propose any additions to `.forge/context/rules/architecture.rules.md` with rationale.
 4. **Global Decisions**: If any decision clearly affects multiple features/repos or defines a reusable standard, suggest creating a separate ADR. If so, draft it in `.forge/knowledge/decisions/ADR-xxx-slug.md` using `.forge/templates/adr-template.md` (check `templates/adr-template.md` if absent). Determine the next ID using `.forge/.next-adr` (fallback to counting existing files).
 
 ### Step 4: Break Into Tasks
@@ -70,7 +70,7 @@ Read the key files identified during exploration.
 2. Determine the next TASK ID by scanning existing tasks across ALL specs.
 3. **Detect repository mode**: check whether `.forge/config.yml` exists and declares a `repos:` block with more than one entry.
    - **Single-repo mode**: set `repo:` on each task to the primary repo id (or omit).
-   - **Cross-repo mode**: every task MUST declare a `repo:` field. A single task should not modify files in multiple repos â€” split cross-repo work into separate tasks with explicit dependencies.
+   - **Cross-repo mode**: every task MUST declare a `repo:` field. A single task should not modify files in multiple repos — split cross-repo work into separate tasks with explicit dependencies.
 4. Create `TASK-xxx-description.md` for each task using `.forge/templates/task-template.md`.
 5. Each task must specify:
    - **Frontmatter**: `id`, `title`, `status` (`draft`), `parent` REQ, `created`, `updated`, `dependencies`, `repo:` (required in cross-repo mode)
@@ -79,9 +79,9 @@ Read the key files identified during exploration.
    - **Acceptance Criteria**: Concrete, testable criteria
    - **Technical Notes**: Implementation details, patterns to follow, edge cases
    - **Dependencies**: Other tasks that must complete first
-6. **Configuration Updates**: If the feature introduces new environment variables, secrets, or configuration properties, you MUST create a specific task (or append to an existing one) to document them in `.forge/context/variables.md`.
+6. **Configuration Updates**: If the feature introduces new environment variables, secrets, or configuration properties, you MUST create a specific task (or append to an existing one) to document them in `.forge/context/corpus/variables.md`.
 7. Tasks must form a valid dependency graph (no cycles).
-8. Order tasks so foundational work comes first (data layer â†’ service â†’ routes â†’ UI).
+8. Order tasks so foundational work comes first (data layer → service → routes → UI).
 
 ### Step 5: Update Requirement Status
 1. Update the requirement's frontmatter `status` from `draft` to `approved`.
@@ -94,12 +94,12 @@ Read the key files identified during exploration.
 4. Remind the user to run `#validate` before starting implementation.
 
 ## Quality Checklist
-- [ ] Architecture follows existing patterns (layered: routes â†’ services â†’ repositories)
+- [ ] Architecture follows existing patterns (layered: routes → services → repositories)
 - [ ] Tasks are small enough to implement in a single session
 - [ ] Task dependencies form a valid DAG (no cycles), including cross-repo edges
 - [ ] Every file to be modified is listed in at least one task
 - [ ] Tests are included in task acceptance criteria
-- [ ] If new environment variables/secrets are needed, a task exists to document them in `.forge/context/variables.md`
+- [ ] If new environment variables/secrets are needed, a task exists to document them in `.forge/context/corpus/variables.md`
 - [ ] No task has more than 3 dependencies
 - [ ] In cross-repo mode: every task has a `repo:` field naming a valid repo id from `.forge/config.yml`
 

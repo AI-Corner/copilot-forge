@@ -1,28 +1,28 @@
-﻿---
+---
 agent: agent
 tools: [codebase, runCommand, changes, terminalLastCommand]
 description: Multi-dimension code review covering correctness, quality, architecture, test coverage, and security
 ---
 
-# review â€” Multi-Dimension Code Review
+# review — Multi-Dimension Code Review
 
 You are performing a thorough code review of recent changes covering 5 dimensions: correctness, quality, architecture, test coverage, and security.
 
 > **Ethos**: Follow the principles in `.github/copilot-instructions.md` throughout this session.
-> **Focus**: Act as the formal code reviewer. Only use `.forge/context/*.md`, the REQâ€™s `requirement.md`, its tasks, and the current code diff; ignore any earlier chat history or brainstorming.
+> **Focus**: Act as the formal code reviewer. Only use `.forge/context/*.md`, the REQ’s `requirement.md`, its tasks, and the current code diff; ignore any earlier chat history or brainstorming.
 >
 
 ## Input
 
-Scope: [file paths, branch name, REQ/TASK ID, or nothing for current branch â€” provided by the user]
+Scope: [file paths, branch name, REQ/TASK ID, or nothing for current branch — provided by the user]
 
 ## Prerequisites
 
-Use the codebase tool to verify `.forge/context/conventions.md` exists. If it doesn't, stop and tell the user: "The `.forge/` structure hasn't been initialized. Run `#init` first."
+Use the codebase tool to verify `.forge/context/rules/conventions.rules.md` exists. If it doesn't, stop and tell the user: "The `.forge/` structure hasn't been initialized. Run `#init` first."
 
 ## Instructions
 
-### â›” Pre-flight Gate (Run This First â€” Do Not Skip)
+### ⛔ Pre-flight Gate (Run This First — Do Not Skip)
 
 ```powershell
 .\scripts\forge-gate.ps1 -Phase review
@@ -36,8 +36,8 @@ Use the codebase tool to verify `.forge/context/conventions.md` exists. If it do
 3. If given a REQ/TASK ID, find the associated branch and review its changes.
 4. If no argument, review all changes on the current branch vs `main`.
 5. Run in terminal: `git diff main...HEAD` (or `git diff` for uncommitted changes).
-6. Read `.forge/context/conventions.md` via the codebase tool.
-7. Read `.forge/context/architecture.md` via the codebase tool.
+6. Read `.forge/context/rules/conventions.rules.md` via the codebase tool.
+7. Read `.forge/context/rules/architecture.rules.md` via the codebase tool.
 8. **Relevant lessons**: derive touched components from the diff file paths. Search `.forge/knowledge/lessons/` for lessons where `component` or `domain` matches touched areas. Read matched lessons and pass them to each review dimension.
 
 ### Step 2: Read All Changed Files
@@ -47,7 +47,7 @@ Read the complete current version of every changed file (not just the diff) to u
 
 Run each review dimension in order. For each, produce structured findings with severity (Critical/Major/Minor/Nit), file path, line number, and suggested fix.
 
-#### Dimension 1 â€” Correctness (reference: `#agents/correctness-reviewer`)
+#### Dimension 1 — Correctness (reference: `#agents/correctness-reviewer`)
 Focus: logic errors, null risks, race conditions, edge cases, concurrency bugs.
 - Off-by-one errors in loops and array indexing
 - Incorrect boolean logic (inverted conditions, missing negations)
@@ -59,16 +59,16 @@ Focus: logic errors, null risks, race conditions, edge cases, concurrency bugs.
 - Data exposure (PII in logs, sensitive fields in API responses)
 - Empty inputs, boundary values, concurrent modification scenarios
 
-#### Dimension 2 â€” Quality (reference: `#agents/quality-reviewer`)
+#### Dimension 2 — Quality (reference: `#agents/quality-reviewer`)
 Focus: naming, convention compliance, code duplication, complexity.
-- Naming conventions per `.forge/context/conventions.md`
-- Logging â€” uses project logger, not `console.log`
-- No hardcoded values (URLs, ports, timeouts) â€” must use config
+- Naming conventions per `.forge/context/rules/conventions.rules.md`
+- Logging — uses project logger, not `console.log`
+- No hardcoded values (URLs, ports, timeouts) — must use config
 - No copy-pasted logic that should be extracted to a shared function
 - User input validated at API boundaries
 - Import/export style per conventions
 
-#### Dimension 3 â€” Architecture (reference: `#agents/architecture-reviewer`)
+#### Dimension 3 — Architecture (reference: `#agents/architecture-reviewer`)
 Focus: layering, separation of concerns, API contracts, backward compatibility, configuration drift.
 - Routes contain only request parsing and response formatting
 - Business logic lives in services, not route handlers
@@ -76,9 +76,9 @@ Focus: layering, separation of concerns, API contracts, backward compatibility, 
 - Each layer only calls the layer directly below it
 - Breaking changes to existing endpoints are flagged
 - Database schema changes are additive
-- **Documentation Drift**: If the PR introduces new environment variables, configuration properties, or secrets (e.g., in `.env`, `application.yml`, `process.env`), cross-reference them with `.forge/context/variables.md`. If a variable is used but not documented there, flag it as a Critical failure.
+- **Documentation Drift**: If the PR introduces new environment variables, configuration properties, or secrets (e.g., in `.env`, `application.yml`, `process.env`), cross-reference them with `.forge/context/corpus/variables.md`. If a variable is used but not documented there, flag it as a Critical failure.
 
-#### Dimension 4 â€” Test Coverage (reference: `#agents/test-auditor`)
+#### Dimension 4 — Test Coverage (reference: `#agents/test-auditor`)
 Focus: test coverage gaps, mock completeness, test quality, determinism.
 - New code has corresponding test files (scan both centralized and colocated test layouts before reporting a gap)
 - Tests cover error/failure paths, not just happy path
@@ -87,7 +87,7 @@ Focus: test coverage gaps, mock completeness, test quality, determinism.
 - No tests that make real network calls
 - For any "no test file" finding, run in terminal: `find . -name '<filename>.test.*' -o -name '<filename>.spec.*' | grep -v node_modules` to verify before reporting
 
-#### Dimension 5 â€” Security (reference: `#agents/security-auditor`)
+#### Dimension 5 — Security (reference: `#agents/security-auditor`)
 Focus: input validation, auth/authz, data exposure, rate limiting, dependency issues.
 - User input validated and sanitized at API boundaries
 - Authentication middleware present on protected endpoints
@@ -104,7 +104,7 @@ Focus: input validation, auth/authz, data exposure, rate limiting, dependency is
    - **Major**: Should fix before merge (convention violations, missing tests)
    - **Minor**: Nice to fix (style, naming)
    - **Nit**: Optional suggestions
-3. Cross-reference findings against the loaded lessons â€” if a finding matches a known pitfall, escalate its severity by one level and flag it explicitly.
+3. Cross-reference findings against the loaded lessons — if a finding matches a known pitfall, escalate its severity by one level and flag it explicitly.
 
 ### Step 5: Present Review
 
@@ -133,7 +133,7 @@ Then list findings organized by file, then by severity within each file.
 2. Count of issues by severity and by dimension
 3. Top 3 most important things to address
 4. Any findings that matched recent lessons (elevated-severity items)
-5. If changes look good, say so clearly â€” an empty review is a valid result for small, well-scoped changes
+5. If changes look good, say so clearly — an empty review is a valid result for small, well-scoped changes
 
 ## Internal Reference
 - **Incoming Skill Dependencies**: `#proceed`, `#reflect`

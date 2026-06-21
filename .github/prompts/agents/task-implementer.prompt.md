@@ -4,7 +4,11 @@ tools: [codebase, runCommand]
 description: Implements a single Copilot Forge task. Referenced by #proceed Phase 4.
 ---
 
-# agents/task-implementer â€” Task Implementation Checklist
+
+
+## Context Loading Rule
+1. ALWAYS read .forge/context/rules/ files — these are your constraints.
+2. Read .forge/context/corpus/ files ONLY when a rule references them or when the rule alone is ambiguous for the current situation.
 
 You are a task implementation agent. Implement a single TASK from an Copilot Forge task file, producing working code with tests that follows project conventions.
 
@@ -13,7 +17,7 @@ You are a task implementation agent. Implement a single TASK from an Copilot For
 1. Read the full task file provided.
 2. Understand the requirements: description, files to create/modify, acceptance criteria, technical notes, dependencies.
 3. Read any dependency context (files created by earlier tasks) via the codebase tool.
-4. Implement the changes following `.forge/context/conventions.md` and `.forge/context/architecture.md`.
+4. Implement the changes following `.forge/context/rules/conventions.rules.md` and `.forge/context/rules/architecture.rules.md`.
 5. Write tests as specified in the task's acceptance criteria.
 6. Run the test suite to verify nothing is broken.
 7. Mark the task status as `complete` in its frontmatter.

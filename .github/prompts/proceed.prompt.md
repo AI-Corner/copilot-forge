@@ -1,16 +1,16 @@
-﻿---
+---
 
 ## Step 0: Preflight + Create Worktree + Load Shared Context
 
 **ALWAYS FIRST.**
 
-1. **Preflight** â€” verify all prerequisite files exist (stop with a clear message if any are missing):
-   - `.forge/context/project-overview.md` â€” run `#init` if missing
-   - `.forge/context/architecture.md` â€” run `#init` if missing
-   - `.forge/context/conventions.md` â€” run `#init` if missing
-   - `.forge/specs/REQ-xxx-*/requirement.md` â€” run `#spec` if missing
+1. **Preflight** — verify all prerequisite files exist (stop with a clear message if any are missing):
+   - `.forge/context/project-overview.md` — run `#init` if missing
+   - `.forge/context/rules/architecture.rules.md` — run `#init` if missing
+   - `.forge/context/rules/conventions.rules.md` — run `#init` if missing
+   - `.forge/specs/REQ-xxx-*/requirement.md` — run `#spec` if missing
 
-2. **Resolve repo registry** â€” read `.forge/config.yml`. If absent, use single-repo mode (one repo, the current workspace).
+2. **Resolve repo registry** — read `.forge/config.yml`. If absent, use single-repo mode (one repo, the current workspace).
 
 3. **Create a git worktree** for the feature branch:
    ```bash
@@ -23,16 +23,16 @@
    git checkout main && git pull
    ```
 
-5. **Load shared context** via the codebase tool â€” read these into conversation once:
-   - `.forge/context/architecture.md`
-   - `.forge/context/conventions.md`
+5. **Load shared context** via the codebase tool — read these into conversation once:
+   - `.forge/context/rules/architecture.rules.md`
+   - `.forge/context/rules/conventions.rules.md`
    - `.forge/context/project-overview.md`
    - `.forge/specs/REQ-xxx-*/requirement.md`
    - `.forge/config.yml` (if present)
 
 6. **Initialize `pipeline-state.json`** in the primary's spec directory.
 
-After Step 0 completes: update `pipeline-state.json` â€” append `0` to `completedPhases`, set `currentPhase` to `1`.
+After Step 0 completes: update `pipeline-state.json` — append `0` to `completedPhases`, set `currentPhase` to `1`.
 
 ---
 
@@ -53,9 +53,9 @@ Run the `#validate` checklist inline for the spec phase:
 **Gate**: `currentPhase` must be `2`. After completion: append `2`, set `currentPhase=3`.
 
 Run the `#architect` prompt inline:
-1. Invoke the architect workflow â€” reads context, designs architecture, creates task files with dependencies.
+1. Invoke the architect workflow — reads context, designs architecture, creates task files with dependencies.
 2. In cross-repo mode: every generated task's frontmatter must include a `repo:` field.
-3. **Reconcile touched repos**: after architect returns, scan task files for distinct `repo:` values. Update `pipeline-state.json` â€” set `touched: true` for repos with tasks, `touched: false` for repos with no tasks.
+3. **Reconcile touched repos**: after architect returns, scan task files for distinct `repo:` values. Update `pipeline-state.json` — set `touched: true` for repos with tasks, `touched: false` for repos with no tasks.
 
 **Log**: Emit a one-paragraph summary of the architecture and task dependency graph. Continue to Phase 3 immediately.
 
@@ -90,20 +90,20 @@ Run the `#tdd` prompt inline:
 **Execute tasks one at a time in dependency order** (reference: `#agents/task-implementer`). All work happens inside the feature branch worktree:
 
 1. Build the dependency graph from task frontmatter.
-2. On resume: read `pipeline-state.json` â€” skip tasks in `phase4.completedTasks`; resume `phase4.currentTask` if non-null.
+2. On resume: read `pipeline-state.json` — skip tasks in `phase4.completedTasks`; resume `phase4.currentTask` if non-null.
 3. For each task (in dependency order):
    - Write `phase4.currentTask` to the TASK-xxx ID before starting.
    - **Refresh context**: run `.\scripts\forge-context.ps1 -ReqId REQ-xxx -TaskId TASK-xxx` to regenerate `.forge/.active-context.md`. Read this file before touching any code.
    - Read the task file for requirements, files to modify, ACs, and `repo:` field.
    - All file reads/writes, tests, and git operations happen inside the worktree (use `git -C <worktree>` form).
-   - Implement the changes following project conventions from `.forge/context/conventions.md`.
+   - Implement the changes following project conventions from `.forge/context/rules/conventions.rules.md`.
    - Write any additional tests as specified in the task (if not covered by Phase 3.5 TDD).
    - Run the test suite: `.\scripts\forge-test.ps1 -ReqId REQ-xxx`. Read `.forge/.last-test-run.md` to verify previously failing TDD tests now pass (the "Green" phase).
    - Mark the task status as `complete` in its frontmatter.
    - Commit inside the worktree: `feat(scope): description [TASK-xxx]`
    - Append the TASK-xxx ID to `phase4.completedTasks` and clear `phase4.currentTask`.
 
-**Log**: After each task completes, emit one line: `TASK-xxx âœ“`. Continue immediately to the next task.
+**Log**: After each task completes, emit one line: `TASK-xxx ✓`. Continue immediately to the next task.
 
 ---
 
@@ -115,7 +115,7 @@ Run the `#tdd` prompt inline:
 
 **Run review checklists sequentially** (reference the full checklists in `.github/prompts/agents/`):
 
-**Step A â€” Self-Review** (reference: `#agents/reflector`):
+**Step A — Self-Review** (reference: `#agents/reflector`):
 Run the reflector checklist:
 - Does the code do what the requirement specifies? Are all ACs met?
 - Edge cases handled? Follows naming conventions? Proper layering?
@@ -123,21 +123,21 @@ Run the reflector checklist:
 - No TODOs, commented-out code, or debug logging?
 - Check `.forge/knowledge/lessons/` for applicable pitfalls.
 
-**Step B â€” Correctness** (reference: `#agents/correctness-reviewer`): logic errors, null handling, race conditions, error handling, security.
+**Step B — Correctness** (reference: `#agents/correctness-reviewer`): logic errors, null handling, race conditions, error handling, security.
 
-**Step C â€” Quality** (reference: `#agents/quality-reviewer`): convention compliance, naming, duplication, input validation.
+**Step C — Quality** (reference: `#agents/quality-reviewer`): convention compliance, naming, duplication, input validation.
 
-**Step D â€” Architecture** (reference: `#agents/architecture-reviewer`): layering, test coverage, mock completeness, API contract compliance.
+**Step D — Architecture** (reference: `#agents/architecture-reviewer`): layering, test coverage, mock completeness, API contract compliance.
 
-**Step E â€” Test Coverage** (reference: `#agents/test-auditor`): coverage gaps, mock completeness, test quality.
+**Step E — Test Coverage** (reference: `#agents/test-auditor`): coverage gaps, mock completeness, test quality.
 
-**Step F â€” Security** (reference: `#agents/security-auditor`): injection, auth bypass, data exposure, rate limiting.
+**Step F — Security** (reference: `#agents/security-auditor`): injection, auth bypass, data exposure, rate limiting.
 
 **Consolidate**: deduplicate overlapping findings. Produce a single ranked list by severity.
 
 **Fix in one pass**:
 1. Critical + must-fix Major: fix immediately, run tests, commit with `fix(scope): address verify finding [REQ-xxx]`.
-2. Should-fix Minor: fix unless significant refactor â€” note as follow-up otherwise.
+2. Should-fix Minor: fix unless significant refactor — note as follow-up otherwise.
 3. Nit/observation: fix trivial ones, skip the rest.
 
 **User-facing questions from reflector**: surface as a numbered list and wait (legitimate halt #2).
@@ -197,22 +197,22 @@ Run the `#canary` prompt for each affected deployable service. If any canary fai
 **Merge and clean up**:
 1. Verify the PR is mergeable: `gh pr view <prUrl> --json mergeable,mergeStateStatus`
 2. If main has advanced, rebase: `git -C <worktree> rebase origin/main && git push --force-with-lease`
-3. Merge: `gh pr merge <prUrl> --squash --delete-branch` (run from parent repo path, not worktree â€” git refuses to delete a branch checked out in a worktree).
+3. Merge: `gh pr merge <prUrl> --squash --delete-branch` (run from parent repo path, not worktree — git refuses to delete a branch checked out in a worktree).
 4. Set `repos[id].merged = true` in `pipeline-state.json`.
 5. Pull main: `git checkout main && git pull`
 6. Remove worktree: `git worktree remove <worktree-path>` (use the absolute path from state).
 7. Run `#wrapup REQ-xxx` to capture knowledge and emit ship summary.
 8. Set `"completed": true` in `pipeline-state.json`.
 
-**Terminal claim** (required â€” pipeline complete report must lead with exactly one of):
-- `merged` â€” all PRs merged, verified via `gh pr view --json state,mergedAt`
-- `pr-ready` â€” PRs open and CI green, awaiting manual merge
-- `blocked` â€” human input needed
-- `failed` â€” pipeline failed past automatic recovery
+**Terminal claim** (required — pipeline complete report must lead with exactly one of):
+- `merged` — all PRs merged, verified via `gh pr view --json state,mergedAt`
+- `pr-ready` — PRs open and CI green, awaiting manual merge
+- `blocked` — human input needed
+- `failed` — pipeline failed past automatic recovery
 
 ---
 
-## Error Handling â€” Failure Taxonomy
+## Error Handling — Failure Taxonomy
 
 Every failure the agent encounters must map to exactly one of these four actions. No ambiguous failures.
 
@@ -248,9 +248,9 @@ Run the `#validate` checklist inline for the spec phase:
 **Gate**: `currentPhase` must be `2`. After completion: append `2`, set `currentPhase=3`.
 
 Run the `#architect` prompt inline:
-1. Invoke the architect workflow â€” reads context, designs architecture, creates task files with dependencies.
+1. Invoke the architect workflow — reads context, designs architecture, creates task files with dependencies.
 2. In cross-repo mode: every generated task's frontmatter must include a `repo:` field.
-3. **Reconcile touched repos**: after architect returns, scan task files for distinct `repo:` values. Update `pipeline-state.json` â€” set `touched: true` for repos with tasks, `touched: false` for repos with no tasks.
+3. **Reconcile touched repos**: after architect returns, scan task files for distinct `repo:` values. Update `pipeline-state.json` — set `touched: true` for repos with tasks, `touched: false` for repos with no tasks.
 
 **Log**: Emit a one-paragraph summary of the architecture and task dependency graph. Continue to Phase 3 immediately.
 
@@ -285,20 +285,20 @@ Run the `#tdd` prompt inline:
 **Execute tasks one at a time in dependency order** (reference: `#agents/task-implementer`). All work happens inside the feature branch worktree:
 
 1. Build the dependency graph from task frontmatter.
-2. On resume: read `pipeline-state.json` â€” skip tasks in `phase4.completedTasks`; resume `phase4.currentTask` if non-null.
+2. On resume: read `pipeline-state.json` — skip tasks in `phase4.completedTasks`; resume `phase4.currentTask` if non-null.
 3. For each task (in dependency order):
    - Write `phase4.currentTask` to the TASK-xxx ID before starting.
    - **Refresh context**: run `.\scripts\forge-context.ps1 -ReqId REQ-xxx -TaskId TASK-xxx` to regenerate `.forge/.active-context.md`. Read this file before touching any code.
    - Read the task file for requirements, files to modify, ACs, and `repo:` field.
    - All file reads/writes, tests, and git operations happen inside the worktree (use `git -C <worktree>` form).
-   - Implement the changes following project conventions from `.forge/context/conventions.md`.
+   - Implement the changes following project conventions from `.forge/context/rules/conventions.rules.md`.
    - Write any additional tests as specified in the task (if not covered by Phase 3.5 TDD).
    - Run the test suite: `.\scripts\forge-test.ps1 -ReqId REQ-xxx`. Read `.forge/.last-test-run.md` to verify previously failing TDD tests now pass (the "Green" phase).
    - Mark the task status as `complete` in its frontmatter.
    - Commit inside the worktree: `feat(scope): description [TASK-xxx]`
    - Append the TASK-xxx ID to `phase4.completedTasks` and clear `phase4.currentTask`.
 
-**Log**: After each task completes, emit one line: `TASK-xxx âœ“`. Continue immediately to the next task.
+**Log**: After each task completes, emit one line: `TASK-xxx ✓`. Continue immediately to the next task.
 
 ---
 
@@ -310,7 +310,7 @@ Run the `#tdd` prompt inline:
 
 **Run review checklists sequentially** (reference the full checklists in `.github/prompts/agents/`):
 
-**Step A â€” Self-Review** (reference: `#agents/reflector`):
+**Step A — Self-Review** (reference: `#agents/reflector`):
 Run the reflector checklist:
 - Does the code do what the requirement specifies? Are all ACs met?
 - Edge cases handled? Follows naming conventions? Proper layering?
@@ -318,21 +318,21 @@ Run the reflector checklist:
 - No TODOs, commented-out code, or debug logging?
 - Check `.forge/knowledge/lessons/` for applicable pitfalls.
 
-**Step B â€” Correctness** (reference: `#agents/correctness-reviewer`): logic errors, null handling, race conditions, error handling, security.
+**Step B — Correctness** (reference: `#agents/correctness-reviewer`): logic errors, null handling, race conditions, error handling, security.
 
-**Step C â€” Quality** (reference: `#agents/quality-reviewer`): convention compliance, naming, duplication, input validation.
+**Step C — Quality** (reference: `#agents/quality-reviewer`): convention compliance, naming, duplication, input validation.
 
-**Step D â€” Architecture** (reference: `#agents/architecture-reviewer`): layering, test coverage, mock completeness, API contract compliance.
+**Step D — Architecture** (reference: `#agents/architecture-reviewer`): layering, test coverage, mock completeness, API contract compliance.
 
-**Step E â€” Test Coverage** (reference: `#agents/test-auditor`): coverage gaps, mock completeness, test quality.
+**Step E — Test Coverage** (reference: `#agents/test-auditor`): coverage gaps, mock completeness, test quality.
 
-**Step F â€” Security** (reference: `#agents/security-auditor`): injection, auth bypass, data exposure, rate limiting.
+**Step F — Security** (reference: `#agents/security-auditor`): injection, auth bypass, data exposure, rate limiting.
 
 **Consolidate**: deduplicate overlapping findings. Produce a single ranked list by severity.
 
 **Fix in one pass**:
 1. Critical + must-fix Major: fix immediately, run tests, commit with `fix(scope): address verify finding [REQ-xxx]`.
-2. Should-fix Minor: fix unless significant refactor â€” note as follow-up otherwise.
+2. Should-fix Minor: fix unless significant refactor — note as follow-up otherwise.
 3. Nit/observation: fix trivial ones, skip the rest.
 
 **User-facing questions from reflector**: surface as a numbered list and wait (legitimate halt #2).
@@ -392,22 +392,22 @@ Run the `#canary` prompt for each affected deployable service. If any canary fai
 **Merge and clean up**:
 1. Verify the PR is mergeable: `gh pr view <prUrl> --json mergeable,mergeStateStatus`
 2. If main has advanced, rebase: `git -C <worktree> rebase origin/main && git push --force-with-lease`
-3. Merge: `gh pr merge <prUrl> --squash --delete-branch` (run from parent repo path, not worktree â€” git refuses to delete a branch checked out in a worktree).
+3. Merge: `gh pr merge <prUrl> --squash --delete-branch` (run from parent repo path, not worktree — git refuses to delete a branch checked out in a worktree).
 4. Set `repos[id].merged = true` in `pipeline-state.json`.
 5. Pull main: `git checkout main && git pull`
 6. Remove worktree: `git worktree remove <worktree-path>` (use the absolute path from state).
 7. Run `#wrapup REQ-xxx` to capture knowledge and emit ship summary.
 8. Set `"completed": true` in `pipeline-state.json`.
 
-**Terminal claim** (required â€” pipeline complete report must lead with exactly one of):
-- `merged` â€” all PRs merged, verified via `gh pr view --json state,mergedAt`
-- `pr-ready` â€” PRs open and CI green, awaiting manual merge
-- `blocked` â€” human input needed
-- `failed` â€” pipeline failed past automatic recovery
+**Terminal claim** (required — pipeline complete report must lead with exactly one of):
+- `merged` — all PRs merged, verified via `gh pr view --json state,mergedAt`
+- `pr-ready` — PRs open and CI green, awaiting manual merge
+- `blocked` — human input needed
+- `failed` — pipeline failed past automatic recovery
 
 ---
 
-## Error Handling â€” Failure Taxonomy
+## Error Handling — Failure Taxonomy
 
 Every failure the agent encounters must map to exactly one of these four actions. No ambiguous failures.
 

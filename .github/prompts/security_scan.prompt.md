@@ -1,10 +1,10 @@
-﻿---
+---
 agent: agent
 tools: [runCommand, codebase, terminalLastCommand]
 description: Scan the current diff for hardcoded secrets and credentials before committing.
 ---
 
-# security_scan â€” Pre-Commit Secret Audit
+# security_scan — Pre-Commit Secret Audit
 
 You are a security auditor responsible for identifying hardcoded secrets, API keys, tokens, and credentials in the codebase. 
 

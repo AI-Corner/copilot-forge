@@ -83,8 +83,8 @@ Heuristics:
 Before answering or writing anything:
 
 1. Read the most relevant files from:
-   - `.forge/context/architecture.md`
-   - `.forge/context/conventions.md`
+   - `.forge/context/rules/architecture.rules.md`
+   - `.forge/context/rules/conventions.rules.md`
    - `.forge/context/project-overview.md`
    - `.forge/context/taxonomy.md`
 2. Search `.forge/knowledge/`, and when relevant also inspect:
@@ -480,7 +480,7 @@ If a write or update occurred:
 
 Relevant follow-up suggestions:
 - “This lesson may affect existing architecture — consider running `#analyze`.”
-- “This ADR sets a reusable standard — consider updating `.forge/context/architecture.md`.”
+- “This ADR sets a reusable standard — consider updating `.forge/context/rules/architecture.rules.md`.”
 - “This assumption is unresolved — revisit after implementation.”
 - “This discussion sounds ready to become a formal REQ — consider `#spec`.”
 

@@ -44,7 +44,7 @@ Evaluate the feature request to decide whether it should be processed as "VIBE" 
    - If ALL are NO â†’ The requirement is suitable for VIBE. Stop immediately and ask the user: *"This looks like a small, isolated change suitable for Vibe Coding. Would you like to use the lightweight `#vibe` workflow instead? If yes, please run `#vibe [your requirement]`."* Do not proceed further until the user decides.
 
 ### Step 1.1: Understand the Request
-1. Read `.forge/context/project-overview.md` and `.forge/context/architecture.md` for grounding context.
+1. Read `.forge/context/project-overview.md` and `.forge/context/rules/architecture.rules.md` for grounding context.
 2. Read `.forge/context/taxonomy.md` for tag vocabulary.
 3. If the feature request is vague or missing key dimensions, act as an "Architectural Interviewer". Ask clarifying questions specifically mapping to the Zachman 5W1H Framework:
    - **WHAT**: Are the data structures and API boundaries clear?

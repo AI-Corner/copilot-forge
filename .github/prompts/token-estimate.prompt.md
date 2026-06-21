@@ -1,4 +1,4 @@
-﻿---
+---
 
 ## Instructions
 
@@ -11,14 +11,14 @@ Use the `runCommand` tool to get file sizes in bytes for all files that are load
 Get-Item `
   ".github/copilot-instructions.md", `
   ".forge/context/project-overview.md", `
-  ".forge/context/architecture.md", `
-  ".forge/context/conventions.md", `
-  ".forge/context/variables.md", `
+  ".forge/context/rules/architecture.rules.md", `
+  ".forge/context/rules/conventions.rules.md", `
+  ".forge/context/corpus/variables.md", `
   ".forge/context/taxonomy.md" `
   -ErrorAction SilentlyContinue | Select-Object Name, Length
 ```
 
-Sum bytes â†’ divide by 4 â†’ **Baseline Context Tokens**.
+Sum bytes → divide by 4 → **Baseline Context Tokens**.
 
 ### Step 2: Measure REQ-Specific Files (if REQ ID provided)
 
@@ -27,7 +27,7 @@ Sum bytes â†’ divide by 4 â†’ **Baseline Context Tokens**.
 Get-ChildItem ".forge/specs/REQ-xxx-*/" -Recurse -File | Select-Object Name, Length
 ```
 
-Sum all `.md` and `.json` files under the REQ spec directory â†’ **REQ Artifact Tokens**.
+Sum all `.md` and `.json` files under the REQ spec directory → **REQ Artifact Tokens**.
 
 ### Step 3: Measure Prompt Files Loaded Per Phase
 
@@ -52,7 +52,7 @@ Get-ChildItem ".github/prompts/agents/" -File | Select-Object Name, Length
 
 ### Step 4: Measure Knowledge Retrieval (RAG) Files
 
-The RAG system retrieves the top-scored lessons and support docs. Estimate conservatively by reading all lessons and support docs â€” the RAG system won't load all of them, but this gives you the worst-case ceiling.
+The RAG system retrieves the top-scored lessons and support docs. Estimate conservatively by reading all lessons and support docs — the RAG system won't load all of them, but this gives you the worst-case ceiling.
 
 ```bash
 Get-ChildItem ".forge/knowledge/" -Recurse -File | Select-Object Name, Length
@@ -71,7 +71,7 @@ Calculate estimated tokens for each pipeline phase based on what is loaded:
 | **Phase 3.5: TDD** | tdd.prompt.md + requirement.md + tasks |
 | **Phase 4: Implement** | proceed.prompt.md + all tasks + conventions.md (per task) |
 | **Phase 5: Verify** | reflect.prompt.md + review.prompt.md + all 6 agent checklists + code diff |
-| **Phase 6â€“7: PR + CI** | proceed.prompt.md sections only (minimal) |
+| **Phase 6–7: PR + CI** | proceed.prompt.md sections only (minimal) |
 | **Phase 7.5: Canary** | canary.prompt.md (if deployable) |
 | **Phase 8: Wrapup** | wrapup.prompt.md + knowledge templates |
 
@@ -117,7 +117,7 @@ If `pipeline-state.json` exists for this REQ, append the token estimate:
   "totalInputTokens": <tokens>,
   "estimatedOutputTokens": <tokens>,
   "estimatedGrandTotal": <tokens>,
-  "note": "Approximation only (~4 chars/token). Actual Copilot usage may vary Â±20%."
+  "note": "Approximation only (~4 chars/token). Actual Copilot usage may vary ±20%."
 }
 ```
 
@@ -126,36 +126,36 @@ If `pipeline-state.json` exists for this REQ, append the token estimate:
 Output the completed table and a one-line takeaway, e.g.:
 
 ```
-Token Estimate for REQ-023 â€” My Feature Title
-â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”
+Token Estimate for REQ-023 — My Feature Title
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 [table]
 
-ðŸ’¡ Largest phase: Phase 5 (Verify) at ~X tokens â€” driven by 6 agent checklists + code diff.
-ðŸ’¡ Total estimated session cost: ~X,XXX input tokens + ~X,XXX output tokens â‰ˆ X,XXX total.
+💡 Largest phase: Phase 5 (Verify) at ~X tokens — driven by 6 agent checklists + code diff.
+💡 Total estimated session cost: ~X,XXX input tokens + ~X,XXX output tokens ≈ X,XXX total.
 ---
 agent: agent
 tools: [codebase, runCommand]
 description: Estimate token consumption for a Copilot Forge pipeline session by phase
 ---
 
-# token-estimate â€” Session Token Usage Estimator
+# token-estimate — Session Token Usage Estimator
 
 You are estimating the token footprint of a Copilot Forge pipeline run for a given REQ. Because GitHub Copilot does not expose live token counts, this prompt uses **character-to-token approximation** (~4 characters = 1 token for English/Markdown) to produce a phase-by-phase breakdown.
 
 > **Ethos**: Follow the principles in `.github/copilot-instructions.md` throughout this session.
 
-> **Cost note**: Running this prompt inside Copilot Chat is itself a token-consuming operation (~1,000â€“2,000 tokens). For routine use, prefer the zero-cost alternative: run `token-estimate.ps1` directly from the terminal. Use this prompt only when the terminal script is unavailable.
+> **Cost note**: Running this prompt inside Copilot Chat is itself a token-consuming operation (~1,000–2,000 tokens). For routine use, prefer the zero-cost alternative: run `token-estimate.ps1` directly from the terminal. Use this prompt only when the terminal script is unavailable.
 
 ## Input
 
-Target: [REQ-xxx ID â€” provided by the user. If omitted, estimate baseline context only.]
+Target: [REQ-xxx ID — provided by the user. If omitted, estimate baseline context only.]
 
 ## How Token Estimation Works
 
 - **Formula**: `estimated_tokens = ceil(file_size_in_bytes / 4)`
 - **Why 4?** OpenAI's tokenizer averages ~4 bytes per token for English prose and Markdown. Code is slightly denser (~3 bytes/token), but 4 is a safe conservative estimate.
-- **Input vs. Output**: This estimate covers **input (context) tokens only**. Output tokens vary by task complexity. A rough multiplier: output â‰ˆ 20â€“35% of input for typical implementation tasks.
-- **Accuracy**: Â±15â€“20%. Useful for relative comparisons between REQs, not for exact billing.
+- **Input vs. Output**: This estimate covers **input (context) tokens only**. Output tokens vary by task complexity. A rough multiplier: output ≈ 20–35% of input for typical implementation tasks.
+- **Accuracy**: ±15–20%. Useful for relative comparisons between REQs, not for exact billing.
 
 ---
 
@@ -170,14 +170,14 @@ Use the `runCommand` tool to get file sizes in bytes for all files that are load
 Get-Item `
   ".github/copilot-instructions.md", `
   ".forge/context/project-overview.md", `
-  ".forge/context/architecture.md", `
-  ".forge/context/conventions.md", `
-  ".forge/context/variables.md", `
+  ".forge/context/rules/architecture.rules.md", `
+  ".forge/context/rules/conventions.rules.md", `
+  ".forge/context/corpus/variables.md", `
   ".forge/context/taxonomy.md" `
   -ErrorAction SilentlyContinue | Select-Object Name, Length
 ```
 
-Sum bytes â†’ divide by 4 â†’ **Baseline Context Tokens**.
+Sum bytes → divide by 4 → **Baseline Context Tokens**.
 
 ### Step 2: Measure REQ-Specific Files (if REQ ID provided)
 
@@ -186,7 +186,7 @@ Sum bytes â†’ divide by 4 â†’ **Baseline Context Tokens**.
 Get-ChildItem ".forge/specs/REQ-xxx-*/" -Recurse -File | Select-Object Name, Length
 ```
 
-Sum all `.md` and `.json` files under the REQ spec directory â†’ **REQ Artifact Tokens**.
+Sum all `.md` and `.json` files under the REQ spec directory → **REQ Artifact Tokens**.
 
 ### Step 3: Measure Prompt Files Loaded Per Phase
 
@@ -211,7 +211,7 @@ Get-ChildItem ".github/prompts/agents/" -File | Select-Object Name, Length
 
 ### Step 4: Measure Knowledge Retrieval (RAG) Files
 
-The RAG system retrieves the top-scored lessons and support docs. Estimate conservatively by reading all lessons and support docs â€” the RAG system won't load all of them, but this gives you the worst-case ceiling.
+The RAG system retrieves the top-scored lessons and support docs. Estimate conservatively by reading all lessons and support docs — the RAG system won't load all of them, but this gives you the worst-case ceiling.
 
 ```bash
 Get-ChildItem ".forge/knowledge/" -Recurse -File | Select-Object Name, Length
@@ -230,7 +230,7 @@ Calculate estimated tokens for each pipeline phase based on what is loaded:
 | **Phase 3.5: TDD** | tdd.prompt.md + requirement.md + tasks |
 | **Phase 4: Implement** | proceed.prompt.md + all tasks + conventions.md (per task) |
 | **Phase 5: Verify** | reflect.prompt.md + review.prompt.md + all 6 agent checklists + code diff |
-| **Phase 6â€“7: PR + CI** | proceed.prompt.md sections only (minimal) |
+| **Phase 6–7: PR + CI** | proceed.prompt.md sections only (minimal) |
 | **Phase 7.5: Canary** | canary.prompt.md (if deployable) |
 | **Phase 8: Wrapup** | wrapup.prompt.md + knowledge templates |
 
@@ -276,7 +276,7 @@ If `pipeline-state.json` exists for this REQ, append the token estimate:
   "totalInputTokens": <tokens>,
   "estimatedOutputTokens": <tokens>,
   "estimatedGrandTotal": <tokens>,
-  "note": "Approximation only (~4 chars/token). Actual Copilot usage may vary Â±20%."
+  "note": "Approximation only (~4 chars/token). Actual Copilot usage may vary ±20%."
 }
 ```
 
@@ -285,13 +285,13 @@ If `pipeline-state.json` exists for this REQ, append the token estimate:
 Output the completed table and a one-line takeaway, e.g.:
 
 ```
-Token Estimate for REQ-023 â€” My Feature Title
-â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”
+Token Estimate for REQ-023 — My Feature Title
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 [table]
 
-ðŸ’¡ Largest phase: Phase 5 (Verify) at ~X tokens â€” driven by 6 agent checklists + code diff.
-ðŸ’¡ Total estimated session cost: ~X,XXX input tokens + ~X,XXX output tokens â‰ˆ X,XXX total.
-ðŸ’¡ Results written to pipeline-state.json.
+💡 Largest phase: Phase 5 (Verify) at ~X tokens — driven by 6 agent checklists + code diff.
+💡 Total estimated session cost: ~X,XXX input tokens + ~X,XXX output tokens ≈ X,XXX total.
+💡 Results written to pipeline-state.json.
 ```
 
 > **Note**: Run `token-estimate.ps1` from the terminal for a faster standalone estimate without needing a Copilot session.

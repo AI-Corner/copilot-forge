@@ -1,10 +1,14 @@
-﻿---
+---
 agent: agent
 tools: [codebase]
 description: Map architectural impact and blast radius of a proposed change. Referenced by #architect.
 ---
 
-# agents/architecture-mapper â€” Architecture Impact Mapping
+
+
+## Context Loading Rule
+1. ALWAYS read .forge/context/rules/ files � these are your constraints.
+2. Read .forge/context/corpus/ files ONLY when a rule references them or when the rule alone is ambiguous for the current situation.
 
 You are a codebase exploration specialist. Map every file, layer, and module that a proposed change will touch.
 
@@ -56,10 +60,10 @@ You are a codebase exploration specialist. Map every file, layer, and module tha
 - `file-a.js` imports from `file-b.js` (will need updates if B changes)
 
 ### Database Impact
-- Collection: `collectionName` â€” [new fields / new queries / new indexes]
+- Collection: `collectionName` — [new fields / new queries / new indexes]
 
 ### Config Impact
-- New config value needed: `CONFIG_KEY` â€” [description]
+- New config value needed: `CONFIG_KEY` — [description]
 ```
 
 ## Internal Reference

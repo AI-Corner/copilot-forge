@@ -85,7 +85,7 @@ For each touched repo, run this sequence inside that repo's worktree:
     ADR_NUM=$(cat .forge/.next-adr 2>/dev/null || echo "1")
     echo $((ADR_NUM + 1)) > .forge/.next-adr
     ```
-- Propose updates to `.forge/context/architecture.md` if existing patterns were modified or deprecated.
+- Propose updates to `.forge/context/rules/architecture.rules.md` if existing patterns were modified or deprecated.
 
 #### Assumptions Validated or Invalidated
 - Review assumptions from the requirement spec.
@@ -111,7 +111,7 @@ For each touched repo, run this sequence inside that repo's worktree:
 - Include `domain`, `component`, and `tags` for future retrieval by `#spec`, `#architect`, `#reflect`, `#review`.
 
 #### Convention Updates
-- New conventions established? Propose updates to `.forge/context/conventions.md`.
+- New conventions established? Propose updates to `.forge/context/rules/conventions.rules.md`.
 
 #### Support Documentation
 - **User-Centric Documentation**: Update or create user-facing support knowledge based on the completed requirement.
@@ -280,7 +280,7 @@ For each touched repo, run this sequence inside that repo's worktree:
     ADR_NUM=$(cat .forge/.next-adr 2>/dev/null || echo "1")
     echo $((ADR_NUM + 1)) > .forge/.next-adr
     ```
-- Propose updates to `.forge/context/architecture.md` if existing patterns were modified or deprecated.
+- Propose updates to `.forge/context/rules/architecture.rules.md` if existing patterns were modified or deprecated.
 
 #### Assumptions Validated or Invalidated
 - Review assumptions from the requirement spec.
@@ -306,7 +306,7 @@ For each touched repo, run this sequence inside that repo's worktree:
 - Include `domain`, `component`, and `tags` for future retrieval by `#spec`, `#architect`, `#reflect`, `#review`.
 
 #### Convention Updates
-- New conventions established? Propose updates to `.forge/context/conventions.md`.
+- New conventions established? Propose updates to `.forge/context/rules/conventions.rules.md`.
 
 #### Support Documentation
 - **User-Centric Documentation**: Update or create user-facing support knowledge based on the completed requirement.
@@ -395,7 +395,7 @@ Walk touched repos and deploy each deployable component. Read `.forge/config.yml
 ### Step 7: Recommend Next Steps
 - If deferred items exist: "Consider creating `#spec` for deferred items: [list]"
 - If follow-up monitoring is needed: "Monitor [what] for [how long]"
-- If conventions were updated: "Review `.forge/context/conventions.md` changes"
+- If conventions were updated: "Review `.forge/context/rules/conventions.rules.md` changes"
 - Otherwise: "Feature complete. No follow-up needed."
 
 ## Internal Reference

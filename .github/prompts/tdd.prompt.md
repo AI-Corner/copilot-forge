@@ -1,15 +1,15 @@
-﻿---
+---
 agent: agent
 tools: [codebase, runCommand, changes, terminalLastCommand]
 description: Generate a failing test suite based on the requirement spec before implementation (TDD)
 ---
 
-# tdd â€” Test-Driven Development Phase
+# tdd — Test-Driven Development Phase
 
 You are a Test-Driven Development (TDD) practitioner. Given a requirement ID (REQ-xxx) and its validated architecture, your goal is to write a comprehensive suite of failing tests *before* any implementation code is written.
 
 > **Ethos**: Follow the principles in `.github/copilot-instructions.md`. Tests must define the "what" and "how it fails", ensuring the red-green-refactor cycle is strictly adhered to.
-> **Focus**: Act as the test engineer for the requirement. Only use `.forge/context/*.md`, the REQâ€™s `requirement.md`, and its tasks; ignore any earlier chat history or brainstorming.
+> **Focus**: Act as the test engineer for the requirement. Only use `.forge/context/*.md`, the REQ’s `requirement.md`, and its tasks; ignore any earlier chat history or brainstorming.
 
 ## Input
 
@@ -17,7 +17,7 @@ REQ-xxx
 
 ## Instructions
 
-### â›” Pre-flight Gate (Run This First â€” Do Not Skip)
+### ⛔ Pre-flight Gate (Run This First — Do Not Skip)
 
 Run this command via terminal **before doing anything else**:
 
@@ -40,7 +40,7 @@ Extract all acceptance criteria (ACs) and edge cases from the requirement spec a
 2. The tests must compile/parse correctly, but they MUST fail because the underlying business logic is not yet implemented (or throws `NotImplementedError` / `UnsupportedOperationException`).
 3. Include unit tests for core logic and integration tests for API endpoints or database interactions.
 
-### Step 4: Verify Failure â€” Autonomous Test Execution
+### Step 4: Verify Failure — Autonomous Test Execution
 
 Do NOT ask the user to run tests manually. Run `.\scripts\forge-test.ps1` via terminal instead:
 
@@ -51,9 +51,9 @@ Do NOT ask the user to run tests manually. Run `.\scripts\forge-test.ps1` via te
 Then read `.forge/.last-test-run.md`. This file contains a token-efficient summary of the run.
 
 **Interpret the result:**
-- If `status: FAIL` â€” the tests are correctly in the Red Phase. Read the `## Failures` section and confirm each failure maps to an acceptance criterion from the spec. This is the expected and desired outcome.
-- If `status: PASS` â€” the tests are passing prematurely, which means either the tests are too weak (not asserting absent behavior) or the code already exists. Investigate and strengthen the tests before proceeding.
-- If `status: skipped` â€” no test runner was detected. Stop and tell the user to configure a test runner.
+- If `status: FAIL` — the tests are correctly in the Red Phase. Read the `## Failures` section and confirm each failure maps to an acceptance criterion from the spec. This is the expected and desired outcome.
+- If `status: PASS` — the tests are passing prematurely, which means either the tests are too weak (not asserting absent behavior) or the code already exists. Investigate and strengthen the tests before proceeding.
+- If `status: skipped` — no test runner was detected. Stop and tell the user to configure a test runner.
 
 ### Step 5: Red-Green Remediation Loop
 
@@ -63,14 +63,14 @@ If any test passes when it should fail (premature green):
 3. Re-run `.\scripts\forge-test.ps1` and re-read `.forge/.last-test-run.md`.
 4. Repeat until all written tests are red.
 
-> **Autonomy rule**: you may loop on steps 4â€“5 up to **3 times** without asking the user. After 3 loops, surface the remaining issue and ask for input.
+> **Autonomy rule**: you may loop on steps 4–5 up to **3 times** without asking the user. After 3 loops, surface the remaining issue and ask for input.
 
 ### Step 6: Output Report
 
 Report completion by summarizing `.forge/.last-test-run.md`:
 - Total tests written and currently failing
 - One-line summary per failure, confirming it maps to an AC
-- Status: **Red Phase complete â€” ready for implementation**
+- Status: **Red Phase complete — ready for implementation**
 
 ## Internal Reference
 - **Incoming Skill Dependencies**: `#proceed`

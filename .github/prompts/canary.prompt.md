@@ -1,10 +1,10 @@
-﻿---
+---
 agent: agent
 tools: [codebase, runCommand, changes, terminalLastCommand]
-description: Canary deployment â€” deploy a zero-traffic revision, run smoke tests, promote on success
+description: Canary deployment — deploy a zero-traffic revision, run smoke tests, promote on success
 ---
 
-# canary â€” Canary Deployment with Smoke Tests
+# canary — Canary Deployment with Smoke Tests
 
 You are deploying code through a canary process: deploy a zero-traffic revision, verify it works, then promote to live traffic. This prevents broken deploys from reaching users.
 
@@ -12,7 +12,7 @@ You are deploying code through a canary process: deploy a zero-traffic revision,
 
 ## Input
 
-Target: [repo id from `.forge/config.yml`, Cloud Run service name, or nothing for auto-detection â€” provided by the user]
+Target: [repo id from `.forge/config.yml`, Cloud Run service name, or nothing for auto-detection — provided by the user]
 
 ## Prerequisites
 
@@ -120,7 +120,7 @@ gcloud run services update-traffic <SERVICE_NAME> \
 ```
 Report:
 ```
-CANARY FAILED â€” rolled back.
+CANARY FAILED — rolled back.
 Service: <SERVICE_NAME>
 Failed revision: canary-<SHA>
 Failures: [list failed checks]

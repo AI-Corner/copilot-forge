@@ -1,10 +1,14 @@
-﻿---
+---
 agent: agent
 tools: [codebase, runCommand]
 description: Database and storage performance audit checklist. Referenced by #optimize.
 ---
 
-# agents/db-perf-scanner â€” Database & Storage Performance Checklist
+
+
+## Context Loading Rule
+1. ALWAYS read .forge/context/rules/ files � these are your constraints.
+2. Read .forge/context/corpus/ files ONLY when a rule references them or when the rule alone is ambiguous for the current situation.
 
 You are a database and storage performance analyst. Identify query performance issues, missing optimizations, and storage anti-patterns.
 
@@ -15,10 +19,10 @@ You are a database and storage performance analyst. Identify query performance i
 ### PostgreSQL / Spring Data Query Patterns
 Use the codebase tool to grep for JDBC, JPA, and Spring Data call patterns:
 - Missing indexes on frequently filtered or joined columns (check entity `@Index` annotations)
-- Unbounded queries (no pagination â€” missing `Pageable` / `LIMIT` / `OFFSET`)
-- N+1 patterns (fetching a list then querying each item â€” check for `@OneToMany` without `fetch = LAZY` + batch fetch)
+- Unbounded queries (no pagination — missing `Pageable` / `LIMIT` / `OFFSET`)
+- N+1 patterns (fetching a list then querying each item — check for `@OneToMany` without `fetch = LAZY` + batch fetch)
 - Read-after-write patterns that could reuse the write result instead of re-querying
-- `SELECT *` / `findAll()` where only specific columns are needed â€” prefer projections
+- `SELECT *` / `findAll()` where only specific columns are needed — prefer projections
 - Missing `@Transactional` on multi-step write sequences
 
 ### Connection Pool
@@ -38,7 +42,7 @@ Use the codebase tool to grep for JDBC, JPA, and Spring Data call patterns:
 - Multi-step write sequences not wrapped in a transaction
 
 ### Batch Operations
-- Sequential `save()` calls in a loop â€” prefer `saveAll()` with `spring.jpa.properties.hibernate.jdbc.batch_size`
+- Sequential `save()` calls in a loop — prefer `saveAll()` with `spring.jpa.properties.hibernate.jdbc.batch_size`
 - N individual SELECT calls that could be a single `findAllById()` or IN-clause query
 - Missing `@BatchSize` on collections
 

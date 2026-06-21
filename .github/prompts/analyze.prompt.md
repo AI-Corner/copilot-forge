@@ -1,10 +1,10 @@
-﻿---
+---
 agent: agent
 tools: [codebase, runCommand, terminalLastCommand]
-description: Codebase health audit â€” identify technical debt, quality issues, and improvement opportunities
+description: Codebase health audit — identify technical debt, quality issues, and improvement opportunities
 ---
 
-# analyze â€” Codebase Health Audit
+# analyze — Codebase Health Audit
 
 You are performing a comprehensive codebase health audit for the current project.
 
@@ -22,7 +22,7 @@ Scope: [specific directory, focus area ("security", "testing", "performance"), o
 1. If given a specific directory or area, focus the audit there.
 2. If given a focus area, prioritize that dimension.
 3. If no argument, perform an incremental audit (see Step 1.5).
-4. Read `.forge/context/architecture.md` and `.forge/context/conventions.md` via the codebase tool.
+4. Read `.forge/context/rules/architecture.rules.md` and `.forge/context/rules/conventions.rules.md` via the codebase tool.
 
 ### Step 1.5: Incremental Analysis (Drift Sync)
 To prevent hallucination and maintain sync after manual edits or `git pull` events, Copilot Forge tracks what it has already analyzed.
@@ -34,7 +34,7 @@ To prevent hallucination and maintain sync after manual edits or `git pull` even
 
 ### Step 2: Run Audit Dimensions Sequentially
 
-#### Dimension 1 â€” Code Quality (reference: `#agents/code-quality-auditor`)
+#### Dimension 1 — Code Quality (reference: `#agents/code-quality-auditor`)
 Check for:
 - **Dead code**: unused exports, unreachable branches, commented-out code blocks, deprecated functions
 - **Code duplication**: copy-pasted logic, near-duplicate functions, repeated patterns without abstraction
@@ -42,11 +42,11 @@ Check for:
 - **Inconsistent patterns**: same operation done multiple ways, mixed paradigms
 - **Maintenance markers**: TODOs, FIXMEs, HACKs, workarounds with no ticket
 
-#### Dimension 2 â€” Convention Compliance (reference: `#agents/convention-auditor`)
-Read `.forge/context/conventions.md` first â€” it is the source of truth.
+#### Dimension 2 — Convention Compliance (reference: `#agents/convention-auditor`)
+Read `.forge/context/rules/conventions.rules.md` first — it is the source of truth.
 - Naming violations (files, types, variables, functions, route paths, constants)
-- Logging violations â€” direct `console.log`/`print` usage instead of project logger
-- Configuration violations â€” hardcoded URLs, ports, timeouts, magic numbers
+- Logging violations — direct `console.log`/`print` usage instead of project logger
+- Configuration violations — hardcoded URLs, ports, timeouts, magic numbers
 - API response format violations
 - Error handling pattern violations (empty catch blocks, swallowed errors)
 - Import/export style violations
@@ -56,7 +56,7 @@ Use the codebase tool to grep for common patterns:
 - `require(` in ESM projects
 - Hardcoded URLs (search for `http://` or `https://` in source files)
 
-#### Dimension 3 â€” Security (reference: `#agents/security-auditor`)
+#### Dimension 3 — Security (reference: `#agents/security-auditor`)
 - User input not validated or sanitized at API boundaries
 - Endpoints missing authentication middleware
 - PII in log messages
@@ -64,7 +64,7 @@ Use the codebase tool to grep for common patterns:
 - Rate limiting missing on expensive or auth endpoints
 - Run in terminal: `npm audit` (if package.json exists)
 
-#### Dimension 4 â€” Testing (reference: `#agents/test-auditor`)
+#### Dimension 4 — Testing (reference: `#agents/test-auditor`)
 - Source files with no corresponding test file (check both centralized and colocated layouts before reporting a gap)
 - Functions with no test coverage
 - Error paths not tested
@@ -106,13 +106,13 @@ grep -r "TODO\|FIXME\|HACK\|XXX" --include="*.js" --include="*.ts" --include="*.
 | **Overall** | **A-F** | |
 
 #### Critical Issues (fix now)
-Issues posing immediate risk â€” security vulnerabilities, data loss potential, broken functionality.
+Issues posing immediate risk — security vulnerabilities, data loss potential, broken functionality.
 
 #### Technical Debt (fix soon)
-Issues that slow development over time â€” duplicated code, missing tests, convention drift.
+Issues that slow development over time — duplicated code, missing tests, convention drift.
 
 #### Improvement Opportunities (fix later)
-Nice-to-have improvements â€” refactoring opportunities, performance optimizations.
+Nice-to-have improvements — refactoring opportunities, performance optimizations.
 
 ### Step 4: Recommendations
 1. Rank the top 5 most impactful improvements.

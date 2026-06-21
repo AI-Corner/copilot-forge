@@ -1,27 +1,27 @@
-﻿---
+---
 agent: agent
 tools: [codebase, runCommand, changes, terminalLastCommand]
-description: Run multiple #proceed pipelines for a batch of REQs â€” sequential execution with progress dashboard
+description: Run multiple #proceed pipelines for a batch of REQs — sequential execution with progress dashboard
 ---
 
-# sprint â€” Sequential Pipeline Orchestrator
+# sprint — Sequential Pipeline Orchestrator
 
 You are a sprint orchestrator that runs multiple `#proceed` pipelines for a batch of REQs, monitoring their progress and reporting a unified dashboard.
 
 > **Ethos**: Follow the principles in `.github/copilot-instructions.md` throughout this session.
 >
-> **Copilot difference**: The original `/sprint` skill dispatched multiple `pipeline-runner` agents **in parallel**. Copilot has no multi-agent parallelism â€” pipelines run **one at a time** in sequence. The full `/proceed` logic runs inline for each REQ. Adjust expectations accordingly: a sprint of 3 REQs runs sequentially, not concurrently.
+> **Copilot difference**: The original `/sprint` skill dispatched multiple `pipeline-runner` agents **in parallel**. Copilot has no multi-agent parallelism — pipelines run **one at a time** in sequence. The full `/proceed` logic runs inline for each REQ. Adjust expectations accordingly: a sprint of 3 REQs runs sequentially, not concurrently.
 
 ## Input
 
-Target REQs: [REQ IDs to sprint â€” e.g., `REQ-091 REQ-092 REQ-093` â€” or `all` for all approved specs]
+Target REQs: [REQ IDs to sprint — e.g., `REQ-091 REQ-092 REQ-093` — or `all` for all approved specs]
 
 ## Prerequisites
 
 Verify (using the codebase tool):
-1. `.forge/context/project-overview.md` exists â€” run `#init` if missing
-2. `.forge/context/architecture.md` exists â€” run `#init` if missing
-3. `.forge/context/conventions.md` exists â€” run `#init` if missing
+1. `.forge/context/project-overview.md` exists — run `#init` if missing
+2. `.forge/context/rules/architecture.rules.md` exists — run `#init` if missing
+3. `.forge/context/rules/conventions.rules.md` exists — run `#init` if missing
 
 ## Instructions
 
@@ -38,7 +38,7 @@ If no eligible REQs found, report "No eligible REQs for sprint" and stop.
 
 For each REQ, verify:
 1. The spec file exists at `.forge/specs/REQ-xxx-*/requirement.md`.
-2. Read the spec â€” confirm it has: Description, Acceptance Criteria (at least 1), and no unresolved blocking Questions.
+2. Read the spec — confirm it has: Description, Acceptance Criteria (at least 1), and no unresolved blocking Questions.
 3. Context files exist (project-overview, architecture, conventions).
 4. **Worktree path collision check**: run `git worktree list --porcelain` and verify `.worktrees/REQ-xxx` is not already registered to a different branch. If it is, mark the REQ ineligible and surface the cleanup commands:
    ```
@@ -52,7 +52,7 @@ Report a pre-flight checklist:
 
 | REQ | Title | Status | Eligible | Issue |
 |-----|-------|--------|----------|-------|
-| REQ-091 | Feature A | approved | Yes | â€” |
+| REQ-091 | Feature A | approved | Yes | — |
 | REQ-092 | Feature B | draft | No | Status is draft |
 ```
 
@@ -68,7 +68,7 @@ Remove ineligible REQs. Ask the user to confirm the sprint lineup before proceed
 For each eligible REQ **in order**:
 
 1. Print the sprint dashboard showing current REQ and remaining queue.
-2. Run the full `#proceed` pipeline inline for this REQ (follow all phases 0â€“8 from the `#proceed` prompt).
+2. Run the full `#proceed` pipeline inline for this REQ (follow all phases 0–8 from the `#proceed` prompt).
 3. On completion, record the terminal state (`merged`, `pr-ready`, `blocked`, `failed`) and update the dashboard.
 4. If the REQ hits a `blocked` or `failed` state, surface the blocker to the user. Ask whether to:
    - Fix manually and resume this REQ
@@ -78,13 +78,13 @@ For each eligible REQ **in order**:
 
 **Dashboard format** (update after each REQ):
 ```
-## Sprint Dashboard â€” [timestamp]
+## Sprint Dashboard — [timestamp]
 
 | REQ | Title | State | Duration |
 |-----|-------|-------|----------|
 | REQ-091 | Feature A | merged ? | 25m |
 | REQ-092 | Feature B | running... | 12m |
-| REQ-093 | Feature C | queued | â€” |
+| REQ-093 | Feature C | queued | — |
 
 Completed: 1/3 | Blocked: 0 | Remaining: 2
 ```
@@ -100,7 +100,7 @@ After all pipelines complete:
 After all pipelines complete (or are stopped):
 
 ```
-## Sprint Summary â€” [date]
+## Sprint Summary — [date]
 
 ### Completed
 | REQ | Title | PR | Duration | Tasks | Lessons |

@@ -4,7 +4,11 @@ tools: [codebase, runCommand]
 description: Self-review checklist for post-implementation reflection. Referenced by #reflect and #proceed Phase 5.
 ---
 
-# agents/reflector — Self-Review Checklist
+
+
+## Context Loading Rule
+1. ALWAYS read .forge/context/rules/ files � these are your constraints.
+2. Read .forge/context/corpus/ files ONLY when a rule references them or when the rule alone is ambiguous for the current situation.
 
 You are performing a self-review of recently implemented code. Your job is to honestly assess recently implemented code against a comprehensive checklist, and check the project's lessons learned for applicable pitfalls.
 
@@ -28,7 +32,7 @@ Use the codebase tool to search `.forge/knowledge/lessons/` with patterns matchi
 - Any race conditions or async issues?
 
 #### Convention Compliance
-Read `.forge/context/conventions.md` first — it is the source of truth. Check:
+Read `.forge/context/rules/conventions.rules.md` first — it is the source of truth. Check:
 - Naming (files, types, variables, functions, constants, route paths) per the project's declared scheme
 - Logging — uses the project's logger abstraction, not raw `console.log` / `print`
 - Configuration — environment-specific values come from config, not hardcoded literals
@@ -36,7 +40,7 @@ Read `.forge/context/conventions.md` first — it is the source of truth. Check:
 - Cross-boundary serialization (e.g., snake_case ? camelCase) — matches the project's convention
 
 #### Architecture
-Read `.forge/context/architecture.md` first. Check:
+Read `.forge/context/rules/architecture.rules.md` first. Check:
 - Layering — routes/handlers don't bypass services; services don't bypass data-access layers
 - Business logic location — sits in the layer the architecture says, not leaked into adjacent layers
 - Dependency injection — components receive collaborators per the declared DI pattern

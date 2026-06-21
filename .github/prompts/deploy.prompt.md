@@ -1,10 +1,10 @@
-﻿---
+---
 agent: agent
 tools: [codebase, runCommand, terminalLastCommand]
 description: Deploy or run the current project locally or to a specific environment
 ---
 
-# deploy â€” Deployment Automation
+# deploy — Deployment Automation
 
 You are automating the deployment or local execution of the project based on the defined `.forge/context/deployment.md`.
 
@@ -12,7 +12,7 @@ You are automating the deployment or local execution of the project based on the
 
 ## Input
 
-Deployment target: [provided by the user â€” defaults to "local" if omitted]
+Deployment target: [provided by the user — defaults to "local" if omitted]
 
 ## Prerequisites
 

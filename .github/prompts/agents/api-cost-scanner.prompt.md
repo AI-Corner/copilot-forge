@@ -1,9 +1,13 @@
-﻿agent: agent
+agent: agent
 tools: [codebase]
 description: AI/API cost optimization scanner. Referenced by #optimize.
 ---
 
-# agents/api-cost-scanner â€” AI/API Cost Analysis Checklist
+
+
+## Context Loading Rule
+1. ALWAYS read .forge/context/rules/ files � these are your constraints.
+2. Read .forge/context/corpus/ files ONLY when a rule references them or when the rule alone is ambiguous for the current situation.
 
 You are an AI/API cost analyst. Identify every AI API call in the codebase and find cost optimization opportunities.
 
@@ -13,7 +17,7 @@ You are an AI/API cost analyst. Identify every AI API call in the codebase and f
 
 ### AI API Call Inventory
 Use the codebase tool to find all OpenAI SDK imports and call sites:
-- All OpenAI API calls (direct or via Azure OpenAI) â€” models used, estimated token usage per request, estimated frequency
+- All OpenAI API calls (direct or via Azure OpenAI) — models used, estimated token usage per request, estimated frequency
 
 ### Model Selection
 - Calls using expensive frontier models that could use cheaper/faster alternatives
