@@ -21,7 +21,7 @@ This document outlines strategic improvements to the Copilot Forge toolkit to fu
 | 13 | Forge Admin Prompt (Self-Modification Harness) | ✅ Implemented | `v2.2.0` | Medium | High |
 | 14 | Corpus/Guide Split (Context Window Optimization) | ✅ Implemented | `v2.4.0` | Medium | High |
 | 15 | Learning Flywheel (Self-Improving Knowledge) | ✅ Implemented | `v2.4.0` | Medium | High |
-| 16 | Process Discipline Guides | 🚧 Future | — | Low | High |
+| 16 | Process Discipline Guides | ✅ Implemented | `v2.7.0` | Low | High |
 | 17 | Computational vs. Inferential Sensor Split | 🚧 Future | — | Medium | High |
 | 18 | Pacing Modes | 🚧 Future | — | High | High |
 | 19 | Drift Sensor (Continuous Convention Compliance) | ✅ Implemented | `v2.5.0` | Low | High |

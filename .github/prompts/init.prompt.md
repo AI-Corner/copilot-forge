@@ -49,6 +49,16 @@ If a `README.md` or `package.json` exists, read it via the codebase tool and ext
       conventions.rules.md
       security.rules.md
       deployment.rules.md
+      iron-laws.rules.md
+      process/
+        grounding.rules.md
+        self-validation.rules.md
+        pushback.rules.md
+        escalation.rules.md
+        context-budget.rules.md
+        scoping.rules.md
+        surgical-edits.rules.md
+        subagent-trust.rules.md
     corpus/
       architecture.md
       conventions.md
@@ -84,6 +94,8 @@ If a `README.md` or `package.json` exists, read it via the codebase tool and ext
 ```
 
 Copy templates from `templates/` at the toolkit repo root (the canonical location). If a local copy already exists in the consumer project's `.forge/templates/`, preserve it — do not overwrite customizations.
+
+For the `process/` rules and `iron-laws.rules.md`, copy the files directly from the toolkit's `templates/process/` directory to `.forge/context/rules/process/` and `.forge/context/rules/iron-laws.rules.md` respectively.
 
 ### Step 4: Populate Context Files
 
