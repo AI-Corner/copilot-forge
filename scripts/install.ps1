@@ -20,11 +20,30 @@ Copy-Item -Path (Join-Path $SourceDir ".github") -Destination $TargetDir -Recurs
 Write-Host "Copying .vscode (workspace settings)..."
 Copy-Item -Path (Join-Path $SourceDir ".vscode") -Destination $TargetDir -Recurse -Force
 
-# 2. Copy the toolkit templates
+# 2. Intelligently merge the templates
 $TargetTemplates = Join-Path $TargetDir "templates"
+$SourceTemplates = Join-Path $SourceDir "templates"
+
 if (-not (Test-Path -Path $TargetTemplates)) {
     Write-Host "Copying standard templates..."
-    Copy-Item -Path (Join-Path $SourceDir "templates") -Destination $TargetDir -Recurse -Force
+    Copy-Item -Path $SourceTemplates -Destination $TargetDir -Recurse -Force
+} else {
+    Write-Host "Merging new templates (preserving your customizations)..."
+    # Only copy files that don't exist in the target
+    Get-ChildItem -Path $SourceTemplates -Recurse -File | ForEach-Object {
+        $relativePath = $_.FullName.Substring($SourceTemplates.Length + 1)
+        $destinationFile = Join-Path $TargetTemplates $relativePath
+        $destinationDir = Split-Path $destinationFile -Parent
+        
+        if (-not (Test-Path $destinationDir)) {
+            New-Item -ItemType Directory -Path $destinationDir -Force | Out-Null
+        }
+        
+        if (-not (Test-Path $destinationFile)) {
+            Write-Host "  Adding new template: $relativePath"
+            Copy-Item -Path $_.FullName -Destination $destinationFile -Force
+        }
+    }
 }
 
 Write-Host ""

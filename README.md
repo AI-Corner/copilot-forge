@@ -95,7 +95,15 @@ Copy-Item -Recurse \path\to\copilot-forge\.vscode .
 
 > **Why copy instead of symlink?** Copilot reads prompt files directly from the workspace — symlinks across repos are not reliably followed by the VS Code extension host.
 
-### 3. Enable Copilot prompt files
+### 3. Upgrading Copilot Forge
+
+To seamlessly upgrade your project to the latest version of Copilot Forge without losing your `.forge` state or custom templates, run the update script from within your project:
+```powershell
+.\scripts\update.ps1
+```
+After the script completes, open Copilot Chat and run `#init` to safely apply any new `.forge` directory structure or context migrations.
+
+### 4. Enable Copilot prompt files
 
 The `.vscode/settings.json` included in this toolkit already enables prompt files. If you have your own settings, make sure these are set:
 
@@ -106,7 +114,7 @@ The `.vscode/settings.json` included in this toolkit already enables prompt file
 }
 ```
 
-### 4. Initialize a project
+### 5. Initialize a project
 
 Open Copilot Chat in the project repo and type:
 
@@ -119,7 +127,7 @@ Open Copilot Chat in the project repo and type:
 
 This bootstraps the `.forge/` directory with project-specific context, specs, and copies of the templates.
 
-### 5. Configure for your stack
+### 6. Configure for your stack
 
 Pick a preset that matches your stack and copy it to `.forge/config.yml`:
 
