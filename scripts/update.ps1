@@ -304,7 +304,7 @@ function Update-Repo($toolkitPath, $projectPath, $toolkitVersion) {
     return $resultObj
 }
 
-$ToolkitDir = $PSScriptRoot
+$ToolkitDir = (Resolve-Path (Join-Path $PSScriptRoot "..")).Path
 
 if (-not (Test-Path (Join-Path $ToolkitDir ".github"))) {
     Write-Err "Run update.ps1 from the copilot-forge toolkit root directory."

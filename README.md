@@ -99,7 +99,7 @@ Copy-Item -Recurse \path\to\copilot-forge\.vscode .
 
 To seamlessly upgrade your project to the latest version of Copilot Forge without losing your `.forge` state or custom templates, run the update script from the root of the toolkit directory, pointing to your project:
 ```powershell
-.\update.ps1 -TargetDir \path\to\your\project
+.\scripts\update.ps1 -TargetDir \path\to\your\project
 ```
 After the script completes, open Copilot Chat in your project and run `#init` to safely apply any new `.forge` directory structure or context migrations.
 
