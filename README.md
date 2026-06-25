@@ -83,7 +83,7 @@ For each project repo you want to use Copilot Forge in:
 # From inside your project repo:
 cp -r /path/to/copilot-forge/.github .
 cp -r /path/to/copilot-forge/.vscode .
-cp -r /path/to/copilot-forge/templates .   # optional — for local template copies
+cp -r /path/to/copilot-forge/templates .forge/templates   # optional — for local template copies
 ```
 
 Or on Windows (PowerShell):

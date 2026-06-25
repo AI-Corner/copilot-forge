@@ -21,7 +21,7 @@ Write-Host "Copying .vscode (workspace settings)..."
 Copy-Item -Path (Join-Path $SourceDir ".vscode") -Destination $TargetDir -Recurse -Force
 
 # 2. Intelligently merge the templates
-$TargetTemplates = Join-Path $TargetDir "templates"
+$TargetTemplates = Join-Path $TargetDir ".forge\templates"
 $SourceTemplates = Join-Path $SourceDir "templates"
 
 if (-not (Test-Path -Path $TargetTemplates)) {
