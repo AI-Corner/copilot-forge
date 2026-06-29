@@ -1,4 +1,4 @@
-<#
+﻿<#
 .SYNOPSIS
     Copilot Forge — Autonomous Test Runner
 
@@ -6,7 +6,7 @@
     Detects the project's test runner, executes the test suite, parses structured
     output, and writes a token-efficient failure summary to .forge/.last-test-run.md.
 
-    Designed to be called by the #tdd agent to enable a true red-green-refactor
+    Designed to be called by the #forge-tdd agent to enable a true red-green-refactor
     loop without requiring the user to relay test results manually.
 
     Supported test runners (auto-detected):

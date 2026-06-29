@@ -1,4 +1,4 @@
-# Copilot Forge — Roadmap & Future Enhancements
+﻿# Copilot Forge — Roadmap & Future Enhancements
 
 This document outlines strategic improvements to the Copilot Forge toolkit to further optimize Spec-Driven Development (SDD) for enterprise use, particularly for robust multi-service architectures (like Java Spring Boot + React + PostgreSQL + AKS).
 
@@ -11,7 +11,7 @@ This document outlines strategic improvements to the Copilot Forge toolkit to fu
 | 3 | AI-Managed Tech Debt Queue | ⚠️ Partial | — | Medium | High |
 | 4 | MCP (Model Context Protocol) Knowledge Retrieval | 🚧 Future | — | High | Very High |
 | 5 | Automated CI/CD SDD Verification | 🚧 Future | — | High | High |
-| 6 | Automated Rollback in `#canary` | ✅ Implemented | `v1.3.0` | High | Medium |
+| 6 | Automated Rollback in `#forge-canary` | ✅ Implemented | `v1.3.0` | High | Medium |
 | 7 | Environment & Configuration Variable Mapping | ✅ Implemented | `v1.2.0` | Medium | High |
 | 8 | Cross-Application Access Flow Tracking | 🚧 Future | — | Medium | High |
 | 9 | Application Monitoring & Observability Knowledge | 🚧 Future | — | Low | Medium |
@@ -35,15 +35,15 @@ This document outlines strategic improvements to the Copilot Forge toolkit to fu
 
 ## 1. Test-Driven Development (TDD) First Prompts
 
-Currently, the pipeline follows: `Spec → Architect → Implement → Review`. This improvement introduces a `#tdd` phase right after `#architect`. The AI generates a suite of failing unit/integration tests before writing any production code, enforcing the "red-green-refactor" cycle.
+Currently, the pipeline follows: `Spec → Architect → Implement → Review`. This improvement introduces a `#forge-tdd` phase right after `#forge-architect`. The AI generates a suite of failing unit/integration tests before writing any production code, enforcing the "red-green-refactor" cycle.
 
 *   **Complexity**: **Low**
 *   **Benefit**: **High**
-*   **Impact**: Guarantees that code implemented by the AI actually satisfies the specification's acceptance criteria in a verifiable way, significantly reducing bugs found in the `#review` stage.
+*   **Impact**: Guarantees that code implemented by the AI actually satisfies the specification's acceptance criteria in a verifiable way, significantly reducing bugs found in the `#forge-review` stage.
 
 ## 2. Interactive Architecture Diagrams (Mermaid.js)
 
-The `#architect` prompt currently outputs raw text/markdown for the system design. This upgrade forces the `#architect` prompt to consistently output Mermaid.js diagrams (Flowcharts, Sequence Diagrams, ER Diagrams for PostgreSQL) inside the `architecture.md` file.
+The `#forge-architect` prompt currently outputs raw text/markdown for the system design. This upgrade forces the `#forge-architect` prompt to consistently output Mermaid.js diagrams (Flowcharts, Sequence Diagrams, ER Diagrams for PostgreSQL) inside the `architecture.md` file.
 
 *   **Complexity**: **Low**
 *   **Benefit**: **Medium**
@@ -51,7 +51,7 @@ The `#architect` prompt currently outputs raw text/markdown for the system desig
 
 ## 3. AI-Managed Tech Debt Queue
 
-During the `#review` and `#reflect` phases, the AI often notices suboptimal code or out-of-scope improvements that get lost in the chat window. This instructs the `#wrapup` agent to automatically extract these items and write them to a `.forge/backlog/` directory using the standard `requirement-template.md`.
+During the `#forge-review` and `#forge-reflect` phases, the AI often notices suboptimal code or out-of-scope improvements that get lost in the chat window. This instructs the `#forge-wrapup` agent to automatically extract these items and write them to a `.forge/backlog/` directory using the standard `requirement-template.md`.
 
 *   **Complexity**: **Medium**
 *   **Benefit**: **High**
@@ -67,15 +67,15 @@ The current system relies on VS Code's standard tools to read flat `.md` files i
 
 ## 5. Automated CI/CD SDD Verification
 
-Currently, validation and review happen locally in the developer's VS Code via `#validate` and `#review`. This improvement implements a GitHub Action (or GitLab CI pipeline) that uses the OpenAI API to automatically cross-reference the PR diff against the original `REQ-xxx/requirement.md`.
+Currently, validation and review happen locally in the developer's VS Code via `#forge-validate` and `#forge-review`. This improvement implements a GitHub Action (or GitLab CI pipeline) that uses the OpenAI API to automatically cross-reference the PR diff against the original `REQ-xxx/requirement.md`.
 
 *   **Complexity**: **High**
 *   **Benefit**: **High**
 *   **Impact**: Enforces Spec-Driven Development at the repository level. A developer cannot merge code if the automated CI pipeline detects that the implementation has drifted from the agreed-upon specification.
 
-## 6. Automated Rollback in `#canary`
+## 6. Automated Rollback in `#forge-canary`
 
-The `#canary` prompt currently manages smoke tests and promotes successful deployments. This upgrade adds explicit rollback intelligence: if the smoke test fails post-deployment on the AKS cluster, the agent automatically executes a `helm rollback` or `kubectl rollout undo`.
+The `#forge-canary` prompt currently manages smoke tests and promotes successful deployments. This upgrade adds explicit rollback intelligence: if the smoke test fails post-deployment on the AKS cluster, the agent automatically executes a `helm rollback` or `kubectl rollout undo`.
 
 *   **Complexity**: **High**
 *   **Benefit**: **Medium**
@@ -107,7 +107,7 @@ Once an application is deployed, understanding its health, logs, and performance
 
 ## 10. Architectural Evolution: Subagent-Driven Development via CLI
 
-Currently, Copilot Forge relies heavily on the VS Code Copilot Chat GUI for its execution pipeline (`#proceed`). While effective for maintaining context through the ideation and architecture phases, running a continuous pipeline in a single chat window leads to context bloat and increased hallucinations on large features. 
+Currently, Copilot Forge relies heavily on the VS Code Copilot Chat GUI for its execution pipeline (`#forge-proceed`). While effective for maintaining context through the ideation and architecture phases, running a continuous pipeline in a single chat window leads to context bloat and increased hallucinations on large features. 
 
 The planned evolution is to transition the execution phase (Task Implementation & Review) to a **Subagent-Driven** model orchestrated by terminal scripts leveraging the **Copilot CLI** (`gh copilot`).
 
@@ -121,7 +121,7 @@ The VS Code Chat GUI naturally retains conversational memory, making it difficul
 By moving the execution pipeline to an automated script (e.g., `proceed.ps1`), the orchestrator can:
 1. Parse the task list generated in the Architecture phase.
 2. Spin up a completely fresh `gh copilot` execution for Task 1, passing it only the required artifacts.
-3. Spin up a fresh execution for the `#reflect` checklist.
+3. Spin up a fresh execution for the `#forge-reflect` checklist.
 4. Move to Task 2 with zero conversational bleed-over.
 
 *   **Complexity**: **High**
@@ -140,17 +140,17 @@ Full analysis: `.demo/harness_engineering_analysis.md`
 
 #### 11.1 — Deterministic Guardrails (Phase 1 · Priority: Critical)
 Add hard pre-flight checks to every phase prompt so the harness **refuses to proceed** when the required upstream artifact or status is missing.
-- `#architect` gate: requires `requirement.md` with `status: draft|approved`
-- `#tdd` gate: requires `status: approved` AND at least one task file
-- `#wrapup` gate: requires all tasks to have `status: complete`
-- `#reflect` lint-first rule: always runs linter + type-checker + build **before** any LLM self-review
+- `#forge-architect` gate: requires `requirement.md` with `status: draft|approved`
+- `#forge-tdd` gate: requires `status: approved` AND at least one task file
+- `#forge-wrapup` gate: requires all tasks to have `status: complete`
+- `#forge-reflect` lint-first rule: always runs linter + type-checker + build **before** any LLM self-review
 
 #### 11.2 — Autonomous Test Execution Loop (Phase 2 · Priority: High)
 Build a `forge-test` wrapper script (PowerShell + bash) that:
 - Detects the project's test runner from `.forge/config.yml`
 - Runs the test suite and produces a **token-efficient structured failure summary**
 - Writes results to `.forge/.last-test-run.md`
-- Allows `#tdd` to operate as a true red-green-refactor loop without user intervention
+- Allows `#forge-tdd` to operate as a true red-green-refactor loop without user intervention
 
 #### 11.3 — State Machine Gate Enforcement (Phase 3 · Priority: High)
 Build a `forge-gate` script that enforces pipeline phase transitions programmatically:
@@ -195,13 +195,13 @@ Full blueprint: `.demo/SDD_TESTING_FRAMEWORK.md`
 
 ## 13. Forge Admin Prompt (Self-Modification Harness)
 
-Currently, modifying Forge itself — adding new prompts, editing existing agents, updating templates, or changing pipeline scripts — requires manual knowledge of how all the pieces connect. There is no guided, safety-aware workflow for users who want to evolve the toolkit. A careless edit (e.g., removing a frontmatter field that `#proceed` references, or renaming an agent that `#review` delegates to) can silently break the pipeline.
+Currently, modifying Forge itself — adding new prompts, editing existing agents, updating templates, or changing pipeline scripts — requires manual knowledge of how all the pieces connect. There is no guided, safety-aware workflow for users who want to evolve the toolkit. A careless edit (e.g., removing a frontmatter field that `#forge-proceed` references, or renaming an agent that `#forge-review` delegates to) can silently break the pipeline.
 
 This feature introduces a dedicated `#forge-admin` prompt that acts as a **self-modification harness** for the Forge toolkit.
 
 ### Core Capabilities
 
-1.  **Guided Modification Workflow**: Users describe what they want to change ("add a new agent for accessibility auditing", "rename the #canary prompt", "add a field to the requirement template"). The prompt maps the change to the affected files and walks the user through it step by step.
+1.  **Guided Modification Workflow**: Users describe what they want to change ("add a new agent for accessibility auditing", "rename the #forge-canary prompt", "add a field to the requirement template"). The prompt maps the change to the affected files and walks the user through it step by step.
 2.  **Dependency Graph Awareness**: The prompt understands the relationships between Forge components — which prompts reference which agents, which templates are consumed by which phases, which scripts are invoked by which prompts — and flags any downstream breakage before a change is applied.
 3.  **Breaking Change Detection**: Before applying modifications, the prompt cross-references the change against all existing prompts, agents, templates, and `copilot-instructions.md` to identify references that would become stale or broken.
 4.  **Scaffold Generation**: For common operations (new prompt, new agent, new template), the prompt generates correctly structured files with proper frontmatter, naming conventions, and integration points pre-wired.
@@ -211,8 +211,8 @@ This feature introduces a dedicated `#forge-admin` prompt that acts as a **self-
 - "Add a new `#a11y` prompt for accessibility auditing"
 - "Rename the `security-auditor` agent to `appsec-reviewer` across the entire toolkit"
 - "Add a `priority` field to `requirement-template.md` and update all prompts that consume it"
-- "Remove the `#deploy` prompt and clean up all references"
-- "Show me everything that would break if I deleted `reflector.prompt.md`"
+- "Remove the `#forge-deploy` prompt and clean up all references"
+- "Show me everything that would break if I deleted `forge-reflector.prompt.md`"
 
 ### Relationship to Other Roadmap Items
 - **Item 11 (Harness Engineering)**: Forge Admin operates on the harness itself, while Item 11 hardens the harness for end-user projects. Forge Admin is the "maintenance mode" for the pipeline that Item 11 builds.
@@ -243,8 +243,8 @@ Split `.forge/context/` into two layers:
   ├── rules/                    # NEW — short, directive (always loaded)
   │   ├── architecture.rules.md    # Extracted rules from architecture.md
   │   ├── conventions.rules.md     # Extracted rules from conventions.md
-  │   ├── security.rules.md        # Security rules (from #security_scan logic)
-  │   └── deployment.rules.md      # Deploy safety rules (from #canary logic)
+  │   ├── security.rules.md        # Security rules (from #forge-security-scan logic)
+  │   └── deployment.rules.md      # Deploy safety rules (from #forge-canary logic)
   │
   ├── corpus/                   # NEW — long-form reasoning (loaded on demand)
   │   ├── architecture.md          # Full architecture documentation
@@ -268,9 +268,9 @@ Split `.forge/context/` into two layers:
 
 ## 15. Learning Flywheel (Self-Improving Knowledge)
 
-Knowledge capture is currently pull-based and ad-hoc (`#query`). This enhancement creates two active flywheels:
-- **Additive**: Agents auto-capture learning candidates into a `.forge/knowledge/inbox/` when they encounter surprises. A new `#synthesize` prompt processes these into lessons, assumptions, or convention updates.
-- **Subtractive**: A `#prune` prompt checks existing rules against the codebase to archive stale knowledge.
+Knowledge capture is currently pull-based and ad-hoc (`#forge-query`). This enhancement creates two active flywheels:
+- **Additive**: Agents auto-capture learning candidates into a `.forge/knowledge/inbox/` when they encounter surprises. A new `#forge-synthesize` prompt processes these into lessons, assumptions, or convention updates.
+- **Subtractive**: A `#forge-prune` prompt checks existing rules against the codebase to archive stale knowledge.
 
 *   **Complexity**: **Medium**
 *   **Benefit**: **High**
@@ -315,15 +315,15 @@ severity: info | important | critical
 
 #### Auto-Capture During Pipeline
 
-Update `#reflect`, `#review`, and `#wrapup` to **automatically write** learning candidates when they encounter surprises:
+Update `#forge-reflect`, `#forge-review`, and `#forge-wrapup` to **automatically write** learning candidates when they encounter surprises:
 
-- `#reflect` finds a convention violation not covered by existing rules → candidate
-- `#review` finds a recurring anti-pattern across multiple PRs → candidate
-- `#wrapup` captures decisions that should be lessons → candidate (already partially does this)
+- `#forge-reflect` finds a convention violation not covered by existing rules → candidate
+- `#forge-review` finds a recurring anti-pattern across multiple PRs → candidate
+- `#forge-wrapup` captures decisions that should be lessons → candidate (already partially does this)
 
 #### Synthesize Command
 
-New prompt: `#synthesize` — processes the inbox:
+New prompt: `#forge-synthesize` — processes the inbox:
 
 ```
 For each file in .forge/knowledge/inbox/:
@@ -337,7 +337,7 @@ For each file in .forge/knowledge/inbox/:
 
 #### Prune Command
 
-New prompt: `#prune` — periodic knowledge hygiene:
+New prompt: `#forge-prune` — periodic knowledge hygiene:
 
 ```
 Walk .forge/knowledge/lessons/ and .forge/context/rules/:
@@ -406,7 +406,7 @@ Agent checklists currently mix deterministic checks with LLM-based reviews. This
 - **Computational Sensors**: Shell commands yielding deterministic output (lint, test, build, secret-scan). These always run first.
 - **Inferential Sensors**: LLM-based reviews (correctness, architecture, security, spec-adherence) that run only after computational passes succeed.
 
-It also introduces a new `spec-adherence.prompt.md` sensor to strictly compare ACs to the `git diff`.
+It also introduces a new `forge-spec-adherence.prompt.md` sensor to strictly compare ACs to the `git diff`.
 
 *   **Complexity**: **Medium**
 *   **Benefit**: **High**
@@ -419,20 +419,20 @@ Formalize the split in Forge's agent checklists. Update the existing agent files
 ```
 .github/prompts/agents/
   ├── computational/                 # NEW subdirectory
-  │   ├── lint-gate.prompt.md           # Run linter
-  │   ├── typecheck-gate.prompt.md      # Run type checker
-  │   ├── build-gate.prompt.md          # Run build
-  │   ├── test-gate.prompt.md           # Run test suite
-  │   ├── secret-scan.prompt.md         # Existing, moved here
-  │   └── vuln-scan.prompt.md           # NEW — dependency vulnerability check
+  │   ├── forge-lint-gate.prompt.md           # Run linter
+  │   ├── forge-typecheck-gate.prompt.md      # Run type checker
+  │   ├── forge-build-gate.prompt.md          # Run build
+  │   ├── forge-test-gate.prompt.md           # Run test suite
+  │   ├── forge-secret-scan.prompt.md         # Existing, moved here
+  │   └── forge-vuln-scan.prompt.md           # NEW — dependency vulnerability check
   │
   ├── inferential/                   # NEW subdirectory
-  │   ├── correctness-reviewer.prompt.md   # Existing, moved here
-  │   ├── quality-reviewer.prompt.md       # Existing, moved here
-  │   ├── architecture-reviewer.prompt.md  # Existing, moved here
-  │   ├── test-auditor.prompt.md           # Existing, moved here
-  │   ├── security-auditor.prompt.md       # Existing, moved here
-  │   └── spec-adherence.prompt.md         # NEW — walks ACs against the diff
+  │   ├── forge-correctness-reviewer.prompt.md   # Existing, moved here
+  │   ├── forge-quality-reviewer.prompt.md       # Existing, moved here
+  │   ├── forge-architecture-reviewer.prompt.md  # Existing, moved here
+  │   ├── forge-test-auditor.prompt.md           # Existing, moved here
+  │   ├── forge-security-auditor.prompt.md       # Existing, moved here
+  │   └── forge-spec-adherence.prompt.md         # NEW — walks ACs against the diff
   │
   └── README.md                      # Explains the split
 ```
@@ -457,7 +457,7 @@ For each AC in requirement.md:
 
 ## 18. Pacing Modes
 
-The framework currently offers only binary speeds: `#proceed` (autonomous with specific pause points) or `#vibe` (lightweight, minimal checks). This enhancement introduces three pacing modes:
+The framework currently offers only binary speeds: `#forge-proceed` (autonomous with specific pause points) or `#forge-vibe` (lightweight, minimal checks). This enhancement introduces three pacing modes:
 - **Paired**: Ask at every phase boundary.
 - **Solo**: Work independently. Stop on hard problems.
 - **Autopilot**: Fully autonomous. Log decisions implicitly to an Assumption Log (`assumption-log.md`) at the end.
@@ -476,7 +476,7 @@ pipeline:
   mode: paired    # paired | solo | autopilot
 ```
 
-Update `#proceed` to respect the mode:
+Update `#forge-proceed` to respect the mode:
 
 | Phase | Paired | Solo | Autopilot |
 |---|---|---|---|
@@ -508,7 +508,7 @@ In autopilot mode, every decision the agent makes without asking gets logged to 
 
 ## 19. Drift Sensor (Continuous Convention Compliance)
 
-Convention compliance is currently only checked during `#reflect` or `#review`. This introduces a new lightweight `#check-drift` prompt to perform fast spot-checks during implementation to flag deviations instantly without auto-fixing them.
+Convention compliance is currently only checked during `#forge-reflect` or `#forge-review`. This introduces a new lightweight `#forge-check-drift` prompt to perform fast spot-checks during implementation to flag deviations instantly without auto-fixing them.
 
 *   **Complexity**: **Low**
 *   **Benefit**: **High**
@@ -516,7 +516,7 @@ Convention compliance is currently only checked during `#reflect` or `#review`. 
 
 ### How to Adopt in Forge
 
-New lightweight prompt: `#check-drift`
+New lightweight prompt: `#forge-check-drift`
 
 ```markdown
 ## Check Drift — Fast Convention Compliance Check
@@ -531,14 +531,14 @@ New lightweight prompt: `#check-drift`
 5. Do NOT fix anything — just report. This is a read-only check.
 ```
 
-Update `#proceed` Phase 4 (Implementation) to invoke `#check-drift` after every 3rd task completion.
+Update `#forge-proceed` Phase 4 (Implementation) to invoke `#forge-check-drift` after every 3rd task completion.
 
 ---
 
 ## 20. Codebase State Document (Rich Project Understanding)
 
 Currently, `project-overview.md` and `architecture.md` fail to capture the real empirical state (e.g., tools, framework versions, CI platforms, quality scorecards, debt ledger). This feature adds:
-- `codebase-state.md` (auto-generated by `#init`, updated by `#analyze`)
+- `codebase-state.md` (auto-generated by `#forge-init`, updated by `#forge-analyze`)
 - `quality-radar.md`
 - `code-debt.md`
 
@@ -552,9 +552,9 @@ Enhance `.forge/context/` with:
 
 ```
 .forge/context/
-  ├── codebase-state.md         # NEW — empirical state (auto-generated by #init, updated by #analyze)
-  ├── quality-radar.md          # NEW — 5-dimension scorecard (updated by #analyze)
-  └── code-debt.md              # NEW — tracked debt ledger (updated by #analyze, #review)
+  ├── codebase-state.md         # NEW — empirical state (auto-generated by #forge-init, updated by #forge-analyze)
+  ├── quality-radar.md          # NEW — 5-dimension scorecard (updated by #forge-analyze)
+  └── code-debt.md              # NEW — tracked debt ledger (updated by #forge-analyze, #forge-review)
 ```
 
 **`codebase-state.md` shape:**
@@ -580,7 +580,7 @@ last_reconciled: 2026-06-20
 GitHub Actions (.github/workflows/ci.yml)
 ```
 
-`#init` auto-generates this by scanning the repo. `#analyze` keeps it current.
+`#forge-init` auto-generates this by scanning the repo. `#forge-analyze` keeps it current.
 
 ---
 

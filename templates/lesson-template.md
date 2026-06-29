@@ -1,8 +1,8 @@
-<!--
+ï»¿<!--
 Filename MUST be `LESSON-xxx-slug.md` (e.g., `LESSON-041-signed-url-ttl-mismatch.md`).
 - `xxx` is the next available integer, zero-padded to 3 digits, unique across `.forge/knowledge/lessons/`.
 - `slug` is lowercase kebab-case, =6 words.
-- Do NOT use date-prefixed names (`2026-MM-DD-…md`) or bare numeric prefixes (`034-…md`).
+- Do NOT use date-prefixed names (`2026-MM-DD-ï¿½md`) or bare numeric prefixes (`034-ï¿½md`).
   Those are legacy schemes and are not valid for new lessons.
 -->
 ---
@@ -24,7 +24,7 @@ Brief description of the situation that produced this lesson.
 
 ## Lesson
 
-The key takeaway — what to do (or avoid) in future work.
+The key takeaway ï¿½ what to do (or avoid) in future work.
 
 ## Why It Matters
 
@@ -35,6 +35,6 @@ Impact if ignored: what goes wrong, how much time it costs, etc.
 Conditions under which this lesson is relevant (so consuming prompts can filter).
 
 ## Internal Reference
-- **Incoming Dependencies**: `#query`, `#bugfix`, `#init`, `#wrapup`
+- **Incoming Dependencies**: `#forge-query`, `#forge-bugfix`, `#forge-init`, `#forge-wrapup`
 - **Outgoing Dependencies**: *None*
 - **Resource Dependencies**: *None*

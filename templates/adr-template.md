@@ -1,4 +1,4 @@
-<!--
+﻿<!--
 Filename MUST be `ADR-xxx-slug.md` (e.g., `ADR-012-use-graphql-for-public-api.md`).
 - `xxx` is the next available integer, zero-padded to 3 digits, unique across `.forge/knowledge/decisions/`.
 - `slug` is lowercase kebab-case, ≤6 words.
@@ -35,6 +35,6 @@ What are the downstream effects of this decision?
 - **Negative:** Tradeoffs we accept, new risks, or added complexity.
 
 ## Internal Reference
-- **Incoming Dependencies**: `#query`, `#init`, `#architect`, `#wrapup`
+- **Incoming Dependencies**: `#forge-query`, `#forge-init`, `#forge-architect`, `#forge-wrapup`
 - **Outgoing Dependencies**: *None*
 - **Resource Dependencies**: *None*

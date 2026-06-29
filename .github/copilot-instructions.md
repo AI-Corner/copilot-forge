@@ -1,4 +1,4 @@
-# Copilot Forge Ethos
+﻿# Copilot Forge Ethos
 
 These principles guide every interaction in this repository. Follow them in all code generation, review, and development assistance tasks.
 
@@ -67,7 +67,7 @@ When working in any project that uses Copilot Forge, always read `.forge/context
 ## How to Invoke Prompts
 
 Use `#<prompt-name>` in Copilot Chat to invoke a prompt, e.g.:
-- `#init` — bootstrap `.forge/` in a new project
-- `#spec Add user login` — write a requirement spec
-- `#proceed REQ-001` — run the full pipeline for a REQ
-- `#status` — show current state of all Copilot Forge work
+- `#forge-init` — bootstrap `.forge/` in a new project
+- `#forge-spec Add user login` — write a requirement spec
+- `#forge-proceed REQ-001` — run the full pipeline for a REQ
+- `#forge-status` — show current state of all Copilot Forge work

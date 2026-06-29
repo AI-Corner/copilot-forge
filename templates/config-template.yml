@@ -1,9 +1,9 @@
-# .forge/config.yml — Copilot Forge project configuration
+﻿# .forge/config.yml — Copilot Forge project configuration
 #
 # This file lives in every repo that originates REQs. "Primary" is per-REQ,
-# not a fixed designation: whichever repo you invoke #proceed from becomes
+# not a fixed designation: whichever repo you invoke #forge-proceed from becomes
 # the primary for that REQ, so every repo that can host REQs needs its own
-# `.forge/` (from #init) and its own config.yml.
+# `.forge/` (from #forge-init) and its own config.yml.
 #
 # The config in THIS repo describes the world from this repo's perspective:
 # this repo is primary, the others are siblings. The sibling repos that also
@@ -53,8 +53,8 @@ project:
 # stack: Tech stack declaration. Drives conditional prompt behavior.
 # ---------------------------------------------------------------------------
 # Prompts consult these lists before running stack-specific steps. For example,
-# `#bugfix` and `#wrapup` only emit iOS deploy instructions when `frontends`
-# includes `ios`. `#canary` only runs when `backends` includes `cloud-run`.
+# `#forge-bugfix` and `#forge-wrapup` only emit iOS deploy instructions when `frontends`
+# includes `ios`. `#forge-canary` only runs when `backends` includes `cloud-run`.
 #
 # Keep these lists honest — listing a platform you don't actually use will
 # produce noisy output; omitting one will skip steps you actually need.
@@ -96,7 +96,7 @@ repos:
 # ---------------------------------------------------------------------------
 # List touched repo ids in the order they should merge. Typical pattern:
 # data/backend first, then the services that consume them.
-# If omitted, #proceed uses the order repos appear under `repos:` above.
+# If omitted, #forge-proceed uses the order repos appear under `repos:` above.
 
 merge_order:
   - api

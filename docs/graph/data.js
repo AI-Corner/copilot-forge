@@ -1,4 +1,4 @@
-const graphData = {
+﻿const graphData = {
     "nodes": [
                     {
                         "id":  "#agents/computational\test-gate",
@@ -9,15 +9,15 @@ const graphData = {
                         "group":  "agent"
                     },
                     {
-                        "id":  "#wrapup",
+                        "id":  "#forge-wrapup",
                         "group":  "prompt"
                     },
                     {
-                        "id":  "#sprint",
+                        "id":  "#forge-sprint",
                         "group":  "prompt"
                     },
                     {
-                        "id":  "#token-estimate",
+                        "id":  "#forge-token-estimate",
                         "group":  "prompt"
                     },
                     {
@@ -33,7 +33,7 @@ const graphData = {
                         "group":  "template"
                     },
                     {
-                        "id":  "#security_scan",
+                        "id":  "#forge-security-scan",
                         "group":  "prompt"
                     },
                     {
@@ -41,11 +41,11 @@ const graphData = {
                         "group":  "template"
                     },
                     {
-                        "id":  "#issue_epic_creation",
+                        "id":  "#forge-issue-epic-creation",
                         "group":  "prompt"
                     },
                     {
-                        "id":  "#analyze",
+                        "id":  "#forge-analyze",
                         "group":  "prompt"
                     },
                     {
@@ -53,7 +53,7 @@ const graphData = {
                         "group":  "agent"
                     },
                     {
-                        "id":  "#spec",
+                        "id":  "#forge-spec",
                         "group":  "prompt"
                     },
                     {
@@ -69,7 +69,7 @@ const graphData = {
                         "group":  "template"
                     },
                     {
-                        "id":  "#canary",
+                        "id":  "#forge-canary",
                         "group":  "prompt"
                     },
                     {
@@ -109,7 +109,7 @@ const graphData = {
                         "group":  "template"
                     },
                     {
-                        "id":  "#architect",
+                        "id":  "#forge-architect",
                         "group":  "prompt"
                     },
                     {
@@ -141,7 +141,7 @@ const graphData = {
                         "group":  "agent"
                     },
                     {
-                        "id":  "#validate",
+                        "id":  "#forge-validate",
                         "group":  "prompt"
                     },
                     {
@@ -173,7 +173,7 @@ const graphData = {
                         "group":  "template"
                     },
                     {
-                        "id":  "#init",
+                        "id":  "#forge-init",
                         "group":  "prompt"
                     },
                     {
@@ -185,7 +185,7 @@ const graphData = {
                         "group":  "agent"
                     },
                     {
-                        "id":  "#review",
+                        "id":  "#forge-review",
                         "group":  "prompt"
                     },
                     {
@@ -193,11 +193,11 @@ const graphData = {
                         "group":  "script"
                     },
                     {
-                        "id":  "#vibe",
+                        "id":  "#forge-vibe",
                         "group":  "prompt"
                     },
                     {
-                        "id":  "#deploy",
+                        "id":  "#forge-deploy",
                         "group":  "prompt"
                     },
                     {
@@ -205,7 +205,7 @@ const graphData = {
                         "group":  "template"
                     },
                     {
-                        "id":  "#status",
+                        "id":  "#forge-status",
                         "group":  "prompt"
                     },
                     {
@@ -213,7 +213,7 @@ const graphData = {
                         "group":  "template"
                     },
                     {
-                        "id":  "#template-drift",
+                        "id":  "#forge-template-drift",
                         "group":  "prompt"
                     },
                     {
@@ -229,11 +229,11 @@ const graphData = {
                         "group":  "template"
                     },
                     {
-                        "id":  "#check-drift",
+                        "id":  "#forge-check-drift",
                         "group":  "prompt"
                     },
                     {
-                        "id":  "#query",
+                        "id":  "#forge-query",
                         "group":  "prompt"
                     },
                     {
@@ -245,7 +245,7 @@ const graphData = {
                         "group":  "script"
                     },
                     {
-                        "id":  "#reflect",
+                        "id":  "#forge-reflect",
                         "group":  "prompt"
                     },
                     {
@@ -261,11 +261,11 @@ const graphData = {
                         "group":  "template"
                     },
                     {
-                        "id":  "#proceed",
+                        "id":  "#forge-proceed",
                         "group":  "prompt"
                     },
                     {
-                        "id":  "#bugfix",
+                        "id":  "#forge-bugfix",
                         "group":  "prompt"
                     },
                     {
@@ -301,7 +301,7 @@ const graphData = {
                         "group":  "agent"
                     },
                     {
-                        "id":  "#prune",
+                        "id":  "#forge-prune",
                         "group":  "prompt"
                     },
                     {
@@ -317,86 +317,86 @@ const graphData = {
                         "group":  "agent"
                     },
                     {
-                        "id":  "#tdd",
+                        "id":  "#forge-tdd",
                         "group":  "prompt"
                     },
                     {
-                        "id":  "#optimize",
+                        "id":  "#forge-optimize",
                         "group":  "prompt"
                     },
                     {
-                        "id":  "#synthesize",
+                        "id":  "#forge-synthesize",
                         "group":  "prompt"
                     }
     ],
     "links": [
                     {
-                        "source":  "#analyze",
+                        "source":  "#forge-analyze",
                         "target":  "#agents/code-quality-auditor",
                         "type": "behavioral"
                     },
                     {
-                        "source":  "#analyze",
+                        "source":  "#forge-analyze",
                         "target":  "#agents/convention-auditor",
                         "type": "behavioral"
                     },
                     {
-                        "source":  "#analyze",
+                        "source":  "#forge-analyze",
                         "target":  "#agents/security-auditor",
                         "type": "behavioral"
                     },
                     {
-                        "source":  "#analyze",
+                        "source":  "#forge-analyze",
                         "target":  "#agents/test-auditor",
                         "type": "behavioral"
                     },
                     {
-                        "source":  "#architect",
+                        "source":  "#forge-architect",
                         "target":  "#agents/architecture-mapper",
                         "type": "behavioral"
                     },
                     {
-                        "source":  "#architect",
+                        "source":  "#forge-architect",
                         "target":  "#agents/feature-tracer",
                         "type": "behavioral"
                     },
                     {
-                        "source":  "#architect",
+                        "source":  "#forge-architect",
                         "target":  "#agents/integration-explorer",
                         "type": "behavioral"
                     },
                     {
-                        "source":  "#architect",
+                        "source":  "#forge-architect",
                         "target":  "adr-template.md",
                         "type": "resource"
                     },
                     {
-                        "source":  "#architect",
+                        "source":  "#forge-architect",
                         "target":  "forge-gate.ps1",
                         "type": "resource"
                     },
                     {
-                        "source":  "#architect",
+                        "source":  "#forge-architect",
                         "target":  "task-template.md",
                         "type": "resource"
                     },
                     {
-                        "source":  "#bugfix",
-                        "target":  "#canary",
+                        "source":  "#forge-bugfix",
+                        "target":  "#forge-canary",
                         "type": "behavioral"
                     },
                     {
-                        "source":  "#bugfix",
-                        "target":  "#wrapup",
+                        "source":  "#forge-bugfix",
+                        "target":  "#forge-wrapup",
                         "type": "behavioral"
                     },
                     {
-                        "source":  "#bugfix",
+                        "source":  "#forge-bugfix",
                         "target":  "bug-template.md",
                         "type": "resource"
                     },
                     {
-                        "source":  "#bugfix",
+                        "source":  "#forge-bugfix",
                         "target":  "lesson-template.md",
                         "type": "resource"
                     },
@@ -406,272 +406,272 @@ const graphData = {
                         "type": "resource"
                     },
                     {
-                        "source":  "#init",
+                        "source":  "#forge-init",
                         "target":  "adr-template.md",
                         "type": "resource"
                     },
                     {
-                        "source":  "#init",
+                        "source":  "#forge-init",
                         "target":  "assumption-template.md",
                         "type": "resource"
                     },
                     {
-                        "source":  "#init",
+                        "source":  "#forge-init",
                         "target":  "bug-template.md",
                         "type": "resource"
                     },
                     {
-                        "source":  "#init",
+                        "source":  "#forge-init",
                         "target":  "deployment-template.md",
                         "type": "resource"
                     },
                     {
-                        "source":  "#init",
+                        "source":  "#forge-init",
                         "target":  "env-local-template.env",
                         "type": "resource"
                     },
                     {
-                        "source":  "#init",
+                        "source":  "#forge-init",
                         "target":  "lesson-template.md",
                         "type": "resource"
                     },
                     {
-                        "source":  "#init",
+                        "source":  "#forge-init",
                         "target":  "requirement-template.md",
                         "type": "resource"
                     },
                     {
-                        "source":  "#init",
+                        "source":  "#forge-init",
                         "target":  "support-template.md",
                         "type": "resource"
                     },
                     {
-                        "source":  "#init",
+                        "source":  "#forge-init",
                         "target":  "task-template.md",
                         "type": "resource"
                     },
                     {
-                        "source":  "#init",
+                        "source":  "#forge-init",
                         "target":  "taxonomy-template.md",
                         "type": "resource"
                     },
                     {
-                        "source":  "#init",
+                        "source":  "#forge-init",
                         "target":  "variables-template.md",
                         "type": "resource"
                     },
                     {
-                        "source":  "#issue_epic_creation",
+                        "source":  "#forge-issue-epic-creation",
                         "target":  "env-local-template.env",
                         "type": "resource"
                     },
                     {
-                        "source":  "#optimize",
+                        "source":  "#forge-optimize",
                         "target":  "#agents/api-cost-scanner",
                         "type": "behavioral"
                     },
                     {
-                        "source":  "#optimize",
+                        "source":  "#forge-optimize",
                         "target":  "#agents/db-perf-scanner",
                         "type": "behavioral"
                     },
                     {
-                        "source":  "#optimize",
+                        "source":  "#forge-optimize",
                         "target":  "#agents/latency-scanner",
                         "type": "behavioral"
                     },
                     {
-                        "source":  "#proceed",
+                        "source":  "#forge-proceed",
                         "target":  "#agents/reflector",
                         "type": "behavioral"
                     },
                     {
-                        "source":  "#proceed",
+                        "source":  "#forge-proceed",
                         "target":  "#agents/task-implementer",
                         "type": "behavioral"
                     },
                     {
-                        "source":  "#proceed",
-                        "target":  "#architect",
+                        "source":  "#forge-proceed",
+                        "target":  "#forge-architect",
                         "type": "behavioral"
                     },
                     {
-                        "source":  "#proceed",
-                        "target":  "#canary",
+                        "source":  "#forge-proceed",
+                        "target":  "#forge-canary",
                         "type": "behavioral"
                     },
                     {
-                        "source":  "#proceed",
-                        "target":  "#check-drift",
+                        "source":  "#forge-proceed",
+                        "target":  "#forge-check-drift",
                         "type": "behavioral"
                     },
                     {
-                        "source":  "#proceed",
-                        "target":  "#reflect",
+                        "source":  "#forge-proceed",
+                        "target":  "#forge-reflect",
                         "type": "behavioral"
                     },
                     {
-                        "source":  "#proceed",
-                        "target":  "#review",
+                        "source":  "#forge-proceed",
+                        "target":  "#forge-review",
                         "type": "behavioral"
                     },
                     {
-                        "source":  "#proceed",
-                        "target":  "#tdd",
+                        "source":  "#forge-proceed",
+                        "target":  "#forge-tdd",
                         "type": "behavioral"
                     },
                     {
-                        "source":  "#proceed",
-                        "target":  "#validate",
+                        "source":  "#forge-proceed",
+                        "target":  "#forge-validate",
                         "type": "behavioral"
                     },
                     {
-                        "source":  "#proceed",
-                        "target":  "#wrapup",
+                        "source":  "#forge-proceed",
+                        "target":  "#forge-wrapup",
                         "type": "behavioral"
                     },
                     {
-                        "source":  "#proceed",
+                        "source":  "#forge-proceed",
                         "target":  "forge-gate.ps1",
                         "type": "resource"
                     },
                     {
-                        "source":  "#query",
+                        "source":  "#forge-query",
                         "target":  "adr-template.md",
                         "type": "resource"
                     },
                     {
-                        "source":  "#query",
+                        "source":  "#forge-query",
                         "target":  "assumption-template.md",
                         "type": "resource"
                     },
                     {
-                        "source":  "#query",
+                        "source":  "#forge-query",
                         "target":  "lesson-template.md",
                         "type": "resource"
                     },
                     {
-                        "source":  "#query",
+                        "source":  "#forge-query",
                         "target":  "manual-qa-template.md",
                         "type": "resource"
                     },
                     {
-                        "source":  "#query",
+                        "source":  "#forge-query",
                         "target":  "support-template.md",
                         "type": "resource"
                     },
                     {
-                        "source":  "#reflect",
+                        "source":  "#forge-reflect",
                         "target":  "#agents/reflector",
                         "type": "behavioral"
                     },
                     {
-                        "source":  "#reflect",
-                        "target":  "#review",
+                        "source":  "#forge-reflect",
+                        "target":  "#forge-review",
                         "type": "behavioral"
                     },
                     {
-                        "source":  "#review",
+                        "source":  "#forge-review",
                         "target":  "#agents/architecture-reviewer",
                         "type": "behavioral"
                     },
                     {
-                        "source":  "#review",
+                        "source":  "#forge-review",
                         "target":  "#agents/correctness-reviewer",
                         "type": "behavioral"
                     },
                     {
-                        "source":  "#review",
+                        "source":  "#forge-review",
                         "target":  "#agents/quality-reviewer",
                         "type": "behavioral"
                     },
                     {
-                        "source":  "#review",
+                        "source":  "#forge-review",
                         "target":  "#agents/security-auditor",
                         "type": "behavioral"
                     },
                     {
-                        "source":  "#review",
+                        "source":  "#forge-review",
                         "target":  "#agents/test-auditor",
                         "type": "behavioral"
                     },
                     {
-                        "source":  "#review",
-                        "target":  "#wrapup",
+                        "source":  "#forge-review",
+                        "target":  "#forge-wrapup",
                         "type": "behavioral"
                     },
                     {
-                        "source":  "#spec",
-                        "target":  "#validate",
+                        "source":  "#forge-spec",
+                        "target":  "#forge-validate",
                         "type": "behavioral"
                     },
                     {
-                        "source":  "#spec",
+                        "source":  "#forge-spec",
                         "target":  "requirement-template.md",
                         "type": "resource"
                     },
                     {
-                        "source":  "#sprint",
-                        "target":  "#proceed",
+                        "source":  "#forge-sprint",
+                        "target":  "#forge-proceed",
                         "type": "behavioral"
                     },
                     {
-                        "source":  "#synthesize",
+                        "source":  "#forge-synthesize",
                         "target":  "adr-template.md",
                         "type": "resource"
                     },
                     {
-                        "source":  "#synthesize",
+                        "source":  "#forge-synthesize",
                         "target":  "lesson-template.md",
                         "type": "resource"
                     },
                     {
-                        "source":  "#token-estimate",
+                        "source":  "#forge-token-estimate",
                         "target":  "token-estimate.ps1",
                         "type": "resource"
                     },
                     {
-                        "source":  "#vibe",
+                        "source":  "#forge-vibe",
                         "target":  "vibe-template.md",
                         "type": "resource"
                     },
                     {
-                        "source":  "#wrapup",
-                        "target":  "#security_scan",
+                        "source":  "#forge-wrapup",
+                        "target":  "#forge-security-scan",
                         "type": "behavioral"
                     },
                     {
-                        "source":  "#wrapup",
+                        "source":  "#forge-wrapup",
                         "target":  "adr-template.md",
                         "type": "resource"
                     },
                     {
-                        "source":  "#wrapup",
+                        "source":  "#forge-wrapup",
                         "target":  "assumption-template.md",
                         "type": "resource"
                     },
                     {
-                        "source":  "#wrapup",
+                        "source":  "#forge-wrapup",
                         "target":  "inbox-template.md",
                         "type": "resource"
                     },
                     {
-                        "source":  "#wrapup",
+                        "source":  "#forge-wrapup",
                         "target":  "lesson-template.md",
                         "type": "resource"
                     },
                     {
-                        "source":  "#wrapup",
+                        "source":  "#forge-wrapup",
                         "target":  "manual-qa-template.md",
                         "type": "resource"
                     },
                     {
-                        "source":  "#wrapup",
+                        "source":  "#forge-wrapup",
                         "target":  "support-template.md",
                         "type": "resource"
                     },
                     {
-                        "source":  "#wrapup",
+                        "source":  "#forge-wrapup",
                         "target":  "token-estimate.ps1",
                         "type": "resource"
                     }

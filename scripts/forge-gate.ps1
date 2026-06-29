@@ -1,4 +1,4 @@
-<#
+﻿<#
 .SYNOPSIS
     Copilot Forge — Pipeline State Machine Gate
 
@@ -163,19 +163,19 @@ switch ($Phase) {
     "spec" {
         $overview = Join-Path $RepoRoot ".forge\context\project-overview.md"
         if (-not (Test-Path $overview)) {
-            Fail ".forge/context/project-overview.md not found." "Run #init to initialize the .forge/ structure."
+            Fail ".forge/context/project-overview.md not found." "Run #forge-init to initialize the .forge/ structure."
         }
-        Pass "project-overview.md exists. Safe to run #spec."
+        Pass "project-overview.md exists. Safe to run #forge-spec."
     }
 
     "architect" {
         $reqFile = Get-ReqFile
         if (-not $reqFile -or -not (Test-Path $reqFile.FullName)) {
-            Fail "No requirement.md found under .forge/specs/." "Run #spec first to create a requirement."
+            Fail "No requirement.md found under .forge/specs/." "Run #forge-spec first to create a requirement."
         }
         $status = Get-FrontmatterValue $reqFile.FullName "status"
         if ($status -eq "complete") {
-            Fail "Requirement '$($reqFile.Name)' is already complete." "Start a new #spec for a new requirement."
+            Fail "Requirement '$($reqFile.Name)' is already complete." "Start a new #forge-spec for a new requirement."
         }
         if ($status -notin @("draft","approved")) {
             Fail "Requirement status is '$status'. Expected: draft or approved." "Check the requirement.md frontmatter."
@@ -186,16 +186,16 @@ switch ($Phase) {
     "tdd" {
         $reqFile = Get-ReqFile
         if (-not $reqFile -or -not (Test-Path $reqFile.FullName)) {
-            Fail "No requirement.md found." "Run #spec and #architect first."
+            Fail "No requirement.md found." "Run #forge-spec and #forge-architect first."
         }
         $status = Get-FrontmatterValue $reqFile.FullName "status"
         if ($status -ne "approved") {
-            Fail "Requirement status is '$status'. Must be 'approved' to write tests." "Run #architect to approve the requirement."
+            Fail "Requirement status is '$status'. Must be 'approved' to write tests." "Run #forge-architect to approve the requirement."
         }
         $taskDir   = Join-Path (Split-Path $reqFile.FullName) "tasks"
         $taskCount = (Get-ChildItem $taskDir -Filter "TASK-*.md" -ErrorAction SilentlyContinue | Measure-Object).Count
         if ($taskCount -eq 0) {
-            Fail "No TASK-*.md files found in $taskDir." "Run #architect to generate tasks first."
+            Fail "No TASK-*.md files found in $taskDir." "Run #forge-architect to generate tasks first."
         }
         Pass "$($reqFile.Name) | status: $status | tasks: $taskCount"
     }
@@ -234,20 +234,20 @@ switch ($Phase) {
         $taskDir = Join-Path (Split-Path $reqFile.FullName) "tasks"
         $tasks   = Get-ChildItem $taskDir -Filter "TASK-*.md" -ErrorAction SilentlyContinue
         if ($tasks.Count -eq 0) {
-            Fail "No task files found in $taskDir." "Run #architect first."
+            Fail "No task files found in $taskDir." "Run #forge-architect first."
         }
         $incomplete = $tasks | Where-Object {
             (Get-FrontmatterValue $_.FullName "status") -ne "complete"
         }
         if ($incomplete.Count -gt 0) {
             $names = ($incomplete | ForEach-Object { "    - $($_.Name)" }) -join "`n"
-            Fail "$($incomplete.Count) task(s) not yet complete:`n$names" "Complete all tasks before running #wrapup."
+            Fail "$($incomplete.Count) task(s) not yet complete:`n$names" "Complete all tasks before running #forge-wrapup."
         }
         Pass "$($tasks.Count) tasks — all complete. Safe to wrap up."
     }
 }
 
 ## Internal Reference
-- **Incoming Dependencies**: `#proceed`, `#forge-admin`, `#architect`
+- **Incoming Dependencies**: `#forge-proceed`, `#forge-admin`, `#forge-architect`
 - **Outgoing Dependencies**: *None*
 - **Resource Dependencies**: *None*

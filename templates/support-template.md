@@ -1,4 +1,4 @@
----
+﻿---
 id: SUP-xxx
 title: "Support: [Feature Name]"
 related_req: REQ-xxx
@@ -29,6 +29,6 @@ tags: []
 - [Any edge cases, system constraints, or out-of-scope items from the spec]
 
 ## Internal Reference
-- **Incoming Dependencies**: `#query`, `#init`, `#wrapup`
+- **Incoming Dependencies**: `#forge-query`, `#forge-init`, `#forge-wrapup`
 - **Outgoing Dependencies**: *None*
 - **Resource Dependencies**: *None*

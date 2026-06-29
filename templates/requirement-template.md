@@ -1,4 +1,4 @@
----
+﻿---
 id: REQ-xxx
 title: "Feature Title"
 status: draft
@@ -78,6 +78,6 @@ _Define the foundational architecture/stack this feature binds to (prevents AI g
 - Items explicitly excluded
 
 ## Internal Reference
-- **Incoming Dependencies**: `#spec`, `#init`
+- **Incoming Dependencies**: `#forge-spec`, `#forge-init`
 - **Outgoing Dependencies**: *None*
 - **Resource Dependencies**: *None*

@@ -1,4 +1,4 @@
-# Copilot Forge — Frequently Asked Questions (FAQ)
+﻿# Copilot Forge — Frequently Asked Questions (FAQ)
 
 ### 1. What is Spec-Driven Development (SDD)?
 **SDD (Spec-Driven Development)** in the absolute simplest way is: **"Think first, write it down, *then* code."**
@@ -13,32 +13,32 @@ Only *after* the Spec is reviewed and locked in do you (or the AI) actually writ
 **Why is it important for AI?**
 If you tell an AI to just "build a feature," it will hallucinate, guess your architecture, and output messy code (often called "vibe coding"). In **Spec-Driven Development**, you give the AI your strict blueprint first. It is forced to follow the blueprint exactly, which eliminates hallucinations and results in enterprise-grade, production-ready code.
 
-### 2. Will running `#spec` or `#analyze` consume a huge amount of tokens by reading all my docs every time?
+### 2. Will running `#forge-spec` or `#forge-analyze` consume a huge amount of tokens by reading all my docs every time?
 **No.** Copilot Forge is specifically engineered to be extremely token-efficient.
 - **It reads summaries, not raw code:** The `.forge/context/` files (like `architecture.md` and `project-overview.md`) are explicitly designed to be high-level summaries. Reading these takes a fraction of the tokens compared to standard Copilot attempting to read your entire raw codebase.
 - **Built-in Retrieval Augmented Generation (RAG):** When searching your past specs, bugs, or lessons learned, the agent acts like a search engine. It first parses your prompt to generate search tags, scans the metadata of your past docs, and only pulls the full text for the absolute most relevant documents (usually just 1 or 2 files). 
 
 ### 3. Can I use an external LLM (like OpenAI API) instead of Copilot for initialization to save tokens?
 **Yes, via a hybrid approach.** 
-While you cannot plug a raw OpenAI API key directly into the GitHub Copilot Chat extension, Copilot Forge is entirely file-based (Markdown). If you have a massive legacy codebase and want to use an external tool (like Aider, Cline, or a custom script) with a massive context window for the initial `#init` sweep, you can! 
-Just have your external tool generate the `architecture.md`, `project-overview.md`, and `conventions.md` files and save them in the `.forge/context/` directory. From there, you can switch back to the native Copilot Chat extension for your daily `#spec` and `#analyze` tasks.
+While you cannot plug a raw OpenAI API key directly into the GitHub Copilot Chat extension, Copilot Forge is entirely file-based (Markdown). If you have a massive legacy codebase and want to use an external tool (like Aider, Cline, or a custom script) with a massive context window for the initial `#forge-init` sweep, you can! 
+Just have your external tool generate the `architecture.md`, `project-overview.md`, and `conventions.md` files and save them in the `.forge/context/` directory. From there, you can switch back to the native Copilot Chat extension for your daily `#forge-spec` and `#forge-analyze` tasks.
 
 ### 4. Does Copilot Forge automatically update the documentation if someone makes manual changes or I run `git pull`?
 **No, but resolving the drift is easy.**
-Copilot Forge does not run as a background daemon, so your `.forge/context/` files will drift if massive changes are made out-of-band. To fix this, run `#analyze`.
-Copilot Forge features an **Incremental Analysis engine**: it stores the git commit hash of its last run. When you invoke `#analyze`, it uses `git diff` to identify exactly which files were added or modified since the last run. It then audits *only* those new files and automatically updates your architecture and convention docs to match the new codebase reality without rescanning the entire project.
+Copilot Forge does not run as a background daemon, so your `.forge/context/` files will drift if massive changes are made out-of-band. To fix this, run `#forge-analyze`.
+Copilot Forge features an **Incremental Analysis engine**: it stores the git commit hash of its last run. When you invoke `#forge-analyze`, it uses `git diff` to identify exactly which files were added or modified since the last run. It then audits *only* those new files and automatically updates your architecture and convention docs to match the new codebase reality without rescanning the entire project.
 
-### 5. Why didn't `#init` create the `copilot-instructions.md` file for me?
+### 5. Why didn't `#forge-init` create the `copilot-instructions.md` file for me?
 Copilot Forge separates the **Toolkit Engine** from the **Project Context**.
-- The Toolkit Engine (`.github/` and `.vscode/`) contains the instructions and prompts. This must be manually copied into your repository first (or by running `.\scripts\install.ps1`). If it isn't there, VS Code won't even recognize the `#init` command.
-- The Project Context (`.forge/`) is what `#init` generates—the unique architectural artifacts and requirements for your specific project.
+- The Toolkit Engine (`.github/` and `.vscode/`) contains the instructions and prompts. This must be manually copied into your repository first (or by running `.\scripts\install.ps1`). If it isn't there, VS Code won't even recognize the `#forge-init` command.
+- The Project Context (`.forge/`) is what `#forge-init` generates—the unique architectural artifacts and requirements for your specific project.
 
 ### 6. Can I generate a single "Global Brain" documentation set for a multi-repo workspace?
 **Yes, you have three options depending on your preference.**
 If your enterprise system spans multiple repositories (e.g., frontend, backend, infra), Copilot Forge supports these architectural patterns natively:
-- **Approach 1: The "Global Brain" (Centralized):** Open all your repositories in a single VS Code Multi-Root Workspace. Create a central folder (e.g., `system-docs`) and run `#init Please read the /frontend, /backend, and /infra directories and generate a unified architecture.md`. Because the Copilot `codebase` tool sees the entire workspace, it will generate one massive, inter-connected documentation set in that single `.forge/` folder.
-- **Approach 2: Native Cross-Repo (Decentralized):** Run `#init` in each individual repository. Then, inside each repo's `.forge/config.yml`, use the `repos:` block to link them together as siblings. The architecture docs stay perfectly separated by repo, but when you run `#spec` or `#proceed`, Copilot automatically reads the configs and orchestrates code changes across all linked repos simultaneously!
-- **Approach 3: The Hybrid (Micro & Macro Brains):** Run `#init` in each individual repository to generate localized `.forge/` documentation for individual teams. Then, open a single VS Code Multi-Root Workspace, create a central folder, and run `#init Please read the .forge/architecture.md files inside the /frontend, /backend, and /infra directories to generate a high-level global architecture.md`. Copilot will read the highly structured localized docs and effortlessly synthesize a perfect, high-level macro architecture that understands exactly how all the repositories connect!
+- **Approach 1: The "Global Brain" (Centralized):** Open all your repositories in a single VS Code Multi-Root Workspace. Create a central folder (e.g., `system-docs`) and run `#forge-init Please read the /frontend, /backend, and /infra directories and generate a unified architecture.md`. Because the Copilot `codebase` tool sees the entire workspace, it will generate one massive, inter-connected documentation set in that single `.forge/` folder.
+- **Approach 2: Native Cross-Repo (Decentralized):** Run `#forge-init` in each individual repository. Then, inside each repo's `.forge/config.yml`, use the `repos:` block to link them together as siblings. The architecture docs stay perfectly separated by repo, but when you run `#forge-spec` or `#forge-proceed`, Copilot automatically reads the configs and orchestrates code changes across all linked repos simultaneously!
+- **Approach 3: The Hybrid (Micro & Macro Brains):** Run `#forge-init` in each individual repository to generate localized `.forge/` documentation for individual teams. Then, open a single VS Code Multi-Root Workspace, create a central folder, and run `#forge-init Please read the .forge/architecture.md files inside the /frontend, /backend, and /infra directories to generate a high-level global architecture.md`. Copilot will read the highly structured localized docs and effortlessly synthesize a perfect, high-level macro architecture that understands exactly how all the repositories connect!
 
 ### 7. Should I commit the `.github` and `.forge` folders to Git, or keep them local?
 **Absolutely commit them!** They are the single source of truth for your team.
@@ -48,21 +48,21 @@ If your enterprise system spans multiple repositories (e.g., frontend, backend, 
 
 *Note: The Copilot Forge `.gitignore` template is specifically designed to ignore local state files (like `.forge/.last-analyzed-commit` and `.forge/.next-req`) so that developers don't encounter merge conflicts on their local counters.*
 
-### 8. What is the difference between `#security_scan` and the `security-auditor` checklist?
+### 8. What is the difference between `#forge-security-scan` and the `security-auditor` checklist?
 They serve different roles in the security lifecycle:
-- **`security-auditor` (Broad Audit)**: A comprehensive checklist used during `#review` or `#analyze` to find architectural and logical vulnerabilities (e.g., input validation flaws, authentication bypasses, insecure dependencies).
-- **`#security_scan` (Focused Safety Gate)**: A dedicated, interactive pre-commit tool used during `#wrapup` specifically to detect and prevent hardcoded credentials (API keys, tokens, passwords) from being committed to version control. It allows users to confirm findings and flag false positives before the `git commit` is executed.
+- **`security-auditor` (Broad Audit)**: A comprehensive checklist used during `#forge-review` or `#forge-analyze` to find architectural and logical vulnerabilities (e.g., input validation flaws, authentication bypasses, insecure dependencies).
+- **`#forge-security-scan` (Focused Safety Gate)**: A dedicated, interactive pre-commit tool used during `#forge-wrapup` specifically to detect and prevent hardcoded credentials (API keys, tokens, passwords) from being committed to version control. It allows users to confirm findings and flag false positives before the `git commit` is executed.
 
 ### 9. Why doesn't Copilot Forge use standard Agile "User Stories"?
 Traditional Agile User Stories (e.g., "As a user, I want X so that Y") are designed for human-to-human communication. They rely heavily on shared intuition and "common sense" to fill in the gaps. 
 When an AI reads a User Story, it fills those gaps with statistical probability—which often results in hallucinated logic, broken security boundaries, or incorrect infrastructure choices.
-Instead, Copilot Forge relies on **System-First Specifications** based on the modernized **Zachman Framework (5W1H)**. We force the AI (and the user) to deterministically define the WHAT (Data), WHO (Actors), WHEN (Triggers), WHERE (Infrastructure), WHY (Invariants), and HOW (Stack). By providing these exact system boundaries, we eliminate ambiguity and prevent the AI from making dangerous assumptions during the `#architect` and implementation phases.
+Instead, Copilot Forge relies on **System-First Specifications** based on the modernized **Zachman Framework (5W1H)**. We force the AI (and the user) to deterministically define the WHAT (Data), WHO (Actors), WHEN (Triggers), WHERE (Infrastructure), WHY (Invariants), and HOW (Stack). By providing these exact system boundaries, we eliminate ambiguity and prevent the AI from making dangerous assumptions during the `#forge-architect` and implementation phases.
 
 ### 10. Are subagents more token consuming?
 **Yes and No. It shifts how you pay for tokens.**
 
 - **The "Context Tax" (Why it uses more input tokens):** In a single long thread, the AI already knows the spec because you talked about it 20 minutes ago. If you use subagents, every time you spin up a new subagent for a new task, you have to re-feed it the Zachman spec, the architecture rules, and the codebase state. You are paying for that baseline context over and over again.
-- **The "Hallucination Tax" (Why it saves tokens in the long run):** In a long continuous pipeline (like running a massive feature through `#proceed` in one thread), the context window grows linearly. By the time it reaches Task 5, the prompt is massive, which makes every single LLM call wildly expensive. Worse, the AI starts hallucinating, mixing up code from Task 1 with Task 5. You end up spending thousands of output tokens arguing with the AI to fix bugs it created due to context confusion.
+- **The "Hallucination Tax" (Why it saves tokens in the long run):** In a long continuous pipeline (like running a massive feature through `#forge-proceed` in one thread), the context window grows linearly. By the time it reaches Task 5, the prompt is massive, which makes every single LLM call wildly expensive. Worse, the AI starts hallucinating, mixing up code from Task 1 with Task 5. You end up spending thousands of output tokens arguing with the AI to fix bugs it created due to context confusion.
 - **The Verdict:** Subagents trade slightly higher input token usage for a massive reduction in output tokens, rework, and bugs. Also, with modern features like Prompt Caching (which Anthropic and Google now use), feeding the same Zachman spec to 10 subagents is heavily discounted, making subagents much cheaper than they were a year ago.
 
 ### 11. Can I see how many tokens a Copilot Forge session uses?
@@ -71,13 +71,13 @@ GitHub Copilot does not expose live token counts from the VS Code extension. How
 
 **Two ways to use it:**
 
-> **Recommended: use the PowerShell script.** Running `#token-estimate` inside Copilot Chat is itself a token-consuming operation — Copilot has to load the prompt, read all the files via the `codebase` tool, and generate the report as output. For routine use, the `.ps1` script runs entirely locally with **zero token cost** and produces identical output.
+> **Recommended: use the PowerShell script.** Running `#forge-token-estimate` inside Copilot Chat is itself a token-consuming operation — Copilot has to load the prompt, read all the files via the `codebase` tool, and generate the report as output. For routine use, the `.ps1` script runs entirely locally with **zero token cost** and produces identical output.
 >
 > **Why is the PowerShell script free (zero tokens)?**
 > Think of tokens like "stamps" you pay when sending data to the AI over the internet. When you use Copilot Chat, it gathers your files and mails them to the AI to read, which costs stamps. The PowerShell script doesn't use the internet or talk to the AI at all. It simply looks at the file sizes on your own hard drive and does basic math (`file size ÷ 4`) to guess what the AI *would* charge you. Since nothing leaves your computer, it costs absolutely nothing.
 
 - **From the terminal** *(zero token cost — recommended)*:
-- **In Copilot Chat** *(convenient, but costs ~1,000–2,000 tokens to run)* — type `#token-estimate REQ-023`:
+- **In Copilot Chat** *(convenient, but costs ~1,000–2,000 tokens to run)* — type `#forge-token-estimate REQ-023`:
 
 ```powershell
 # Baseline only (useful before starting a REQ)
@@ -123,7 +123,7 @@ GitHub Copilot does not expose live token counts from the VS Code extension. How
 - **Variable Source Payload:** How does the script know which source files you're changing? It simply reads your `TASK-*.md` text files. Since you list the files to modify under the `## Files to Create/Modify` heading during the architecture phase, the script just extracts those paths, finds the files on your hard drive, and measures their size.
 - It applies the standard approximation: **~4 characters = 1 token** for English/Markdown text.
 - Output tokens are estimated at **~27% of input** — a conservative average for agentic implementation tasks.
-- Results are written to `pipeline-state.json` (via `-UpdatePipelineState`) and automatically surfaced in the `#wrapup` ship summary under **Metrics**.
+- Results are written to `pipeline-state.json` (via `-UpdatePipelineState`) and automatically surfaced in the `#forge-wrapup` ship summary under **Metrics**.
 
 **Accuracy:** ±15–20%. Useful for comparing token costs across REQs and identifying the heaviest phases (typically Phase 5: Verify, which loads all 6 agent checklists simultaneously). Not a substitute for official GitHub Copilot billing data.
 
@@ -141,15 +141,15 @@ However, they differ significantly in scope, rigidity, and how they view the sof
 
 **2. Guardrails and Organizational Principles**
 - **Spec Kit:** Establishes guardrails upfront. You define a Constitution (your project's principles, testing standards, UX consistency), and the AI is expected to keep those principles in mind as it generates code.
-- **Copilot Forge:** Enforces guardrails continuously through auditing. It doesn't just ask the AI to follow the rules; it uses dedicated Agent Reference Checklists (e.g., `security-auditor`, `architecture-reviewer`, `test-auditor`) to actively audit the AI's work at every stage. It believes in strict, interactive gates (like `#validate` and `#review`) rather than just upfront guidance.
+- **Copilot Forge:** Enforces guardrails continuously through auditing. It doesn't just ask the AI to follow the rules; it uses dedicated Agent Reference Checklists (e.g., `security-auditor`, `architecture-reviewer`, `test-auditor`) to actively audit the AI's work at every stage. It believes in strict, interactive gates (like `#forge-validate` and `#forge-review`) rather than just upfront guidance.
 
 **3. Multi-Step Refinement**
 - **Spec Kit:** Uses a lightweight, high-level refinement process: Constitution -> Spec -> Plan -> Tasks -> Implement. It's designed to be simple enough to fit into any workflow.
-- **Copilot Forge:** Views refinement as a full enterprise Software Development Life Cycle (SDLC). Its pipeline is deeply granular and highly prescriptive: `#spec → #validate → #architect → #validate → implement → #reflect → #review → merge → #wrapup`. It believes that refinement doesn't end when the code is written—it mandates self-reflection, multi-dimensional peer reviews, and automated documentation updates before a feature is considered "done."
+- **Copilot Forge:** Views refinement as a full enterprise Software Development Life Cycle (SDLC). Its pipeline is deeply granular and highly prescriptive: `#forge-spec → #forge-validate → #forge-architect → #forge-validate → implement → #forge-reflect → #forge-review → merge → #forge-wrapup`. It believes that refinement doesn't end when the code is written—it mandates self-reflection, multi-dimensional peer reviews, and automated documentation updates before a feature is considered "done."
 
 **4. Relying on AI for Specification Interpretation**
 - **Spec Kit:** Trusts the AI's advanced reasoning capabilities to read the specs, look at your codebase, and figure out the implementation.
-- **Copilot Forge:** Believes the AI needs a living, stateful memory to interpret specs accurately. Rather than relying purely on the AI's contextual reasoning, Forge actively maintains a `.forge/context/` directory. It uses Incremental Analysis (`#analyze`) to constantly detect code drift and update architecture documents, ensuring the AI's "brain" perfectly matches the reality of the codebase at all times.
+- **Copilot Forge:** Believes the AI needs a living, stateful memory to interpret specs accurately. Rather than relying purely on the AI's contextual reasoning, Forge actively maintains a `.forge/context/` directory. It uses Incremental Analysis (`#forge-analyze`) to constantly detect code drift and update architecture documents, ensuring the AI's "brain" perfectly matches the reality of the codebase at all times.
 
 **Summary**
 - **Spec Kit's Philosophy:** "Give the AI clear principles, write a good spec, break it into tasks, and let the AI build it. Keep the process lightweight, adaptable, and agent-agnostic."
@@ -165,7 +165,7 @@ Superpowers outlines four explicit philosophical pillars. Interestingly, Copilot
 
 **Intervention vs. Orchestration**
 - **Superpowers:** Relies on *implicit intervention*. It automatically detects when you try to write code and stops you, stepping back to tease out a specification through conversation before allowing you to proceed. It acts as a seamless, automatic guardrail.
-- **Copilot Forge:** Relies on *explicit orchestration*. It provides a defined, manual pipeline (`#spec → #validate → #architect → #proceed`). The developer remains the conductor, explicitly telling the AI which phase of the Software Development Life Cycle (SDLC) to execute.
+- **Copilot Forge:** Relies on *explicit orchestration*. It provides a defined, manual pipeline (`#forge-spec → #forge-validate → #forge-architect → #forge-proceed`). The developer remains the conductor, explicitly telling the AI which phase of the Software Development Life Cycle (SDLC) to execute.
 
 **Execution Model**
 - **Superpowers:** Heavily champions **subagent-driven-development**. Once the plan is approved, it dispatches multiple autonomous subagents to handle individual engineering tasks, self-review their work, and run for hours at a time.
@@ -180,9 +180,9 @@ Open-Spec advocates for a lightweight, highly adaptable approach to specificatio
 Here is how Copilot Forge aligns (or contrasts) with Open-Spec's five core tenets:
 
 - **Fluid not rigid:** **Opposites.** Open-Spec prefers fluidity, while Copilot Forge intentionally enforces rigid discipline. Forge uses strict templates (like the Zachman 5W1H Framework) and hard quality gates to mathematically remove ambiguity.
-- **Iterative not waterfall:** **Different approaches.** Open-Spec encourages loose iteration. Copilot Forge forces a highly structured, sequential micro-waterfall for every feature (`#spec` → `#architect` → `implement` → `#review`), ensuring strict architectural compliance before any code is merged.
-- **Easy not complex:** **Opposites.** Open-Spec prioritizes sheer simplicity. Copilot Forge embraces the necessary complexity of enterprise development, providing advanced tools like cross-repo PR orchestration, Incremental Analysis (`#analyze`), and Canary deployment routing.
-- **Built for brownfield not just greenfield:** **Both completely agree.** Copilot Forge was engineered explicitly for massive legacy codebases. Its `#analyze` engine is designed to constantly read and reverse-engineer existing code to keep its architectural memory (`.forge/context/`) perfectly synced with reality.
+- **Iterative not waterfall:** **Different approaches.** Open-Spec encourages loose iteration. Copilot Forge forces a highly structured, sequential micro-waterfall for every feature (`#forge-spec` → `#forge-architect` → `implement` → `#forge-review`), ensuring strict architectural compliance before any code is merged.
+- **Easy not complex:** **Opposites.** Open-Spec prioritizes sheer simplicity. Copilot Forge embraces the necessary complexity of enterprise development, providing advanced tools like cross-repo PR orchestration, Incremental Analysis (`#forge-analyze`), and Canary deployment routing.
+- **Built for brownfield not just greenfield:** **Both completely agree.** Copilot Forge was engineered explicitly for massive legacy codebases. Its `#forge-analyze` engine is designed to constantly read and reverse-engineer existing code to keep its architectural memory (`.forge/context/`) perfectly synced with reality.
 - **Scalable from personal projects to enterprises:** **Different sweet spots.** Open-Spec scales smoothly from tiny personal scripts up to larger projects. Copilot Forge *can* be used for personal projects (using single-repo mode), but its true sweet spot is at the massive enterprise level where teams, security policies, and cross-repo dependencies require strict orchestration.
 
 ### 16. Why is Copilot Forge described as a "micro-waterfall"?
@@ -197,16 +197,16 @@ Agile and iterative models push against this by blending those phases together�
 **Copilot Forge, however, intentionally brings Waterfall back—but shrinks it down to the feature level.**
 
 Look at the required sequence for a single feature in Forge: 
-`#spec` → `#validate` → `#architect` → `#validate` → `#tdd` → `implement` → `#reflect` → `#review` → `#wrapup`
+`#forge-spec` → `#forge-validate` → `#forge-architect` → `#forge-validate` → `#forge-tdd` → `implement` → `#forge-reflect` → `#forge-review` → `#forge-wrapup`
 
 - You cannot generate architecture until the spec passes validation.
 - You cannot write functional code until the architecture passes validation.
-- You cannot merge until the code passes the `#review` checklists.
+- You cannot merge until the code passes the `#forge-review` checklists.
 
 It acts exactly like the strict, phase-gated Waterfall model where every step requires sign-off before the next begins. It's a **"micro" waterfall** because instead of this process taking 6 months for an entire software release, the AI executes this rigid, phase-gated sequence for a single feature in a matter of minutes or hours.
 
-### 17. What exactly is validated during the `#validate` phase?
-When you run `#validate` on a Requirement (REQ) or Architecture phase, Copilot Forge acts as a strict technical reviewer and runs through a rigorous checklist to mathematically eliminate ambiguity and prevent "vibe coding" errors.
+### 17. What exactly is validated during the `#forge-validate` phase?
+When you run `#forge-validate` on a Requirement (REQ) or Architecture phase, Copilot Forge acts as a strict technical reviewer and runs through a rigorous checklist to mathematically eliminate ambiguity and prevent "vibe coding" errors.
 
 **In the REQ Phase (`requirement.md`)**
 The goal here is to ensure the "What" and "Why" are rock-solid before *any* technical decisions are made:
@@ -224,7 +224,7 @@ The goal here is to ensure the proposed technical solution perfectly matches you
 * **Layered Architecture:** It ensures the service layer adheres to your established layered pattern (e.g., routes → services → repositories).
 * **Conflict Resolution:** It checks for architectural conflicts with any other *in-progress* requirements being built by you or your team.
 
-If any of these checks fail, `#validate` categorizes them as **Blockers**, **Warnings**, or **Info**, and explicitly halts the pipeline until the blockers are fixed!
+If any of these checks fail, `#forge-validate` categorizes them as **Blockers**, **Warnings**, or **Info**, and explicitly halts the pipeline until the blockers are fixed!
 
 ### 18. What problem is Copilot Forge really solving?
 Standard AI tools like Copilot are incredible at "local code generation" (writing snippets, generating tests for a single file, or explaining a block of code). 
@@ -232,7 +232,7 @@ Standard AI tools like Copilot are incredible at "local code generation" (writin
 However, there is a massive gap between **local code generation** and **production‑ready engineering**. Standard AI does not understand your enterprise architecture, strict security controls, or cross‑system dependencies. This often leads to a cycle where AI generates code quickly, but senior engineers have to spend hours supervising, debugging, and cleaning up architectural violations before it can be merged.
 
 **Copilot Forge solves this gap.**
-It forces the AI to work through a strict, governed delivery process. Instead of just generating code from a prompt, Forge requires the AI to pass through formal requirements gathering (`#spec`), architecture design, test-driven development (`#tdd`), and multiple peer-review quality gates. 
+It forces the AI to work through a strict, governed delivery process. Instead of just generating code from a prompt, Forge requires the AI to pass through formal requirements gathering (`#forge-spec`), architecture design, test-driven development (`#forge-tdd`), and multiple peer-review quality gates. 
 
 By enforcing this governed execution, Forge's goal is to deliver:
 - Less rework from AI‑generated code.
@@ -246,7 +246,7 @@ To prevent the AI from generating generic ideas that violate your organization's
 2. **Specialized Agents:** Targeted persona checklists (e.g., Security Auditor, Architecture Reviewer) that strictly check output against those global rules.
 3. **Local State:** The `.forge/` directory inside each repository. This stores your current specs, architecture records (`architecture.md`), and the living state of your pipelines. 
 
-When you run `#spec`, it pulls in past incidents and architecture rules relevant to *your* codebase. When you run `#proceed`, every validation gate and code review is grounded in those exact same artifacts.
+When you run `#forge-spec`, it pulls in past incidents and architecture rules relevant to *your* codebase. When you run `#forge-proceed`, every validation gate and code review is grounded in those exact same artifacts.
 
 In Copilot Forge, context is not abstract or hallucinated—it is version‑controlled directly in your repository and evolves alongside your project.
 
@@ -254,8 +254,8 @@ In Copilot Forge, context is not abstract or hallucinated—it is version‑cont
 Copilot Forge **does not replace** your existing SDLC or CI/CD pipelines; it augments them at the developer level.
 
 Everything Forge does ultimately results in standard Git commits, branches, and Pull Requests/Merge Requests. 
-- For issue tracking, commands like `#issue_epic_creation` push work directly into your existing Jira/GitLab epics.
-- For delivery, the `#wrapup` command integrates perfectly with your existing PR/MR documentation practices.
+- For issue tracking, commands like `#forge-issue-epic-creation` push work directly into your existing Jira/GitLab epics.
+- For delivery, the `#forge-wrapup` command integrates perfectly with your existing PR/MR documentation practices.
 
 Think of Copilot Forge as an **intelligent front‑end** to your pipeline. By the time code is pushed and hits your CI/CD server, Forge has already enforced spec quality, architectural compliance, TDD, and peer review locally. It drastically reduces noise and failures downstream instead of attempting to bypass your established enterprise processes.
 
@@ -264,8 +264,8 @@ We approach monitoring on two distinct levels: **Tool Telemetry** (monitoring th
 
 **1. Tool Telemetry (Monitoring the AI Pipeline)**
 Copilot Forge tracks its own execution metrics locally to give you visibility and auditability into what the AI is doing:
-* **Pipeline State:** The `#token-estimate` phase tracks token consumption, phase durations, and validation results, saving them to `.forge/pipeline-state.json`.
-* **Ship Summary:** At the end of every pipeline, `#wrapup` generates a final Metrics report summarizing the run, which is appended directly to your Pull Requests.
+* **Pipeline State:** The `#forge-token-estimate` phase tracks token consumption, phase durations, and validation results, saving them to `.forge/pipeline-state.json`.
+* **Ship Summary:** At the end of every pipeline, `#forge-wrapup` generates a final Metrics report summarizing the run, which is appended directly to your Pull Requests.
 * **Agent Telemetry:** Advanced hooks (like `emit-telemetry.sh`) can log granular agent decisions, detect "ghost-skips" (when the AI tries to bypass a review), and track API errors into local TSV files for strict enterprise auditability.
 
 **2. Application Observability (Monitoring Your Code)**
@@ -278,9 +278,9 @@ To ensure the AI has the exact right context without exceeding token limits, Cop
 
 Rather than blindly loading all past documentation, prompts dynamically retrieve relevant prior knowledge based on what is being executed:
 
-* **Lessons (`.forge/knowledge/lessons/*.md`)** — Surfaced during `#spec`, `#architect`, `#reflect`, and `#review` phases to prevent the AI from repeating past mistakes.
-* **Specs (`.forge/specs/*/requirement.md`)** — Surfaced during the `#spec` phase to find related prior requirements and prevent overlapping work.
-* **Bugs (`.forge/bugs/*.md`)** — Surfaced during the `#spec` phase to load context about related resolved bugs.
+* **Lessons (`.forge/knowledge/lessons/*.md`)** — Surfaced during `#forge-spec`, `#forge-architect`, `#forge-reflect`, and `#forge-review` phases to prevent the AI from repeating past mistakes.
+* **Specs (`.forge/specs/*/requirement.md`)** — Surfaced during the `#forge-spec` phase to find related prior requirements and prevent overlapping work.
+* **Bugs (`.forge/bugs/*.md`)** — Surfaced during the `#forge-spec` phase to load context about related resolved bugs.
 
 **The Scoring System:**
 When searching, Forge evaluates the available knowledge files using a strict mathematical weighting:
@@ -293,26 +293,26 @@ Once scored, only the **Top 15** files by score are read in full and injected in
 
 ### 23. How do you explain the architecture of Copilot Forge in simple terms?
 Copilot Forge's architecture is a simple split between the **Engine** and the **Memory**:
-1. **The Toolkit Engine (`.github/`)**: The strict conductor. It contains the prompt templates and pipelines that tell the AI *how* to execute standard enterprise workflows (like `#spec` or `#review`).
+1. **The Toolkit Engine (`.github/`)**: The strict conductor. It contains the prompt templates and pipelines that tell the AI *how* to execute standard enterprise workflows (like `#forge-spec` or `#forge-review`).
 2. **The Project Memory (`.forge/`)**: The stateful brain. It stores your project's specific architecture rules, past bugs, and current specs.
 
 When you run a command, Forge merges the Engine with the Memory—forcing the AI to follow rigorous SDLC processes using your exact project context!
 
-### 24. What is `#vibe` and when should I use it vs `#spec`?
-The `#vibe` prompt is a lightweight "Vibe Coding" workflow designed for trivial changes that don't require heavy documentation. It bypasses the strict Zachman Framework specs and Test-Driven Development phases in favor of speed, differential edits, and an "as-built" traceability document.
+### 24. What is `#forge-vibe` and when should I use it vs `#forge-spec`?
+The `#forge-vibe` prompt is a lightweight "Vibe Coding" workflow designed for trivial changes that don't require heavy documentation. It bypasses the strict Zachman Framework specs and Test-Driven Development phases in favor of speed, differential edits, and an "as-built" traceability document.
 
-You should use `#vibe` when:
+You should use `#forge-vibe` when:
 - The change is confined to a single layer or component.
 - It does not require any database or state modifications.
 - It does not introduce new unit tests.
 - It has no cross-boundary or security impact.
 
-For everything else, the intelligent router built into `#spec` will require you to use the full Spec-Driven Development (SDD) workflow to ensure architectural safety.
+For everything else, the intelligent router built into `#forge-spec` will require you to use the full Spec-Driven Development (SDD) workflow to ensure architectural safety.
 
 ### 25. How are Architecture Decision Records (ADRs) tracked in Copilot Forge?
 Copilot Forge uses a **Hybrid Approach** for tracking decisions to balance keeping the workflow lean while maintaining a queryable history for major architectural shifts.
 
-1. **Local Decisions (The Default):** For the vast majority of work (90%), you do not create an extra file. The `#architect` agent simply logs the decisions and tradeoffs in a dedicated `## Decisions & Tradeoffs` section inside the specific feature's local `architecture.md` file. This avoids file bloat and keeps everything perfectly consolidated.
+1. **Local Decisions (The Default):** For the vast majority of work (90%), you do not create an extra file. The `#forge-architect` agent simply logs the decisions and tradeoffs in a dedicated `## Decisions & Tradeoffs` section inside the specific feature's local `architecture.md` file. This avoids file bloat and keeps everything perfectly consolidated.
 2. **Global Decisions (The Exception):** If a decision affects multiple repositories or sets a new, reusable standard (e.g., "All new APIs must use GraphQL instead of REST"), the agent will promote it to a standalone ADR file in `.forge/knowledge/decisions/ADR-xxx-slug.md`. 
 
 This guarantees that you have a searchable, durable history for project-altering choices, without drowning your repository in minor paperwork for everyday features.
@@ -321,10 +321,10 @@ This guarantees that you have a searchable, durable history for project-altering
 Copilot Forge uses a **Learning Flywheel** — a self-improving knowledge cycle that treats new insights as *candidates* before promoting them to permanent project knowledge. This prevents your `.forge/` documentation from filling up with noise, duplicates, or one-off observations that don't deserve a permanent slot.
 
 **How candidates get added:**
-When you run the core pipeline prompts (`#reflect`, `#review`, or `#wrapup`), the agent automatically watches for "surprises" — things like convention violations not covered by existing `.rules.md` files, anti-patterns, or missing architectural constraints. Instead of writing these directly into your lessons or rules, it writes a shaped markdown file into `.forge/knowledge/inbox/` using the `inbox-template.md` template.
+When you run the core pipeline prompts (`#forge-reflect`, `#forge-review`, or `#forge-wrapup`), the agent automatically watches for "surprises" — things like convention violations not covered by existing `.rules.md` files, anti-patterns, or missing architectural constraints. Instead of writing these directly into your lessons or rules, it writes a shaped markdown file into `.forge/knowledge/inbox/` using the `inbox-template.md` template.
 
 **How candidates become permanent knowledge:**
-You periodically run `#synthesize`, which acts as the inbox processor. For each candidate file, it:
+You periodically run `#forge-synthesize`, which acts as the inbox processor. For each candidate file, it:
 1. **Classifies** the candidate as a lesson, convention update, ADR (Architecture Decision Record), or reject.
 2. **Routes** it accordingly:
    - **Lesson** → saved to `.forge/knowledge/lessons/` using the lesson template.
@@ -333,17 +333,17 @@ You periodically run `#synthesize`, which acts as the inbox processor. For each 
    - **Reject** → archived to `.forge/knowledge/archive/` with a reason.
 
 **The subtractive side:**
-The flywheel also has a garbage-collection step. Running `#prune` periodically audits your existing rules and lessons against the actual codebase, identifies stale or superseded items, and archives them (with your approval) to keep `.forge/` lean and accurate.
+The flywheel also has a garbage-collection step. Running `#forge-prune` periodically audits your existing rules and lessons against the actual codebase, identifies stale or superseded items, and archives them (with your approval) to keep `.forge/` lean and accurate.
 
 This two-phase approach (capture → triage) ensures that only validated, high-quality knowledge earns a permanent place in your project's memory while still capturing every learning opportunity automatically.
 
-### 27. Isn't it conflicting that `#query` writes directly to knowledge while pipeline prompts go through the inbox first?
+### 27. Isn't it conflicting that `#forge-query` writes directly to knowledge while pipeline prompts go through the inbox first?
 **No — it's two different trust levels, not a conflict.**
 
 Copilot Forge has two pathways for adding knowledge, and the routing depends on **who initiated the capture** and **whether a human is supervising at the moment of capture**:
 
-- **Pipeline auto-capture** (`#reflect`, `#review`, `#wrapup`) → routes to **inbox** first. These prompts run mid-pipeline and the AI autonomously decides something is worth noting. Nobody reviewed that judgment at the time, so the observation is treated as a *candidate* that needs human triage via `#synthesize`. This prevents noise, duplicates, and low-value observations from polluting your permanent knowledge.
+- **Pipeline auto-capture** (`#forge-reflect`, `#forge-review`, `#forge-wrapup`) → routes to **inbox** first. These prompts run mid-pipeline and the AI autonomously decides something is worth noting. Nobody reviewed that judgment at the time, so the observation is treated as a *candidate* that needs human triage via `#forge-synthesize`. This prevents noise, duplicates, and low-value observations from polluting your permanent knowledge.
 
-- **Direct capture via `#query`** → writes **directly** to `.forge/knowledge/`. When you use `#query`, *you* are in the conversation, deliberately telling the agent what to save. The agent proposes the action (create a lesson, ADR, assumption, etc.) and waits for your explicit approval before writing anything. There is no need for a second triage step because **you are the triage**.
+- **Direct capture via `#forge-query`** → writes **directly** to `.forge/knowledge/`. When you use `#forge-query`, *you* are in the conversation, deliberately telling the agent what to save. The agent proposes the action (create a lesson, ADR, assumption, etc.) and waits for your explicit approval before writing anything. There is no need for a second triage step because **you are the triage**.
 
-Think of it this way: the inbox exists as a human gate for **unsupervised AI observations**. When you're personally driving the capture through `#query`, you *are* the gate — adding an inbox step on top would just be redundant friction.
+Think of it this way: the inbox exists as a human gate for **unsupervised AI observations**. When you're personally driving the capture through `#forge-query`, you *are* the gate — adding an inbox step on top would just be redundant friction.

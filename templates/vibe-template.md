@@ -1,4 +1,4 @@
-# VIBE-xxx: <slug>
+﻿# VIBE-xxx: <slug>
 
 **Date**: <date>
 **Status**: Completed
@@ -16,6 +16,6 @@
 -
 
 ## Internal Reference
-- **Incoming Dependencies**: `#vibe`
+- **Incoming Dependencies**: `#forge-vibe`
 - **Outgoing Dependencies**: *None*
 - **Resource Dependencies**: *None*

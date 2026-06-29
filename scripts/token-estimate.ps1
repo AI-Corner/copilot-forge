@@ -1,4 +1,4 @@
-<#
+﻿<#
 .SYNOPSIS
     Copilot Forge — Token Usage Estimator
 
@@ -349,6 +349,6 @@ if ($UpdatePipelineState -and $reqSpecDir -ne "") {
 }
 
 ## Internal Reference
-- **Incoming Dependencies**: `#token-estimate`, `#wrapup`
+- **Incoming Dependencies**: `#forge-token-estimate`, `#forge-wrapup`
 - **Outgoing Dependencies**: *None*
 - **Resource Dependencies**: *None*

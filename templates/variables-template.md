@@ -1,4 +1,4 @@
-# Environment & Configuration Variables
+﻿# Environment & Configuration Variables
 
 > [!CAUTION]
 > **SECURITY WARNING:** Do NOT store real production secrets, API keys, passwords, or sensitive tokens in this file. This file is intended to be committed to version control and must only contain variable names, dummy/example values, or safe development default values.
@@ -42,6 +42,6 @@ Variables and secrets used in CI/CD pipelines, container orchestration, or cloud
 | Prod        | `AKS_CLUSTER_NAME` | `prod-cluster` | Target Kubernetes cluster | `helm/values-prod.yaml` |
 
 ## Internal Reference
-- **Incoming Dependencies**: `#init`
+- **Incoming Dependencies**: `#forge-init`
 - **Outgoing Dependencies**: *None*
 - **Resource Dependencies**: *None*

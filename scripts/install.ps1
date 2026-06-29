@@ -1,4 +1,4 @@
-param (
+﻿param (
     [Parameter(Mandatory=$true)]
     [string]$TargetDir
 )
@@ -51,4 +51,4 @@ Write-Host "✅ Copilot Forge successfully installed in $TargetDir" -ForegroundC
 Write-Host ""
 Write-Host "Next steps:" -ForegroundColor Yellow
 Write-Host "1. Open $TargetDir in VS Code"
-Write-Host "2. Open Copilot Chat and run '#init' to scaffold the project context"
+Write-Host "2. Open Copilot Chat and run '#forge-init' to scaffold the project context"

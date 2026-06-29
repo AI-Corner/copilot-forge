@@ -1,4 +1,4 @@
-# Manual QA Guide: {Feature Title}
+﻿# Manual QA Guide: {Feature Title}
 
 *REQ ID: {REQ-xxx}*
 *Status: Draft / Final*
@@ -32,6 +32,6 @@ Briefly describe what this manual test is intended to verify. (Keep to 1-2 short
 (Space for the manual tester to leave comments or attach screenshots)
 
 ## Internal Reference
-- **Incoming Dependencies**: `#query`, `#wrapup`
+- **Incoming Dependencies**: `#forge-query`, `#forge-wrapup`
 - **Outgoing Dependencies**: *None*
 - **Resource Dependencies**: *None*

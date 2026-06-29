@@ -1,4 +1,4 @@
-# {Project Name} — Deployment Flow
+﻿# {Project Name} — Deployment Flow
 
 *Navigation: [Project Overview](project-overview.md) | [Architecture](architecture.md) | [Conventions](conventions.md) | [Variables](variables.md)*
 
@@ -54,6 +54,6 @@ _List external secrets needed for deployment (do NOT store actual values here, o
 - (e.g., `AWS_ACCESS_KEY_ID`, `DOCKER_REGISTRY_TOKEN`)
 
 ## Internal Reference
-- **Incoming Dependencies**: `#init`
+- **Incoming Dependencies**: `#forge-init`
 - **Outgoing Dependencies**: *None*
 - **Resource Dependencies**: *None*

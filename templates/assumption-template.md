@@ -1,4 +1,4 @@
----
+﻿---
 id: ASSUME-xxx
 title: "Assumption Title"
 status: validated | invalidated | unresolved
@@ -20,6 +20,6 @@ Why this assumption was made and what depends on it.
 How it was validated or invalidated (filled after resolution).
 
 ## Internal Reference
-- **Incoming Dependencies**: `#query`, `#init`, `#wrapup`
+- **Incoming Dependencies**: `#forge-query`, `#forge-init`, `#forge-wrapup`
 - **Outgoing Dependencies**: *None*
 - **Resource Dependencies**: *None*

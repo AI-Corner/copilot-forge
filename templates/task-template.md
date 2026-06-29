@@ -1,4 +1,4 @@
----
+ï»¿---
 id: TASK-xxx
 title: "Task Title"
 status: draft
@@ -16,7 +16,7 @@ What this task accomplishes.
 
 ## Files to Create/Modify
 
-- `path/to/file.js` — description of changes
+- `path/to/file.js` ï¿½ description of changes
 
 ## Acceptance Criteria
 
@@ -28,6 +28,6 @@ What this task accomplishes.
 Implementation details, patterns to follow, edge cases.
 
 ## Internal Reference
-- **Incoming Dependencies**: `#init`, `#architect`
+- **Incoming Dependencies**: `#forge-init`, `#forge-architect`
 - **Outgoing Dependencies**: *None*
 - **Resource Dependencies**: *None*

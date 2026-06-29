@@ -1,4 +1,4 @@
----
+ï»¿---
 id: BUG-xxx
 title: "Bug Title"
 status: open
@@ -44,9 +44,9 @@ What happens instead.
 
 ## Files Changed
 
-- `path/to/file.js` — description
+- `path/to/file.js` ï¿½ description
 
 ## Internal Reference
-- **Incoming Dependencies**: `#bugfix`, `#init`
+- **Incoming Dependencies**: `#forge-bugfix`, `#forge-init`
 - **Outgoing Dependencies**: *None*
 - **Resource Dependencies**: *None*

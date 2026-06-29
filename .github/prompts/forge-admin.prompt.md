@@ -1,4 +1,4 @@
----
+﻿---
 id: REQ-xxx
 title: "<short title>"
 status: complete
@@ -152,7 +152,7 @@ Before applying changes from `patch`, `standardize`, or `deprecate`, build a dep
 
 ### Step 1: Identify all cross-references
 For each target file, scan the entire `.github/prompts/` tree (including `agents/`) and `.github/copilot-instructions.md` for:
-- Direct name references (e.g., `#agents/security-auditor`, `#review`, `#wrapup`)
+- Direct name references (e.g., `#agents/security-auditor`, `#forge-review`, `#forge-wrapup`)
 - Frontmatter `tools:` and `description:` fields that mention other prompts
 - Template references (e.g., `requirement-template.md`, `task-template.md`)
 - Script invocations (e.g., `forge-gate.ps1`, `forge-test.ps1`, `forge-context.ps1`)
