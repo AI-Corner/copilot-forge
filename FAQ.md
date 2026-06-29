@@ -316,3 +316,34 @@ Copilot Forge uses a **Hybrid Approach** for tracking decisions to balance keepi
 2. **Global Decisions (The Exception):** If a decision affects multiple repositories or sets a new, reusable standard (e.g., "All new APIs must use GraphQL instead of REST"), the agent will promote it to a standalone ADR file in `.forge/knowledge/decisions/ADR-xxx-slug.md`. 
 
 This guarantees that you have a searchable, durable history for project-altering choices, without drowning your repository in minor paperwork for everyday features.
+
+### 26. Why does new knowledge go to an inbox first instead of being saved directly?
+Copilot Forge uses a **Learning Flywheel** — a self-improving knowledge cycle that treats new insights as *candidates* before promoting them to permanent project knowledge. This prevents your `.forge/` documentation from filling up with noise, duplicates, or one-off observations that don't deserve a permanent slot.
+
+**How candidates get added:**
+When you run the core pipeline prompts (`#reflect`, `#review`, or `#wrapup`), the agent automatically watches for "surprises" — things like convention violations not covered by existing `.rules.md` files, anti-patterns, or missing architectural constraints. Instead of writing these directly into your lessons or rules, it writes a shaped markdown file into `.forge/knowledge/inbox/` using the `inbox-template.md` template.
+
+**How candidates become permanent knowledge:**
+You periodically run `#synthesize`, which acts as the inbox processor. For each candidate file, it:
+1. **Classifies** the candidate as a lesson, convention update, ADR (Architecture Decision Record), or reject.
+2. **Routes** it accordingly:
+   - **Lesson** → saved to `.forge/knowledge/lessons/` using the lesson template.
+   - **Convention update** → proposes a diff to the relevant `.rules.md` file and waits for your explicit approval before applying.
+   - **ADR** → saved to `.forge/knowledge/decisions/` using the ADR template.
+   - **Reject** → archived to `.forge/knowledge/archive/` with a reason.
+
+**The subtractive side:**
+The flywheel also has a garbage-collection step. Running `#prune` periodically audits your existing rules and lessons against the actual codebase, identifies stale or superseded items, and archives them (with your approval) to keep `.forge/` lean and accurate.
+
+This two-phase approach (capture → triage) ensures that only validated, high-quality knowledge earns a permanent place in your project's memory while still capturing every learning opportunity automatically.
+
+### 27. Isn't it conflicting that `#query` writes directly to knowledge while pipeline prompts go through the inbox first?
+**No — it's two different trust levels, not a conflict.**
+
+Copilot Forge has two pathways for adding knowledge, and the routing depends on **who initiated the capture** and **whether a human is supervising at the moment of capture**:
+
+- **Pipeline auto-capture** (`#reflect`, `#review`, `#wrapup`) → routes to **inbox** first. These prompts run mid-pipeline and the AI autonomously decides something is worth noting. Nobody reviewed that judgment at the time, so the observation is treated as a *candidate* that needs human triage via `#synthesize`. This prevents noise, duplicates, and low-value observations from polluting your permanent knowledge.
+
+- **Direct capture via `#query`** → writes **directly** to `.forge/knowledge/`. When you use `#query`, *you* are in the conversation, deliberately telling the agent what to save. The agent proposes the action (create a lesson, ADR, assumption, etc.) and waits for your explicit approval before writing anything. There is no need for a second triage step because **you are the triage**.
+
+Think of it this way: the inbox exists as a human gate for **unsupervised AI observations**. When you're personally driving the capture through `#query`, you *are* the gate — adding an inbox step on top would just be redundant friction.

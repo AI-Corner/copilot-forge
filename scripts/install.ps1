@@ -9,7 +9,7 @@ if (-not (Test-Path -Path $TargetDir)) {
     exit 1
 }
 
-$SourceDir = $PSScriptRoot
+$SourceDir = Split-Path -Path $PSScriptRoot -Parent
 
 Write-Host "Installing Copilot Forge engine to $TargetDir..." -ForegroundColor Cyan
 
