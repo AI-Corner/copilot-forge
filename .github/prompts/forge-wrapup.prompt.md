@@ -1,4 +1,4 @@
-﻿---
+---
 agent: agent
 tools: [codebase, runCommand, changes, terminalLastCommand]
 description: Close out a completed feature — commit, merge, deploy, capture knowledge, emit ship summary
@@ -81,7 +81,7 @@ Review the implementation process for new knowledge:
 - **Lessons Learned**: Were there surprises? Approaches that didn't work? Things that worked well?
 - **Convention Updates**: Did we establish new patterns not covered by existing `.rules.md` files?
 
-If you find *any* of the above, do NOT write them directly to lessons, ADRs, or rules. Instead, use the `write_to_file` tool to capture each as a learning candidate in `.forge/knowledge/inbox/YYYY-MM-DD-HHMM-slug.md` using the `inbox-template.md` format.
+If you find *any* of the above, do NOT write them directly to lessons, ADRs, or rules. Instead, use the `write_to_file` tool to capture each as a learning candidate in `.forge/knowledge/inbox/YYYY-MM-DD-HHMM-slug.md` using the `inbox-template.md` format. Keep the candidate text extremely concise.
 
 For local or feature-specific tradeoffs that don't warrant a global rule, log them in the feature's `.forge/specs/REQ-xxx-*/architecture.md` under `## Decisions & Tradeoffs`.
 
@@ -95,7 +95,8 @@ For local or feature-specific tradeoffs that don't warrant a global rule, log th
   ```
 
 #### Support Documentation
-- **User-Centric Documentation**: Update or create user-facing support knowledge based on the completed requirement.
+- **User-Centric Documentation**: Update or create user-facing support knowledge based on the completed requirement. Only generate this if there is a meaningful user-facing change.
+- **Strictly Concise**: Keep the document extremely concise (short bullet points). 
 - **Filter Technical Noise**: This document is for end-users and support agents. Focus on:
   - **Features & Usage**: How does the user use the new functionality?
   - **User Value**: What problem does this solve for the user?
@@ -110,7 +111,8 @@ For local or feature-specific tradeoffs that don't warrant a global rule, log th
   ```
 
 #### Manual QA Documentation
-- Finalize the manual test guide based on the implementation. 
+- Finalize the manual test guide based on the implementation. Only generate this if manual QA is genuinely required beyond automated tests.
+- **Strictly Concise**: Keep it extremely concise (short bullet points).
 - Ensure it includes clear **Action -> Expected Result** steps and any necessary **CLI/Curl commands**.
 - Use the template from `.forge/templates/manual-qa-template.md`.
 - Save it to `.forge/knowledge/qa/QA-xxx-slug.md`.

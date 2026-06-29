@@ -1,4 +1,4 @@
-﻿---
+---
 agent: agent
 tools: [codebase, runCommand, changes, terminalLastCommand]
 description: End-to-end bug fix workflow — report, analyze, fix, verify, ship, knowledge capture
@@ -33,6 +33,7 @@ Read `.forge/templates/bug-template.md` (or `templates/bug-template.md` at the t
      ```
    - Create `.forge/bugs/BUG-xxx-slug.md` using `.forge/templates/bug-template.md`.
    - Fill in: description, reproduction steps, expected vs actual behavior, environment.
+   - **Strict Rule**: Keep the bug report strictly concise. Use short bullet points and omit filler text.
    - Set status to `open`, severity based on impact.
    - **Cross-repo**: if `.forge/config.yml` declares siblings AND the fix likely lives in a sibling, add `repo: <sibling-id>` or `touched_repos: [<id>, <id>]` to the bug frontmatter.
 2. If given a BUG ID, read the existing bug report.
@@ -113,7 +114,7 @@ Evaluate: did this bug reveal something a future implementer should know?
 - A pattern or anti-pattern worth recording?
 - A check that would have caught this earlier?
 
-If yes, write a lesson to `.forge/knowledge/lessons/LESSON-xxx-slug.md`:
+If yes, write a strictly concise lesson to `.forge/knowledge/lessons/LESSON-xxx-slug.md`:
 ```bash
 LESSON_NUM=$(cat .forge/.next-lesson 2>/dev/null || echo "1")
 echo $((LESSON_NUM + 1)) > .forge/.next-lesson

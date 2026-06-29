@@ -1,4 +1,4 @@
-﻿---
+---
 agent: agent
 tools: [codebase, runCommand, changes]
 description: Design architecture and break a requirement into implementable tasks
@@ -52,11 +52,11 @@ Use the codebase tool to explore systematically — run these explorations in se
 Read the key files identified during exploration.
 
 ### Step 3: Design Architecture (if needed)
-1. If the requirement involves new architectural decisions, create `.forge/specs/REQ-xxx-*/architecture.md`.
-2. Document:
+1. If the requirement involves new architectural decisions, create `.forge/specs/REQ-xxx-*/architecture.md`. If the feature doesn't introduce new structural changes, skip generating this file entirely.
+2. Document (keep all text hyper-concise and use short bullet points):
    - **Approach**: High-level design and rationale
    - **System Diagram**: A Mermaid sequence diagram or flowchart to visualize the execution flow, especially critical for complex business logic or cross-repo interactions
-   - **Execution Flow Breakdown**: Provide a detailed, step-by-step text explanation of the logic shown in the diagram, specifically highlighting how data flows between layers and any critical decision points
+   - **Execution Flow Breakdown**: Omit this if the diagram is self-explanatory. Otherwise, provide an extremely brief text explanation of the logic.
    - **Data model changes**: New collections/fields, schema changes
    - **API changes**: New or modified endpoints
    - **Service layer**: New or modified services

@@ -9,6 +9,8 @@ updated: YYYY-MM-DD
                     # One of the ids under `repos:` in .forge/config.yml.
                     # In single-repo projects, omit or set to the primary repo id.
 ---
+> **Note to AI**: Keep all sections extremely concise (short bullet points). Omit any sections that are not strictly relevant.
+
 
 ## Description
 

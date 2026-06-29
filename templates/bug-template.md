@@ -11,6 +11,8 @@ stack: []           # tech layers touched, e.g., ["express", "postgres"]
 concerns: []        # cross-cutting dimensions, e.g., ["security", "performance", "a11y"]
 tags: []            # free-form keywords, e.g., ["password-reset", "tokens"]
 ---
+> **Note to AI**: Keep all sections extremely concise (short bullet points). Omit any sections that are not strictly relevant.
+
 
 ## Description
 

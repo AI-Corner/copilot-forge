@@ -15,6 +15,8 @@ req: REQ-xxx        # requirement that prompted this decision
 created: YYYY-MM-DD
 updated: YYYY-MM-DD
 ---
+> **Note to AI**: Keep all sections extremely concise (short bullet points). Omit any sections that are not strictly relevant.
+
 
 ## Context
 
