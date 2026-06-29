@@ -1,4 +1,4 @@
-﻿---
+---
 id: REQ-xxx
 title: "Feature Title"
 status: draft
@@ -11,6 +11,12 @@ stack: []           # tech layers touched, e.g., ["express", "postgres"]
 concerns: []        # cross-cutting dimensions, e.g., ["security", "performance", "a11y"]
 tags: []            # free-form keywords, e.g., ["password-reset", "tokens"]
 ---
+
+## Executive Summary
+
+_A 1-2 sentence high-level summary of the feature's goal and business value._
+
+> **Note to AI**: Omit any of the 5W1H sections below (WHAT, WHO, WHEN, WHERE, WHY, HOW) if they are not strictly relevant to this specific feature. Keep all retained sections extremely concise (short bullet points).
 
 ## 1. WHAT (System Capabilities & Data)
 

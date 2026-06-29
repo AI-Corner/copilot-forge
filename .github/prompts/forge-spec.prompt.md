@@ -1,4 +1,4 @@
-﻿---
+---
 agent: agent
 tools: [codebase, runCommand, changes]
 description: Write a requirement spec from a feature request
@@ -24,7 +24,7 @@ Before proceeding:
 
 ## Instructions
 
-> **Strict Rule**: Keep the requirement document strictly concise. Use short bullet points. Do not invent filler, irrelevant edge cases, or hallucinate implementation details. DO NOT generate QA, Support, or Architecture documents â€” those are handled in later phases.
+> **Strict Rule**: Keep the requirement document strictly concise. Use short bullet points and omit any template sections that are not strictly relevant to the feature. Do not invent filler, irrelevant edge cases, or hallucinate implementation details. DO NOT generate QA, Support, or Architecture documents — those are handled in later phases.
 
 ### Step 1: Workflow Routing (VIBE vs SDD)
 
@@ -88,8 +88,10 @@ Take the top 5 by score and read their full content. Surface a retrieval summary
 ### Step 3: Create the Requirement Spec
 1. Create directory: `.forge/specs/REQ-xxx-feature-slug/`
 2. Create `requirement.md` using `.forge/templates/requirement-template.md`.
-3. Fill in all sections:
+3. Fill in the template:
+   - **Executive Summary**: 1-2 sentence high-level summary.
    - **Frontmatter**: `id`, `title`, `status` (`draft`), `deployable`, `created`, `updated`, plus the five query tags from Step 1.5: `component`, `domain`, `stack`, `concerns`, `tags`
+   - OMIT any of the 5W1H sections below (WHAT, WHO, WHEN, WHERE, WHY, HOW) that are not strictly necessary for this feature.
    - **1. WHAT (System Capabilities & Data)**: Exact data structures and API boundaries
    - **2. WHO (Identity & Access)**: Actors, roles, and security perimeters
    - **3. WHEN (Event Flows & Triggers)**: Triggers and event flows
@@ -104,9 +106,9 @@ Take the top 5 by score and read their full content. Surface a retrieval summary
 4. **Inline citations**: where a retrieved doc directly informed a Business Rule or Acceptance Criterion, add `(informed by BUG-012)` at the end of that line.
 
 ### Step 4: Present for Review
-1. Display the full requirement spec to the user.
+1. Display a concise summary of the requirement spec to the user.
 2. Highlight any assumptions or open questions that need input.
-3. Remind the user to run `#forge-validate` before advancing to `#forge-architect`.
+3. Remind the user to run `#forge-validate` before advancing to `#forge-architect` (once they are happy with the spec).
 
 ## Quality Checklist
 - [ ] Acceptance criteria are specific and testable (not vague)
