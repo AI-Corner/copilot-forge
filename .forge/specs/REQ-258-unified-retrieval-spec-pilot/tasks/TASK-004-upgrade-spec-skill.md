@@ -1,6 +1,6 @@
 ﻿---
 id: TASK-004
-title: "Upgrade #spec prompt with unified retriever, query derivation, citations, self-tagging"
+title: "Upgrade #forge-spec prompt with unified retriever, query derivation, citations, self-tagging"
 status: complete
 parent: REQ-258
 created: 2026-04-19
@@ -10,11 +10,11 @@ dependencies: [TASK-001, TASK-002, TASK-003]
 
 ## Description
 
-Rewrite `#spec`'s context-loading and authoring instructions to implement the unified tag-based retriever. This is the core implementation task — the templates (TASK-001/002/003) are the schema; this task is the behavior.
+Rewrite `#forge-spec`'s context-loading and authoring instructions to implement the unified tag-based retriever. This is the core implementation task — the templates (TASK-001/002/003) are the schema; this task is the behavior.
 
 Four changes to `spec/prompt.md`:
 
-1. **NEW Step 0.5** — Query Derivation: agent proposes tags from feature description; interactive-confirm or inherit-from-#proceed.
+1. **NEW Step 0.5** — Query Derivation: agent proposes tags from feature description; interactive-confirm or inherit-from-#forge-proceed.
 2. **REPLACE Step 1.3** — unified retriever over lessons + specs + bugs, weighted scoring, global top-15.
 3. **REPORT retrieval summary** — the agent surfaces every retrieved doc with its score before authoring begins.
 4. **EXTEND Step 3** — spec authoring now requires inline citations, `## Retrieved Context` section, self-tagged frontmatter.
@@ -25,10 +25,10 @@ Four changes to `spec/prompt.md`:
 
 ## Acceptance Criteria
 
-- [ ] `#spec`'s Step 0.5 (new) instructs the agent to derive a query tag object `{component, domain, stack, concerns, tags}` from the feature request, surface it to the user, and wait for confirmation in interactive mode; in pipeline mode (invoked from `#proceed`), proceed autonomously with proposed tags.
-- [ ] `#spec`'s Step 1.3 (replaced) implements the unified retriever per REQ-258 BR-1 through BR-11. Specifically: Grep candidates across `.forge/knowledge/lessons/*.md`, `.forge/specs/*/requirement.md` (filter status ∈ {approved, in-progress, deployed}), `.forge/bugs/*.md` (filter status == resolved); Read frontmatter of each; compute weighted score; filter zero-score; sort desc; tiebreak by `updated` → `created` → mtime → stable alphabetical; take top 15 globally; Read full bodies.
+- [ ] `#forge-spec`'s Step 0.5 (new) instructs the agent to derive a query tag object `{component, domain, stack, concerns, tags}` from the feature request, surface it to the user, and wait for confirmation in interactive mode; in pipeline mode (invoked from `#forge-proceed`), proceed autonomously with proposed tags.
+- [ ] `#forge-spec`'s Step 1.3 (replaced) implements the unified retriever per REQ-258 BR-1 through BR-11. Specifically: Grep candidates across `.forge/knowledge/lessons/*.md`, `.forge/specs/*/requirement.md` (filter status ∈ {approved, in-progress, deployed}), `.forge/bugs/*.md` (filter status == resolved); Read frontmatter of each; compute weighted score; filter zero-score; sort desc; tiebreak by `updated` → `created` → mtime → stable alphabetical; take top 15 globally; Read full bodies.
 - [ ] The retrieval summary output (before authoring) lists every retrieved doc with `id`, corpus, and score. Default always-shown (no `--verbose` gate).
-- [ ] `#spec`'s Step 3 (extended) instructs the agent to:
+- [ ] `#forge-spec`'s Step 3 (extended) instructs the agent to:
   - Write the query tags into the new REQ's frontmatter (component, domain, stack, concerns, tags) — self-tagging.
   - Add inline citations `(informed by BUG-xxx)` or `(informed by REQ-xxx, LESSON-xxx)` on Business Rules / Assumptions / Acceptance Criteria that drew on a specific retrieved doc.
   - Append a `## Retrieved Context` section listing every retrieved source with ID, corpus, score, regardless of whether cited inline.
@@ -66,7 +66,7 @@ Draft language:
      tags: [<proposed>]
    }
    ```
-3. **Interactive mode** (manual `#spec` invocation): Surface the proposed query to the user and ask:
+3. **Interactive mode** (manual `#forge-spec` invocation): Surface the proposed query to the user and ask:
    "Proposed retrieval query for this feature:
      component: ...
      domain: ...
@@ -75,7 +75,7 @@ Draft language:
      tags: [...]
    Confirm or edit any field before retrieval fires."
    Wait for confirmation or edits.
-4. **Pipeline mode** (invoked from `#proceed`): Do NOT block for user input. Use the proposed tags directly. If `#proceed` passed inherited tags in the invocation context, use those instead.
+4. **Pipeline mode** (invoked from `#forge-proceed`): Do NOT block for user input. Use the proposed tags directly. If `#forge-proceed` passed inherited tags in the invocation context, use those instead.
 5. Retain the confirmed `query` object — it is used by Step 1.3 (retrieval) and Step 3 (self-tagging the new REQ).
 ```
 
@@ -132,7 +132,7 @@ Add three sub-requirements to the existing Step 3:
 ... (existing sub-steps 1 and 2 unchanged) ...
 
 3. Fill in all sections:
-   - **Frontmatter**: id, title, status (`draft`), deployable, created/updated dates, AND the five query tags from Step 0.5: `component`, `domain`, `stack`, `concerns`, `tags`. This self-tagging makes the new REQ retrievable for future `#spec` invocations (per REQ-258 BR-7).
+   - **Frontmatter**: id, title, status (`draft`), deployable, created/updated dates, AND the five query tags from Step 0.5: `component`, `domain`, `stack`, `concerns`, `tags`. This self-tagging makes the new REQ retrievable for future `#forge-spec` invocations (per REQ-258 BR-7).
    - (existing sections — Description, System Model, Business Rules, Acceptance Criteria, External Dependencies, Assumptions, Open Questions, Out of Scope — unchanged)
    - **NEW**: add a `## Retrieved Context` section at the end listing every retrieved source from Step 1.3.h with `ID (corpus, score): title`. If no context was retrieved (cold-start path), write `"No prior context retrieved — first REQ in this area."`
 

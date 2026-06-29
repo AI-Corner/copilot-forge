@@ -1,4 +1,4 @@
-# Architecture — Copilot Forge
+﻿# Architecture — Copilot Forge
 
 ## Top-level layout
 
@@ -15,7 +15,7 @@ copilot-forge/
 ├── .vscode/
 │   └── settings.json                # Enables Copilot instruction files and prompt files
 ├── templates/
-│   └── *.md / *.yml / *.json        # Canonical templates (copied into consumer projects by #init)
+│   └── *.md / *.yml / *.json        # Canonical templates (copied into consumer projects by #forge-init)
 ├── presets/
 │   └── *.yml                        # Stack-shaped starter configs for .forge/config.yml
 └── .forge/                          # Minimal self-tracking for toolkit-internal REQs
@@ -39,14 +39,14 @@ Prompts are pure markdown — no code, no package dependencies. Copilot loads th
 
 ## Agent checklist anatomy
 
-Agent checklists live in `.github/prompts/agents/<name>.prompt.md`. They are **not invoked directly** by the user — they are referenced inline by main prompts like `#review`, `#reflect`, `#analyze`, and `#architect`.
+Agent checklists live in `.github/prompts/agents/<name>.prompt.md`. They are **not invoked directly** by the user — they are referenced inline by main prompts like `#forge-review`, `#forge-reflect`, `#forge-analyze`, and `#forge-architect`.
 
 Each checklist contains:
 - A **role declaration** (what dimension this agent covers)
 - A **focused checklist** (specific items to verify)
 - A **reporting format** (how to surface findings)
 
-The `#proceed` and `#review` prompts reference all review checklists sequentially.
+The `#forge-proceed` and `#forge-review` prompts reference all review checklists sequentially.
 
 ## Template anatomy
 
@@ -60,20 +60,20 @@ Templates at `templates/*.md` are the canonical shape for each artifact type:
 - `taxonomy-template.md` — tag vocabulary for retrieval scoring
 - `config-template.yml` — annotated `.forge/config.yml` template
 
-Templates are copied into consumer projects by `#init` (into `.forge/templates/`). Consumer projects may customize their local copies; `#template-drift` detects divergence from the canonical set.
+Templates are copied into consumer projects by `#forge-init` (into `.forge/templates/`). Consumer projects may customize their local copies; `#forge-template-drift` detects divergence from the canonical set.
 
 ## Copilot Forge pipeline shape (consumer-project view)
 
-When a consumer project runs `#proceed REQ-xxx`, the pipeline phases are:
+When a consumer project runs `#forge-proceed REQ-xxx`, the pipeline phases are:
 
 ```
 Step 0: Preflight + create worktree + load shared context
    ↓
-Phase 1: #validate (spec)
+Phase 1: #forge-validate (spec)
    ↓
-Phase 2: #architect  ← creates .forge/specs/REQ-xxx/tasks/TASK-yyy.md
+Phase 2: #forge-architect  ← creates .forge/specs/REQ-xxx/tasks/TASK-yyy.md
    ↓
-Phase 3: #validate (architecture + tasks)
+Phase 3: #forge-validate (architecture + tasks)
    ↓
 Phase 4: Implement (tasks executed sequentially in dependency order)
    ↓
@@ -83,9 +83,9 @@ Phase 6: Create PR (gh pr create)
    ↓
 Phase 7: PR cleanup + CI checks
    ↓
-Phase 7.5: #canary (optional, if deployable: true)
+Phase 7.5: #forge-canary (optional, if deployable: true)
    ↓
-Phase 8: #wrapup (merge, artifact updates, knowledge capture, deploy)
+Phase 8: #forge-wrapup (merge, artifact updates, knowledge capture, deploy)
 ```
 
 Each phase has a validation gate. Failed validation loops up to 3 times before pausing for human input. Pipeline state is persisted in `pipeline-state.json` so a session can resume from interruption.
@@ -94,16 +94,16 @@ Each phase has a validation gate. Failed validation loops up to 3 times before p
 
 Prompts retrieve relevant prior knowledge at context-loading time via a **weighted-score retriever** over `.forge/knowledge/`:
 
-- **Lessons** (`.forge/knowledge/lessons/*.md`) — surfaced by `#spec`, `#architect`, `#reflect`, `#review`
-- **Specs** (`.forge/specs/*/requirement.md`) — surfaced by `#spec` for related prior requirements
-- **Bugs** (`.forge/bugs/*.md`) — surfaced by `#spec` for related resolved bugs
+- **Lessons** (`.forge/knowledge/lessons/*.md`) — surfaced by `#forge-spec`, `#forge-architect`, `#forge-reflect`, `#forge-review`
+- **Specs** (`.forge/specs/*/requirement.md`) — surfaced by `#forge-spec` for related prior requirements
+- **Bugs** (`.forge/bugs/*.md`) — surfaced by `#forge-spec` for related resolved bugs
 
 Scoring: `+3` component match, `+2` domain match, `+2×` overlapping concerns, `+1×` overlapping tags. Top 15 by score are read in full.
 
 ## Key cross-cutting behaviors
 
-- **Worktree isolation**: `#proceed` creates a git worktree per REQ at `.worktrees/REQ-xxx` so the feature branch stays isolated from the main workspace during implementation.
+- **Worktree isolation**: `#forge-proceed` creates a git worktree per REQ at `.worktrees/REQ-xxx` so the feature branch stays isolated from the main workspace during implementation.
 - **Per-repo REQ counter**: each consumer repo maintains its own `.forge/.next-req` counter — no global shared state.
-- **Cross-repo coordination**: optional `repos:` block in `.forge/config.yml` enables multi-repo REQs. Tasks carry a `repo:` frontmatter field; `#proceed` creates worktrees and opens PRs in each touched repo.
-- **Pipeline state**: `pipeline-state.json` next to each REQ spec allows `#proceed` to resume a pipeline after interruption without replaying completed phases.
-- **Copy-based updates**: toolkit changes propagate to consumer projects by re-copying `.github/` — use `#template-drift` to detect stale local template copies.
+- **Cross-repo coordination**: optional `repos:` block in `.forge/config.yml` enables multi-repo REQs. Tasks carry a `repo:` frontmatter field; `#forge-proceed` creates worktrees and opens PRs in each touched repo.
+- **Pipeline state**: `pipeline-state.json` next to each REQ spec allows `#forge-proceed` to resume a pipeline after interruption without replaying completed phases.
+- **Copy-based updates**: toolkit changes propagate to consumer projects by re-copying `.github/` — use `#forge-template-drift` to detect stale local template copies.

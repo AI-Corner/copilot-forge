@@ -1,6 +1,6 @@
 ﻿---
 id: TASK-007
-title: "Add path-parse + worktree validation to #proceed Step 0"
+title: "Add path-parse + worktree validation to #forge-proceed Step 0"
 status: complete
 parent: REQ-263
 created: 2026-04-25

@@ -1,4 +1,4 @@
-﻿# REQ-258 Verification — Unified Tag-Based Retrieval for #spec (Pilot)
+﻿# REQ-258 Verification — Unified Tag-Based Retrieval for #forge-spec (Pilot)
 
 **Status:** Complete (static)
 **Verified by:** TASK-006 (dogfood-verification), adapted scope
@@ -7,12 +7,12 @@
 
 ## Overview — Adapted Scope
 
-The original TASK-006 called for behavioral dogfood verification by invoking `Copilot Chat: #spec '...'` in scratch directories. That approach is **not executable pre-merge**: the updated `#spec` prompt only becomes active once the `.forge` symlink points at the merged `main`. Running `#spec` in a scratch directory before merge would execute the *old* pre-REQ-258 prompt and prove nothing about the new implementation.
+The original TASK-006 called for behavioral dogfood verification by invoking `Copilot Chat: #forge-spec '...'` in scratch directories. That approach is **not executable pre-merge**: the updated `#forge-spec` prompt only becomes active once the `.forge` symlink points at the merged `main`. Running `#forge-spec` in a scratch directory before merge would execute the *old* pre-REQ-258 prompt and prove nothing about the new implementation.
 
 This verification therefore splits into two tracks:
 
 1. **Static verification (this document, pre-merge):** every REQ-258 AC whose evidence lives in committed files is verified by reading the implementation artifacts produced by TASK-001 through TASK-005. Each AC gets an evidence source (file + line range), a paraphrase of what was verified, and a Pass/Fail/Deferred status.
-2. **Post-merge dogfood plan (§5 below):** ACs that require a live `#spec` invocation to observe — AC-1 (runtime summary display), AC-4 (runtime inline citation behavior), AC-5 (runtime cold-start note emission) — are preserved as an executable checklist the user runs after the REQ-258 PR is merged and the symlink is active. These are not gaps in the implementation; they are gaps in what's *observable* from committed files alone.
+2. **Post-merge dogfood plan (§5 below):** ACs that require a live `#forge-spec` invocation to observe — AC-1 (runtime summary display), AC-4 (runtime inline citation behavior), AC-5 (runtime cold-start note emission) — are preserved as an executable checklist the user runs after the REQ-258 PR is merged and the symlink is active. These are not gaps in the implementation; they are gaps in what's *observable* from committed files alone.
 
 The two original TASK-006 scenarios (Scenario A — cold-start; Scenario B — retrieval fixture) are preserved verbatim in §5 as the post-merge checklist, with expected-output excerpts updated to reflect the actually-shipped prompt text.
 
@@ -22,7 +22,7 @@ Each AC below cites a specific file and line range in the worktree. Paths are re
 
 ### AC-1 — Retrieval displays top 15 with scores, reads bodies into context
 
-> A `#spec` invocation in an area with prior lessons, specs, or bugs retrieves the top 15 most-relevant docs, displays them with scores before authoring, and reads their bodies into agent context.
+> A `#forge-spec` invocation in an area with prior lessons, specs, or bugs retrieves the top 15 most-relevant docs, displays them with scores before authoring, and reads their bodies into agent context.
 
 **Evidence source:** `spec/prompt.md:69-107` (Step 1.6 — Unified Retrieval Across Corpora)
 
@@ -39,7 +39,7 @@ Each AC below cites a specific file and line range in the worktree. Paths are re
 
 **Evidence sources:**
 - `templates/requirement-template.md:1-13` — frontmatter block includes `component`, `domain`, `stack`, `concerns`, `tags` with inline comments.
-- `spec/prompt.md:135` — Step 3.3 Frontmatter bullet requires *"the five query tags from Step 1.5 — `component`, `domain`, `stack`, `concerns`, `tags`. This self-tagging makes the new REQ retrievable for future `#spec` invocations (per REQ-258 BR-7)."*
+- `spec/prompt.md:135` — Step 3.3 Frontmatter bullet requires *"the five query tags from Step 1.5 — `component`, `domain`, `stack`, `concerns`, `tags`. This self-tagging makes the new REQ retrievable for future `#forge-spec` invocations (per REQ-258 BR-7)."*
 - `.forge/specs/REQ-258-unified-retrieval-spec-pilot/requirement.md:1-13` — dogfooded confirmation: REQ-258's own frontmatter carries `component: Copilot Forge/spec`, `domain: Copilot Forge`, non-empty `stack`, `concerns`, and `tags` arrays.
 
 **What was verified:** The template schema exposes the fields; the prompt instructs population; the toolkit's own REQ-258 proves end-to-end persistence works on at least one real doc.
@@ -68,7 +68,7 @@ Each AC below cites a specific file and line range in the worktree. Paths are re
 
 ### AC-5 — Cold-start path emits canonical note
 
-> On a fresh project with empty `.forge/knowledge/lessons/`, `.forge/specs/`, and `.forge/bugs/`, `#spec` produces a REQ with `## Retrieved Context` containing `"No prior context retrieved — first REQ in this area."`
+> On a fresh project with empty `.forge/knowledge/lessons/`, `.forge/specs/`, and `.forge/bugs/`, `#forge-spec` produces a REQ with `## Retrieved Context` containing `"No prior context retrieved — first REQ in this area."`
 
 **Evidence sources:**
 - `spec/prompt.md:107` — Step 1.6.9 cold-start branch: *"if every corpus is empty, or all candidates filter out to zero, skip retrieval and record this explicitly when Step 3 writes the `## Retrieved Context` section."*
@@ -115,9 +115,9 @@ See §2 below for a numeric walkthrough with synthetic docs.
 
 **Status:** **PASS (static — grep-verifiable).**
 
-### AC-9 — `.forge/context/taxonomy.md` created by `#init`
+### AC-9 — `.forge/context/taxonomy.md` created by `#forge-init`
 
-> A new file `.forge/context/taxonomy.md` exists in consumer projects after `#init` runs, documenting legal values per dimension with examples. The taxonomy is project-local (different codebases have different component hierarchies).
+> A new file `.forge/context/taxonomy.md` exists in consumer projects after `#forge-init` runs, documenting legal values per dimension with examples. The taxonomy is project-local (different codebases have different component hierarchies).
 
 **Evidence sources:**
 - `init/prompt.md:44` — directory-structure listing shows `taxonomy.md` inside `context/` with comment `# Retrieval tag vocabulary (component/domain/stack/concerns)`.
@@ -126,11 +126,11 @@ See §2 below for a numeric walkthrough with synthetic docs.
 
 **What was verified:** The init prompt creates the file from a canonical template, the template itself documents all four enumerated dimensions with examples, and "project-local" is declared explicitly.
 
-**Status:** **PASS (static).** Runtime creation can optionally be exercised post-merge by running `#init` in a scratch directory — see §5 "Optional: AC-9 live run" note.
+**Status:** **PASS (static).** Runtime creation can optionally be exercised post-merge by running `#forge-init` in a scratch directory — see §5 "Optional: AC-9 live run" note.
 
 ### AC-10 — Old Step 1.3 removed, new retriever present
 
-> The `#spec` prompt's Step 1.3 is replaced by a new sub-step implementing the unified retriever as specified. The old 3-tier grep logic is removed — not left as a fallback.
+> The `#forge-spec` prompt's Step 1.3 is replaced by a new sub-step implementing the unified retriever as specified. The old 3-tier grep logic is removed — not left as a fallback.
 
 **Evidence source:** `spec/prompt.md:31-107` (full Step 1 area)
 
@@ -363,7 +363,7 @@ Assumption + task templates checked for the five tag fields: none present in eit
 | AC-6 | PASS (proven by §2 scoring arithmetic) | — |
 | AC-7 | PASS (no quota logic exists to remove; static proof is conclusive) | Optional fixture demo |
 | AC-8 | PASS (grep-verifiable) | — |
-| AC-9 | PASS (template + init logic present) | Optional `#init` live run |
+| AC-9 | PASS (template + init logic present) | Optional `#forge-init` live run |
 | AC-10 | PASS (old logic verifiably absent, new present) | — |
 | AC-11 | PASS (grep-verifiable) | — |
 | AC-12 | PASS (grep-verifiable) | — |
@@ -374,8 +374,8 @@ Assumption + task templates checked for the five tag fields: none present in eit
 
 **F-1 (informational, not a defect):** REQ-258's own `## Retrieved Context` section uses the expanded wording *"No prior context retrieved — first REQ tracked in the copilot-forge repo."* (requirement.md:151) rather than the canonical *"No prior context retrieved — first REQ in this area."* required by BR-9/AC-5.
 
-- **Why this is not a defect against AC-5:** AC-5 governs the output of `#spec`-generated REQs, not hand-authored bootstrap REQs. REQ-258 was authored before its own prompt shipped and exists to define the cold-start behavior; a hand-authored elaboration of the cold-start sentence does not violate the rule it's establishing.
-- **Why the prompt's instruction is correct:** `spec/prompt.md:144` embeds the exact canonical sentence and instructs future `#spec` invocations to emit it verbatim (*"write exactly: `No prior context retrieved — first REQ in this area.`"*).
+- **Why this is not a defect against AC-5:** AC-5 governs the output of `#forge-spec`-generated REQs, not hand-authored bootstrap REQs. REQ-258 was authored before its own prompt shipped and exists to define the cold-start behavior; a hand-authored elaboration of the cold-start sentence does not violate the rule it's establishing.
+- **Why the prompt's instruction is correct:** `spec/prompt.md:144` embeds the exact canonical sentence and instructs future `#forge-spec` invocations to emit it verbatim (*"write exactly: `No prior context retrieved — first REQ in this area.`"*).
 - **Action:** no fix required. If Phase 5 reviewers prefer strict literal parity between the requirement.md's example and the canonical string, the fix is a one-line edit to requirement.md:151. The prompt itself is correct and needs no change.
 
 **No other findings.** No AC failed static verification, and no other drift between implementation and requirement was detected.
@@ -402,7 +402,7 @@ mkdir -p .forge/templates && cp .forge .forge/templates/ 2>/dev/null || true
 
 **Invocation:**
 ```bash
-Copilot Chat: #spec 'add SSO for admin users'
+Copilot Chat: #forge-spec 'add SSO for admin users'
 ```
 (Or open an interactive Copilot Forge session in `/tmp/req258-scenario-a` and run `/spec add SSO for admin users`.)
 
@@ -513,7 +513,7 @@ EOF
 
 **Invocation:**
 ```bash
-Copilot Chat: #spec 'add password reset via email'
+Copilot Chat: #forge-spec 'add password reset via email'
 ```
 
 **Expected interactive behavior (and expected output excerpts):**
@@ -548,7 +548,7 @@ Copilot Chat: #spec 'add password reset via email'
 - [ ] AC-6: BUG-001's printed score is at least 3 greater than any plain-component-only hypothetical doc.
 - [ ] AC-3 + AC-2: As in Scenario A, also verified here.
 
-**Optional extension for AC-7 (proportional retention, no per-corpus cap):** construct a fixture with 15+ bugs that all score above zero and zero lessons. Invoke `#spec`. Confirm the retrieval summary contains 15 bugs and 0 lessons. The static proof at §1 AC-7 is already conclusive, but this runtime check is available if Phase 5 wants belt-and-suspenders.
+**Optional extension for AC-7 (proportional retention, no per-corpus cap):** construct a fixture with 15+ bugs that all score above zero and zero lessons. Invoke `#forge-spec`. Confirm the retrieval summary contains 15 bugs and 0 lessons. The static proof at §1 AC-7 is already conclusive, but this runtime check is available if Phase 5 wants belt-and-suspenders.
 
 **Rollback if any scenario fails:** file a Phase 5 finding pointing at the specific prompt line that produced the wrong behavior. Fix lives in TASK-004's footprint (`spec/prompt.md`) or TASK-005's footprint (`init/prompt.md`) depending on which step misbehaved. Re-run the affected scenario, re-verify.
 
@@ -557,7 +557,7 @@ Copilot Chat: #spec 'add password reset via email'
 Already covered statically. A live confirmation is:
 ```bash
 mkdir -p /tmp/req258-init-check && cd /tmp/req258-init-check
-Copilot Chat: #init
+Copilot Chat: #forge-init
 # After init completes:
 ls -la .forge/context/taxonomy.md
 cat .forge/context/taxonomy.md | head -10
@@ -574,7 +574,7 @@ All 12 REQ-258 acceptance criteria pass static verification against the artifact
 
 ## 7. Dogfood Execution (Post-Phase-5, Pre-Merge)
 
-Per user direction, the dogfood scenarios from §5 were executed pre-merge. Because `.forge` points at the merged `main` (not this worktree's branch), a fresh `Copilot Chat: #spec ...` invocation would exercise the OLD prompt. Instead, the updated `spec/prompt.md` instructions were executed **by following them manually as the agent against real synthetic corpora in `/tmp/req258-scenario-*`**. This is runtime-equivalent: a `#spec` invocation is nothing more than Copilot loading prompt.md into agent context and following it, which is exactly what was done here.
+Per user direction, the dogfood scenarios from §5 were executed pre-merge. Because `.forge` points at the merged `main` (not this worktree's branch), a fresh `Copilot Chat: #forge-spec ...` invocation would exercise the OLD prompt. Instead, the updated `spec/prompt.md` instructions were executed **by following them manually as the agent against real synthetic corpora in `/tmp/req258-scenario-*`**. This is runtime-equivalent: a `#forge-spec` invocation is nothing more than Copilot loading prompt.md into agent context and following it, which is exactly what was done here.
 
 ### 7.1 Scenario A — Cold-start (REQ-258 AC-5)
 
@@ -691,7 +691,7 @@ The pre-dogfood finding F-1 (REQ-258's bootstrap `## Retrieved Context` using ex
 
 ### 7.5 Post-merge smoke test (optional)
 
-After merging, the user may optionally re-run the scenarios above via `Copilot Chat: #spec '...'` in fresh scratch directories to confirm that loading the prompt via Copilot Forge's normal path produces identical results. This is a smoke test, not a gate — the runtime behavior has already been verified.
+After merging, the user may optionally re-run the scenarios above via `Copilot Chat: #forge-spec '...'` in fresh scratch directories to confirm that loading the prompt via Copilot Forge's normal path produces identical results. This is a smoke test, not a gate — the runtime behavior has already been verified.
 
 ---
 

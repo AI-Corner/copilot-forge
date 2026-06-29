@@ -14,11 +14,11 @@ tags: ["backfill", "tagging", "legacy-migration", "multi-repo", "retrieval-enabl
 
 ## Description
 
-Retroactively populate the unified retrieval tag frontmatter (`component`, `domain`, `stack`, `concerns`, `tags`) on ~468 existing artifacts across four consumer repos so the new `#spec` retriever (shipped in REQ-258, toolkit PR #12) produces meaningful results against pre-existing `.forge/` corpora. Without backfill, every `#spec` invocation in these repos falls through to the cold-start path; the retriever cannot reach content the repos have already accumulated.
+Retroactively populate the unified retrieval tag frontmatter (`component`, `domain`, `stack`, `concerns`, `tags`) on ~468 existing artifacts across four consumer repos so the new `#forge-spec` retriever (shipped in REQ-258, toolkit PR #12) produces meaningful results against pre-existing `.forge/` corpora. Without backfill, every `#forge-spec` invocation in these repos falls through to the cold-start path; the retriever cannot reach content the repos have already accumulated.
 
 **Why this REQ exists.** REQ-258 shipped the retriever and schema but kept migration explicitly out of scope (lazy migration policy: authors retag on next touch). In practice, waiting for organic retagging means the retriever is functionally cold-start for months or longer in the highest-value repos. The user has authorized a bulk backfill to front-load the value.
 
-**Why four repos, not one.** The original scoping sized atelier-fashion at ~290 files. A cross-repo survey (REQ-258 §7.5 follow-up) revealed 468 in-scope files distributed across four consumer repos: atelier-fashion (306), atelier-web (82), admin-api (54), infrastructure (26). Any repo left un-backfilled degrades its own `#spec` invocations without benefiting from the retriever REQ-258 shipped.
+**Why four repos, not one.** The original scoping sized atelier-fashion at ~290 files. A cross-repo survey (REQ-258 §7.5 follow-up) revealed 468 in-scope files distributed across four consumer repos: atelier-fashion (306), atelier-web (82), admin-api (54), infrastructure (26). Any repo left un-backfilled degrades its own `#forge-spec` invocations without benefiting from the retriever REQ-258 shipped.
 
 **What "in scope" means here.** Only corpora the REQ-258 retriever reads: `.forge/knowledge/lessons/`, `.forge/specs/*/requirement.md`, `.forge/bugs/*.md`. The `.forge/knowledge/decisions/` and `.forge/knowledge/assumptions/` directories are explicitly NOT retrieved by REQ-258 (see REQ-258 Out of Scope), so they are deferred to a separate follow-up REQ if/when those corpora become retrievable.
 
@@ -116,7 +116,7 @@ _User-locked decisions from the REQ-258 planning conversation. These are non-neg
 - Building the `/retag` prompt promised in REQ-258's Out of Scope — this backfill is a one-shot manual pass; the `/retag` prompt remains a separate follow-up for future on-demand retagging needs.
 - Customizing consumer-project taxonomy.md files with project-specific values beyond the canonical stub — separate work item, can happen after the backfill lands.
 - Restructuring legacy lesson body content (per BR-3 — insert-only). Any lessons with unclear structure remain as they are in the body; only the frontmatter is added.
-- Running `#init` on additional consumer repos not yet surveyed.
+- Running `#forge-init` on additional consumer repos not yet surveyed.
 
 ## Next Session Runbook
 
@@ -250,4 +250,4 @@ Merge only after user confirms. (User-directed — this REQ is high-volume data 
 
 No prior context retrieved — no tagged documents matched this area.
 
-(Note: this REQ is drafted manually rather than via the live `#spec` prompt, because the prompt's retrieval corpus in the toolkit repo is still minimal — the toolkit tracks only REQ-258 and this REQ-262 in its own `.forge/specs/`. If this REQ had been drafted via `#spec`, it would have retrieved REQ-258 as load-bearing context and cited it on BRs 1, 2, 3, 7, 12. REQ-258 is the sole upstream dependency and is linked above.)
+(Note: this REQ is drafted manually rather than via the live `#forge-spec` prompt, because the prompt's retrieval corpus in the toolkit repo is still minimal — the toolkit tracks only REQ-258 and this REQ-262 in its own `.forge/specs/`. If this REQ had been drafted via `#forge-spec`, it would have retrieved REQ-258 as load-bearing context and cited it on BRs 1, 2, 3, 7, 12. REQ-258 is the sole upstream dependency and is linked above.)

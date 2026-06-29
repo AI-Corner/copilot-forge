@@ -15,7 +15,7 @@
     { "phase": 6, "name": "Create PR", "completedAt": "2026-04-25T00:00:00Z", "notes": "Branch pushed; PR #22 opened at https://github.com/atelier-fashion/copilot-forge/pull/22." },
     { "phase": 7, "name": "PR Cleanup & CI", "completedAt": "2026-04-25T13:00:00Z", "notes": "Diff clean (no TODOs/debug markers); commit history follows convention; PR MERGEABLE/CLEAN; no CI configured (markdown-only repo)." },
     { "phase": 7.5, "name": "Canary Deploy", "completedAt": "2026-04-25T13:00:00Z", "notes": "Skipped: requirement.md frontmatter declares deployable: false." },
-    { "phase": 8, "name": "Wrapup and Merge", "completedAt": "2026-04-25T13:05:19Z", "notes": "Squash-merged PR #22 at 96b54ee. Worktree cleanup followed (force-removed bookkeeping mod, deleted local branch). LESSON-003 captured pre-merge (commit 55c4e8d). Final state file written directly to main as post-wrapup commit since #proceed Phase 8 fires after squash-merge." }
+    { "phase": 8, "name": "Wrapup and Merge", "completedAt": "2026-04-25T13:05:19Z", "notes": "Squash-merged PR #22 at 96b54ee. Worktree cleanup followed (force-removed bookkeeping mod, deleted local branch). LESSON-003 captured pre-merge (commit 55c4e8d). Final state file written directly to main as post-wrapup commit since #forge-proceed Phase 8 fires after squash-merge." }
   ],
   "repos": {
     "copilot-forge": {

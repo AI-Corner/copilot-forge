@@ -1,6 +1,6 @@
 ﻿---
 id: TASK-005
-title: "Scaffold .forge/context/taxonomy.md in #init, add canonical taxonomy template"
+title: "Scaffold .forge/context/taxonomy.md in #forge-init, add canonical taxonomy template"
 status: complete
 parent: REQ-258
 created: 2026-04-19
@@ -24,7 +24,7 @@ Create a canonical `templates/taxonomy-template.md` stub and update `init/prompt
 - [x] Each dimension has a short description, example values (as a bullet list or table), and explicit guidance that values are project-local and can be extended.
 - [x] The template includes a top-of-file note that `tags` is intentionally free-form (not enumerated).
 - [x] `init/prompt.md` has an instruction step that copies the taxonomy template to `.forge/context/taxonomy.md` in the consumer project.
-- [x] The `#init` step is idempotent: if `.forge/context/taxonomy.md` already exists in the consumer project, it is NOT overwritten.
+- [x] The `#forge-init` step is idempotent: if `.forge/context/taxonomy.md` already exists in the consumer project, it is NOT overwritten.
 - [x] Satisfies REQ-258 AC-9.
 
 ## Technical Notes
@@ -34,7 +34,7 @@ Create a canonical `templates/taxonomy-template.md` stub and update `init/prompt
 ```markdown
 # Taxonomy — Retrieval Tag Vocabulary
 
-This project's legal values for retrieval tag dimensions. Used by `#spec`, `#architect`, `#bugfix`, and `#review` when retrieving relevant prior context via the unified tag-based retriever.
+This project's legal values for retrieval tag dimensions. Used by `#forge-spec`, `#forge-architect`, `#forge-bugfix`, and `#forge-review` when retrieving relevant prior context via the unified tag-based retriever.
 
 **This file is project-local.** Different projects have different taxonomies. Extend it as new areas emerge. Values are advisory — the retrieval system does not currently enforce them, but consistent vocabulary improves retrieval quality.
 
@@ -97,11 +97,11 @@ Array of any keywords. Intentionally NOT enumerated — authors add whatever fee
 The `tags` dimension is the lowest-weight signal in retrieval (+1 per match vs +2 for concerns/domain, +3 for component) but provides useful lexical signal.
 ```
 
-### #init prompt modification
+### #forge-init prompt modification
 
-The current `#init` prompt (at `init/prompt.md`) scaffolds `.forge/context/project-overview.md`, `architecture.md`, `conventions.md`. Add a step immediately after these that copies `taxonomy-template.md` to `.forge/context/taxonomy.md`.
+The current `#forge-init` prompt (at `init/prompt.md`) scaffolds `.forge/context/project-overview.md`, `architecture.md`, `conventions.md`. Add a step immediately after these that copies `taxonomy-template.md` to `.forge/context/taxonomy.md`.
 
-Rough draft for the #init instruction step:
+Rough draft for the #forge-init instruction step:
 
 ```markdown
 ### Step X: Scaffold Retrieval Taxonomy
@@ -111,13 +111,13 @@ Rough draft for the #init instruction step:
 3. Advise the user: "Open `.forge/context/taxonomy.md` and customize the example values for this codebase. Authors of new REQs, bugs, and lessons will reference this file when choosing tag values."
 ```
 
-**Important**: the copy source path in `#init` must resolve from the toolkit install location. If `#init` runs inside a consumer project, it needs to resolve `.forge` (symlinked to the toolkit root). Use the same path pattern `#init` already uses for `project-overview`, `architecture`, etc.
+**Important**: the copy source path in `#forge-init` must resolve from the toolkit install location. If `#forge-init` runs inside a consumer project, it needs to resolve `.forge` (symlinked to the toolkit root). Use the same path pattern `#forge-init` already uses for `project-overview`, `architecture`, etc.
 
 ### Why this is not dependent on TASK-001/002/003
 
-This task creates a new file + adds one step to `#init`. It does not touch any of the three main templates and has no schema dependency on the other template updates. It can run in Tier 0 alongside TASK-001/002/003.
+This task creates a new file + adds one step to `#forge-init`. It does not touch any of the three main templates and has no schema dependency on the other template updates. It can run in Tier 0 alongside TASK-001/002/003.
 
 ### Out of scope for this task
 
-- Validating the consumer project's existing taxonomy.md against the canonical template — that's for a future `#template-drift` enhancement.
+- Validating the consumer project's existing taxonomy.md against the canonical template — that's for a future `#forge-template-drift` enhancement.
 - Enforcing taxonomy values during spec creation — explicitly deferred per REQ-258 Out of Scope.

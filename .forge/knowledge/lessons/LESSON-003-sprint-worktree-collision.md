@@ -13,15 +13,15 @@ updated: 2026-04-24
 
 ## What Happened
 
-A multi-tier `#sprint` run launched several `pipeline-runner` agents in parallel against distinct REQs (REQ-295 through REQ-299). All three Tier 1 final reports independently flagged the same failure mode: **sibling pipeline-runners checking out other branches into the same worktree path mid-run**. Two REQ specs (REQ-296 and REQ-297) were destroyed by the collision before the user noticed.
+A multi-tier `#forge-sprint` run launched several `pipeline-runner` agents in parallel against distinct REQs (REQ-295 through REQ-299). All three Tier 1 final reports independently flagged the same failure mode: **sibling pipeline-runners checking out other branches into the same worktree path mid-run**. Two REQ specs (REQ-296 and REQ-297) were destroyed by the collision before the user noticed.
 
 The user manually worked around it for Tier 2 and Tier 3 by editing each agent's launch prompt to include an explicit absolute worktree path. With the path declared up front, the collision disappeared and Tier 2/3 ran clean.
 
 The chain of fragility in the unfixed dispatch is:
 
 1. **Shared parent cwd.** Every dispatched `pipeline-runner` inherits the orchestrator's cwd — the parent repo. Any operation that lands in the parent working tree (instead of a worktree) races siblings. The parent working tree is the only thing all parallel pipelines truly share, and it is unprotected.
-2. **Worktree path is derived, not declared.** The original `#sprint` Step 3 dispatch prompt told each agent to run `#proceed` "in the repository at [current repo path]" without specifying a worktree path. Each agent then re-derived `.worktrees/REQ-xxx` itself inside `#proceed` Step 0. After context compression or a resume, an agent could re-derive against a stale cwd and end up pointed at the wrong path.
-3. **No collision gate.** Neither `#sprint` Step 2 pre-flight nor `#proceed` Step 0 consulted `git worktree list` before adding a worktree, so an existing worktree owned by another live pipeline could be silently overwritten.
+2. **Worktree path is derived, not declared.** The original `#forge-sprint` Step 3 dispatch prompt told each agent to run `#forge-proceed` "in the repository at [current repo path]" without specifying a worktree path. Each agent then re-derived `.worktrees/REQ-xxx` itself inside `#forge-proceed` Step 0. After context compression or a resume, an agent could re-derive against a stale cwd and end up pointed at the wrong path.
+3. **No collision gate.** Neither `#forge-sprint` Step 2 pre-flight nor `#forge-proceed` Step 0 consulted `git worktree list` before adding a worktree, so an existing worktree owned by another live pipeline could be silently overwritten.
 
 ## Lesson
 
@@ -39,14 +39,14 @@ The fix has three coordinated parts. None of them in isolation is sufficient:
 
 ## Why It Matters
 
-Spec destruction is the worst-case symptom: the user lost two REQ specs (REQ-296, REQ-297) and had to rebuild them. A worktree clobber that destroys spec files also destroys the pipeline-state.json that would let `#sprint` resume cleanly — so a single race can take out both the work product and the recovery path. The blast radius scales with the number of parallel pipelines: an N=5 sprint has 5×4=20 concurrency edges per phase, and the cost of a collision compounds because every downstream tier inherits the corrupted base.
+Spec destruction is the worst-case symptom: the user lost two REQ specs (REQ-296, REQ-297) and had to rebuild them. A worktree clobber that destroys spec files also destroys the pipeline-state.json that would let `#forge-sprint` resume cleanly — so a single race can take out both the work product and the recovery path. The blast radius scales with the number of parallel pipelines: an N=5 sprint has 5×4=20 concurrency edges per phase, and the cost of a collision compounds because every downstream tier inherits the corrupted base.
 
 The cheap manual workaround (passing explicit paths) proved the fix; not codifying it leaves the next sprint operator to rediscover the bug.
 
 ## Applies When
 
 - Designing multi-agent orchestration where N agents share a launch context
-- Reviewing dispatch prompts for `#sprint`, `#proceed`, or any future parallel-pipeline prompt
+- Reviewing dispatch prompts for `#forge-sprint`, `#forge-proceed`, or any future parallel-pipeline prompt
 - Adding a new "compute path from context" pattern to any prompt — prefer "declare path explicitly" instead
 - Triaging "files mysteriously changed mid-run" reports during sprint or parallel-task execution
 
@@ -56,5 +56,5 @@ Don't treat `.worktrees/REQ-xxx` (or any `<dir>/<unique-id>` derivation) as inhe
 
 ## Related
 
-- REQ-263 — bugfix REQ that codifies these three changes in `#sprint`, `#proceed`, and the `pipeline-runner` agent definition
+- REQ-263 — bugfix REQ that codifies these three changes in `#forge-sprint`, `#forge-proceed`, and the `pipeline-runner` agent definition
 - LESSON-002 — cross-repo primary-is-per-REQ; established that `pipeline-state.json` is the per-REQ runtime registry. This lesson extends that: the registry must be **orchestrator-populated**, not agent-derived

@@ -5,15 +5,15 @@ updated: 2026-04-19
 status: approved
 ---
 
-# Architecture — Unified Tag-Based Retrieval for #spec (Pilot)
+# Architecture — Unified Tag-Based Retrieval for #forge-spec (Pilot)
 
 ## Approach
 
 The feature is **pure markdown choreography**. No application code, no services, no state beyond the artifacts themselves. The implementation layers are:
 
 1. **Schema layer**: extend frontmatter on three templates (requirement, bug, lesson) with tag dimensions (`component`, `domain`, `stack`, `concerns`, `tags`). Additive — existing documents without these fields still parse.
-2. **prompt-instruction layer**: upgrade `#spec`'s prompt.md body with new steps (query derivation, unified retriever, citation + self-tagging + Retrieved Context section requirements). The "scorer" is rendered as natural-language instructions the agent executes at invocation time — no bash helper, no Python function.
-3. **Scaffold layer**: extend `#init` to create `.forge/context/taxonomy.md` in consumer projects on initialization. A canonical taxonomy template provides the stub content.
+2. **prompt-instruction layer**: upgrade `#forge-spec`'s prompt.md body with new steps (query derivation, unified retriever, citation + self-tagging + Retrieved Context section requirements). The "scorer" is rendered as natural-language instructions the agent executes at invocation time — no bash helper, no Python function.
+3. **Scaffold layer**: extend `#forge-init` to create `.forge/context/taxonomy.md` in consumer projects on initialization. A canonical taxonomy template provides the stub content.
 
 ## Key Design Decisions
 
@@ -51,7 +51,7 @@ The feature is **pure markdown choreography**. No application code, no services,
 
 ### D-4: Taxonomy doc is project-local, not toolkit-canonical
 
-**Decision**: `.forge/context/taxonomy.md` is scaffolded by `#init` in each consumer project. Each project defines its own legal values for `component`, `domain`, `stack`, `concerns`. The toolkit provides a canonical *template* (`templates/taxonomy-template.md`) with example dimensions but NOT prescribed values.
+**Decision**: `.forge/context/taxonomy.md` is scaffolded by `#forge-init` in each consumer project. Each project defines its own legal values for `component`, `domain`, `stack`, `concerns`. The toolkit provides a canonical *template* (`templates/taxonomy-template.md`) with example dimensions but NOT prescribed values.
 
 **Rationale**:
 - `component: API/auth` makes sense for atelier-fashion; it's meaningless for a different project.
@@ -60,22 +60,22 @@ The feature is **pure markdown choreography**. No application code, no services,
 
 ### D-5: Query confirmation default per invocation mode
 
-**Decision**: When `#spec` is invoked manually, the agent proposes query tags, surfaces them, and waits for user confirmation before retrieval fires. When `#spec` is invoked from `#proceed` (i.e., inside a pipeline), the agent proceeds autonomously using its own proposed tags and relies on later review phases to catch misfires.
+**Decision**: When `#forge-spec` is invoked manually, the agent proposes query tags, surfaces them, and waits for user confirmation before retrieval fires. When `#forge-spec` is invoked from `#forge-proceed` (i.e., inside a pipeline), the agent proceeds autonomously using its own proposed tags and relies on later review phases to catch misfires.
 
 **Rationale**:
 - Honors OQ-4 resolution.
 - Interactive mode: one confirmation round adds seconds, prevents wrong-area retrieval which would waste real authoring cycles.
-- Pipeline mode: #proceed's downstream validation and review phases catch anomalies; blocking for user input breaks automation.
+- Pipeline mode: #forge-proceed's downstream validation and review phases catch anomalies; blocking for user input breaks automation.
 
 ### D-6: Exploration agents skipped for this REQ
 
-**Decision**: The three exploration agents normally dispatched by `#architect` (feature-tracer, architecture-mapper, integration-explorer) are NOT run for REQ-258.
+**Decision**: The three exploration agents normally dispatched by `#forge-architect` (feature-tracer, architecture-mapper, integration-explorer) are NOT run for REQ-258.
 
 **Rationale**:
-- The REQ's BR-1–14 and AC-1–12 name every affected file explicitly: three template files, one prompt file, one new taxonomy template, one update to `#init`. Six files total, exhaustively enumerated.
+- The REQ's BR-1–14 and AC-1–12 name every affected file explicitly: three template files, one prompt file, one new taxonomy template, one update to `#forge-init`. Six files total, exhaustively enumerated.
 - The copilot-forge repo contains no application code, no test suite, no integration surfaces to discover. The entire feature surface is markdown.
 - Running three parallel agents to re-enumerate the file list already in the spec would be ceremony without discovery. ETHOS #5 permits explicit skip when a step "truly doesn't apply."
-- If `#architect`'s quality checklist requires evidence of an exploration pass, this document's D-6 captures the reasoning.
+- If `#forge-architect`'s quality checklist requires evidence of an exploration pass, this document's D-6 captures the reasoning.
 
 **Risk**: An unnamed affected file could be missed. Mitigation: Phase 5 reviewers (architecture-reviewer, correctness-reviewer) will catch it during verify. If a gap emerges, a follow-up task is added.
 
@@ -101,13 +101,13 @@ None. No backend services.
 | `spec/prompt.md` | Add Step 1.5 (Query Derivation); add Step 1.6 (Unified Retrieval, replacing the old 3-tier grep); extend Step 3 (deployable field, citations, self-tagging, Retrieved Context section) | TASK-004 |
 | `init/prompt.md` | Add taxonomy.md scaffolding step | TASK-005 |
 | `templates/taxonomy-template.md` | New file (canonical stub) | TASK-005 |
-| (verification pass — no file change) | Dogfood `#spec` on synthetic REQ | TASK-006 |
+| (verification pass — no file change) | Dogfood `#forge-spec` on synthetic REQ | TASK-006 |
 
 ## Testing Approach
 
 The copilot-forge has no traditional test suite. Verification is dogfooding:
 
-1. Invoke the upgraded `#spec` on a synthetic feature request (e.g., `/spec "add SSO for admin users"` in a scratch directory).
+1. Invoke the upgraded `#forge-spec` on a synthetic feature request (e.g., `/spec "add SSO for admin users"` in a scratch directory).
 2. Verify against the ACs:
    - Query tags proposed (AC-1 mode)
    - Retrieved context listed with scores (AC-1, AC-3)
@@ -120,15 +120,15 @@ Test-auditor agent will likely flag "no test coverage" during Phase 5 verify. Re
 
 ## Rollout
 
-Merge lands in main. Symlink install means the upgraded `#spec` is live immediately for every consumer project. No build, no publish, no version bump.
+Merge lands in main. Symlink install means the upgraded `#forge-spec` is live immediately for every consumer project. No build, no publish, no version bump.
 
-Consumer projects that have already run `#init`:
-- Existing `.forge/templates/requirement-template.md` and `.forge/templates/bug-template.md` copies **will not** auto-update. Users must re-run `#init` or manually update their local copies. `#template-drift` will flag the divergence.
-- Missing `.forge/context/taxonomy.md` is handled by running `#init` again (idempotent — skips existing files, adds new ones).
+Consumer projects that have already run `#forge-init`:
+- Existing `.forge/templates/requirement-template.md` and `.forge/templates/bug-template.md` copies **will not** auto-update. Users must re-run `#forge-init` or manually update their local copies. `#forge-template-drift` will flag the divergence.
+- Missing `.forge/context/taxonomy.md` is handled by running `#forge-init` again (idempotent — skips existing files, adds new ones).
 
 ## Deferred Work (for downstream REQs)
 
-- Integration into `#architect`, `#bugfix`, `#review` — each a separate REQ.
+- Integration into `#forge-architect`, `#forge-bugfix`, `#forge-review` — each a separate REQ.
 - Retroactive tagging via `/retag` — separate REQ; user has queued ~290 files of atelier-fashion corpus.
 - Assumption / decision corpora extension — separate REQ when deemed valuable.
 - Telemetry ("which retrieved docs were cited") — v2.

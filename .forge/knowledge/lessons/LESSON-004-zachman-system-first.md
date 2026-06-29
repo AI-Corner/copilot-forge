@@ -1,4 +1,4 @@
----
+﻿---
 id: LESSON-004
 title: "System-First Specifications (Zachman 5W1H)"
 component: "Copilot Forge/spec"
@@ -24,4 +24,4 @@ Instead of writing a narrative, the requirement must define deterministic bounds
 
 ## Impact
 
-By interrogating users along these 6 dimensions during the `#spec` phase, we eliminate "pitch black" areas in the architecture. The downstream Builder and Reviewer agents operate with total clarity, preventing hallucinated variables and dramatically reducing testing failures in the `#tdd` phase.
+By interrogating users along these 6 dimensions during the `#forge-spec` phase, we eliminate "pitch black" areas in the architecture. The downstream Builder and Reviewer agents operate with total clarity, preventing hallucinated variables and dramatically reducing testing failures in the `#forge-tdd` phase.

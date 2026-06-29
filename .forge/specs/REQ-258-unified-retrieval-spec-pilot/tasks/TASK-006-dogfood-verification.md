@@ -1,6 +1,6 @@
 ﻿---
 id: TASK-006
-title: "Dogfood verification — invoke upgraded #spec on synthetic feature and validate output against REQ-258 ACs"
+title: "Dogfood verification — invoke upgraded #forge-spec on synthetic feature and validate output against REQ-258 ACs"
 status: complete
 parent: REQ-258
 created: 2026-04-19
@@ -10,7 +10,7 @@ dependencies: [TASK-004, TASK-005]
 
 ## Description
 
-The copilot-forge has no unit test framework. Behavioral verification is dogfooding: invoke the upgraded `#spec` on a synthetic feature request and confirm its output satisfies every REQ-258 acceptance criterion. This task is the final behavioral gate before Phase 5 (reflect/review) in the `#proceed` pipeline.
+The copilot-forge has no unit test framework. Behavioral verification is dogfooding: invoke the upgraded `#forge-spec` on a synthetic feature request and confirm its output satisfies every REQ-258 acceptance criterion. This task is the final behavioral gate before Phase 5 (reflect/review) in the `#forge-proceed` pipeline.
 
 ## Files to Create/Modify
 
@@ -21,7 +21,7 @@ The copilot-forge has no unit test framework. Behavioral verification is dogfood
 
 - [ ] `verification.md` exists and documents at least two dogfood scenarios:
   - **Scenario A — Cold-start**: invoke `/spec "add feature X"` in a directory with empty or non-existent `.forge/knowledge/lessons/`, `.forge/specs/`, `.forge/bugs/`. Verify the generated REQ's `## Retrieved Context` section contains the cold-start note. Satisfies REQ-258 AC-5.
-  - **Scenario B — Retrieval fixture**: construct a minimal synthetic corpus (two mock lessons + two mock bugs with controlled tags) and invoke `#spec` against it. Verify scoring ranks them as expected and the generated REQ contains inline citations. Tests multiple ACs: AC-1, AC-3, AC-4, AC-6, AC-7.
+  - **Scenario B — Retrieval fixture**: construct a minimal synthetic corpus (two mock lessons + two mock bugs with controlled tags) and invoke `#forge-spec` against it. Verify scoring ranks them as expected and the generated REQ contains inline citations. Tests multiple ACs: AC-1, AC-3, AC-4, AC-6, AC-7.
 - [ ] Each scenario records: input command, corpus state, actual generated REQ (or excerpts), and an AC-by-AC pass/fail line.
 - [ ] All 12 REQ-258 ACs are covered across the scenarios, explicitly mapped in verification.md.
 - [ ] Any AC that cannot be verified by dogfood is explicitly noted with rationale (e.g., AC-8 and AC-11 are schema-file checks, not behavioral — they can be verified by `grep` on the template files).
@@ -35,16 +35,16 @@ Run in a scratch directory or ephemeral folder:
 ```bash
 mkdir -p /tmp/req258-scenario-a/.forge/{knowledge/lessons,specs,bugs}
 cd /tmp/req258-scenario-a
-# minimal project-overview so #spec preflight passes
+# minimal project-overview so #forge-spec preflight passes
 echo "# Test project" > .forge/context/project-overview.md
 echo "# Test architecture" > .forge/context/architecture.md
 echo "# Test conventions" > .forge/context/conventions.md
-# invoke #spec with a feature request
-Copilot Chat: #spec 'add SSO for admin users'
+# invoke #forge-spec with a feature request
+Copilot Chat: #forge-spec 'add SSO for admin users'
 ```
 
 Expected behavior:
-1. `#spec` proposes query tags (interactive — needs confirmation in real run; can be bypassed with `--accept-all` or pre-supplied tags in automation).
+1. `#forge-spec` proposes query tags (interactive — needs confirmation in real run; can be bypassed with `--accept-all` or pre-supplied tags in automation).
 2. Step 1.3 retrieves from empty corpus → zero candidates.
 3. Generated REQ has frontmatter with self-tagged fields.
 4. `## Retrieved Context` section contains the cold-start note.
@@ -123,8 +123,8 @@ updated: 2026-02-15
 ## Root Cause
 Race condition in view loading.
 EOF
-# invoke #spec for a password reset feature — should retrieve LESSON-001 and BUG-001, not LESSON-002/BUG-002
-Copilot Chat: #spec 'add password reset via email'
+# invoke #forge-spec for a password reset feature — should retrieve LESSON-001 and BUG-001, not LESSON-002/BUG-002
+Copilot Chat: #forge-spec 'add password reset via email'
 ```
 
 Expected behavior:
@@ -145,14 +145,14 @@ Expected behavior:
 | AC-6 | Scenario B — BUG-001 ranks higher than LESSON-002 because concerns+tags match |
 | AC-7 | Scenario B or dedicated fixture — can be verified by varying tag matches |
 | AC-8 | Grep on template files (non-behavioral) |
-| AC-9 | Inspect `.forge/context/taxonomy.md` after running `#init` in a scratch dir |
+| AC-9 | Inspect `.forge/context/taxonomy.md` after running `#forge-init` in a scratch dir |
 | AC-10 | Inspect `spec/prompt.md` — old Step 1.3 removed, new retriever present |
 | AC-11 | Grep on lesson template file |
 | AC-12 | Grep on `templates/assumption-template.md` and `templates/task-template.md` confirming no tag fields added |
 
 ### Execution mode
 
-**Interactive mode**: open a Copilot Forge session in `/tmp/req258-scenario-*`, invoke `#spec`, manually confirm the proposed query tags, and inspect output.
+**Interactive mode**: open a Copilot Forge session in `/tmp/req258-scenario-*`, invoke `#forge-spec`, manually confirm the proposed query tags, and inspect output.
 
 **Automated mode**: if time allows, automate via a bash wrapper that pre-supplies query tags to bypass the interactive confirmation. Not required for this task — manual interactive verification is sufficient.
 

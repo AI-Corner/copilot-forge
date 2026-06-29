@@ -1,4 +1,4 @@
-1. “What problem are you really solving?”
+﻿1. “What problem are you really solving?”
 Likely question (explicit or implicit)
 
 “We already have Copilot and other tools; what specific problem does Forge solve for us?”
@@ -25,7 +25,7 @@ Likely question
 
 Answer:
 
-“Standard copilots are session‑oriented and code‑centric: you prompt, they generate. Forge is pipeline‑oriented and system‑centric. The core difference is that Forge enforces a sequence: #spec → #validate → #architect → #validate → #tdd → implementation → #reflect + #review → #canary + #wrapup, all under #proceed orchestration. The model doesn’t get to skip requirements, architecture, tests, or review.”
+“Standard copilots are session‑oriented and code‑centric: you prompt, they generate. Forge is pipeline‑oriented and system‑centric. The core difference is that Forge enforces a sequence: #forge-spec → #forge-validate → #forge-architect → #forge-validate → #forge-tdd → implementation → #forge-reflect + #forge-review → #forge-canary + #forge-wrapup, all under #forge-proceed orchestration. The model doesn’t get to skip requirements, architecture, tests, or review.”
 
 “You could try to prompt a generic model to do this, but it will forget steps and context. Forge bakes the steps, the prompts, the validations, and the project memory into a repeatable toolchain inside the repo and IDE, so behavior is consistent across engineers and projects, not just per‑session.”
 
@@ -46,7 +46,7 @@ Specialized agents – e.g., Security, Architecture, Conventions, that check out
 
 Local state – the .forge directory and pipeline-state.json in each repo, which stores specs, diagrams, and lessons learned from prior runs.”
 
-“When you call #spec, it pulls in past incidents and architecture rules relevant to that codebase; when you call #proceed, every gate and review is grounded on those same artifacts. So the ‘context’ is not abstract; it’s version‑controlled in the repo and evolves with the project.”
+“When you call #forge-spec, it pulls in past incidents and architecture rules relevant to that codebase; when you call #forge-proceed, every gate and review is grounded on those same artifacts. So the ‘context’ is not abstract; it’s version‑controlled in the repo and evolves with the project.”
 
 4. “How do you keep this safe in a bank environment?”
 Likely question
@@ -92,7 +92,7 @@ Likely question
 
 Answer:
 
-“Forge doesn’t replace our SDLC; it augments it at the developer and repo level. Everything still ends up as normal Git commits, branches, worktrees and MR/PRs. #issue_epic_creation pushes work into GitLab epics and issues, and #wrapup integrates with our existing merge and documentation practices.”
+“Forge doesn’t replace our SDLC; it augments it at the developer and repo level. Everything still ends up as normal Git commits, branches, worktrees and MR/PRs. #forge-issue-epic-creation pushes work into GitLab epics and issues, and #forge-wrapup integrates with our existing merge and documentation practices.”
 
 “Think of it as an intelligent front‑end to the pipeline: it makes sure that by the time code hits CI/CD, we’ve enforced spec quality, architecture, tests, and review. It reduces noise downstream instead of bypassing our processes.”
 
@@ -138,7 +138,7 @@ ROI: 3 quick answers
 2) “How would you measure success?”
 
 “I’d track four things:
-– cycle time from #spec to merged PR,
+– cycle time from #forge-spec to merged PR,
 – rework after review,
 – number of standards / architecture violations, and
 – how many issues are caught at the validation gates versus later testing.
@@ -151,7 +151,7 @@ If those trend the right way, the business case is clear.”
 Risk: 3 quick answers
 1) “What’s the main risk of this approach?”
 
-“The main risk is over‑trusting the AI and letting architectural or control issues slip through. That’s exactly why we force it through #validate on spec and architecture, tests first with #tdd, and read‑only review agents, plus manual QA before merge. The AI never has the last word.”
+“The main risk is over‑trusting the AI and letting architectural or control issues slip through. That’s exactly why we force it through #forge-validate on spec and architecture, tests first with #forge-tdd, and read‑only review agents, plus manual QA before merge. The AI never has the last word.”
 
 2) “How do you avoid data leakage and model‑risk issues?”
 

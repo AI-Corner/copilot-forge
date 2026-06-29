@@ -1,6 +1,6 @@
 ﻿---
 id: TASK-008
-title: "Add dispatch-line contract and pre-flight collision check to #sprint"
+title: "Add dispatch-line contract and pre-flight collision check to #forge-sprint"
 status: complete
 parent: REQ-263
 created: 2026-04-25
@@ -30,7 +30,7 @@ Covers BR-1 (orchestrator declares, agent obeys), BR-5 (pre-flight collision che
 - [ ] `sprint/prompt.md` Step 2 adds the pre-flight collision check: for each candidate REQ, parse `git worktree list --porcelain` in the primary repo and intersect against the candidate's target path `<repo-path>/.worktrees/<REQ-id>`. Any conflict marks the REQ ineligible with the issue reason `worktree path in use by branch <name>`. (Covers BR-5.)
 - [ ] The example pre-flight table in Step 2 is updated to show the new "Issue" reason text in at least one example row, so future readers see the expected format.
 - [ ] When the pre-flight check halts a REQ from dispatch, the surfaced message names the cleanup commands the user must run: `git -C <repo> worktree remove <path>` then `git -C <repo> branch -D <branch>` (with `--force` flagged as available). (Covers BR-9.)
-- [ ] Cross-repo REQs: the Step 2 pre-flight scans only the **primary repo** for collisions (per OQ-2 default — sibling collisions are caught at `#proceed` Step 0 by TASK-007's gate). The prompt documentation is explicit about this scope so future maintainers don't extend the pre-flight to siblings without a deliberate decision.
+- [ ] Cross-repo REQs: the Step 2 pre-flight scans only the **primary repo** for collisions (per OQ-2 default — sibling collisions are caught at `#forge-proceed` Step 0 by TASK-007's gate). The prompt documentation is explicit about this scope so future maintainers don't extend the pre-flight to siblings without a deliberate decision.
 - [ ] No behavior change when zero candidate REQs collide: the dispatch proceeds with the new contract line in place but no pre-flight halts.
 
 ## Technical Notes

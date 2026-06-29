@@ -10,7 +10,7 @@ dependencies: []
 
 ## Description
 
-Add the five new tag fields to the canonical bug template so every bug report created via `#bugfix` after this change carries the unified retrieval schema, matching the requirement template.
+Add the five new tag fields to the canonical bug template so every bug report created via `#forge-bugfix` after this change carries the unified retrieval schema, matching the requirement template.
 
 ## Files to Create/Modify
 

@@ -1,4 +1,4 @@
----
+﻿---
 id: SUP-004
 title: "Support: Cross-Repo Operations"
 related_req: core-feature
@@ -13,7 +13,7 @@ tags: ["cross-repo", "config.yml", "multi-repo", "siblings"]
 Copilot Forge supports modifying multiple repositories simultaneously for a single feature by defining sibling repositories in `.forge/config.yml`.
 
 ## 2. Common User Queries & FAQ
-- **Q: How does `#proceed` know which repos to touch?**
+- **Q: How does `#forge-proceed` know which repos to touch?**
   **A:** It checks the `repo:` frontmatter on each task defined in the specification.
 
 ## 3. Troubleshooting & Expected Behavior

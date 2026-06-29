@@ -1,4 +1,4 @@
----
+﻿---
 id: REQ-264
 title: "Environment & Configuration Variable Mapping"
 status: complete
@@ -41,7 +41,7 @@ This requirement introduces a new baseline knowledge artifact (`variables.md` or
 - [ ] A new template `templates/variables-template.md` is added to Copilot Forge.
 - [ ] The `init` and `architect` prompts are updated to scan and map variables.
 - [ ] A `.forge/context/variables.md` file is established in initialized projects.
-- [ ] The `#review` agent checks that new env vars are documented.
+- [ ] The `#forge-review` agent checks that new env vars are documented.
 
 ## External Dependencies
 
@@ -53,7 +53,7 @@ This requirement introduces a new baseline knowledge artifact (`variables.md` or
 
 ## Open Questions
 
-- [ ] Should variable extraction be a standalone agent, or bundled into `#architect`?
+- [ ] Should variable extraction be a standalone agent, or bundled into `#forge-architect`?
 - [ ] How do we handle dynamic variable keys if they are constructed programmatically?
 
 ## Out of Scope

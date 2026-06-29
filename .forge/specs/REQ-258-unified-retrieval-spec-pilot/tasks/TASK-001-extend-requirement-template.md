@@ -10,7 +10,7 @@ dependencies: []
 
 ## Description
 
-Add the five new tag fields to the canonical requirement template so every REQ created via `#spec` after this change inherits the unified retrieval schema.
+Add the five new tag fields to the canonical requirement template so every REQ created via `#forge-spec` after this change inherits the unified retrieval schema.
 
 ## Files to Create/Modify
 

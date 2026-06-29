@@ -1,8 +1,8 @@
-# Architecture: Environment & Configuration Variable Mapping (REQ-264)
+﻿# Architecture: Environment & Configuration Variable Mapping (REQ-264)
 
 ## Overview
 
-This feature introduces a centralized variable registry within the Copilot Forge context (`.forge/context/variables.md`). AI agents (`#init`, `#architect`, `#review`) will be upgraded to actively read, populate, and enforce this knowledge base to ensure robust management of environment variables and configuration properties across the repository.
+This feature introduces a centralized variable registry within the Copilot Forge context (`.forge/context/variables.md`). AI agents (`#forge-init`, `#forge-architect`, `#forge-review`) will be upgraded to actively read, populate, and enforce this knowledge base to ensure robust management of environment variables and configuration properties across the repository.
 
 ## Component Changes
 
@@ -31,4 +31,4 @@ A standard markdown file that defines the structure for variable tracking. It wi
 ## Technical Considerations
 
 - **Security Constraint**: The templates and prompts MUST explicitly instruct the AI *never* to write real production secrets to `variables.md`. It should only contain the key names and safe, descriptive dummy/default values.
-- **Drift Prevention**: The `#review` prompt acts as the primary gatekeeper to prevent the code's configuration surface from drifting away from the documented variable state.
+- **Drift Prevention**: The `#forge-review` prompt acts as the primary gatekeeper to prevent the code's configuration surface from drifting away from the documented variable state.

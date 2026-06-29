@@ -1,4 +1,4 @@
-# Conventions — Copilot Forge
+﻿# Conventions — Copilot Forge
 
 ## Prompts are markdown, not code
 
@@ -55,7 +55,7 @@ Never use `!bash` macro syntax or `cat` commands for context loading. In Copilot
 
 ## Prerequisites block
 
-Every prompt that depends on the `.forge/` scaffold must have a `## Prerequisites` section that stops with a clear "run `#init` first" message if required files are missing. Do not silently produce broken output when context is absent.
+Every prompt that depends on the `.forge/` scaffold must have a `## Prerequisites` section that stops with a clear "run `#forge-init` first" message if required files are missing. Do not silently produce broken output when context is absent.
 
 ## Terminal commands in prompts
 
@@ -76,11 +76,11 @@ Agent checklists in `.github/prompts/agents/` are **not invoked directly by user
 Run the reflector checklist: ...
 ```
 
-In Copilot, all agent checklists run **sequentially in the same context** — there is no parallel agent dispatch. The `#proceed` and `#review` prompts run 5–6 checklists one after another. Document this explicitly in any prompt that runs multiple checklists.
+In Copilot, all agent checklists run **sequentially in the same context** — there is no parallel agent dispatch. The `#forge-proceed` and `#forge-review` prompts run 5–6 checklists one after another. Document this explicitly in any prompt that runs multiple checklists.
 
 ## Pipeline state
 
-Prompts that span multiple phases (`#proceed`) write a `pipeline-state.json` next to the REQ spec. This lets a long-running pipeline resume from interruption without replaying phases. Every phase update writes the state file atomically.
+Prompts that span multiple phases (`#forge-proceed`) write a `pipeline-state.json` next to the REQ spec. This lets a long-running pipeline resume from interruption without replaying phases. Every phase update writes the state file atomically.
 
 ## Frontmatter conventions (artifact files)
 
@@ -106,7 +106,7 @@ When adding new fields to templates, prefer additive — do not rename existing 
 - **Don't create new prompts casually**: each new prompt is a commitment to maintain. Prefer extending an existing prompt unless the new responsibility is genuinely orthogonal.
 - **Don't bypass ethos**: the six principles (especially #4 Verify, Don't Trust and #5 Process Is Not Optional) exist because shortcuts silently fail. If you're tempted to skip a validation gate, surface the tension to the user instead.
 - **Don't hardcode project-specific paths**: prompts must work for any consumer project, not just a specific one.
-- **Don't edit `templates/` without considering downstream**: consumer projects that ran `#init` got a copy of the templates. Template changes propagate via `#template-drift` detection, not auto-update.
+- **Don't edit `templates/` without considering downstream**: consumer projects that ran `#forge-init` got a copy of the templates. Template changes propagate via `#forge-template-drift` detection, not auto-update.
 
 ## Testing changes
 
@@ -118,4 +118,4 @@ Because this is a copy-based install, there is no staging layer. To validate a p
 4. Verify the artifacts it produces match the intended behavior
 5. If broken, fix here and re-copy `.github/` to the consumer project
 
-The toolkit's own `#proceed REQ-xxx` pipeline can also exercise changes end-to-end.
+The toolkit's own `#forge-proceed REQ-xxx` pipeline can also exercise changes end-to-end.
