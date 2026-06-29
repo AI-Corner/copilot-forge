@@ -1,10 +1,11 @@
-﻿# Copilot Forge
+# Copilot Forge
 
 Prompts, checklists, and templates for spec-driven development with **GitHub Copilot**. Stack-agnostic at the core, with optional preset configs for common stacks (Java Spring Boot + PostgreSQL + AKS, React + AKS, etc.).
 
 ## What's Included
 
 ## Changelog & Recent Updates
+- **v2.9.0** *(BREAKING)*: **Prompt Namespace Prefix**. All 48 prompt files renamed from `<name>.prompt.md` to `forge-<name>.prompt.md` (e.g., `#spec` → `#forge-spec`, `#review` → `#forge-review`). Typing `#forge-` in VS Code Copilot Chat now instantly filters to only Forge commands, eliminating popup clutter in multi-repo workspaces. Underscores normalized to hyphens (`security_scan` → `forge-security-scan`, `issue_epic_creation` → `forge-issue-epic-creation`). All 1,100+ internal cross-references updated across prompts, documentation, templates, scripts, graph data, and `.forge/` project context files.
 - **v2.8.0**: Added **Computational vs. Inferential Sensor Split** (Feature 17). Formalized the verification phase in `#forge-proceed` into two parts. Fast, deterministic computational tools (`lint-gate`, `test-gate`, `build-gate`, etc.) run first. Only if they pass perfectly do we spend tokens running the slower, LLM-based inferential reviewers (`correctness-reviewer`, `spec-adherence`, etc.). All agents in `.github/prompts/agents/` are now cleanly organized into `computational/` and `inferential/` subdirectories.
 - **v2.7.0**: Added **Process Discipline Guides** (Feature 16). The toolkit now includes explicit behavioral rules (Iron Laws and Process Guides) to prevent hallucinations, constrain scope, and enforce validation rules. `#forge-init` automatically scaffolds `.forge/context/rules/process/` in new projects.
 - **v2.6.0**: Added **Codebase State Document** (Feature 20). The toolkit now empirically tracks your project's health and tech stack. `#forge-init` generates `codebase-state.md` with tool versions and scaffolds `quality-radar.md` and `code-debt.md`. `#forge-analyze` updates the scorecard and logs technical debt. `#forge-review` appends deferred minor issues to the debt ledger so they aren't lost.
