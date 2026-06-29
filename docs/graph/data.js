@@ -1,28 +1,36 @@
-﻿const graphData = {
+const graphData = {
     "nodes": [
                     {
-                        "id":  "#agents/computational\test-gate",
+                        "id":  "process\scoping.rules.md",
+                        "group":  "template"
+                    },
+                    {
+                        "id":  "#agents/computational\forge-vuln-scan",
                         "group":  "agent"
                     },
                     {
-                        "id":  "#agents/inferential\architecture-reviewer",
+                        "id":  "#agents/architecture-reviewer",
                         "group":  "agent"
                     },
                     {
-                        "id":  "#forge-wrapup",
-                        "group":  "prompt"
+                        "id":  "#agents/xxx",
+                        "group":  "agent"
                     },
                     {
-                        "id":  "#forge-sprint",
-                        "group":  "prompt"
-                    },
-                    {
-                        "id":  "#forge-token-estimate",
-                        "group":  "prompt"
+                        "id":  "#agents/computational/vuln-scan",
+                        "group":  "agent"
                     },
                     {
                         "id":  "process\subagent-trust.rules.md",
                         "group":  "template"
+                    },
+                    {
+                        "id":  "#agents/forge-task-implementer",
+                        "group":  "agent"
+                    },
+                    {
+                        "id":  "#agents/forge-architecture-mapper",
+                        "group":  "agent"
                     },
                     {
                         "id":  "#agents/feature-tracer",
@@ -33,55 +41,59 @@
                         "group":  "template"
                     },
                     {
-                        "id":  "#forge-security-scan",
-                        "group":  "prompt"
-                    },
-                    {
-                        "id":  "process\context-budget.rules.md",
-                        "group":  "template"
-                    },
-                    {
-                        "id":  "#forge-issue-epic-creation",
-                        "group":  "prompt"
-                    },
-                    {
-                        "id":  "#forge-analyze",
-                        "group":  "prompt"
-                    },
-                    {
-                        "id":  "#agents/inferential\test-auditor",
+                        "id":  "#agents/computational/test-gate",
                         "group":  "agent"
                     },
                     {
-                        "id":  "#forge-spec",
+                        "id":  "#agents/inferential/architecture-reviewer",
+                        "group":  "agent"
+                    },
+                    {
+                        "id":  "#agents/inferential/code-quality-auditor",
+                        "group":  "agent"
+                    },
+                    {
+                        "id":  "#agents/inferential/security-auditor",
+                        "group":  "agent"
+                    },
+                    {
+                        "id":  "#agents/inferential\forge-spec-adherence",
+                        "group":  "agent"
+                    },
+                    {
+                        "id":  "#forge-init",
                         "group":  "prompt"
+                    },
+                    {
+                        "id":  "#agents/computational\forge-build-gate",
+                        "group":  "agent"
                     },
                     {
                         "id":  "process\iron-laws.rules.md",
                         "group":  "template"
                     },
                     {
-                        "id":  "#agents/inferential\quality-reviewer",
+                        "id":  "#agents/computational\forge-secret-scan",
                         "group":  "agent"
+                    },
+                    {
+                        "id":  "#forge-bugfix",
+                        "group":  "prompt"
+                    },
+                    {
+                        "id":  "#forge-validate",
+                        "group":  "prompt"
                     },
                     {
                         "id":  "assumption-template.md",
                         "group":  "template"
                     },
                     {
-                        "id":  "#forge-canary",
-                        "group":  "prompt"
-                    },
-                    {
-                        "id":  "#agents/computational\build-gate",
-                        "group":  "agent"
-                    },
-                    {
                         "id":  "deployment-template.md",
                         "group":  "template"
                     },
                     {
-                        "id":  "#agents/inferential\security-auditor",
+                        "id":  "#agents/inferential/convention-auditor",
                         "group":  "agent"
                     },
                     {
@@ -101,51 +113,59 @@
                         "group":  "agent"
                     },
                     {
-                        "id":  "#agents/inferential\code-quality-auditor",
+                        "id":  "#agents/inferential\forge-correctness-reviewer",
                         "group":  "agent"
                     },
                     {
-                        "id":  "process\escalation.rules.md",
-                        "group":  "template"
-                    },
-                    {
-                        "id":  "#forge-architect",
-                        "group":  "prompt"
+                        "id":  "#agents/forge-api-cost-scanner",
+                        "group":  "agent"
                     },
                     {
                         "id":  "#agents/convention-auditor",
                         "group":  "agent"
                     },
                     {
-                        "id":  "bug-template.md",
-                        "group":  "template"
+                        "id":  "#agents/computational/typecheck-gate",
+                        "group":  "agent"
+                    },
+                    {
+                        "id":  "#forge-canary",
+                        "group":  "prompt"
+                    },
+                    {
+                        "id":  "#forge-admin",
+                        "group":  "prompt"
+                    },
+                    {
+                        "id":  "#forge-architect",
+                        "group":  "prompt"
+                    },
+                    {
+                        "id":  "#forge-wrapup",
+                        "group":  "prompt"
                     },
                     {
                         "id":  "#agents/correctness-reviewer",
                         "group":  "agent"
                     },
                     {
-                        "id":  "#agents/db-perf-scanner",
-                        "group":  "agent"
+                        "id":  "update.ps1",
+                        "group":  "script"
                     },
                     {
-                        "id":  "process\scoping.rules.md",
-                        "group":  "template"
+                        "id":  "#forge-proceed",
+                        "group":  "prompt"
                     },
                     {
                         "id":  "task-template.md",
                         "group":  "template"
                     },
                     {
-                        "id":  "#agents/computational\typecheck-gate",
+                        "id":  "#agents/inferential/test-auditor",
                         "group":  "agent"
                     },
                     {
-                        "id":  "#forge-validate",
-                        "group":  "prompt"
-                    },
-                    {
-                        "id":  "#agents/computational\secret-scan",
+                        "id":  "#agents/inferential\forge-test-auditor",
                         "group":  "agent"
                     },
                     {
@@ -153,8 +173,12 @@
                         "group":  "template"
                     },
                     {
-                        "id":  "process\pushback.rules.md",
-                        "group":  "template"
+                        "id":  "#agents/forge-latency-scanner",
+                        "group":  "agent"
+                    },
+                    {
+                        "id":  "#agents/inferential\forge-convention-auditor",
+                        "group":  "agent"
                     },
                     {
                         "id":  "#agents/code-quality-auditor",
@@ -173,19 +197,35 @@
                         "group":  "template"
                     },
                     {
-                        "id":  "#forge-init",
+                        "id":  "#agents/forge-feature-tracer",
+                        "group":  "agent"
+                    },
+                    {
+                        "id":  "#forge-sprint",
                         "group":  "prompt"
                     },
                     {
-                        "id":  "#agents/test-auditor",
+                        "id":  "#agents/inferential/quality-reviewer",
                         "group":  "agent"
                     },
                     {
-                        "id":  "#agents/architecture-reviewer",
+                        "id":  "#agents/inferential\forge-code-quality-auditor",
                         "group":  "agent"
                     },
                     {
-                        "id":  "#forge-review",
+                        "id":  "#forge-spec",
+                        "group":  "prompt"
+                    },
+                    {
+                        "id":  "#agents/inferential\forge-architecture-reviewer",
+                        "group":  "agent"
+                    },
+                    {
+                        "id":  "#forge-status",
+                        "group":  "prompt"
+                    },
+                    {
+                        "id":  "#forge-issue-epic-creation",
                         "group":  "prompt"
                     },
                     {
@@ -193,19 +233,11 @@
                         "group":  "script"
                     },
                     {
-                        "id":  "#forge-vibe",
-                        "group":  "prompt"
-                    },
-                    {
-                        "id":  "#forge-deploy",
-                        "group":  "prompt"
-                    },
-                    {
                         "id":  "process\grounding.rules.md",
                         "group":  "template"
                     },
                     {
-                        "id":  "#forge-status",
+                        "id":  "#forge-prune",
                         "group":  "prompt"
                     },
                     {
@@ -213,11 +245,15 @@
                         "group":  "template"
                     },
                     {
-                        "id":  "#forge-template-drift",
-                        "group":  "prompt"
+                        "id":  "#agents/latency-scanner",
+                        "group":  "agent"
                     },
                     {
-                        "id":  "#agents/latency-scanner",
+                        "id":  "#agents/inferential/correctness-reviewer",
+                        "group":  "agent"
+                    },
+                    {
+                        "id":  "#agents/computational\forge-lint-gate",
                         "group":  "agent"
                     },
                     {
@@ -229,23 +265,51 @@
                         "group":  "template"
                     },
                     {
-                        "id":  "#forge-check-drift",
+                        "id":  "#forge-query",
                         "group":  "prompt"
                     },
                     {
-                        "id":  "#forge-query",
-                        "group":  "prompt"
+                        "id":  "process\escalation.rules.md",
+                        "group":  "template"
+                    },
+                    {
+                        "id":  "process\context-budget.rules.md",
+                        "group":  "template"
                     },
                     {
                         "id":  "forge-gate.ps1",
                         "group":  "script"
                     },
                     {
+                        "id":  "#agents/inferential/spec-adherence",
+                        "group":  "agent"
+                    },
+                    {
                         "id":  "forge-context.ps1",
                         "group":  "script"
                     },
                     {
-                        "id":  "#forge-reflect",
+                        "id":  "#forge-vibe",
+                        "group":  "prompt"
+                    },
+                    {
+                        "id":  "#forge-deploy",
+                        "group":  "prompt"
+                    },
+                    {
+                        "id":  "#forge-security-scan",
+                        "group":  "prompt"
+                    },
+                    {
+                        "id":  "#agents/computational/build-gate",
+                        "group":  "agent"
+                    },
+                    {
+                        "id":  "#forge-template-drift",
+                        "group":  "prompt"
+                    },
+                    {
+                        "id":  "#forge-check-drift",
                         "group":  "prompt"
                     },
                     {
@@ -261,35 +325,51 @@
                         "group":  "template"
                     },
                     {
-                        "id":  "#forge-proceed",
+                        "id":  "process\pushback.rules.md",
+                        "group":  "template"
+                    },
+                    {
+                        "id":  "#agents/inferential\forge-security-auditor",
+                        "group":  "agent"
+                    },
+                    {
+                        "id":  "#agents/forge-db-perf-scanner",
+                        "group":  "agent"
+                    },
+                    {
+                        "id":  "#agents/test-auditor",
+                        "group":  "agent"
+                    },
+                    {
+                        "id":  "#forge-synthesize",
                         "group":  "prompt"
-                    },
-                    {
-                        "id":  "#forge-bugfix",
-                        "group":  "prompt"
-                    },
-                    {
-                        "id":  "#agents/inferential\convention-auditor",
-                        "group":  "agent"
-                    },
-                    {
-                        "id":  "#agents/inferential\correctness-reviewer",
-                        "group":  "agent"
-                    },
-                    {
-                        "id":  "#agents/computational\lint-gate",
-                        "group":  "agent"
                     },
                     {
                         "id":  "inbox-template.md",
                         "group":  "template"
                     },
                     {
-                        "id":  "#forge-admin",
+                        "id":  "#forge-tdd",
                         "group":  "prompt"
                     },
                     {
-                        "id":  "#agents/computational\vuln-scan",
+                        "id":  "#agents/computational/secret-scan",
+                        "group":  "agent"
+                    },
+                    {
+                        "id":  "#agents/computational\forge-test-gate",
+                        "group":  "agent"
+                    },
+                    {
+                        "id":  "#forge-token-estimate",
+                        "group":  "prompt"
+                    },
+                    {
+                        "id":  "#forge-optimize",
+                        "group":  "prompt"
+                    },
+                    {
+                        "id":  "#agents/computational\forge-typecheck-gate",
                         "group":  "agent"
                     },
                     {
@@ -301,7 +381,11 @@
                         "group":  "agent"
                     },
                     {
-                        "id":  "#forge-prune",
+                        "id":  "bug-template.md",
+                        "group":  "template"
+                    },
+                    {
+                        "id":  "#forge-reflect",
                         "group":  "prompt"
                     },
                     {
@@ -309,27 +393,64 @@
                         "group":  "template"
                     },
                     {
+                        "id":  "#forge-analyze",
+                        "group":  "prompt"
+                    },
+                    {
                         "id":  "#agents/api-cost-scanner",
                         "group":  "agent"
                     },
                     {
-                        "id":  "#agents/inferential\spec-adherence",
+                        "id":  "#agents/forge-reflector",
                         "group":  "agent"
                     },
                     {
-                        "id":  "#forge-tdd",
+                        "id":  "#agents/forge-integration-explorer",
+                        "group":  "agent"
+                    },
+                    {
+                        "id":  "#agents/computational/lint-gate",
+                        "group":  "agent"
+                    },
+                    {
+                        "id":  "#agents/db-perf-scanner",
+                        "group":  "agent"
+                    },
+                    {
+                        "id":  "#forge-review",
                         "group":  "prompt"
                     },
                     {
-                        "id":  "#forge-optimize",
-                        "group":  "prompt"
-                    },
-                    {
-                        "id":  "#forge-synthesize",
-                        "group":  "prompt"
+                        "id":  "#agents/inferential\forge-quality-reviewer",
+                        "group":  "agent"
                     }
     ],
     "links": [
+                    {
+                        "source":  "#forge-admin",
+                        "target":  "#agents/security-auditor",
+                        "type": "behavioral"
+                    },
+                    {
+                        "source":  "#forge-admin",
+                        "target":  "#agents/xxx",
+                        "type": "behavioral"
+                    },
+                    {
+                        "source":  "#forge-admin",
+                        "target":  "#forge-review",
+                        "type": "behavioral"
+                    },
+                    {
+                        "source":  "#forge-admin",
+                        "target":  "#forge-wrapup",
+                        "type": "behavioral"
+                    },
+                    {
+                        "source":  "#forge-admin",
+                        "target":  "forge-gate.ps1",
+                        "type": "resource"
+                    },
                     {
                         "source":  "#forge-analyze",
                         "target":  "#agents/code-quality-auditor",
@@ -342,12 +463,37 @@
                     },
                     {
                         "source":  "#forge-analyze",
+                        "target":  "#agents/inferential/code-quality-auditor",
+                        "type": "behavioral"
+                    },
+                    {
+                        "source":  "#forge-analyze",
+                        "target":  "#agents/inferential/convention-auditor",
+                        "type": "behavioral"
+                    },
+                    {
+                        "source":  "#forge-analyze",
+                        "target":  "#agents/inferential/security-auditor",
+                        "type": "behavioral"
+                    },
+                    {
+                        "source":  "#forge-analyze",
+                        "target":  "#agents/inferential/test-auditor",
+                        "type": "behavioral"
+                    },
+                    {
+                        "source":  "#forge-analyze",
                         "target":  "#agents/security-auditor",
                         "type": "behavioral"
                     },
                     {
                         "source":  "#forge-analyze",
                         "target":  "#agents/test-auditor",
+                        "type": "behavioral"
+                    },
+                    {
+                        "source":  "#forge-analyze",
+                        "target":  "#forge-spec",
                         "type": "behavioral"
                     },
                     {
@@ -363,6 +509,21 @@
                     {
                         "source":  "#forge-architect",
                         "target":  "#agents/integration-explorer",
+                        "type": "behavioral"
+                    },
+                    {
+                        "source":  "#forge-architect",
+                        "target":  "#forge-init",
+                        "type": "behavioral"
+                    },
+                    {
+                        "source":  "#forge-architect",
+                        "target":  "#forge-proceed",
+                        "type": "behavioral"
+                    },
+                    {
+                        "source":  "#forge-architect",
+                        "target":  "#forge-validate",
                         "type": "behavioral"
                     },
                     {
@@ -387,6 +548,11 @@
                     },
                     {
                         "source":  "#forge-bugfix",
+                        "target":  "#forge-init",
+                        "type": "behavioral"
+                    },
+                    {
+                        "source":  "#forge-bugfix",
                         "target":  "#forge-wrapup",
                         "type": "behavioral"
                     },
@@ -401,9 +567,59 @@
                         "type": "resource"
                     },
                     {
-                        "source":  "#forge-admin",
-                        "target":  "forge-gate.ps1",
-                        "type": "resource"
+                        "source":  "#forge-canary",
+                        "target":  "#forge-bugfix",
+                        "type": "behavioral"
+                    },
+                    {
+                        "source":  "#forge-canary",
+                        "target":  "#forge-proceed",
+                        "type": "behavioral"
+                    },
+                    {
+                        "source":  "#forge-check-drift",
+                        "target":  "#forge-init",
+                        "type": "behavioral"
+                    },
+                    {
+                        "source":  "#forge-check-drift",
+                        "target":  "#forge-proceed",
+                        "type": "behavioral"
+                    },
+                    {
+                        "source":  "#forge-deploy",
+                        "target":  "#forge-init",
+                        "type": "behavioral"
+                    },
+                    {
+                        "source":  "#forge-init",
+                        "target":  "#forge-analyze",
+                        "type": "behavioral"
+                    },
+                    {
+                        "source":  "#forge-init",
+                        "target":  "#forge-architect",
+                        "type": "behavioral"
+                    },
+                    {
+                        "source":  "#forge-init",
+                        "target":  "#forge-issue-epic-creation",
+                        "type": "behavioral"
+                    },
+                    {
+                        "source":  "#forge-init",
+                        "target":  "#forge-review",
+                        "type": "behavioral"
+                    },
+                    {
+                        "source":  "#forge-init",
+                        "target":  "#forge-spec",
+                        "type": "behavioral"
+                    },
+                    {
+                        "source":  "#forge-init",
+                        "target":  "#forge-validate",
+                        "type": "behavioral"
                     },
                     {
                         "source":  "#forge-init",
@@ -462,6 +678,11 @@
                     },
                     {
                         "source":  "#forge-issue-epic-creation",
+                        "target":  "#forge-architect",
+                        "type": "behavioral"
+                    },
+                    {
+                        "source":  "#forge-issue-epic-creation",
                         "target":  "env-local-template.env",
                         "type": "resource"
                     },
@@ -478,6 +699,71 @@
                     {
                         "source":  "#forge-optimize",
                         "target":  "#agents/latency-scanner",
+                        "type": "behavioral"
+                    },
+                    {
+                        "source":  "#forge-optimize",
+                        "target":  "#forge-spec",
+                        "type": "behavioral"
+                    },
+                    {
+                        "source":  "#forge-proceed",
+                        "target":  "#agents/computational/build-gate",
+                        "type": "behavioral"
+                    },
+                    {
+                        "source":  "#forge-proceed",
+                        "target":  "#agents/computational/lint-gate",
+                        "type": "behavioral"
+                    },
+                    {
+                        "source":  "#forge-proceed",
+                        "target":  "#agents/computational/secret-scan",
+                        "type": "behavioral"
+                    },
+                    {
+                        "source":  "#forge-proceed",
+                        "target":  "#agents/computational/test-gate",
+                        "type": "behavioral"
+                    },
+                    {
+                        "source":  "#forge-proceed",
+                        "target":  "#agents/computational/typecheck-gate",
+                        "type": "behavioral"
+                    },
+                    {
+                        "source":  "#forge-proceed",
+                        "target":  "#agents/computational/vuln-scan",
+                        "type": "behavioral"
+                    },
+                    {
+                        "source":  "#forge-proceed",
+                        "target":  "#agents/inferential/architecture-reviewer",
+                        "type": "behavioral"
+                    },
+                    {
+                        "source":  "#forge-proceed",
+                        "target":  "#agents/inferential/correctness-reviewer",
+                        "type": "behavioral"
+                    },
+                    {
+                        "source":  "#forge-proceed",
+                        "target":  "#agents/inferential/quality-reviewer",
+                        "type": "behavioral"
+                    },
+                    {
+                        "source":  "#forge-proceed",
+                        "target":  "#agents/inferential/security-auditor",
+                        "type": "behavioral"
+                    },
+                    {
+                        "source":  "#forge-proceed",
+                        "target":  "#agents/inferential/spec-adherence",
+                        "type": "behavioral"
+                    },
+                    {
+                        "source":  "#forge-proceed",
+                        "target":  "#agents/inferential/test-auditor",
                         "type": "behavioral"
                     },
                     {
@@ -507,12 +793,27 @@
                     },
                     {
                         "source":  "#forge-proceed",
+                        "target":  "#forge-init",
+                        "type": "behavioral"
+                    },
+                    {
+                        "source":  "#forge-proceed",
                         "target":  "#forge-reflect",
                         "type": "behavioral"
                     },
                     {
                         "source":  "#forge-proceed",
                         "target":  "#forge-review",
+                        "type": "behavioral"
+                    },
+                    {
+                        "source":  "#forge-proceed",
+                        "target":  "#forge-spec",
+                        "type": "behavioral"
+                    },
+                    {
+                        "source":  "#forge-proceed",
+                        "target":  "#forge-sprint",
                         "type": "behavioral"
                     },
                     {
@@ -534,6 +835,21 @@
                         "source":  "#forge-proceed",
                         "target":  "forge-gate.ps1",
                         "type": "resource"
+                    },
+                    {
+                        "source":  "#forge-query",
+                        "target":  "#forge-analyze",
+                        "type": "behavioral"
+                    },
+                    {
+                        "source":  "#forge-query",
+                        "target":  "#forge-architect",
+                        "type": "behavioral"
+                    },
+                    {
+                        "source":  "#forge-query",
+                        "target":  "#forge-spec",
+                        "type": "behavioral"
                     },
                     {
                         "source":  "#forge-query",
@@ -567,6 +883,16 @@
                     },
                     {
                         "source":  "#forge-reflect",
+                        "target":  "#forge-init",
+                        "type": "behavioral"
+                    },
+                    {
+                        "source":  "#forge-reflect",
+                        "target":  "#forge-proceed",
+                        "type": "behavioral"
+                    },
+                    {
+                        "source":  "#forge-reflect",
                         "target":  "#forge-review",
                         "type": "behavioral"
                     },
@@ -578,6 +904,31 @@
                     {
                         "source":  "#forge-review",
                         "target":  "#agents/correctness-reviewer",
+                        "type": "behavioral"
+                    },
+                    {
+                        "source":  "#forge-review",
+                        "target":  "#agents/inferential/architecture-reviewer",
+                        "type": "behavioral"
+                    },
+                    {
+                        "source":  "#forge-review",
+                        "target":  "#agents/inferential/correctness-reviewer",
+                        "type": "behavioral"
+                    },
+                    {
+                        "source":  "#forge-review",
+                        "target":  "#agents/inferential/quality-reviewer",
+                        "type": "behavioral"
+                    },
+                    {
+                        "source":  "#forge-review",
+                        "target":  "#agents/inferential/security-auditor",
+                        "type": "behavioral"
+                    },
+                    {
+                        "source":  "#forge-review",
+                        "target":  "#agents/inferential/test-auditor",
                         "type": "behavioral"
                     },
                     {
@@ -597,7 +948,37 @@
                     },
                     {
                         "source":  "#forge-review",
+                        "target":  "#forge-init",
+                        "type": "behavioral"
+                    },
+                    {
+                        "source":  "#forge-review",
+                        "target":  "#forge-proceed",
+                        "type": "behavioral"
+                    },
+                    {
+                        "source":  "#forge-review",
+                        "target":  "#forge-reflect",
+                        "type": "behavioral"
+                    },
+                    {
+                        "source":  "#forge-review",
                         "target":  "#forge-wrapup",
+                        "type": "behavioral"
+                    },
+                    {
+                        "source":  "#forge-security-scan",
+                        "target":  "#forge-wrapup",
+                        "type": "behavioral"
+                    },
+                    {
+                        "source":  "#forge-spec",
+                        "target":  "#forge-architect",
+                        "type": "behavioral"
+                    },
+                    {
+                        "source":  "#forge-spec",
+                        "target":  "#forge-init",
                         "type": "behavioral"
                     },
                     {
@@ -607,12 +988,37 @@
                     },
                     {
                         "source":  "#forge-spec",
+                        "target":  "#forge-vibe",
+                        "type": "behavioral"
+                    },
+                    {
+                        "source":  "#forge-spec",
                         "target":  "requirement-template.md",
                         "type": "resource"
                     },
                     {
                         "source":  "#forge-sprint",
+                        "target":  "#forge-init",
+                        "type": "behavioral"
+                    },
+                    {
+                        "source":  "#forge-sprint",
                         "target":  "#forge-proceed",
+                        "type": "behavioral"
+                    },
+                    {
+                        "source":  "#forge-synthesize",
+                        "target":  "#forge-reflect",
+                        "type": "behavioral"
+                    },
+                    {
+                        "source":  "#forge-synthesize",
+                        "target":  "#forge-review",
+                        "type": "behavioral"
+                    },
+                    {
+                        "source":  "#forge-synthesize",
+                        "target":  "#forge-wrapup",
                         "type": "behavioral"
                     },
                     {
@@ -626,9 +1032,54 @@
                         "type": "resource"
                     },
                     {
+                        "source":  "#forge-tdd",
+                        "target":  "#forge-proceed",
+                        "type": "behavioral"
+                    },
+                    {
+                        "source":  "#forge-template-drift",
+                        "target":  "#forge-architect",
+                        "type": "behavioral"
+                    },
+                    {
+                        "source":  "#forge-template-drift",
+                        "target":  "#forge-bugfix",
+                        "type": "behavioral"
+                    },
+                    {
+                        "source":  "#forge-template-drift",
+                        "target":  "#forge-spec",
+                        "type": "behavioral"
+                    },
+                    {
                         "source":  "#forge-token-estimate",
                         "target":  "token-estimate.ps1",
                         "type": "resource"
+                    },
+                    {
+                        "source":  "#forge-validate",
+                        "target":  "#forge-architect",
+                        "type": "behavioral"
+                    },
+                    {
+                        "source":  "#forge-validate",
+                        "target":  "#forge-init",
+                        "type": "behavioral"
+                    },
+                    {
+                        "source":  "#forge-validate",
+                        "target":  "#forge-proceed",
+                        "type": "behavioral"
+                    },
+                    {
+                        "source":  "#forge-validate",
+                        "target":  "#forge-review",
+                        "type": "behavioral"
+                    },
+                    {
+                        "source":  "#forge-validate",
+                        "target":  "#forge-spec",
+                        "type": "behavioral"
                     },
                     {
                         "source":  "#forge-vibe",
@@ -637,7 +1088,32 @@
                     },
                     {
                         "source":  "#forge-wrapup",
+                        "target":  "#forge-bugfix",
+                        "type": "behavioral"
+                    },
+                    {
+                        "source":  "#forge-wrapup",
+                        "target":  "#forge-proceed",
+                        "type": "behavioral"
+                    },
+                    {
+                        "source":  "#forge-wrapup",
+                        "target":  "#forge-review",
+                        "type": "behavioral"
+                    },
+                    {
+                        "source":  "#forge-wrapup",
                         "target":  "#forge-security-scan",
+                        "type": "behavioral"
+                    },
+                    {
+                        "source":  "#forge-wrapup",
+                        "target":  "#forge-spec",
+                        "type": "behavioral"
+                    },
+                    {
+                        "source":  "#forge-wrapup",
+                        "target":  "#forge-token-estimate",
                         "type": "behavioral"
                     },
                     {
@@ -674,6 +1150,191 @@
                         "source":  "#forge-wrapup",
                         "target":  "token-estimate.ps1",
                         "type": "resource"
+                    },
+                    {
+                        "source":  "adr-template.md",
+                        "target":  "#forge-architect",
+                        "type": "behavioral"
+                    },
+                    {
+                        "source":  "adr-template.md",
+                        "target":  "#forge-init",
+                        "type": "behavioral"
+                    },
+                    {
+                        "source":  "adr-template.md",
+                        "target":  "#forge-query",
+                        "type": "behavioral"
+                    },
+                    {
+                        "source":  "adr-template.md",
+                        "target":  "#forge-wrapup",
+                        "type": "behavioral"
+                    },
+                    {
+                        "source":  "assumption-template.md",
+                        "target":  "#forge-init",
+                        "type": "behavioral"
+                    },
+                    {
+                        "source":  "assumption-template.md",
+                        "target":  "#forge-query",
+                        "type": "behavioral"
+                    },
+                    {
+                        "source":  "assumption-template.md",
+                        "target":  "#forge-wrapup",
+                        "type": "behavioral"
+                    },
+                    {
+                        "source":  "bug-template.md",
+                        "target":  "#forge-bugfix",
+                        "type": "behavioral"
+                    },
+                    {
+                        "source":  "bug-template.md",
+                        "target":  "#forge-init",
+                        "type": "behavioral"
+                    },
+                    {
+                        "source":  "deployment-template.md",
+                        "target":  "#forge-init",
+                        "type": "behavioral"
+                    },
+                    {
+                        "source":  "env-local-template.env",
+                        "target":  "#forge-init",
+                        "type": "behavioral"
+                    },
+                    {
+                        "source":  "env-local-template.env",
+                        "target":  "#forge-issue-epic-creation",
+                        "type": "behavioral"
+                    },
+                    {
+                        "source":  "forge-gate.ps1",
+                        "target":  "#forge-admin",
+                        "type": "behavioral"
+                    },
+                    {
+                        "source":  "forge-gate.ps1",
+                        "target":  "#forge-architect",
+                        "type": "behavioral"
+                    },
+                    {
+                        "source":  "forge-gate.ps1",
+                        "target":  "#forge-init",
+                        "type": "behavioral"
+                    },
+                    {
+                        "source":  "forge-gate.ps1",
+                        "target":  "#forge-proceed",
+                        "type": "behavioral"
+                    },
+                    {
+                        "source":  "forge-gate.ps1",
+                        "target":  "#forge-spec",
+                        "type": "behavioral"
+                    },
+                    {
+                        "source":  "forge-gate.ps1",
+                        "target":  "#forge-wrapup",
+                        "type": "behavioral"
+                    },
+                    {
+                        "source":  "forge-test.ps1",
+                        "target":  "#forge-tdd",
+                        "type": "behavioral"
+                    },
+                    {
+                        "source":  "lesson-template.md",
+                        "target":  "#forge-bugfix",
+                        "type": "behavioral"
+                    },
+                    {
+                        "source":  "lesson-template.md",
+                        "target":  "#forge-init",
+                        "type": "behavioral"
+                    },
+                    {
+                        "source":  "lesson-template.md",
+                        "target":  "#forge-query",
+                        "type": "behavioral"
+                    },
+                    {
+                        "source":  "lesson-template.md",
+                        "target":  "#forge-wrapup",
+                        "type": "behavioral"
+                    },
+                    {
+                        "source":  "manual-qa-template.md",
+                        "target":  "#forge-query",
+                        "type": "behavioral"
+                    },
+                    {
+                        "source":  "manual-qa-template.md",
+                        "target":  "#forge-wrapup",
+                        "type": "behavioral"
+                    },
+                    {
+                        "source":  "requirement-template.md",
+                        "target":  "#forge-init",
+                        "type": "behavioral"
+                    },
+                    {
+                        "source":  "requirement-template.md",
+                        "target":  "#forge-spec",
+                        "type": "behavioral"
+                    },
+                    {
+                        "source":  "support-template.md",
+                        "target":  "#forge-init",
+                        "type": "behavioral"
+                    },
+                    {
+                        "source":  "support-template.md",
+                        "target":  "#forge-query",
+                        "type": "behavioral"
+                    },
+                    {
+                        "source":  "support-template.md",
+                        "target":  "#forge-wrapup",
+                        "type": "behavioral"
+                    },
+                    {
+                        "source":  "task-template.md",
+                        "target":  "#forge-architect",
+                        "type": "behavioral"
+                    },
+                    {
+                        "source":  "task-template.md",
+                        "target":  "#forge-init",
+                        "type": "behavioral"
+                    },
+                    {
+                        "source":  "taxonomy-template.md",
+                        "target":  "#forge-init",
+                        "type": "behavioral"
+                    },
+                    {
+                        "source":  "token-estimate.ps1",
+                        "target":  "#forge-token-estimate",
+                        "type": "behavioral"
+                    },
+                    {
+                        "source":  "token-estimate.ps1",
+                        "target":  "#forge-wrapup",
+                        "type": "behavioral"
+                    },
+                    {
+                        "source":  "variables-template.md",
+                        "target":  "#forge-init",
+                        "type": "behavioral"
+                    },
+                    {
+                        "source":  "vibe-template.md",
+                        "target":  "#forge-vibe",
+                        "type": "behavioral"
                     }
     ]
 };

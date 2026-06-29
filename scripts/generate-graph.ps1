@@ -94,6 +94,19 @@ foreach ($file in $files) {
             }
         }
     }
+
+    # Parse Inline Dependencies (Skills and Agents)
+    $inlineMatches = [regex]::Matches($content, '(#agents/[\w/-]+|#forge-[\w-]+)')
+    foreach ($m in $inlineMatches) {
+        $dep = $m.Groups[1].Value
+        if ($dep -eq $id) { continue }
+        
+        $tgtGroup = "prompt"
+        if ($dep -match "^#agents/") { $tgtGroup = "agent" }
+        
+        Add-Node $dep $tgtGroup
+        Add-Link $id $dep "behavioral"
+    }
 }
 
 # Remove duplicate links
