@@ -1,0 +1,17 @@
+# Auto-detect text files and normalise line endings
+* text=auto eol=lf
+
+# Explicitly declare text file types
+*.md    text eol=lf
+*.yml   text eol=lf
+*.yaml  text eol=lf
+*.json  text eol=lf
+*.txt   text eol=lf
+*.ps1   text eol=lf
+*.sh    text eol=lf
+*.html  text eol=lf
+*.css   text eol=lf
+*.js    text eol=lf
+
+# Ensure shell scripts retain executable bit
+*.sh    text eol=lf diff

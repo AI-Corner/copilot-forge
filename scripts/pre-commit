@@ -1,0 +1,49 @@
+#!/usr/bin/env bash
+# Pre-commit hook: reject files with UTF-8 BOM or U+FFFD replacement characters.
+# Install: copy to .git/hooks/pre-commit and chmod +x
+
+set -e
+
+ERRORS=0
+
+# Get staged files (only Added/Modified, skip Deleted)
+STAGED=$(git diff --cached --name-only --diff-filter=AM)
+
+if [ -z "$STAGED" ]; then
+    exit 0
+fi
+
+for FILE in $STAGED; do
+    # Skip binary files
+    if ! file "$FILE" 2>/dev/null | grep -qiE 'text|json|xml|script'; then
+        continue
+    fi
+
+    # Check for UTF-8 BOM (EF BB BF)
+    if [ -f "$FILE" ]; then
+        FIRST3=$(xxd -p -l 3 "$FILE" 2>/dev/null || od -A n -t x1 -N 3 "$FILE" 2>/dev/null | tr -d ' ')
+        if [ "$FIRST3" = "efbbbf" ]; then
+            echo "ERROR: $FILE has UTF-8 BOM. Strip it before committing."
+            ERRORS=$((ERRORS + 1))
+        fi
+
+        # Check for U+FFFD replacement character (EF BF BD in UTF-8)
+        if xxd -p "$FILE" 2>/dev/null | tr -d '\n' | grep -q "efbfbd"; then
+            echo "ERROR: $FILE contains U+FFFD replacement character(s). Fix encoding."
+            ERRORS=$((ERRORS + 1))
+        elif od -A n -t x1 "$FILE" 2>/dev/null | tr -d ' \n' | grep -q "efbfbd"; then
+            echo "ERROR: $FILE contains U+FFFD replacement character(s). Fix encoding."
+            ERRORS=$((ERRORS + 1))
+        fi
+    fi
+done
+
+if [ $ERRORS -gt 0 ]; then
+    echo ""
+    echo "Commit blocked: $ERRORS encoding issue(s) found."
+    echo "Run the cleanup script:  powershell scripts/fix-encoding.ps1"
+    echo "Or bypass with:          git commit --no-verify"
+    exit 1
+fi
+
+exit 0
