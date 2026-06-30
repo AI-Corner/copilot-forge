@@ -22,3 +22,9 @@
 node_modules/
 package-lock.json
 .env.local
+
+# Temporary files
+tmp/
+
+# Docs
+docs/implementation_plans/
