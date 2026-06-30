@@ -98,7 +98,21 @@ Copy-Item -Recurse \path\to\copilot-forge\.vscode .
 
 ### 3. Upgrading Copilot Forge
 
-To seamlessly upgrade your project to the latest version of Copilot Forge without losing your `.forge` state or custom templates, run the update script from the root of the toolkit directory, pointing to your project:
+To seamlessly upgrade your project to the latest version of Copilot Forge without losing your `.forge` state or custom templates, use the `update.ps1` script from the root of this toolkit directory. This script is designed to be non-destructive and automatically backs up your existing configuration before making changes.
+
+**1. Run a Health Check (Recommended)**
+Preview the version gap, check for template drift, and see protected file status without modifying any files:
+```powershell
+.\scripts\update.ps1 -TargetDir \path\to\your\project -HealthOnly
+```
+
+**2. Preview the Update (Optional)**
+See exactly which files will be added, updated, or skipped without actually writing to disk:
+```powershell
+.\scripts\update.ps1 -TargetDir \path\to\your\project -DryRun
+```
+
+**3. Perform the Update**
 ```powershell
 .\scripts\update.ps1 -TargetDir \path\to\your\project
 ```
