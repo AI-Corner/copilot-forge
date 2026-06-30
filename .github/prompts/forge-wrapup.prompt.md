@@ -22,7 +22,7 @@ Target: [REQ-xxx ID — provided by the user]
 Run this command via terminal **before doing anything else**:
 
 ```powershell
-.\scripts\forge-gate.ps1 -Phase wrapup
+.\scripts\forge-gate.ps1 -Phase wrapup # (Use ./scripts/forge-gate.sh on Linux/Mac)
 ```
 
 > **If the gate fails**: stop immediately. List the incomplete tasks to the user and tell them to complete implementation before running `#forge-wrapup` again. Do not attempt to work around the gate.
@@ -160,7 +160,7 @@ Add a `### Repos` table showing `| Repo | Branch | PR | Files | +/- |` for each 
 Run the token estimator to record the session's approximate token consumption:
 
 ```powershell
-.\scripts\token-estimate.ps1 -ReqId REQ-xxx -UpdatePipelineState
+.\scripts\token-estimate.ps1 -ReqId REQ-xxx -UpdatePipelineState # (Use ./scripts/token-estimate.sh on Linux/Mac)
 ```
 
 This will:
@@ -171,7 +171,7 @@ This will:
 
 Copy the **Est. GRAND TOTAL** value into the `### Metrics` block of the ship summary above.
 
-> **Note**: If `token-estimate.ps1` is not present in the repo root, run `#forge-token-estimate REQ-xxx` in Copilot Chat instead for an inline estimate.
+> **Note**: If `token-estimate.ps1` (or `.sh`) is not present in the repo root, run `#forge-token-estimate REQ-xxx` in Copilot Chat instead for an inline estimate.
 
 ### Step 6: Deploy
 Walk touched repos and deploy each deployable component. Read `.forge/config.yml` for stack and deploy config:
@@ -191,4 +191,4 @@ Walk touched repos and deploy each deployable component. Read `.forge/config.yml
 - **Incoming Agent Dependencies**: *None*
 - **Outgoing Skill Dependencies**: `#forge-security-scan`
 - **Outgoing Agent Dependencies**: *None*
-- **Resource Dependencies**: `adr-template.md`, `assumption-template.md`, `lesson-template.md`, `manual-qa-template.md`, `support-template.md`, `token-estimate.ps1`, `inbox-template.md`
+- **Resource Dependencies**: `adr-template.md`, `assumption-template.md`, `lesson-template.md`, `manual-qa-template.md`, `support-template.md`, `token-estimate.ps1`, `token-estimate.sh`, `inbox-template.md`

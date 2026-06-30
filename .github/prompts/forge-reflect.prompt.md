@@ -1,4 +1,4 @@
-﻿---
+---
 agent: agent
 tools: [codebase, runCommand, changes, terminalLastCommand]
 description: Post-implementation self-review — catch issues before #forge-review
@@ -24,7 +24,7 @@ Use the codebase tool to verify `.forge/context/rules/conventions.rules.md` exis
 ### ⛔ Pre-flight Gate (Run This First — Do Not Skip)
 
 ```powershell
-.\scripts\forge-gate.ps1 -Phase reflect
+.\scripts\forge-gate.ps1 -Phase reflect # (Use ./scripts/forge-gate.sh on Linux/Mac)
 ```
 
 > **If the gate fails**: stop immediately. There are no changes to review.

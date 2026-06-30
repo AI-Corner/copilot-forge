@@ -13,7 +13,7 @@ Use this prompt for governance operations on:
 - `.github/copilot-instructions.md`
 - `.forge/context/*.md` related to prompt/workflow policy
 - `templates/*.md` (canonical templates)
-- `scripts/*.ps1` (pipeline scripts)
+- `scripts/*.ps1` and `scripts/*.sh` (pipeline scripts)
 
 > **Ethos**: Follow the principles in `.github/copilot-instructions.md` throughout this session.
 
@@ -45,7 +45,7 @@ For each target file, scan the entire `.github/prompts/` tree (including `agents
 - Direct name references (e.g., `#agents/security-auditor`, `#forge-review`, `#forge-wrapup`)
 - Frontmatter `tools:` and `description:` fields that mention other prompts
 - Template references (e.g., `requirement-template.md`, `task-template.md`)
-- Script invocations (e.g., `forge-gate.ps1`, `forge-test.ps1`, `forge-context.ps1`)
+- Script invocations (e.g., `forge-gate.ps1`, `forge-test.ps1`, `forge-context.ps1` and their `.sh` equivalents)
 
 ### Step 2: Flag downstream impact
 For each cross-reference found:
@@ -63,7 +63,7 @@ Present the dependency impact table to the user:
 |---|---|---|
 | proceed.prompt.md | `#agents/security-auditor` | Will break (target renamed) |
 | review.prompt.md | `#agents/security-auditor` | Will break (target renamed) |
-| wrapup.prompt.md | `forge-test.ps1` | Safe |
+| wrapup.prompt.md | `forge-test.ps1` / `.sh` | Safe |
 ```
 
 If any reference shows **Will break**, do NOT proceed without explicit user confirmation to also update those referencing files.
@@ -199,4 +199,4 @@ Targets: <files>
 - **Incoming Agent Dependencies**: *None*
 - **Outgoing Skill Dependencies**: *None*
 - **Outgoing Agent Dependencies**: *None*
-- **Resource Dependencies**: `forge-gate.ps1`
+- **Resource Dependencies**: `forge-gate.ps1`, `forge-gate.sh`

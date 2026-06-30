@@ -1,4 +1,4 @@
-﻿---
+---
 agent: agent
 tools: [codebase, runCommand, changes, terminalLastCommand]
 description: Multi-dimension code review covering correctness, quality, architecture, test coverage, and security
@@ -25,7 +25,7 @@ Use the codebase tool to verify `.forge/context/rules/conventions.rules.md` exis
 ### ⛔ Pre-flight Gate (Run This First — Do Not Skip)
 
 ```powershell
-.\scripts\forge-gate.ps1 -Phase review
+.\scripts\forge-gate.ps1 -Phase review # (Use ./scripts/forge-gate.sh on Linux/Mac)
 ```
 
 > **If the gate fails**: stop immediately. There are no changes to review.

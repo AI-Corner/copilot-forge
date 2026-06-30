@@ -9,7 +9,7 @@ You are estimating the token footprint of a Copilot Forge pipeline run for a giv
 
 > **Ethos**: Follow the principles in `.github/copilot-instructions.md` throughout this session.
 
-> **Cost note**: Running this prompt inside Copilot Chat is itself a token-consuming operation (~1,000–2,000 tokens). For routine use, prefer the zero-cost alternative: run `token-estimate.ps1` directly from the terminal. Use this prompt only when the terminal script is unavailable.
+> **Cost note**: Running this prompt inside Copilot Chat is itself a token-consuming operation (~1,000–2,000 tokens). For routine use, prefer the zero-cost alternative: run `token-estimate.ps1` (or `.sh`) directly from the terminal. Use this prompt only when the terminal script is unavailable.
 
 ## Input
 
@@ -159,11 +159,11 @@ Token Estimate for REQ-023 — My Feature Title
 💡 Results written to pipeline-state.json.
 ```
 
-> **Note**: Run `token-estimate.ps1` from the terminal for a faster standalone estimate without needing a Copilot session.
+> **Note**: Run `token-estimate.ps1` (or `.sh`) from the terminal for a faster standalone estimate without needing a Copilot session.
 
 ## Internal Reference
 - **Incoming Skill Dependencies**: *None*
 - **Incoming Agent Dependencies**: *None*
 - **Outgoing Skill Dependencies**: *None*
 - **Outgoing Agent Dependencies**: *None*
-- **Resource Dependencies**: `token-estimate.ps1`
+- **Resource Dependencies**: `token-estimate.ps1`, `token-estimate.sh`

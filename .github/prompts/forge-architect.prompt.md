@@ -30,7 +30,7 @@ Read `.forge/templates/task-template.md` (or `templates/task-template.md` at the
 Run this command via terminal **before doing anything else**:
 
 ```powershell
-.\scripts\forge-gate.ps1 -Phase architect
+.\scripts\forge-gate.ps1 -Phase architect # (Use ./scripts/forge-gate.sh on Linux/Mac)
 ```
 
 > **If the gate fails**: stop immediately. Surface the exact error to the user. Do not attempt to work around the gate or proceed.
@@ -108,4 +108,4 @@ Read the key files identified during exploration.
 - **Incoming Agent Dependencies**: *None*
 - **Outgoing Skill Dependencies**: *None*
 - **Outgoing Agent Dependencies**: `#agents/architecture-mapper`, `#agents/feature-tracer`, `#agents/integration-explorer`
-- **Resource Dependencies**: `adr-template.md`, `forge-gate.ps1`, `task-template.md`
+- **Resource Dependencies**: `adr-template.md`, `forge-gate.ps1`, `forge-gate.sh`, `task-template.md`
