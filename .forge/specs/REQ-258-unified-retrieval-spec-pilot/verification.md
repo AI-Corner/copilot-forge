@@ -1,4 +1,4 @@
-﻿# REQ-258 Verification — Unified Tag-Based Retrieval for #forge-spec (Pilot)
+# REQ-258 Verification — Unified Tag-Based Retrieval for #forge-spec (Pilot)
 
 **Status:** Complete (static)
 **Verified by:** TASK-006 (dogfood-verification), adapted scope

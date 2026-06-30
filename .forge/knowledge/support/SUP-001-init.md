@@ -1,4 +1,4 @@
-﻿---
+---
 id: SUP-001
 title: "Support: Project Initialization (#forge-init)"
 related_req: core-feature

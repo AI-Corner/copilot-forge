@@ -1,4 +1,4 @@
-﻿# Copilot Forge — Prompt Usage Guide
+# Copilot Forge — Prompt Usage Guide
 
 Complete reference for every Copilot Forge prompt. Each section covers **what the prompt does**, **when to call it**, **what it expects as input**, **what it produces**, and **where it fits in the workflow**.
 

@@ -1,4 +1,4 @@
-﻿<#
+<#
 .SYNOPSIS
     Copilot Forge — Token Usage Estimator
 

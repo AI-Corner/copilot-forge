@@ -1,4 +1,4 @@
-﻿---
+---
 id: TASK-003
 title: "Extend lesson-template.md with stack, concerns, updated fields"
 status: complete

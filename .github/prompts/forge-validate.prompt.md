@@ -1,4 +1,4 @@
-﻿---
+---
 agent: agent
 tools: [codebase, runCommand, changes]
 description: Validate any Copilot Forge phase output before advancing to the next phase

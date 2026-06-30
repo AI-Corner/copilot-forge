@@ -1,4 +1,4 @@
-﻿# Conventions — Copilot Forge
+# Conventions — Copilot Forge
 
 ## Prompts are markdown, not code
 

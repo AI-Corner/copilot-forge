@@ -1,4 +1,4 @@
-﻿# Convention Rules
+# Convention Rules
 
 These are the strict coding and formatting conventions for Copilot Forge. For full explanations, see `corpus/conventions.md`.
 

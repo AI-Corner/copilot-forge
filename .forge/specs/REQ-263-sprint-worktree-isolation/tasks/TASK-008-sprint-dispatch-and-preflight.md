@@ -1,4 +1,4 @@
-﻿---
+---
 id: TASK-008
 title: "Add dispatch-line contract and pre-flight collision check to #forge-sprint"
 status: complete

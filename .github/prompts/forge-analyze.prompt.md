@@ -1,4 +1,4 @@
-﻿---
+---
 agent: agent
 tools: [codebase, runCommand, terminalLastCommand]
 description: Codebase health audit — identify technical debt, quality issues, and improvement opportunities

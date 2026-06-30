@@ -1,4 +1,4 @@
-﻿---
+---
 id: LESSON-002
 title: "Cross-repo REQ support: 'primary' is per-REQ (wherever #forge-proceed runs), configs are symmetric mirrors"
 component: "Copilot Forge/proceed"

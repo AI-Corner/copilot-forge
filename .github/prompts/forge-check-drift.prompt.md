@@ -1,4 +1,4 @@
-﻿---
+---
 agent: agent
 tools: [codebase, runCommand, terminalLastCommand]
 description: Lightweight read-only convention compliance check — flags drift without auto-fixing

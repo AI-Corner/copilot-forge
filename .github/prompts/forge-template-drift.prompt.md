@@ -1,4 +1,4 @@
-﻿---
+---
 agent: agent
 tools: [codebase, runCommand, terminalLastCommand]
 description: Detect drift between this project's .forge/templates/ copies and the canonical templates in the toolkit

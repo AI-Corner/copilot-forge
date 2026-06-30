@@ -1,4 +1,4 @@
-﻿---
+---
 id: TASK-005
 title: "Scaffold .forge/context/taxonomy.md in #forge-init, add canonical taxonomy template"
 status: complete

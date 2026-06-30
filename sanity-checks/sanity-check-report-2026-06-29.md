@@ -110,17 +110,17 @@ description: End-to-end pipeline for a single REQ — spec → architect → TDD
 
 ## 🟡 Encoding Issue (15 files)
 
-All 15 agent prompt files contain a **mojibake character** (`�`) in the Context Loading Rule section:
+All 15 agent prompt files contain a **mojibake character** (``) in the Context Loading Rule section:
 
 ```
-1. ALWAYS read .forge/context/rules/ files � these are your constraints.
+1. ALWAYS read .forge/context/rules/ files  these are your constraints.
 ```
 
-The `�` is a Unicode replacement character (U+FFFD), likely a corrupted em-dash (`—`) or a right arrow (`→`). This won't break parsing but looks unprofessional and could confuse the LLM.
+The `` is a Unicode replacement character (U+FFFD), likely a corrupted em-dash (`—`) or a right arrow (`→`). This won't break parsing but looks unprofessional and could confuse the LLM.
 
 **Affected**: Every file in `agents/` and `agents/inferential/` (15 total).
 
-**Fix**: Replace `�` with `—` (em-dash) in all 15 files.
+**Fix**: Replace `` with `—` (em-dash) in all 15 files.
 
 ---
 
@@ -223,7 +223,7 @@ All rules in [templates/process/](file:///d:/2026/ai-corner/copilot-forge/templa
 | 🔴 P0 | Fix `forge-admin` frontmatter position | 1 | Admin prompt broken |
 | 🔴 P0 | Fix `forge-token-estimate` frontmatter position | 1 | Token estimate prompt broken |
 | 🟡 P1 | Add opening `---` to all 15 agent prompts | 15 | Spec compliance |
-| 🟡 P1 | Fix `�` encoding in 15 agent prompts | 15 | Cosmetic + LLM clarity |
+| 🟡 P1 | Fix `` encoding in 15 agent prompts | 15 | Cosmetic + LLM clarity |
 | 🟢 P2 | Regenerate dependency graph with full edges | 1 | Graph accuracy |
 
 ---

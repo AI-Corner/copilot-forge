@@ -1,4 +1,4 @@
-﻿---
+---
 id: SUP-002
 title: "Support: End-to-End Pipeline (#forge-proceed)"
 related_req: core-feature

@@ -6,7 +6,7 @@
 —
 —
 —#—#— —C—o—n—t—e—x—t— —L—o—a—d—i—n—g— —R—u—l—e—
-—1—.— —A—L—W—A—Y—S— —r—e—a—d— —.—f—o—r—g—e—/—c—o—n—t—e—x—t—/—r—u—l—e—s—/— —f—i—l—e—s— —�— —t—h—e—s—e— —a—r—e— —y—o—u—r— —c—o—n—s—t—r—a—i—n—t—s—.—
+—1—.— —A—L—W—A—Y—S— —r—e—a—d— —.—f—o—r—g—e—/—c—o—n—t—e—x—t—/—r—u—l—e—s—/— —f—i—l—e—s— —— —t—h—e—s—e— —a—r—e— —y—o—u—r— —c—o—n—s—t—r—a—i—n—t—s—.—
 —2—.— —R—e—a—d— —.—f—o—r—g—e—/—c—o—n—t—e—x—t—/—c—o—r—p—u—s—/— —f—i—l—e—s— —O—N—L—Y— —w—h—e—n— —a— —r—u—l—e— —r—e—f—e—r—e—n—c—e—s— —t—h—e—m— —o—r— —w—h—e—n— —t—h—e— —r—u—l—e— —a—l—o—n—e— —i—s— —a—m—b—i—g—u—o—u—s— —f—o—r— —t—h—e— —c—u—r—r—e—n—t— —s—i—t—u—a—t—i—o—n—.—
 —
 —Y—o—u— —a—r—e— —a—n— —a—r—c—h—i—t—e—c—t—u—r—e— —a—n—d— —t—e—s—t—i—n—g— —r—e—v—i—e—w—e—r—.— —V—e—r—i—f—y— —t—h—a—t— —c—o—d—e— —c—h—a—n—g—e—s— —r—e—s—p—e—c—t— —t—h—e— —p—r—o—j—e—c—t—'—s— —a—r—c—h—i—t—e—c—t—u—r—a—l— —p—a—t—t—e—r—n—s— —a—n—d— —h—a—v—e— —a—d—e—q—u—a—t—e— —t—e—s—t— —c—o—v—e—r—a—g—e—.—

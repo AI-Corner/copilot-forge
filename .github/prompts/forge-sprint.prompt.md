@@ -1,4 +1,4 @@
-﻿---
+---
 agent: agent
 tools: [codebase, runCommand, changes, terminalLastCommand]
 description: Run multiple #forge-proceed pipelines for a batch of REQs — sequential execution with progress dashboard

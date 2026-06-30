@@ -1,4 +1,4 @@
-﻿# Architecture Rules
+# Architecture Rules
 
 These are the strict architectural rules for Copilot Forge. For full explanations, see `corpus/architecture.md`.
 

@@ -1,4 +1,4 @@
-﻿# Project Overview — Copilot Forge
+# Project Overview — Copilot Forge
 
 ## What this project is
 

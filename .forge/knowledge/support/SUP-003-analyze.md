@@ -1,4 +1,4 @@
-﻿---
+---
 id: SUP-003
 title: "Support: Incremental Analysis (#forge-analyze)"
 related_req: core-feature

@@ -1,4 +1,4 @@
-﻿# Copilot Forge — Frequently Asked Questions (FAQ)
+# Copilot Forge — Frequently Asked Questions (FAQ)
 
 ### 1. What is Spec-Driven Development (SDD)?
 **SDD (Spec-Driven Development)** in the absolute simplest way is: **"Think first, write it down, *then* code."**

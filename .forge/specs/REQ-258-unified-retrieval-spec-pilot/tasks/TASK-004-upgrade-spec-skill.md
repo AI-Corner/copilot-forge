@@ -1,4 +1,4 @@
-﻿---
+---
 id: TASK-004
 title: "Upgrade #forge-spec prompt with unified retriever, query derivation, citations, self-tagging"
 status: complete

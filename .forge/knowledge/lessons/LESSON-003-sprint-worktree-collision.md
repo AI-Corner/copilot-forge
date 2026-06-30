@@ -1,4 +1,4 @@
-﻿---
+---
 id: LESSON-003
 title: "Sprint dispatch must declare each pipeline-runner's worktree path; deriving it lets siblings clobber each other"
 component: "Copilot Forge/sprint"

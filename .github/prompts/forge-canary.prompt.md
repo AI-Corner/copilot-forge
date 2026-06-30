@@ -1,4 +1,4 @@
-﻿---
+---
 agent: agent
 tools: [codebase, runCommand, changes, terminalLastCommand]
 description: Canary deployment — deploy a zero-traffic revision, run smoke tests, promote on success

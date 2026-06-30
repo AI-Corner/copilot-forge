@@ -1,4 +1,4 @@
-﻿# Architecture: Environment & Configuration Variable Mapping (REQ-264)
+# Architecture: Environment & Configuration Variable Mapping (REQ-264)
 
 ## Overview
 

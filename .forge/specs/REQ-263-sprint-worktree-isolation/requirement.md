@@ -1,4 +1,4 @@
-﻿---
+---
 id: REQ-263
 title: "Enforce per-REQ unique worktree paths in #forge-sprint dispatch and #forge-proceed Phase 0"
 status: complete

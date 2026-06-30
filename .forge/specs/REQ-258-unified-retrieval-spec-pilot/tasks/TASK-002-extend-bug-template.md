@@ -1,4 +1,4 @@
-﻿---
+---
 id: TASK-002
 title: "Extend bug-template.md with tag frontmatter fields"
 status: complete

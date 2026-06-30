@@ -1,4 +1,4 @@
-﻿# Architecture — Copilot Forge
+# Architecture — Copilot Forge
 
 ## Top-level layout
 

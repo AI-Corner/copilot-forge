@@ -1,4 +1,4 @@
-﻿---
+---
 id: REQ-258
 title: "Unified Tag-Based Retrieval for #forge-spec (Pilot)"
 status: complete

@@ -1,4 +1,4 @@
-﻿---
+---
 id: LESSON-004
 title: "System-First Specifications (Zachman 5W1H)"
 component: "Copilot Forge/spec"

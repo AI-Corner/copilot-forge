@@ -1,4 +1,4 @@
-﻿---
+---
 id: TASK-001
 title: "Extend requirement-template.md with tag frontmatter fields"
 status: complete

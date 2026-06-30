@@ -1,4 +1,4 @@
-﻿---
+---
 agent: agent
 tools: [codebase, runCommand, changes, terminalLastCommand]
 description: Query project knowledge, answer using .forge context, and optionally capture or enhance knowledge in .forge/knowledge/

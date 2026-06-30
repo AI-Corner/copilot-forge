@@ -1,4 +1,4 @@
-﻿# Copilot Forge: Complete Flow & Architecture Overview
+# Copilot Forge: Complete Flow & Architecture Overview
 
 Welcome to the **Copilot Forge** demo guide! This document breaks down the entire project into simple terms so you can easily understand and demonstrate how it enables **Spec-Driven Development** with GitHub Copilot.
 

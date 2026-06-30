@@ -1,4 +1,4 @@
-﻿---
+---
 agent: agent
 tools: [codebase, runCommand, changes, terminalLastCommand]
 description: Process learning candidates from the inbox into permanent rules, lessons, or ADRs.

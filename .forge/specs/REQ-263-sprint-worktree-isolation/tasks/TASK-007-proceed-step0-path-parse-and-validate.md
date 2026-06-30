@@ -1,4 +1,4 @@
-﻿---
+---
 id: TASK-007
 title: "Add path-parse + worktree validation to #forge-proceed Step 0"
 status: complete

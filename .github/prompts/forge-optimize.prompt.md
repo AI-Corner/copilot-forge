@@ -1,4 +1,4 @@
-﻿---
+---
 agent: agent
 tools: [codebase, runCommand, terminalLastCommand]
 description: API cost & performance scanner — identify expensive operations and optimization opportunities

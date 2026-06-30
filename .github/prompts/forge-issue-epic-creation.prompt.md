@@ -1,4 +1,4 @@
-﻿---
+---
 agent: agent
 tools: [runCommand, codebase, terminalLastCommand]
 description: Synchronize local REQs and Tasks to GitLab as Epics and Issues.

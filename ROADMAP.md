@@ -1,4 +1,4 @@
-﻿# Copilot Forge — Roadmap & Future Enhancements
+# Copilot Forge — Roadmap & Future Enhancements
 
 This document outlines strategic improvements to the Copilot Forge toolkit to further optimize Spec-Driven Development (SDD) for enterprise use, particularly for robust multi-service architectures (like Java Spring Boot + React + PostgreSQL + AKS).
 

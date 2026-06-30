@@ -1,4 +1,4 @@
-﻿<#
+<#
 .SYNOPSIS
     Copilot Forge — Pipeline State Machine Gate
 

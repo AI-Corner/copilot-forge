@@ -1,4 +1,4 @@
-﻿# .forge/config.yml — Copilot Forge project configuration
+# .forge/config.yml — Copilot Forge project configuration
 #
 # This file lives in every repo that originates REQs. "Primary" is per-REQ,
 # not a fixed designation: whichever repo you invoke #forge-proceed from becomes

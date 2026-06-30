@@ -1,4 +1,4 @@
-﻿1. “What problem are you really solving?”
+1. “What problem are you really solving?”
 Likely question (explicit or implicit)
 
 “We already have Copilot and other tools; what specific problem does Forge solve for us?”

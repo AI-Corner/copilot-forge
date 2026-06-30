@@ -1,4 +1,4 @@
-﻿---
+---
 id: TASK-006
 title: "Dogfood verification — invoke upgraded #forge-spec on synthetic feature and validate output against REQ-258 ACs"
 status: complete

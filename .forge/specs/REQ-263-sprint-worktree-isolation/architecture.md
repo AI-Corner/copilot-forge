@@ -1,4 +1,4 @@
-﻿# Architecture — REQ-263 Sprint Worktree Isolation
+# Architecture — REQ-263 Sprint Worktree Isolation
 
 ## Approach
 

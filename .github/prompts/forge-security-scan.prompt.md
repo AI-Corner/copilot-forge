@@ -1,4 +1,4 @@
-﻿---
+---
 agent: agent
 tools: [runCommand, codebase, terminalLastCommand]
 description: Scan the current diff for hardcoded secrets and credentials before committing.
