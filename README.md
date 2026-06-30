@@ -116,6 +116,16 @@ See exactly which files will be added, updated, or skipped without actually writ
 ```powershell
 .\scripts\update.ps1 -TargetDir \path\to\your\project
 ```
+
+**4. Customizing Paths (Multi-Component Repos)**
+If your `.forge` structure or prompts are nested inside a multi-component repo, you can override the default target paths:
+```powershell
+.\scripts\update.ps1 -TargetDir \path\to\your\project `
+    -PromptsDir \path\to\your\project\libs\backend\.github\prompts `
+    -TemplatesDir \path\to\your\project\libs\backend\.forge\templates
+```
+Available path parameters: `-GithubDir`, `-PromptsDir`, `-TemplatesDir`, `-ScriptsDir`, `-VscodeDir`.
+
 After the script completes, open Copilot Chat in your project and run `#forge-init` to safely apply any new `.forge` directory structure or context migrations.
 
 ### 4. Enable Copilot prompt files

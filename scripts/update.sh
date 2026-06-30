@@ -11,6 +11,12 @@ Branch=""
 HealthOnly=0
 JsonReport=0
 
+GithubDir=""
+PromptsDir=""
+TemplatesDir=""
+ScriptsDir=""
+VscodeDir=""
+
 # Parse arguments
 while [[ "$#" -gt 0 ]]; do
     case $1 in
@@ -28,6 +34,11 @@ while [[ "$#" -gt 0 ]]; do
         -Branch) Branch="$2"; shift ;;
         -HealthOnly) HealthOnly=1 ;;
         -JsonReport) JsonReport=1 ;;
+        -GithubDir) GithubDir="$2"; shift ;;
+        -PromptsDir) PromptsDir="$2"; shift ;;
+        -TemplatesDir) TemplatesDir="$2"; shift ;;
+        -ScriptsDir) ScriptsDir="$2"; shift ;;
+        -VscodeDir) VscodeDir="$2"; shift ;;
         *) echo "Unknown parameter passed: $1"; exit 1 ;;
     esac
     shift
@@ -112,15 +123,17 @@ New-Backup() {
 }
 
 Sync-Directory() {
-    local srcRoot="$1/$3"
-    local dstRoot="$2/$3"
+    local srcRoot="$1"
+    local dstRoot="$2"
     local subDir="$3"
+    local excludePrefix="$4"
     
     if [ ! -d "$srcRoot" ]; then return; fi
     
     while IFS= read -r srcFile; do
         if [ -z "$srcFile" ]; then continue; fi
         local relPath="${srcFile#$srcRoot/}"
+        if [ -n "$excludePrefix" ] && [[ "$relPath" == "$excludePrefix"* ]]; then continue; fi
         local dstFile="$dstRoot/$relPath"
         
         local srcHash=$(Get-MD5Hash "$srcFile")
@@ -290,21 +303,27 @@ Update-Repo() {
     log_entries=()
     drift_entries=()
     
-    Sync-Directory "$toolkitPath" "$projectPath" ".github"
-    Sync-Directory "$toolkitPath" "$projectPath" ".vscode"
-    Sync-Directory "$toolkitPath" "$projectPath" "scripts"
+    local targetGithub="${GithubDir:-$projectPath/.github}"
+    local targetPrompts="${PromptsDir:-$targetGithub/prompts}"
+    local targetVscode="${VscodeDir:-$projectPath/.vscode}"
+    local targetScripts="${ScriptsDir:-$projectPath/scripts}"
+    local targetTemplates="${TemplatesDir:-$projectPath/.forge/templates}"
+
+    Sync-Directory "$toolkitPath/.github" "$targetGithub" ".github" "prompts/"
+    Sync-Directory "$toolkitPath/.github/prompts" "$targetPrompts" ".github/prompts"
+    Sync-Directory "$toolkitPath/.vscode" "$targetVscode" ".vscode"
+    Sync-Directory "$toolkitPath/scripts" "$targetScripts" "scripts"
     
     if [ $HealthOnly -eq 0 ]; then
         local srcTemplates="$toolkitPath/templates"
-        local dstTemplates="$projectPath/.forge/templates"
         if [ -d "$srcTemplates" ]; then
             while IFS= read -r srcFile; do
                 if [ -z "$srcFile" ]; then continue; fi
                 local name=$(basename "$srcFile")
-                local dstFile="$dstTemplates/$name"
+                local dstFile="$targetTemplates/$name"
                 if [ ! -f "$dstFile" ]; then
                     if [ $DryRun -eq 0 ]; then
-                        mkdir -p "$dstTemplates"
+                        mkdir -p "$targetTemplates"
                         cp "$srcFile" "$dstFile"
                     fi
                     Write-New "[templates] $name"

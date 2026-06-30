@@ -43,7 +43,12 @@ param(
     [string] $Branch = "",
     [string] $Restore = "",
     [switch] $HealthOnly,
-    [switch] $JsonReport
+    [switch] $JsonReport,
+    [string] $GithubDir = "",
+    [string] $PromptsDir = "",
+    [string] $TemplatesDir = "",
+    [string] $ScriptsDir = "",
+    [string] $VscodeDir = ""
 )
 
 Set-StrictMode -Version Latest
