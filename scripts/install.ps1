@@ -1,4 +1,4 @@
-﻿param (
+param (
     [Parameter(Mandatory=$true)]
     [string]$TargetDir
 )
@@ -19,6 +19,9 @@ Copy-Item -Path (Join-Path $SourceDir ".github") -Destination $TargetDir -Recurs
 
 Write-Host "Copying .vscode (workspace settings)..."
 Copy-Item -Path (Join-Path $SourceDir ".vscode") -Destination $TargetDir -Recurse -Force
+
+Write-Host "Copying scripts (toolkit helpers)..."
+Copy-Item -Path (Join-Path $SourceDir "scripts") -Destination $TargetDir -Recurse -Force
 
 # 2. Intelligently merge the templates
 $TargetTemplates = Join-Path $TargetDir ".forge\templates"
