@@ -1,4 +1,4 @@
-﻿# VIBE-xxx: <slug>
+# VIBE-xxx: <slug>
 
 **Date**: <date>
 **Status**: Completed

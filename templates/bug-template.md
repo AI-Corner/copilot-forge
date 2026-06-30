@@ -1,4 +1,4 @@
-﻿---
+---
 id: BUG-xxx
 title: "Bug Title"
 status: open
@@ -12,7 +12,6 @@ concerns: []        # cross-cutting dimensions, e.g., ["security", "performance"
 tags: []            # free-form keywords, e.g., ["password-reset", "tokens"]
 ---
 > **Note to AI**: Keep all sections extremely concise (short bullet points). Omit any sections that are not strictly relevant.
-
 
 ## Description
 
@@ -46,7 +45,7 @@ What happens instead.
 
 ## Files Changed
 
-- `path/to/file.js` � description
+- `path/to/file.js` - description
 
 ## Internal Reference
 - **Incoming Dependencies**: `#forge-bugfix`, `#forge-init`

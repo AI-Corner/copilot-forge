@@ -1,4 +1,4 @@
-﻿<!--
+<!--
 Filename MUST be `ADR-xxx-slug.md` (e.g., `ADR-012-use-graphql-for-public-api.md`).
 - `xxx` is the next available integer, zero-padded to 3 digits, unique across `.forge/knowledge/decisions/`.
 - `slug` is lowercase kebab-case, ≤6 words.
@@ -16,7 +16,6 @@ created: YYYY-MM-DD
 updated: YYYY-MM-DD
 ---
 > **Note to AI**: Keep all sections extremely concise (short bullet points). Omit any sections that are not strictly relevant.
-
 
 ## Context
 

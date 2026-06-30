@@ -1,4 +1,4 @@
-﻿# {Project Name} — Deployment Flow
+# {Project Name} — Deployment Flow
 
 *Navigation: [Project Overview](project-overview.md) | [Architecture](architecture.md) | [Conventions](conventions.md) | [Variables](variables.md)*
 

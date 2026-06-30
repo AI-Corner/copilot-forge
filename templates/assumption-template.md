@@ -1,4 +1,4 @@
-﻿---
+---
 id: ASSUME-xxx
 title: "Assumption Title"
 status: validated | invalidated | unresolved

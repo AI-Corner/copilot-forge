@@ -1,4 +1,6 @@
-﻿# Manual QA Guide: {Feature Title}
+# Manual QA Guide: {Feature Name}
+
+> **Note to AI**: Keep all sections extremely concise (short bullet points). Omit any sections that are not strictly relevant.
 
 *REQ ID: {REQ-xxx}*
 *Status: Draft / Final*
@@ -13,9 +15,7 @@ Briefly describe what this manual test is intended to verify. (Keep to 1-2 short
 
 ## 🧪 Test Steps
 | Step # | Action | Expected Result |
-| :--- | :---
-> **Note to AI**: Keep all sections extremely concise (short bullet points). Omit any sections that are not strictly relevant.
- | :--- |
+| :--- | :--- | :--- |
 | 1 | {Action} | {Expected outcome} |
 | 2 | {Action} | {Expected outcome} |
 | 3 | {Action} | {Expected outcome} |

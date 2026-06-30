@@ -1,4 +1,4 @@
-﻿---
+---
 id: TASK-xxx
 title: "Task Title"
 status: draft
@@ -11,14 +11,13 @@ updated: YYYY-MM-DD
 ---
 > **Note to AI**: Keep all sections extremely concise (short bullet points). Omit any sections that are not strictly relevant.
 
-
 ## Description
 
 What this task accomplishes.
 
 ## Files to Create/Modify
 
-- `path/to/file.js` � description of changes
+- `path/to/file.js` - description of changes
 
 ## Acceptance Criteria
 

@@ -1,4 +1,4 @@
-﻿---
+---
 id: SUP-xxx
 title: "Support: [Feature Name]"
 related_req: REQ-xxx
@@ -9,7 +9,6 @@ domain: ""
 tags: []
 ---
 > **Note to AI**: Keep all sections extremely concise (short bullet points). Omit any sections that are not strictly relevant.
-
 
 ## 1. Feature Overview
 [Simple, user-friendly explanation of what the feature does, suitable for a customer support agent or end user to read.]
