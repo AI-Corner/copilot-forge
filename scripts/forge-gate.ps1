@@ -64,6 +64,12 @@ function Pass([string]$msg) {
     Write-Host "  ✓ GATE PASSED [$Phase]" -ForegroundColor Green
     Write-Host "  $msg" -ForegroundColor DarkGray
     Write-Host ""
+
+    $traceScript = Join-Path $PSScriptRoot "forge-trace.ps1"
+    if (Test-Path $traceScript) {
+        $req = if ($ReqId) { $ReqId } else { "REQ-GENERAL" }
+        & $traceScript -ReqId $req -Phase "gate-$Phase" -Event "span" -Status "success" -Output $msg | Out-Null
+    }
 }
 
 function Fail([string]$msg, [string]$remedy = "") {

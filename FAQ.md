@@ -347,3 +347,40 @@ Copilot Forge has two pathways for adding knowledge, and the routing depends on 
 - **Direct capture via `#forge-query`** → writes **directly** to `.forge/knowledge/`. When you use `#forge-query`, *you* are in the conversation, deliberately telling the agent what to save. The agent proposes the action (create a lesson, ADR, assumption, etc.) and waits for your explicit approval before writing anything. There is no need for a second triage step because **you are the triage**.
 
 Think of it this way: the inbox exists as a human gate for **unsupervised AI observations**. When you're personally driving the capture through `#forge-query`, you *are* the gate — adding an inbox step on top would just be redundant friction.
+
+### 28. Is there a way to capture 100% complete LLM observability (exact prompts, tokens) directly from GitHub Copilot Chat in the IDE?
+**Currently, no. Not natively.**
+
+Because GitHub Copilot is a closed system, it bundles your prompt and workspace context and sends it directly to GitHub's backend over encrypted HTTPS. You cannot "intercept" the raw prompts or responses locally to send them to an observability tool like Langfuse.
+
+**How we solve this today:**
+1. **State-Based Tracing (Copilot Forge Default):** We trace the *milestones*. When the LLM runs a phase gate (`forge-gate.ps1`) or a custom script, that script emits a span to Langfuse. You miss the exact prompt text, but you still get a timeline of execution, success/failure rates, and workflow tracing.
+2. **Build a Copilot Extension (High Effort):** If you build a custom GitHub Copilot Extension (e.g., `@forge`), GitHub routes the user's prompt to your own backend server. Because you control the server making the LLM call, you can integrate Langfuse natively and get 100% observability.
+3. **Use an Open-Source IDE AI:** If you replace GitHub Copilot with an open-source extension like **Continue.dev** or **Cline**, you control the API key and proxy routing. You can route all IDE requests through Langfuse first, giving you perfect observability inside the IDE without changing your agent framework.
+
+### 29. If we migrate Copilot Forge to a standalone agent framework (like LangChain or LangGraph), how do we capture observability?
+**It becomes completely automatic and native.**
+
+When you move away from the closed GitHub Copilot Chat environment and run Copilot Forge through an open-source agent framework (such as LangChain, LlamaIndex, LiteLLM, or AutoGen) in Python or TypeScript, you gain direct control over the LLM network requests.
+
+Tools like Langfuse offer native integrations (often just 1-2 lines of code) for these frameworks. For example, in LangChain:
+
+```python
+from langfuse.callback import CallbackHandler
+from langchain.chains import LLMChain
+
+# 1. Initialize the Langfuse callback handler
+langfuse_handler = CallbackHandler()
+
+# 2. Pass it to your agent/chain
+chain = LLMChain(llm=my_llm, prompt=my_prompt)
+chain.invoke({"input": "build a hello world program"}, config={"callbacks": [langfuse_handler]})
+```
+
+**What you get instantly (without writing manual trace scripts):**
+- **Full Trace Trees:** Every agent step, tool invocation, and LLM reasoning loop is automatically nested.
+- **Raw Prompts & Completions:** The exact text sent to and received from OpenAI/Anthropic is logged.
+- **Exact Token Counts & Costs:** Automatically calculated per step.
+- **Latency Metrics:** Timing for every individual API call and tool execution.
+
+In this architecture, your existing `.forge/scripts/` (like `forge-gate.ps1`) simply become "Tools" that the LangChain agent can execute, and their outputs are automatically traced as tool-call spans.

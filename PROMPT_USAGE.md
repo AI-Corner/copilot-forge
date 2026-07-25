@@ -33,6 +33,7 @@ Complete reference for every Copilot Forge prompt. Each section covers **what th
 | [`#forge-admin`](#forge-admin) | Maintenance | Modify the Forge toolkit safely |
 | [`#forge-template-drift`](#forge-template-drift) | Maintenance | Detect drift between local and canonical templates |
 | [`#forge-token-estimate`](#forge-token-estimate) | Metrics | Estimate token consumption per pipeline phase |
+| [`#forge-trace`](#forge-trace) | Observability | Query and summarize Langfuse observability trace telemetry |
 | [`#forge-synthesize`](#forge-synthesize) | Knowledge | Process learning inbox into permanent rules/lessons/ADRs |
 | [`#forge-prune`](#forge-prune) | Knowledge | Periodic knowledge hygiene — archive stale rules and lessons |
 
