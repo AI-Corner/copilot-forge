@@ -51,7 +51,7 @@ Prompts run in `mode: agent` and have access to the `codebase`, `runCommand`, `c
 
 ```mermaid
 flowchart TD
-    User([User types #forge-proceed]) --> VSCode[VS Code Copilot Chat]
+    User(["User types #forge-proceed"]) --> VSCode[VS Code Copilot Chat]
     
     subgraph Settings [1. Initialization]
         VSCode -- "Checks .vscode/settings.json" --> Scanner[Scans .github/prompts/]
@@ -70,9 +70,9 @@ flowchart TD
     end
     
     subgraph Agents [3. Phase 5 Verification]
-        MainPrompt -- "Part 1: Deterministic Check" --> CompAgents[Computational Agents\n(lint, test, build)]
+        MainPrompt -- "Part 1: Deterministic Check" --> CompAgents["Computational Agents: lint, test, build"]
         CompAgents -- "Fail" --> MainPrompt
-        CompAgents -- "Pass 100%" --> InfAgents[Inferential Agents\n(architecture, security, correctness)]
+        CompAgents -- "Pass 100%" --> InfAgents["Inferential Agents: architecture, security, correctness"]
     end
 ```
 
