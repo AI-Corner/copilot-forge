@@ -3,8 +3,8 @@
 These are the strict coding and formatting conventions for Copilot Forge. For full explanations, see `corpus/conventions.md`.
 
 1. **Naming**:
-   - Main prompts: `.github/prompts/<name>.prompt.md` (lowercase, hyphenated)
-   - Agent checklists: `.github/prompts/agents/<name>.prompt.md`
+   - Main prompts: `.github/prompts/forge-<name>.prompt.md` (lowercase, hyphenated)
+   - Agent checklists: `.github/prompts/agents/forge-<name>.prompt.md`
    - IDs: `REQ-xxx`, `TASK-yyy`, `BUG-zzz`, `LESSON-nnn` (uppercase, 3 digits zero-padded)
 2. **Frontmatter**: Every prompt MUST have YAML frontmatter declaring `mode: agent`, `tools: [...]`, and a `description`.
 3. **Ethos**: Every main prompt MUST begin with `> **Ethos**: Follow the principles in .github/copilot-instructions.md throughout this session.`

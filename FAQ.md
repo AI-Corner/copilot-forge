@@ -384,3 +384,13 @@ chain.invoke({"input": "build a hello world program"}, config={"callbacks": [lan
 - **Latency Metrics:** Timing for every individual API call and tool execution.
 
 In this architecture, your existing `.forge/scripts/` (like `forge-gate.ps1`) simply become "Tools" that the LangChain agent can execute, and their outputs are automatically traced as tool-call spans.
+
+### 30. What is the difference between `.forge\knowledge\lessons` vs `.forge\knowledge\support`, and `.forge\context\corpus` vs `.forge\context\rules`?
+
+**`.forge\knowledge\` (The "Why" vs The "How-To")**
+*   **`lessons`**: Acts as a repository for lessons learned or architectural decision records (ADRs). It captures historical context about past mistakes, insights, or structural changes (e.g., why a certain framework was adopted).
+*   **`support`**: Acts as the Support Knowledge Base containing FAQs, troubleshooting steps, and guides for executing specific features or pipelines. It provides reference material when an agent or user needs help.
+
+**`.forge\context\` (Deep Explanations vs Strict Constraints)**
+*   **`corpus`**: Contains long-form, comprehensive documentation providing full context, explanations, and background for a topic. It is meant for deep understanding.
+*   **`rules`**: Contains condensed, rigid rule sets extracted directly from the corpus. These files give AI agents short, explicit lists of unbreakable constraints to follow deterministically, stripping out all the verbose explanations.

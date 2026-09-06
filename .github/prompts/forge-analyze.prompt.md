@@ -10,7 +10,7 @@ You are performing a comprehensive codebase health audit for the current project
 
 > **Ethos**: Follow the principles in `.github/copilot-instructions.md` throughout this session.
 >
-> **Copilot difference**: The original `/analyze` skill dispatched 4 audit agents in parallel. In Copilot, run all 4 audit dimensions sequentially. Reference the agent checklist prompts in `.github/prompts/agents/` for the full per-dimension checklists.
+> **Copilot difference**: Run all 4 audit dimensions sequentially. Reference the agent checklist prompts in `.github/prompts/agents/` for the full per-dimension checklists.
 
 ## Input
 
