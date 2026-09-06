@@ -47,6 +47,35 @@ In Copilot Chat (VS Code), type `#<prompt-name>` to invoke a prompt:
 
 Prompts run in `mode: agent` and have access to the `codebase`, `runCommand`, `changes`, and `terminalLastCommand` tools as declared in their frontmatter.
 
+### The Invocation Flow
+
+```mermaid
+flowchart TD
+    User([User types #forge-proceed]) --> VSCode[VS Code Copilot Chat]
+    
+    subgraph Settings [1. Initialization]
+        VSCode -- "Checks .vscode/settings.json" --> Scanner[Scans .github/prompts/]
+        Scanner -- "Registers commands" --> Intercept[Intercepts # command]
+    end
+    
+    Intercept -- "Injects .prompt.md as system prompt" --> MainPrompt{Main Prompt Executing}
+    
+    subgraph Execution [2. Execution & Injection]
+        MainPrompt -- "Reads constraints" --> Rules[(.forge/context/*.rules.md)]
+        MainPrompt -- "Reads deep context (if planning)" --> Corpus[(.forge/context/*.md)]
+        MainPrompt -- "Scans RAG (Top 15 scores)" --> Knowledge[(.forge/knowledge/)]
+        Knowledge -. "Why (ADRs)" .-> Lessons[lessons/]
+        Knowledge -. "How-To (FAQs)" .-> Support[support/]
+        MainPrompt -- "Uses canonical shapes to write" --> Templates[(.forge/templates/)]
+    end
+    
+    subgraph Agents [3. Phase 5 Verification]
+        MainPrompt -- "Part 1: Deterministic Check" --> CompAgents[Computational Agents\n(lint, test, build)]
+        CompAgents -- "Fail" --> MainPrompt
+        CompAgents -- "Pass 100%" --> InfAgents[Inferential Agents\n(architecture, security, correctness)]
+    end
+```
+
 ## Relationship to consumer projects
 
 `#forge-init` is the bridge: when a consumer project runs `#forge-init`, it creates `.forge/context/`, `.forge/specs/`, `.forge/bugs/`, `.forge/knowledge/`, and `.forge/templates/` in that project, copying from this toolkit's `templates/` directory. After `#forge-init`, the consumer project uses prompts that read from **its** `.forge/` structure — not the toolkit's.
